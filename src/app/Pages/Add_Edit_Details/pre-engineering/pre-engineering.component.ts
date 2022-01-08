@@ -19,6 +19,8 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
   _CategoryID : any;
   _AddDocuments : AddDocuments;
   _IsGazette : boolean; //
+  _StateValue : any;
+  _TalukaName : string;
   constructor(){
     this._ShowUploadedDocModel = new ShowUploadedDocModel();
     this._CategoryDataModel = new CategoryDataModel()
@@ -50,6 +52,14 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
 
   }
 
+  StateChange(event){
+    if(this._StateValue =="1"){
+      this._TalukaName = "Tahsil"
+    }else{
+      this._TalukaName = "Taluka"
+    }
+  }
+  
   openDocument(){
     let url = "http://www.africau.edu/images/default/sample.pdf";
     window.open(url);
