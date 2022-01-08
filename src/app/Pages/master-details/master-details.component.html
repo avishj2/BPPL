@@ -1,0 +1,141 @@
+<app-dropdowns (child) = "GetChildData($event)"></app-dropdowns>
+<br>
+<!-- <button type="button" class="btn waves-effect waves-light blue" (click)="rerender()">
+  Rerender
+</button> -->
+
+<div class="row" >
+    <div class="col-lg-12">
+      <!-- <div class="md-tabs">*ngIf="_showTabs == true" -->
+        <ngb-tabset>
+          <ngb-tab title="Land Details">
+            <ng-template ngbTabContent>
+                <div class="m-t-15">
+                   
+                    Land Details
+                    <app-land-details></app-land-details>
+                
+                  </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Crop Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Crop Details
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Tree Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Tree
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Restoration Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Restoration Details
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Assign Panch">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Assign Panch
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Survey No. Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Survey Number Details
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Crossing Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- Crossing Details -->
+                    <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" >
+                      <thead>
+                           <tr>           
+                             <th *ngFor="let header of getTableData()">{{header}}</th>
+                           </tr>
+                      </thead>
+                      <tbody>
+                           <tr *ngFor="let item of _tableData">           
+                             <td *ngFor="let data of getTableData()">{{item[data]}}</td>
+                           </tr>
+                      </tbody>
+                    </table>
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Revenue Form">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                    <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="100%" >
+                        <thead>
+                             <tr>           
+                               <th>CrossingType</th>
+                               <th>NoOfCrossing</th>
+                               <th>DemandNodeNot</th>
+                             </tr>
+                        </thead>
+                        <tbody>
+                             <tr *ngFor="let item of _TableDataModel.TableData">           
+                               <td>{{item.CrossingType}}</td>
+                               <td>{{item.NoOfCrossing}}</td>
+                               <td>{{item.DemandNodeNot}}</td>
+                             </tr>
+                        </tbody>
+                      </table>
+                      <!-- <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered"width="100%"></table> -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Gazette And Notice">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                Gazette And Notice
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Compensation">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                Compensation
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+        </ngb-tabset><!-- close tabs -->
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <div class="row"  *ngIf="_showTabs == false">
+    <div class="card">
+    <b><h4>Show all khasra</h4></b>
+    </div>
+  </div>

@@ -1,0 +1,52 @@
+.backIcon{
+    font-size: 23px;
+    color: rgb(255, 255, 255);
+}
+.nav-list > li > a {
+    cursor: pointer;
+}
+/* .no-skin .nav-list > li > .submenu >li.active:after {
+    display: block;
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: -1px;
+    bottom: 0;
+    z-index: 1;
+    border: 1px solid #26a1d1;
+}  */
+.logout{
+    color: rgb(191, 214, 235);
+}
+a {
+    color: #326dad;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 450;
+    background-color: transparent;
+
+    /* color: #0e72c4; */
+}
+
+.navbar ul li ul {
+    border: 1px solid;
+    display: none;
+    width: auto;
+    padding: 0;
+    padding-left: 10px;
+    margin: 0;
+  }
+  .navbar ul li:hover ul   {
+    display: block;
+  }
+.Innersubmenu{
+    margin-left: 2px;
+    font-size: 14px;
+    margin-bottom: 2px;
+    // border-bottom: 0.2px solid #326dad;
+}
+li > ol, li > ul {
+    background: #fafbfb;
+    // font-size: 1px;
+    border-bottom: 0.2px solid #fffefe;
+}

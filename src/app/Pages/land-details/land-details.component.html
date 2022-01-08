@@ -1,0 +1,42 @@
+<div class="card">
+<div class="row">
+    <!-- <div class="col-lg-4">
+        <label class ="dropdownsLabel"> Owner Name  </label>
+        <input class="form-control"/>
+    </div>
+    <div class="col-lg-4">
+        <label class ="dropdownsLabel"> Type of Land </label>
+        [(ngModel)]="_DropdownDataModel.Section"
+        <select class="form-control">
+            <option *ngFor="let data of _LandTypes">{{data}}</option>
+        </select>
+    </div> -->
+        
+        <div class="form-group">
+            <label class ="dropdownsLabel">Owner Name: </label>
+            <input name="Ownername"/>
+        </div>
+        <div class="form-group">
+            <label class ="dropdownsLabel">Type of Land: </label>
+            <select>
+                <option *ngFor="let data of _LandTypes">{{data}}</option>
+            </select>
+        </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3">
+        <label class ="dropdownsLabel"> Area </label>
+        <input type="text" class="form-control" appTwoDigitDecimaNumber>
+    </div>
+    <div class="col-lg-3">
+        <label class ="dropdownsLabel"> Ha</label>
+        <input type="text" class="form-control" appTwoDigitDecimaNumber>
+    </div>
+    <div class="col-lg-3">
+        <label class ="dropdownsLabel"> sqmt </label>
+        <input type="text" class="form-control" appTwoDigitDecimaNumber>
+    </div>
+</div>
+<br>
+</div>
