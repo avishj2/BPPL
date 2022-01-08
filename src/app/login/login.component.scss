@@ -1,0 +1,104 @@
+ /* Made with love by Mutiullah Samim*/
+
+ @import url('https://fonts.googleapis.com/css?family=Numans');
+
+ html,body{
+ background-image: url('/assets/NKBPLImages/background_image.png');
+ 
+ /* background-size: cover; 
+ background: rgba(105, 181, 216, 0.911);*/
+//  background-size: 100% 100%;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    width: 100%;
+    height: inherit;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+ }
+ 
+ .backgroundImage {
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    // background: url(assets/images/bg.jpg) no-repeat center center fixed;
+    background: url("/assets/NKBPLImages/background_image.png") no-repeat center center fixed;
+    height: 100%;
+    width: 100%;
+  
+  }
+ .container{
+ height: 100%;
+ align-content: center;
+ }
+ 
+ .card{
+ height: 370px;
+ margin-top: auto;
+ margin-bottom: auto;
+ width: 400px;
+ background-color: rgba(230, 223, 223, 0.5) !important;
+ }
+ 
+ .submitBtn{
+   color: #030302;
+   text-align: center;
+   width: 85px;
+   height: 35px;
+   font-size: 15px;
+   font-weight: 500;
+   /* align-items: center;
+   justify-content: center;
+   display: flex; */
+   border-radius: 10px;
+   background-color:  #3cbbfc;//rgba(202, 160, 69, 0.945);
+   margin-top: 8%;
+ 
+ }
+ .card-header{
+ color: white;
+ text-align: center;
+ }
+ 
+ .social_icon{
+ position: absolute;
+ right: 20px;
+ top: -45px;
+ }
+ 
+ .input-group-prepend span{
+ width: 50px;
+ background-color: #96bee4;
+ color: black;
+ border:0 !important;
+ }
+ 
+ input:focus{
+ outline: 0 0 0 0  !important;
+ box-shadow: 0 0 0 0 !important;
+ 
+ }
+ 
+ 
+ .login_btn{
+ color: black;
+ background-color: #FFC312;
+ width: 100px;
+ }
+ 
+ .login_btn:hover{
+ color: black;
+ background-color: white;
+ }
+ 
+ .links{
+ color: white;
+ }
+ 
+ .links a{
+ margin-left: 4px;
+ }
+ 

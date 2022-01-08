@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-lg-4">
+    <label class ="dropdownsLabel">Category</label>
+    <select class="form-control"[(ngModel)]="_CategoryID">
+        <option *ngFor="let data of _CategoryDataModel.Categories"[value]="data.CategoryID">{{data.CategoryName}}</option>
+    </select>
+    </div>
+
+    <div class="col-lg-4" *ngIf ="_CategoryID == 2">
+        <div class="custom-file">
+            <label class="custom-file-label" for="customFile">Choose Excel File</label>
+            <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+        </div> 
+    </div>
+
+</div>
+<br>
+
+<div class="row"*ngIf ="_CategoryID == 1">
+    <div class="col-lg-4">
+    <label class ="dropdownsLabel">Description</label>
+    <!-- [(ngModel)]="_InventoryFormDataModel.InventoryField.Remarks"[ngModelOptions]="{standalone: true}"[disabled]="DisableAssetEditField" -->
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" ></textarea>  
+    </div>
+    <div class="col-lg-4">
+        <div class="custom-file">
+            <label class="custom-file-label" for="customFile">Choose Excel File</label>
+            <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+        </div> 
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-3">
+        <button class="btn-round" >Upload</button>
+    </div>
+</div>
+
+<div class="row"*ngIf ="_CategoryID == 2">
+    <div class="col-lg-3">
+    <label class ="dropdownsLabel">Alignment Number </label>
+    <input (keypress)="NumberOnly($event)" type="text"class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <label class ="dropdownsLabel">From Chainage </label>
+        <input class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <label class ="dropdownsLabel">To Chainage </label>
+        <input class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <button class="btn-round" >Upload</button>
+    </div>
+</div>
+
+<div *ngIf ="_CategoryID == 3">
+    <div class="row">
+        <div class="col-lg-3">
+        <label class ="dropdownsLabel">Select Document</label>
+        <!--  [items]="_AddDocuments.Documents " bindLabel="DocumentName" bindValue ="DocumentName" [(ngModel)]="_TransferFieldSubmitModel.UserFrom"-->
+        <ng-select [allowClear]="true"[items]="_AddDocuments.Documents " bindLabel="DocumentName" bindValue ="IsGazette"[(ngModel)]="_IsGazette"> </ng-select>
+        </div>
+
+        <div class="col-lg-3" *ngIf ="_IsGazette == true">
+            <label class ="dropdownsLabel">Gazette Notification No.</label>
+            <ng-select [allowClear]="true"> </ng-select>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="custom-file">
+                <label class="custom-file-label" for="customFile">Choose Excel File</label>
+                <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+                
+            </div> 
+        </div>
+        <!-- <a (click)="openDocument()"target="_blank"> open pdf </a> -->
+        <div class="col-lg-3">
+            <button class="btn-round" >Upload</button>
+        </div>
+    </div>
+    <br>
+
+    <div class="card">
+        <div class="tableDiv">
+            <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="100%" >
+                <thead>
+                    <tr>           
+                    <th>Document Type</th>
+                    <th>Document Name</th>
+                    <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _ShowUploadedDocModel.DisplayDocument">           
+                    <td>{{item.DocumentType}}</td>
+                    <td>{{item.DocumentName}}</td>
+                    <!-- <td></td> -->
+                    <td>
+                        <button type="button" class="btn-danger"title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>    
+                    </td>
+                    <!-- (click)="DeleteAccessoryDetails(data)"  -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
+<div class="form-group">
+    <label class ="dropdownsLabel">Select Document:&nbsp;&nbsp; </label>
+    <ng-select [allowClear]="true"> </ng-select>
+</div> (click)="SearchData()"
+</div> -->
+    <!-- [items]="_TransferFieldSubmitModel.Users" bindLabel="UserFromTo" bindValue ="UserID" -->

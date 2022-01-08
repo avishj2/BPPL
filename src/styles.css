@@ -1,0 +1,36 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+/* You can add global styles to this file, and also import other style files */
+html, body, app-root {
+    height: 100%;
+    margin: 0;
+    }
+
+table{ 
+    word-wrap:break-word; 
+    table-layout: fixed; 
+  }
+.dropdownsLabel{
+  font-weight: 550;
+  margin-bottom: 2px;
+  margin-top: 1px;
+  /*margin-left: 1px; */
+}
+.btn-round ::after{
+  background:#2b97e4;
+  box-shadow: #92c6eb;
+}
+
+.btn-round{
+  border-radius: 10px;
+  background:#0a83dc;
+  width: 30%;
+  height: 35px;
+  margin-top: 9.5%;
+  font-size: 16px;
+  font-weight: 530;
+  color :#fff
+}
+.btn-round ::after{
+  background:#2b97e4;
+  box-shadow: #92c6eb;
+}
