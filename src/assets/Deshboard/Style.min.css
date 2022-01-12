@@ -13916,14 +13916,14 @@ div.dataTables_scrollFoot table {
 }
 .dataTable > thead > tr > th.sorting_asc,
 .dataTable > thead > tr > th.sorting_desc {
-    /* background-image: linear-gradient(to bottom, #eff3f8 0, #e0ba93 100%); */
-    background-image:linear-gradient(to bottom, #e7efff 0%, #82c1e1 53%);
+    /* background-image: linear-gradient(to bottom, #e7efff 0%, #82c1e1 53%) */
+    background-color: #b6c9e5f4;
     /* table click */
     /* background-image: -webkit-linear-gradient(top, #eff3f8 0, #e3e7ed 100%);
     background-image: -o-linear-gradient(top, #eff3f8 0, #e3e7ed 100%);
     background-image: linear-gradient(to bottom, #eff3f8 0, #e3e7ed 100%); */
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeff3f8', endColorstr='#ffe3e7ed', GradientType=0);
+    /* background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeff3f8', endColorstr='#ffe3e7ed', GradientType=0); */
 }
 .dataTable > thead > tr > th.sorting_desc:after {
     content: "\f0dd";

@@ -1,0 +1,26 @@
+.row{
+    margin-bottom: 1%;
+}
+.SubmitButton{
+    margin-top: 4%;
+    margin-left: 20%;
+}
+
+.btn-primary{
+    /* width: 30%;
+    height: 10px;
+    background-color: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%); */
+    border-radius: 10px;
+    height: 40px;
+}
+.AddBtn{
+    height: 10%;
+    /* margin-top: 13%; */
+    touch-action: manipulation;
+    cursor: pointer;
+    color: #fff;
+    background-color: #146de0;
+    border-color: #146de0;
+    margin-left: 3%;
+    margin-bottom: 2%;
+}

@@ -148,3 +148,147 @@ export class GazetteFields{
     HindiFromPage :any;
     HindiToPage :any;
 }
+
+/**VILLAGE Details */
+export class VillageDetailsDataModel{
+    VillageDetails : VillageDetails;
+    VillageChainage : VillageChainage[];
+
+    constructor(){
+        this.VillageDetails = new VillageDetails();
+        this.VillageChainage = [];
+    }
+}
+
+export class VillageDetails{
+    VillageNo : any;
+    RevenueVillageNo: any;
+    NoOfpopulation: any;
+    InActiveReason :any;
+    VillageNameEnglish : string;
+    VillageNameHindi : string;
+    VillageNameLocal : string;
+}
+
+export class VillageChainage{
+    SNo : any;
+    ChainageFrom : any;
+    ChainageTo : any;
+    SurveyorName : string;
+
+}
+
+export class VillageChainageColl{
+
+    VillageChainage : VillageChainage[];
+    ReadJson()
+        {
+        let data = [
+                {
+                    SNo : 1,
+                    ChainageFrom :324,
+                    ChainageTo : 326,
+                    SurveyorName : "dasadsad"
+                },
+                {
+                    SNo : 2,
+                    ChainageFrom :434,
+                    ChainageTo : 432,
+                    SurveyorName : "fsfdaw"
+                }
+        ]
+        this.VillageChainage =  JSON.parse(JSON.stringify(data));
+    }
+}
+
+/**crossing details  */
+export class CrossDetailsDataModel{
+    CrossDetails :CrossDetails;
+
+    constructor(){
+        this.CrossDetails = new CrossDetails()
+    }
+}
+
+export class CrossDetails{
+    CrossingNo :any;
+    CrossingName : string;
+    CrossingChainageKm : any;;
+    CrossingIPTPTo : any;
+    CrossingIPTPFrom: any;
+    DateOfApplication: any;
+    DateOfDemandNote: any;
+    DateOfPermission: any;
+    Approved:  string;
+    NonRefundable : any;
+    Refundable: any;
+    oneTimeRent : any;
+    Description : any;
+    CrossingAuthorityName:string;
+    CrossingAuthorityAddress : string;
+
+}
+
+/**AGI/Terminals details */
+export class AGITerminalsDataModel{
+    AGITerminalsDetails : AGITerminalsDetails;
+
+   constructor(){
+       this.AGITerminalsDetails = new AGITerminalsDetails();
+   }
+}
+export class AGITerminalsDetails{
+    AGIStationNo : any;//searchdropdown
+    OwnerName: string; //searchdropdown
+    SurveyNo : any;//searchdropdown
+    AGITerminalsName : string;
+    Chainage : any;
+    PlotSizeInMeter:any;
+    TypesOfland : string;//classificationofland
+    DLCIrrigated :boolean;
+    OwnerNameCount :any;
+    SubRegisterIrrigated :boolean;
+    SubRegisterNonIrrigated : boolean;
+    RateExpectedByFarmer: any;
+    MapWithDetailsFromTalhati :any;
+    Remarks : string;
+    ConstructionStartDate : any;
+    ConstructionEndDate : any;
+    Registry : boolean;
+    From7upon12 : boolean;
+    From8A : boolean;
+    FromNo6: boolean;
+    DLCYantri: boolean;
+    DILRSurvey : boolean;
+    FiveyrsSaledeed:  boolean;
+    Notice63AA : boolean;
+    Notice65BB: boolean;
+    PanchanammaForAVillage : boolean;
+    NegociationwithVillage: boolean;
+    PanchanammaForMarketValue : boolean;
+    MiscDetails : boolean;
+
+}
+
+/**Adhoc Payment Details */
+export class AdhocPaymentDataModel{
+    AdhocPaymentDetails : AdhocPaymentDetails;
+
+    constructor(){
+        this.AdhocPaymentDetails = new AdhocPaymentDetails();
+    }
+}
+export class AdhocPaymentDetails{
+    paymentAmountInRs : any;
+    AmountInWordEnglish : string;
+    PaymentMode : string;
+    BankName : string;
+    ChequeNo: any;
+    ChequeDate : any;
+    Paid: boolean;
+    PaymentDate : any;
+    AmountInLocalWords : string;
+    ChequeIssuedTo : string;
+    OwnerName : string; //serachdropdown
+
+}

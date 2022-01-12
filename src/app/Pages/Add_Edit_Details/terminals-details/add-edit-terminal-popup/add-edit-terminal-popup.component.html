@@ -1,0 +1,154 @@
+<div class="modal-header">
+    <h5 class="modal-title"><b>{{_modelTitle}} AGI/Terminal Details</b></h5>
+    <button type="button" class="close" data-dismiss="modal" (click)="closeModal('dismiss')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body"> 
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">AGI Terminals Name</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.AGITerminalsName"[ngModelOptions]="{standalone: true}">
+        </div>
+        
+        <label class="col-sm-2 col-form-label">Chainage</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <label class="col-sm-2 col-form-label">Registry</label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Registry"[ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Classification Of Land</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.TypesOfland"[ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Plot Area</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PlotSizeInMeter" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">From 7/12  </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From7upon12" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> Sub Register Irrigated(Rs.) </label>
+        <div class="col-lg-3">
+            <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterIrrigated"[ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">DLC Irrigated </label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCIrrigated"[ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label"> From 8A </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From8A" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Sub Register Non-Irrigated(Rs.)</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterNonIrrigated" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Owner Name  </label>
+        <div class="col-lg-3">
+            <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.OwnerNameCount"[ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">From No 6 </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FromNo6" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Rate Expected By Farmer(Rs/sqmt) </label>
+        <div class="col-lg-3">
+            <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.RateExpectedByFarmer" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Remarks </label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Remarks" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Notice 65BB</label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice65BB"[ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Map with details from Talhati </label>
+        <div class="col-lg-3">
+            <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MapWithDetailsFromTalhati" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Construction Start Date </label>
+        <div class="col-lg-3">
+            <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+        </div>
+        <label class="col-sm-2 col-form-label">DILR Survey </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DILRSurvey" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Construction End Date </label>
+        <div class="col-lg-3">
+            <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+        </div>        
+        <label class="col-sm-3 col-form-label">5yrs Sale deed from sub resigter</label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FiveyrsSaledeed" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <label class="col-sm-2 col-form-label"> Notice 63AA </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice63AA" [ngModelOptions]="{standalone: true}">
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Panchanamma For village Details</label>
+        <div class="col-lg-2">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForAVillage" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-3 col-form-label">Panchanamma for present market value </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForMarketValue" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">DLC (yantri) </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCYantri" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-5 col-form-label">Negociation with owner and his statement </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.NegociationwithVillage" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-5 col-form-label">Misc Details to be collect from the land owner </label>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MiscDetails" [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+
+    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+        <div class="div-to-align">
+            <button type="submit" class="btn-primary" ngbTooltip=""(click)="SubmitDetails()">
+                {{_modelTitle}} Details
+            </button>  
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+</div>

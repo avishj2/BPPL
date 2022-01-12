@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,10 +9,10 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(
-    private router: Router,
-    public storage: StorageService
-  ) { }
+    constructor(
+      private router: Router,
+      public storage: StorageService
+    ) { }
 
   ngOnInit(): void {
   }
