@@ -1,0 +1,102 @@
+<form>
+    <div class="card">
+        <div class="innercard"> 
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Crossing Number</label>
+                <div class="col-lg-3">
+                    <select class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingNo"[ngModelOptions]="{standalone: true}">
+                        <option> </option>
+                    </select>
+                    <!-- [(ngModel)]="_DropdownDataModel.SurveyNumber"-->
+                </div>
+
+                <label class="col-sm-3 col-form-label">Crossing Name</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingName"[ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Crossing Chainage(Km)</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingChainageKm" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label class="col-sm-3 col-form-label">Crossing B/W IP-TP From  </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingIPTPFrom" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Crossing B/W IP-TP To</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingIPTPTo" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label class="col-sm-3 col-form-label">One Time Rent </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.oneTimeRent" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Non Refundable</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.NonRefundable"[ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label class="col-sm-3 col-form-label">Refundable </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.Refundable" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Date Of Application </label>
+                <div class="col-lg-3">
+                    <input type="date" class="form-control"[value]="_CrossDetailsDataModel.CrossDetails.DateOfApplication | date:'yyyy-MM-dd'" (input)="_CrossDetailsDataModel.CrossDetails.DateOfApplication = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                </div>
+
+                <label class="col-sm-3 col-form-label">Date Of Demand Note </label>
+                <div class="col-lg-3">
+                    <input type="date" class="form-control"[value]="_CrossDetailsDataModel.CrossDetails.DateOfDemandNote | date:'yyyy-MM-dd'" (input)="_CrossDetailsDataModel.CrossDetails.DateOfDemandNote = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Crossing Authority Name </label>
+                <div class="col-lg-3">
+                   <input type="text"class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingAuthorityName"[ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label class="col-sm-3 col-form-label">Crossing Authority Address</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingAuthorityAddress" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Description</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.Description" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <label class="col-sm-3 col-form-label">Date Of Permission/Aggrement </label>
+                <div class="col-lg-3">
+                    <input type="date" class="form-control"[value]="_CrossDetailsDataModel.CrossDetails.DateOfPermission | date:'yyyy-MM-dd'" (input)="_CrossDetailsDataModel.CrossDetails.DateOfPermission = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Approved </label>
+                <div class="col-lg-3">
+                    <select class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.Approved"[ngModelOptions]="{standalone: true}">
+                        <option> </option>
+                    </select>
+                    
+                </div>
+            </div>
+        </div> 
+    </div>
+</form>

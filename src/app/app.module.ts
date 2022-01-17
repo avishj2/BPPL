@@ -18,6 +18,14 @@ import { MasterDetailsComponent } from './Pages/master-details/master-details.co
 import { LandDetailsComponent } from './Pages/land-details/land-details.component';
 import { PreEngineeringComponent } from './Pages/Add_Edit_Details/pre-engineering/pre-engineering.component';
 import { GazetteDetailsComponent } from './Pages/Add_Edit_Details/gazette-details/gazette-details.component';
+import { VillageDetailsComponent } from './Pages/Add_Edit_Details/village-details/village-details.component';
+import { AddEditVillagePopupComponent } from './Pages/Add_Edit_Details/village-details/add-edit-village-popup/add-edit-village-popup.component';
+import { CrossingDetailsComponent } from './Pages/Add_Edit_Details/crossing-details/crossing-details.component';
+import { TerminalsDetailsComponent } from './Pages/Add_Edit_Details/terminals-details/terminals-details.component';
+import { AddEditTerminalPopupComponent } from './Pages/Add_Edit_Details/terminals-details/add-edit-terminal-popup/add-edit-terminal-popup.component';
+import { AdhocPaymentDetailsComponent } from './Pages/Add_Edit_Details/adhoc-payment-details/adhoc-payment-details.component';
+import { AdhocPaymentPopupComponent } from './Pages/Add_Edit_Details/adhoc-payment-details/adhoc-payment-popup/adhoc-payment-popup.component';
+import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
 
 
 @NgModule({
@@ -31,7 +39,15 @@ import { GazetteDetailsComponent } from './Pages/Add_Edit_Details/gazette-detail
     MasterDetailsComponent,
     LandDetailsComponent,
     PreEngineeringComponent,
-    GazetteDetailsComponent
+    GazetteDetailsComponent,
+    VillageDetailsComponent,
+    AddEditVillagePopupComponent,
+    CrossingDetailsComponent,
+    TerminalsDetailsComponent,
+    AddEditTerminalPopupComponent,
+    AdhocPaymentDetailsComponent,
+    AdhocPaymentPopupComponent,
+    ViewVillageDetailsComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [

@@ -1,0 +1,19 @@
+.col-sm-2 {
+    /* max-width: 6%; */
+    font-weight: 550;
+}
+.innercard {
+    margin: 1%;
+}
+.btn-primary{
+    margin-left: 5px;
+    background-color:linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+    border-color :#428bca;
+    font-weight: 550;
+}
+.form-group {
+    margin-bottom: 0.6rem;
+}
+.form-group input:disabled{
+    color: black;
+}

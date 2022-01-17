@@ -1,0 +1,78 @@
+<app-dropdowns></app-dropdowns>
+<br>
+<form>
+    <div class="card">
+        <div class="innercard">
+            <button class="btn-primary" (click)="OpenAddPopupModel()">
+                <i class="fa fa-plus-circle"></i>&nbsp;
+                Add Adhoc Payment
+            </button>
+            <hr>   
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Payment Amount(Rs.)</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" [(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.paymentAmountInRs"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+
+                <label class="col-sm-2 col-form-label">Cheque Date</label>
+                <div class="col-lg-3">
+                    <input type="date" class="form-control"[value]="_AdhocPaymentDataModel.AdhocPaymentDetails.ChequeDate | date:'yyyy-MM-dd'" (input)="_AdhocPaymentDataModel.AdhocPaymentDetails.ChequeDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Amount In Words</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" [(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.AmountInWordEnglish"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+               
+                <label class="col-sm-2 col-form-label">Paid</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.Paid" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Payment Mode </label>
+                <div class="col-lg-3">
+                   <input type="text"class="form-control" [(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.PaymentMode"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            
+                <label class="col-sm-2 col-form-label"> Payment Date </label>
+                <div class="col-lg-3">
+                    <input type="date" class="form-control"[value]="_AdhocPaymentDataModel.AdhocPaymentDetails.PaymentDate | date:'yyyy-MM-dd'" (input)="_AdhocPaymentDataModel.AdhocPaymentDetails.PaymentDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
+                </div>
+            </div>
+           
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Bank Name</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.BankName" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            
+                <label class="col-sm-2 col-form-label">Amount In Words Local </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.AmountInLocalWords" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Cheque No. </label>
+                <div class="col-lg-3">
+                   <input type="text"class="form-control" [(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.ChequeNo" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+               
+                <label class="col-sm-2 col-form-label">Cheque Issued To </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.ChequeIssuedTo" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <button class="btn-primary" (click)="OpenEditPopupModel()">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                Edit Adhoc Payment
+            </button>
+        </div> 
+    </div>
+</form>

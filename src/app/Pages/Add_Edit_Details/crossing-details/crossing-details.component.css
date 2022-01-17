@@ -1,0 +1,10 @@
+.col-sm-3 {
+    /* max-width: 6%; */
+    font-weight: 550;
+}
+.innercard {
+    margin: 1%;
+}
+.form-group {
+    margin-bottom: 0.6rem;
+}

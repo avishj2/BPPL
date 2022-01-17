@@ -1,0 +1,152 @@
+<form>
+    <div class="card">
+        <div class="innercard">
+            <button class="btn-primary" (click)="OpenAddPopupModel()">
+                <i class="fa fa-plus-circle"></i>&nbsp;
+                ADD AGI/Terminal
+            </button><hr>
+            
+             
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">AGI Terminals Name</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Registry"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                
+                <label class="col-sm-2 col-form-label">Chainage</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+
+                <label class="col-sm-2 col-form-label">Registry</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Registry"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Classification Of Land</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.TypesOfland"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">Plot Area</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PlotSizeInMeter" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">From 7/12  </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From7upon12" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"> Sub Register Irrigated(Rs.) </label>
+                <div class="col-lg-2">
+                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">DLC Irrigated </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label"> From 8A </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From8A" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+           
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Sub Register Non-Irrigated(Rs.)</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterNonIrrigated" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">Owner Name  </label>
+                <div class="col-lg-2">
+                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.OwnerNameCount"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">From No 6 </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FromNo6" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Rate Expected By Farmer(Rs/sqmt) </label>
+                <div class="col-lg-2">
+                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.RateExpectedByFarmer" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">Remarks </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Remarks" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">Notice 65BB</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice65BB"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Map with details from Talhati </label>
+                <div class="col-lg-2">
+                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MapWithDetailsFromTalhati" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">Construction Start Date </label>
+                <div class="col-lg-2">
+                    <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">DILR Survey </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DILRSurvey" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Construction End Date </label>
+                <div class="col-lg-2">
+                    <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
+                </div>        
+                <label class="col-sm-2 col-form-label">5yrs Sale deed from sub resigter</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FiveyrsSaledeed" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+
+                <label class="col-sm-2 col-form-label"> Notice 63AA </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice63AA" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Panchanamma For village Details</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForAVillage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">Panchanamma for present market value </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForMarketValue" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <label class="col-sm-2 col-form-label">DLC (yantri) </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCYantri" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Negociation with owner and his statement </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.NegociationwithVillage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+
+                <label class="col-sm-4 col-form-label">Misc Details to be collect from the land owner </label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MiscDetails" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+
+            <button class="btn-primary" (click)="OpenEditPopupModel()">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;
+                Edit AGI/Terminal
+            </button>
+        </div> 
+    </div>
+</form>

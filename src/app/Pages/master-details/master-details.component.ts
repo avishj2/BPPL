@@ -468,7 +468,8 @@ export class MasterDetailsComponent implements AfterViewInit,OnDestroy, OnInit {
         })
       })
     }
-    //console.log(JSON.stringify(this._tableData))
+    // console.log(JSON.stringify(this._tableData));
+    // console.log(this._tableData);
     //console.log("_TableDataModel",JSON.stringify(this._TableDataModel))
     return headers;
   }
