@@ -168,6 +168,7 @@ export class VillageDetails{
     VillageNameEnglish : string;
     VillageNameHindi : string;
     VillageNameLocal : string;
+    VillageName : string;
 }
 
 export class VillageChainage{

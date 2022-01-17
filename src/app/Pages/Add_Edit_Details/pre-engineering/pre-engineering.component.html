@@ -16,7 +16,7 @@
     </div>
     <div class="col-lg-4">
         <div class="custom-file">
-            <label class="custom-file-label" for="customFile">Choose Excel File</label>
+            <label class="custom-file-label" for="customFile">Choose File</label>
             <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
         </div> 
     </div>
@@ -46,13 +46,13 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="custom-file">
-                <label class="custom-file-label" for="customFile">Choose Excel File</label>
+                <label class="custom-file-label" for="customFile">Choose File</label>
                 <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
             </div> 
         </div>
         <!-- <div class="col-lg-2"></div> -->
         <div class="col-lg-3">
-            <button class="btn-round" >Upload</button>
+            <button class="btn-round"(click)="UploadData()" >Upload</button>
         </div>
     </div>
 </div>
@@ -92,6 +92,18 @@
         </div>
     </div>
     <br>
+    <ngb-tabset>
+        <ngb-tab [attr.id]="tab.id" *ngFor="let tab of tabs">
+            <ng-template ngbTabTitle>
+                <span>{{ tab.title }}</span>
+            </ng-template>
+            <ng-template ngbTabContent> 
+                Content of {{ tab.tab }}
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+
+    <br>
     <div class="row">
         <div class="col-lg-3">
         <label class ="dropdownsLabel">Select Document</label>
@@ -106,7 +118,7 @@
 
         <div class="col-lg-3" *ngIf ="_IsGazette != true">
             <div class="custom-file">
-                <label class="custom-file-label" for="customFile">Choose Excel File</label>
+                <label class="custom-file-label" for="customFile">Choose File</label>
                 <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
             </div> 
         </div>
@@ -117,38 +129,29 @@
     </div>
     <br><hr>
 
-    <!-- <div class="card"> -->
-        <div class="tableDiv">
-            <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="100%" >
-                <thead>
-                    <tr>           
-                    <th>Document Type</th>
-                    <th>Document Name</th>
-                    <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of _ShowUploadedDocModel.DisplayDocument">           
-                    <td>{{item.DocumentType}}</td>
-                    <td>{{item.DocumentName}}</td>
-                    <!-- <td></td> -->
-                    <td>
-                        <button type="button" class="btn-danger"title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </button>    
-                    </td>
-                    <!-- (click)="DeleteAccessoryDetails(data)"  -->
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    <!-- </div> -->
-</div>
 
-<!-- <div class="row">
-<div class="form-group">
-    <label class ="dropdownsLabel">Select Document:&nbsp;&nbsp; </label>
-    <ng-select [allowClear]="true"> </ng-select>
-</div> (click)="SearchData()"
-</div> -->
-    <!-- [items]="_TransferFieldSubmitModel.Users" bindLabel="UserFromTo" bindValue ="UserID" -->
+    <div class="tableDiv">
+        <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="98%" >
+            <thead>
+                <tr>           
+                <th>Document Type</th>
+                <th>Document Name</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of _ShowUploadedDocModel.DisplayDocument">           
+                <td>{{item.DocumentType}}</td>
+                <td>{{item.DocumentName}}</td>
+                <!-- <td></td> -->
+                <td>
+                    <button type="button" class="btn-danger"title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </button>    
+                </td>
+                <!-- (click)="DeleteAccessoryDetails(data)"  -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

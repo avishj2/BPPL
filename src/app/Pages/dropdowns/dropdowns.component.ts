@@ -1,6 +1,12 @@
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
-import { DropdownDataModel } from './dropdown.model'
-
+import { AngularModuleHelperService } from 'src/app/services/angular-module-helper.service';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { CommonService } from 'src/app/services/common.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { UrlService } from 'src/app/services/url.service';
+import { UtilityService } from 'src/app/services/utility.service';
+import { Router } from '@angular/router';
+import { DropdownDataModel ,StateDataModel} from './dropdown.model'
 @Component({
   selector: 'app-dropdowns',
   templateUrl: './dropdowns.component.html',
@@ -13,6 +19,8 @@ export class DropdownsComponent implements OnInit {
 
   _DropdownData ;
   _DropdownDataModel : DropdownDataModel;
+
+  _StateDataModel : StateDataModel;
   DropdownData = [
     // { id : 24 , name  : "--select--" },
     { id : 27 , name  : "Ajmer" },
@@ -32,15 +40,27 @@ export class DropdownsComponent implements OnInit {
     { id : 85 , name  : "Hanumangarh" }
   ];
 
-  constructor() {
+  constructor(
+    public urlService: UrlService,
+    private utility : UtilityService,
+    public commonService : CommonService,
+    private angularModuleHelperService : AngularModuleHelperService,
+    private router: Router,
+    public storage: StorageService,
+    private http: HttpClient,
+    ){
     this._DropdownData = this.DropdownData;
     this._DropdownDataModel = new DropdownDataModel()
+    this._StateDataModel = new StateDataModel();
    }
 
   ngOnInit() {
     //console.log("hi")
     
   }
+
+
+
 
  
   SearchData(){

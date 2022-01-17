@@ -9535,8 +9535,8 @@ input.ace + .lbl.padding-0::before {
 }
 .form-group input:disabled,
 .form-group input[disabled] {
-    color: #848484 !important;
-    background-color: #eee !important;
+    color: #000000 !important;  /* disabled input box font color change */
+    background-color: #e2e8f1 !important;
 }
 .input-transparent,
 input[type].input-transparent,

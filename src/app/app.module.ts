@@ -25,6 +25,7 @@ import { TerminalsDetailsComponent } from './Pages/Add_Edit_Details/terminals-de
 import { AddEditTerminalPopupComponent } from './Pages/Add_Edit_Details/terminals-details/add-edit-terminal-popup/add-edit-terminal-popup.component';
 import { AdhocPaymentDetailsComponent } from './Pages/Add_Edit_Details/adhoc-payment-details/adhoc-payment-details.component';
 import { AdhocPaymentPopupComponent } from './Pages/Add_Edit_Details/adhoc-payment-details/adhoc-payment-popup/adhoc-payment-popup.component';
+import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { AdhocPaymentPopupComponent } from './Pages/Add_Edit_Details/adhoc-payme
     TerminalsDetailsComponent,
     AddEditTerminalPopupComponent,
     AdhocPaymentDetailsComponent,
-    AdhocPaymentPopupComponent
+    AdhocPaymentPopupComponent,
+    ViewVillageDetailsComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [

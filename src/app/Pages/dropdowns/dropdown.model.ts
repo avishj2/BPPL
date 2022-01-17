@@ -13,4 +13,15 @@ export class DropdownDataModel{
 
   }
 }
+/**get all states details from api, data model */
+export class StateDataModel{
+  StateDataColl :  StateDataColl[];
   
+  constructor(){
+    this.StateDataColl =[];
+  }
+}
+export class StateDataColl{
+  StateId  : any;
+  Name : string;
+}  

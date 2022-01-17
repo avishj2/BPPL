@@ -12,43 +12,43 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNo" [ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNo" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (English)</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameEnglish"[ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control" [(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameEnglish"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Revenue Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.RevenueVillageNo"[ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.RevenueVillageNo"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Hindi) </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameHindi"[ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Number of Population </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.NoOfpopulation"[ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.NoOfpopulation"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Local) </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameLocal"[ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameLocal"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">InActive Reason </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.InActiveReason"[ngModelOptions]="{standalone: true}">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.InActiveReason"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
             </div>
 
@@ -60,41 +60,44 @@
     </div>
 </form>
 <br>
-<div class="tableDiv">
-    <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="98%" >
-        <thead>
-            <tr>           
-            <!-- <th>S.No.</th> -->
-            <th>Chaingae From</th>
-            <th>Chaingae To</th>
-            <th>Surveyor Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- *ngIf="_VillageDetailsDataModel.VillageChainage?.length != 0" -->
-            <tr *ngFor="let item of _VillageDetailsDataModel.VillageChainage">           
-            <td>{{item.ChaingaeFrom}}</td>
-            <td>{{item.ChaingaeTo}}</td>
+<!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="stripe table table-striped table-bordered" width="98%" >
+    <thead>
+        <tr>           
+        <th>Chaingae From</th>
+        <th>Chaingae To</th>
+        <th>Surveyor Name</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length != 0" >
+        <tr *ngFor="let item of _VillageDetailsDataModel.VillageChainage">           
+            <td>{{item.ChainageFrom }}</td>
+            <td>{{item.ChainageTo}}</td>
             <td>{{item.SurveyorName}}</td>
-            </tr>
-        </tbody>
-        <!-- <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length == 0">
-            <tr>
+        </tr>
+    </tbody>
+    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length == 0">
+        <tr>
             <td colspan="3" class="no-data-available">No data!</td>
-            </tr>
-        </tbody> -->
-    </table>
+        </tr>
+    </tbody>
+</table> -->
 
-    <!-- <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" >
-        <thead>
-             <tr>           
-               <th *ngFor="let header of getTableData()">{{header}}</th>
-             </tr>
-        </thead>
-        <tbody>
-             <tr *ngFor="let item of _VillageDetailsDataModel.VillageChainage">           
-               <td *ngFor="let data of getTableData()">{{item[data]}}</td>
-             </tr>
-        </tbody>
-      </table> -->
-</div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="stripe table table-striped table-bordered" width="98%">
+    <thead *ngIf="_VillageDetailsDataModel.VillageChainage?.length != 0">
+        <tr>           
+            <th *ngFor="let header of getTableData()">{{header}}</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length != 0">
+        <tr *ngFor="let item of _VillageDetailsDataModel.VillageChainage">           
+            <td *ngFor="let data of getTableData()">
+                {{item[data]}}
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length == 0">
+        <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+        </tr>
+    </tbody>
+</table>

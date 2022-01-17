@@ -26,7 +26,7 @@
             "styles": [
               "src/custom-theme.scss",
               {
-                "input": "src/assets/Deshboard/bootstrap(node).min.css"
+                "input": "src/assets/Dashboard/bootstrap(node).min.css"
               },
               {
                 "input": "src/styles.css"
@@ -36,19 +36,19 @@
               },
               
               {
-                "input": "src/assets/Deshboard/font-awesome.min.css"
+                "input": "src/assets/Dashboard/font-awesome.min.css"
               },
               {
-                "input": "src/assets/Deshboard/Style-rtl.min.css"
+                "input": "src/assets/Dashboard/Style-rtl.min.css"
               },
               {
-                "input": "src/assets/Deshboard/Style.min.css"
+                "input": "src/assets/Dashboard/Style.min.css"
               }
             ],
             "scripts": [
-              "src/assets/Deshboard/Newjquery-2.1.4.min.js",
-              "src/assets/Deshboard/bootstrap.min.js",
-              "src/assets/Deshboard/min.js",
+              "src/assets/Dashboard/Newjquery-2.1.4.min.js",
+              "src/assets/Dashboard/bootstrap.min.js",
+              "src/assets/Dashboard/min.js",
              
               "node_modules/datatables.net/js/jquery.dataTables.js"
               

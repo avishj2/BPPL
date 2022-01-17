@@ -58,6 +58,7 @@ export class AddEditVillagePopupComponent implements OnInit {
   AddChainageDetailsDiv() {
     this._ChainageDetailsArray.push(this._VillageDetailsDataModel.VillageChainage);
     console.log("_ChainageDetailsArray",this._ChainageDetailsArray);
+    this.closeModal(this._VillageDetailsDataModel);
   }
 
   /**add ChainageFrom values in array */

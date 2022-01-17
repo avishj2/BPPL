@@ -12,6 +12,7 @@ import { AdhocPaymentPopupComponent } from '../adhoc-payment-details/adhoc-payme
 
 export class AdhocPaymentDetailsComponent implements OnInit {
 _AdhocPaymentDataModel : AdhocPaymentDataModel;
+DisableInputField : boolean = true;
 
   constructor(
     public modelServiceService : ModelServiceService

@@ -12,8 +12,10 @@ import { ShowUploadedDocModel ,CategoryDataModel,AddDocuments} from '../Add_Edit
 export class PreEngineeringComponent implements AfterViewInit, OnInit {
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+  dtOptions: any = {};
+  datatable: any;
+
   _ShowUploadedDocModel : ShowUploadedDocModel;
   _CategoryDataModel :CategoryDataModel;
   _CategoryID : any;
@@ -21,6 +23,11 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
   _IsGazette : boolean; //
   _StateValue : any;
   _TalukaName : string;
+  tabs = [
+    { tab: 'One', title: 'one' },
+    { tab: 'Two', title: 'two' },
+    { tab: 'Three', title: 'three' }
+  ];
   constructor(){
     this._ShowUploadedDocModel = new ShowUploadedDocModel();
     this._CategoryDataModel = new CategoryDataModel()
@@ -37,8 +44,25 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
       };
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void 
+  {
     this.dtTrigger.next();
+  }
+
+  ngOnDestroy(): void 
+  {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+  /**After add chainage details refresh datatable  */
+  rerenderDataTable(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 
   /**In Input Box add only numbric values */
@@ -63,5 +87,12 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
   openDocument(){
     let url = "http://www.africau.edu/images/default/sample.pdf";
     window.open(url);
+  }
+
+  /**
+  * if category is Award and mutation and attachment upload to the server   
+  */
+  UploadData(){
+    this.rerenderDataTable()
   }
 }

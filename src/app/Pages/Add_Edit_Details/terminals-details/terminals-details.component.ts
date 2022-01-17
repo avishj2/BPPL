@@ -12,11 +12,13 @@ import { AddEditTerminalPopupComponent } from './add-edit-terminal-popup/add-edi
   styleUrls: ['./terminals-details.component.css']
 })
 export class TerminalsDetailsComponent implements OnInit {
-  _AGITerminalsDataModel : AGITerminalsDataModel;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+  dtOptions: any = {};
+  datatable: any;
+  DisableInputField : boolean = true;
+  _AGITerminalsDataModel : AGITerminalsDataModel;
 
   constructor(public modelServiceService : ModelServiceService,)
     {
@@ -27,15 +29,12 @@ export class TerminalsDetailsComponent implements OnInit {
   ngOnInit(): void {
     // this._AGITerminalsDataModel.AGITerminalsDetails
     this.dtOptions = 
-        {
-          pagingType: 'full_numbers',
-          pageLength: 10,//onpage load loaded 5 rows, datatable bydefault shows 10 rows
-        };
+      {
+        pagingType: 'full_numbers',
+        pageLength: 10,//onpage load loaded 5 rows, datatable bydefault shows 10 rows
+      };
   }
   
-  ngAfterViewInit(): void {
-    this.dtTrigger.next();
-  }
   OpenAddPopupModel(){
     /**NgbModalOptions  add some option in ngbmodel  */
     let ngbModalOptions: NgbModalOptions = {
