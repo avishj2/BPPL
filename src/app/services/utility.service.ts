@@ -24,6 +24,7 @@ export class UtilityService {
   {
     console.log(argText);
   }
+  
   LogText1(argKey,argText)
   {
     //console.log(argKey,argText);

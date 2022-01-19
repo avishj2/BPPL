@@ -25,11 +25,11 @@ const routes: Routes = [
       
       /**Add-Edit details section components */
       {path: 'VillageDetails', component: VillageDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Add-Edit Details / Village Details'}},
+      {path: 'GazetteDetails', component: GazetteDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Add-Edit Details / Gazette Details'}},
       {path: 'CrossingDetails', component: CrossingDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Add-Edit Details / Crossing Details'}},
       {path: 'AGI_Terminals', component: TerminalsDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Add-Edit Details / AGI/Terminals Details'}},
-      {path: 'Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Add-Edit Details / Adhoc Payment Details'}},
-      {path: 'GazetteDetails', component: GazetteDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Add-Edit Details / Gazette Details'}},
       {path: 'PreEngineering', component: PreEngineeringComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Add-Edit Details / Pre-Engineering'}},
+      {path: 'Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Add-Edit Details / Adhoc Payment Details'}},
        /**View details section components */
        {path: 'VeiwVillageDetails', component: ViewVillageDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'View Details / Village Details'}},
 

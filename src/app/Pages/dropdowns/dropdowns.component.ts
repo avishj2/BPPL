@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { AngularModuleHelperService } from 'src/app/services/angular-module-helper.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { CommonService } from 'src/app/services/common.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UrlService } from 'src/app/services/url.service';
-import { UtilityService } from 'src/app/services/utility.service';
 import { Router } from '@angular/router';
-import { DropdownDataModel ,StateDataModel} from './dropdown.model'
+import { DropdownDataModel ,StateDataModel,DistrictDataModel,TalukaDataModel,VillageDataModel} from './dropdown.model';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
+import {from} from 'rxjs';
+
 @Component({
   selector: 'app-dropdowns',
   templateUrl: './dropdowns.component.html',
@@ -42,11 +44,8 @@ export class DropdownsComponent implements OnInit {
 
   constructor(
     public urlService: UrlService,
-    private utility : UtilityService,
-    public commonService : CommonService,
-    private angularModuleHelperService : AngularModuleHelperService,
+    public APIUtilityService: APIUtilityService,
     private router: Router,
-    public storage: StorageService,
     private http: HttpClient,
     ){
     this._DropdownData = this.DropdownData;
@@ -54,37 +53,76 @@ export class DropdownsComponent implements OnInit {
     this._StateDataModel = new StateDataModel();
    }
 
-  ngOnInit() {
-    //console.log("hi")
-    
+    ngOnInit() {
+      //console.log("hi")
+      this.GetAllStates();
+      // this.getData();
+    }
+
+
+  /**test */
+  getData() {
+    let url = this.urlService.GetAllStatesAPI;    
+    this.http.get(url, {
+      headers: {
+        'Bearer': 'Access Token',
+        'Content-Type': 'application/json'
+      },
+    })
+    .subscribe(response => console.log('Got the Response as: ', response));
   }
 
 
 
+  /**API CALL FOR state details */
+  GetAllStates()
+    {
+      let url = this.urlService.GetAllStatesAPI;   
+      //=====method 1 ===      
+      // this.APIUtilityService.CallBack = this.CallBackStateDetails.bind(this);
+      // this.APIUtilityService.HttpGetRequest(url,null);  
 
- 
-  SearchData(){
-    // console.log("dropdown values : ", this._DropdownDataModel)
-    let AlertMessage = "Jurisdiction - " + this._DropdownDataModel.Jurisdiction + "\nSection - " + this._DropdownDataModel.Section + "\nChainage To - " + this._DropdownDataModel.ChainageTo + "\nChainage From - " + this._DropdownDataModel.ChainageFrom + "\nState - " + this._DropdownDataModel.State + "\nDistrict - " + this._DropdownDataModel.District + "\nTaluka - " + this._DropdownDataModel.Taluka + "\nVillage - " + this._DropdownDataModel.Village + "\nSurvey Number - " + this._DropdownDataModel.SurveyNumber
-    
-    alert(AlertMessage);
+      //===== 2=====
+      this.APIUtilityService.get(url).subscribe(res => {
+        console.log('data response', res);
+      });
+    }
 
-    // if(this._DropdownDataModel.SurveyNumber == null && this._DropdownDataModel.Village == null )
-    // {
-    //   this._DropdownDataModel = null
-    // }
+    /**@abstract
+     * =====method 1 ===      
+     */
+  CallBackStateDetails(dtas : HttpResponse<any>)
+    {
+      if (dtas != null) 
+      {
+        let data : StateDataModel;
+        data = dtas.body; 
+        this._StateDataModel = data;    
+      }
+    }
 
-    /**1. bind data in variable
-     * 2.pass data child component to parent component 
-     * */
-    this.DropdownValues = this._DropdownDataModel.SurveyNumber;
-    this.child.emit(this.DropdownValues);  
 
-  }
   
-  input(event){
-   console.log("event",event)
-  }
+    SearchData(){
+      // console.log("dropdown values : ", this._DropdownDataModel)
+      let AlertMessage = "Jurisdiction - " + this._DropdownDataModel.Jurisdiction + "\nSection - " + this._DropdownDataModel.Section + "\nChainage To - " + this._DropdownDataModel.ChainageTo + "\nChainage From - " + this._DropdownDataModel.ChainageFrom + "\nState - " + this._DropdownDataModel.State + "\nDistrict - " + this._DropdownDataModel.District + "\nTaluka - " + this._DropdownDataModel.Taluka + "\nVillage - " + this._DropdownDataModel.Village + "\nSurvey Number - " + this._DropdownDataModel.SurveyNumber
+      alert(AlertMessage);
+      // if(this._DropdownDataModel.SurveyNumber == null && this._DropdownDataModel.Village == null )
+      // {
+      //   this._DropdownDataModel = null
+      // }
+  
+      /**1. bind data in variable
+       * 2.pass data child component to parent component 
+       * */
+      this.DropdownValues = this._DropdownDataModel.SurveyNumber;
+      this.child.emit(this.DropdownValues);  
+  
+    }
+    input(event)
+    {
+      console.log("event",event)
+    }
   
 
 }

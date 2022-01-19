@@ -16,9 +16,15 @@ export class UrlService {
   /**Rolebase menu dropdown API */
   // GetRolesAPI = this.url + '/api/Auth/GetRoles';
   TokenAPI = this.url + '/token';
+
+  /**bppl api url **/
   GetAllStatesAPI = this.url + '/api/CRUD/GetAllStates';
- 
-  
+  GetAllDistrictAPI = this.url + '/api/CRUD/GetAllDistrict';
+  GetDistrictByStateAPI = this.url + '/api/CRUD/GetDistrictByState?stateId=';
+  GetAllTalukaAPI = this.url + '/api/CRUD/GetAllTaluka';  
+  GetTalukaByDistrictAPI = this.url + '/api/CRUD/GetTalukaByDistrict?districtId=';
+  GetAllVillagesAPI = this.url +'/api/CRUD/GetAllVillages';
+  GetVillageByTalukaAPI = this.url +'/api/CRUD/GetVillageByTaluka?talukaId=';
 
  
   

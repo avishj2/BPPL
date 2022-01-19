@@ -13,15 +13,72 @@ export class DropdownDataModel{
 
   }
 }
+// ========================================================================================
 /**get all states details from api, data model */
 export class StateDataModel{
-  StateDataColl :  StateDataColl[];
+  StateDetails :  StateDetails[];
   
   constructor(){
-    this.StateDataColl =[];
+    this.StateDetails =[];
   }
 }
-export class StateDataColl{
+export class StateDetails{
   StateId  : any;
   Name : string;
+  StateNameHindi : string;
+  StateNameGuj :string;
 }  
+
+
+/**District data model for api  */
+export class DistrictDataModel{
+  District : District[];
+
+  constructor(){
+    this.District =[];
+  }
+}
+
+export class District{
+    DistrictId: any;
+    StateId: any;
+    DistrictName: string;
+    DistrictNameHindi: string;
+    DistrictNameGuj: string
+}
+
+/**Taluka/tahsil data model for api */
+export class TalukaDataModel{
+  Taluka : Taluka[];
+  constructor(){
+    this.Taluka =[];
+  }
+}
+
+export class Taluka
+  {
+    DistrictId: any;
+    TalukaId: any;
+    TalukaName: string;
+    TalukaNameHindi: string;
+    TalukaNameGuj: string
+  }
+
+export class VillageDataModel{
+  Village : Village[];
+
+  constructor(){
+    this.Village = [];
+  }
+}
+
+export class Village{
+  VillageId: any;
+  TalukaId: any;
+  VillageNumber: string;
+  RevenueVillageNumber: string;
+  NoOfPopulation: any;
+  VillageNameEng: string;
+  VillageNameLocal: string;
+  VillageNameHindi: string
+}
