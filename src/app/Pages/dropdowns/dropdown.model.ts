@@ -15,13 +15,6 @@ export class DropdownDataModel{
 }
 // ========================================================================================
 /**get all states details from api, data model */
-export class StateDataModel{
-  StateDetails :  StateDetails[];
-  
-  constructor(){
-    this.StateDetails =[];
-  }
-}
 export class StateDetails{
   StateId  : any;
   Name : string;
@@ -31,15 +24,15 @@ export class StateDetails{
 
 
 /**District data model for api  */
-export class DistrictDataModel{
-  District : District[];
+// export class DistrictDataModel{
+//   District : DistrictDetails[];
 
-  constructor(){
-    this.District =[];
-  }
-}
+//   constructor(){
+//     this.District =[];
+//   }
+// }
 
-export class District{
+export class DistrictDetails{
     DistrictId: any;
     StateId: any;
     DistrictName: string;
@@ -48,14 +41,14 @@ export class District{
 }
 
 /**Taluka/tahsil data model for api */
-export class TalukaDataModel{
-  Taluka : Taluka[];
-  constructor(){
-    this.Taluka =[];
-  }
-}
+// export class TalukaDataModel{
+//   Taluka : TalukaDetails[];
+//   constructor(){
+//     this.Taluka =[];
+//   }
+// }
 
-export class Taluka
+export class TalukaDetails
   {
     DistrictId: any;
     TalukaId: any;
@@ -64,15 +57,15 @@ export class Taluka
     TalukaNameGuj: string
   }
 
-export class VillageDataModel{
-  Village : Village[];
+// export class VillageDataModel{
+//   Village : VillageDetails[];
 
-  constructor(){
-    this.Village = [];
-  }
-}
+//   constructor(){
+//     this.Village = [];
+//   }
+// }
 
-export class Village{
+export class VillageDetails{
   VillageId: any;
   TalukaId: any;
   VillageNumber: string;
@@ -80,5 +73,19 @@ export class Village{
   NoOfPopulation: any;
   VillageNameEng: string;
   VillageNameLocal: string;
-  VillageNameHindi: string
+  VillageNameHindi: string;
+  Chainages : ChainageDetails;
+
+  constructor(){
+    this.Chainages = new ChainageDetails();
+  }
+}
+
+export class ChainageDetails{
+  VillageId: any;
+  VillageChainageId: any;
+  ChainageFrom: any;
+  ChainageTo: any;
+  SurveyAgency: string;
+  LengthInKm: any
 }

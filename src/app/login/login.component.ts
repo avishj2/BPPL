@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from 'src/app/services/storage.service';
+
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,6 @@ export class LoginComponent implements OnInit {
 
     constructor(
       private router: Router,
-      public storage: StorageService
     ) { }
 
   ngOnInit(): void {
@@ -20,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   Submit(){
     // this.utilityHttp.doLogin(this._login);
-    this.storage.set('loginDetails',{}); 
+    //this.storage.set('loginDetails',{}); 
+    localStorage.setItem('loginDetails', JSON.stringify({}));
     this.router.navigate(['/dashboard']); 
   }
 }

@@ -1,11 +1,8 @@
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
-import { AngularModuleHelperService } from 'src/app/services/angular-module-helper.service';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
-import { CommonService } from 'src/app/services/common.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
-import { DropdownDataModel ,StateDataModel,DistrictDataModel,TalukaDataModel,VillageDataModel} from './dropdown.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,DropdownDataModel} from './dropdown.model';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import {from} from 'rxjs';
 
@@ -18,11 +15,19 @@ import {from} from 'rxjs';
 export class DropdownsComponent implements OnInit {
   @Output() child:EventEmitter<string>= new EventEmitter(); 
   DropdownValues = null;
-
+  //dummy objects
   _DropdownData ;
   _DropdownDataModel : DropdownDataModel;
+ 
+  //api models
+  _StateDataModel : StateDetails[];
+  _DistrictDetails : DistrictDetails[];
+  _TalukaDetails : TalukaDetails[];
+  _VillageDetails : VillageDetails[];
+  _StateId : any;
+  _DistrictId : any;
+  _TalukaId : any;
 
-  _StateDataModel : StateDataModel;
   DropdownData = [
     // { id : 24 , name  : "--select--" },
     { id : 27 , name  : "Ajmer" },
@@ -50,57 +55,92 @@ export class DropdownsComponent implements OnInit {
     ){
     this._DropdownData = this.DropdownData;
     this._DropdownDataModel = new DropdownDataModel()
-    this._StateDataModel = new StateDataModel();
+    // this._StateDataModel = [];
    }
 
     ngOnInit() {
-      //console.log("hi")
+      console.log("hi")      
       this.GetAllStates();
-      // this.getData();
+      // this.GetAllDistrict();
+      // this.GetAllTaluka();
+      // this.GetAllVillageDetails();
     }
-
-
-  /**test */
-  getData() {
-    let url = this.urlService.GetAllStatesAPI;    
-    this.http.get(url, {
-      headers: {
-        'Bearer': 'Access Token',
-        'Content-Type': 'application/json'
-      },
-    })
-    .subscribe(response => console.log('Got the Response as: ', response));
-  }
-
-
 
   /**API CALL FOR state details */
   GetAllStates()
     {
-      let url = this.urlService.GetAllStatesAPI;   
+      let url = this.urlService.GetAllStatesAPI; 
       //=====method 1 ===      
-      // this.APIUtilityService.CallBack = this.CallBackStateDetails.bind(this);
-      // this.APIUtilityService.HttpGetRequest(url,null);  
+      this.APIUtilityService.CallBack = this.CallBackStateDetails.bind(this);
+      this.APIUtilityService.HttpGetRequest(url,null);  
 
-      //===== 2=====
-      this.APIUtilityService.get(url).subscribe(res => {
-        console.log('data response', res);
-      });
+      //===== method 2(without callback function)=====
+      // this.APIUtilityService.get(url,null).subscribe(res => {
+      //   console.log('data response', res);
+      //   this._StateDataModel = res;
+      //   },error => {
+      //     console.log("error",error);
+      //   });
     }
 
     /**@abstract
      * =====method 1 ===      
      */
-  CallBackStateDetails(dtas : HttpResponse<any>)
+  CallBackStateDetails(dtas : HttpResponse<StateDetails>)
     {
       if (dtas != null) 
       {
-        let data : StateDataModel;
-        data = dtas.body; 
+        let data;
+        data = dtas; 
         this._StateDataModel = data;    
       }
     }
 
+   /**Get all District list base on the selected state */
+  GetAllDistrict(arg)
+    {
+      let url = this.urlService.GetDistrictByStateAPI + arg; 
+      this.APIUtilityService.CallBack = this.CallBackAllDistrictDetails.bind(this);
+      this.APIUtilityService.HttpGetRequest(url,null);  
+      // this.APIUtilityService.get(url,null).subscribe(response => {
+      //   console.log('data response', response);
+      //   this._DistrictDetails = response;
+      //   },error => {
+      //     console.log("error",error);
+      //   });
+    }
+
+  CallBackAllDistrictDetails(dtas : HttpResponse<DistrictDetails>)
+    {
+      if (dtas != null) 
+      {
+        let data;
+        data = dtas; 
+        this._DistrictDetails = data;    
+      }
+    }
+
+  /**get all Taluka details base on the selected DistrictId */
+  GetAllTaluka(argDistrictID)
+    {
+      let url = this.urlService.GetTalukaByDistrictAPI+ argDistrictID;
+      this.APIUtilityService.get(url,null).subscribe(response => {
+        this._TalukaDetails = response;
+        },error => {
+          console.log("GetTalukaByDistrictAPI error",error);
+        });
+    }
+
+    /**get all village details base on the selected Taluka */
+  GetAllVillageDetails(argTalukaId)
+    {
+      let url = this.urlService.GetVillageByTalukaAPI + argTalukaId;
+      this.APIUtilityService.get(url,null).subscribe(response => {
+        this._VillageDetails = response;
+        },error => {
+          console.log("GetVillageByTalukaAPI error",error);
+        });
+    }
 
   
     SearchData(){

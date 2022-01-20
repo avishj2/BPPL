@@ -4,7 +4,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ModelServiceService } from 'src/app/services/model-service.service';
 import { AddEditVillagePopupComponent } from './add-edit-village-popup/add-edit-village-popup.component';
-import { VillageDetailsDataModel,VillageChainage} from '../Add_Edit_Details.model';
+import { VillageDetailsDataModel,VillageChainage ,AddOrUpdateVillageDataModel} from '../Add_Edit_Details.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails} from 'src/app/Pages/dropdowns/dropdown.model';
 
 @Component({
   selector: 'app-village-details',
@@ -21,11 +22,13 @@ export class VillageDetailsComponent implements OnInit {
 
   _VillageDetailsDataModel : VillageDetailsDataModel;
   DisableInputField : boolean = true;
-
+  
+  _AddOrUpdateVillageDataModel : AddOrUpdateVillageDataModel;
   constructor(
     public modelServiceService : ModelServiceService,
     ){ 
-      this._VillageDetailsDataModel = new VillageDetailsDataModel()
+      this._VillageDetailsDataModel = new VillageDetailsDataModel();
+      this._AddOrUpdateVillageDataModel = new AddOrUpdateVillageDataModel();
       
     }
 
