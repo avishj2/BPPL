@@ -7,6 +7,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadCrumbComponent } from 'src/app/dash-board/breadcrumb.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AlertsModule } from 'angular-alert-module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -58,7 +60,9 @@ import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-d
     NgbModule,
     DataTablesModule,
     BreadcrumbModule,
-    NgSelectModule
+    NgSelectModule,
+    HttpClientModule,
+    AlertsModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,52 @@
-<app-dropdowns></app-dropdowns>
+<!-- <div>
+    <div class="row">
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel"> State  </label>
+            <select class="form-control"[(ngModel)]="_DropdownDataModel.State">
+                <option *ngFor="let data of _DropdownData" [value]="data.name">{{data.name}}</option>
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <label class ="dropdownsLabel"> District  </label>
+            <select class="form-control"[(ngModel)]="_DropdownDataModel.District">
+                <option *ngFor="let data of _DropdownData"[value]="data.name">{{data.name}}</option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel"> Taluka  </label>
+            <select class="form-control"[(ngModel)]="_DropdownDataModel.Taluka">
+                <option *ngFor="let data of _DropdownData"[value]="data.name">{{data.name}}</option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel"> Village  </label>
+            <select class="form-control"[(ngModel)]="_DropdownDataModel.Village">
+                <option *ngFor="let data of _DropdownData" [value]="data.name">{{data.name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel"> Chainage To </label>
+            <input type="text" class="form-control" [(ngModel)]="_DropdownDataModel.ChainageTo" appTwoDigitDecimaNumber>
+        </div>
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel"> Chainage From  </label>
+            <input type="text" class="form-control"[(ngModel)]="_DropdownDataModel.ChainageFrom" appTwoDigitDecimaNumber>
+        </div>
+
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel"> Survey Number  </label>
+            <select class="form-control"[(ngModel)]="_DropdownDataModel.SurveyNumber">
+                <option *ngFor="let data of _DropdownData"[value]="data.id">{{data.id}}</option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+           <button class="btn-round" (click)="SearchData()">Search</button>
+         </div>
+    </div>
+</div> -->
 <br>
 
 <form>

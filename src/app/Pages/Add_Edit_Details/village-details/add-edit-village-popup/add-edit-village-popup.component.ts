@@ -43,9 +43,10 @@ export class AddEditVillagePopupComponent implements OnInit {
         this._VillageChainageColl.ReadJson();
         this._ChainageDetailsArray = this._VillageChainageColl.VillageChainage;
       }
-      
+      console.log("_ChainageDetailsArray",this._ChainageDetailsArray);
       // this._VillageChainage.push(this._VillageChainage.map())
   }
+
   /** Submit add/edit village information to db */
   SubmitDetails()
     {
@@ -57,15 +58,15 @@ export class AddEditVillagePopupComponent implements OnInit {
   
   AddChainageDetailsDiv() {
     this._ChainageDetailsArray.push(this._VillageDetailsDataModel.VillageChainage);
-    console.log("_ChainageDetailsArray",this._ChainageDetailsArray);
-    this.closeModal(this._VillageDetailsDataModel);
+    console.log("ChainageDetailsArray",this._ChainageDetailsArray);
+    // this.closeModal(this._VillageDetailsDataModel);
   }
 
   /**add ChainageFrom values in array */
   ChangeChainageFrom(position: any, values: any)
   {
     this._VillageDetailsDataModel.VillageChainage[position].ChainageFrom = values;  
-    console.log(this._VillageDetailsDataModel.VillageChainage)
+    console.log(this._VillageDetailsDataModel.VillageChainage);
   }
 
   /**add ChainageTo values in array */
@@ -78,7 +79,6 @@ export class AddEditVillagePopupComponent implements OnInit {
   {
     this._VillageDetailsDataModel.VillageChainage[position].SurveyorName = values;  
   }
-
 
   /**close open model cross-arrow icon top-right side */
   closeModal(sendData) 
