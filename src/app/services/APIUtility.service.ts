@@ -12,11 +12,11 @@ import { map } from 'rxjs/operators';
   })
 
 export class APIUtilityService {
-    constructor(
-        private router: Router,
-        private http: HttpClient,
-        public urlService: UrlService,
-        ) { }
+  constructor(
+      private router: Router,
+      private http: HttpClient,
+      public urlService: UrlService,
+      ) { }
 
   public CallBack : {(arg1 : any): any;};
 
@@ -33,7 +33,7 @@ export class APIUtilityService {
    /**get api call */
    public Post(argurl,argParams ): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
-    return this.http.post(argurl, { headers },argParams)//params
+    return this.http.post(argurl, { params: argParams })//params
     .pipe(map(res => res));
   }
 

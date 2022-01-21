@@ -89,3 +89,12 @@ export class ChainageDetails{
   SurveyAgency: string;
   LengthInKm: any
 }
+
+export class SearchCriteria{
+  StateId : any;
+  DistrictId :any;
+  TalukaId : any;
+  VillageId : any;
+  ChainageFrom : any;
+  ChainageTo : any;
+}

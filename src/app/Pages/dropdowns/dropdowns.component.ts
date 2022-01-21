@@ -2,8 +2,9 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
-import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,DropdownDataModel} from './dropdown.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria,DropdownDataModel} from './dropdown.model';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
+import { CommonService} from 'src/app/services/common.service';
 import {from} from 'rxjs';
 
 @Component({
@@ -24,10 +25,8 @@ export class DropdownsComponent implements OnInit {
   _DistrictDetails : DistrictDetails[];
   _TalukaDetails : TalukaDetails[];
   _VillageDetails : VillageDetails[];
-  _StateId : any;
-  _DistrictId : any;
-  _TalukaId : any;
-
+  _SearchCriteria : SearchCriteria;
+ 
   DropdownData = [
     // { id : 24 , name  : "--select--" },
     { id : 27 , name  : "Ajmer" },
@@ -52,22 +51,19 @@ export class DropdownsComponent implements OnInit {
     public APIUtilityService: APIUtilityService,
     private router: Router,
     private http: HttpClient,
+    public CommonService : CommonService,
     ){
     this._DropdownData = this.DropdownData;
     this._DropdownDataModel = new DropdownDataModel()
-    // this._StateDataModel = [];
+    this._SearchCriteria = new SearchCriteria();
    }
 
     ngOnInit() {
-      console.log("hi")      
-      this.GetAllStates();
-      // this.GetAllDistrict();
-      // this.GetAllTaluka();
-      // this.GetAllVillageDetails();
+      this.PopulateState();
     }
 
   /**API CALL FOR state details */
-  GetAllStates()
+  PopulateState()
     {
       let url = this.urlService.GetAllStatesAPI; 
       //=====method 1 ===      
@@ -97,8 +93,12 @@ export class DropdownsComponent implements OnInit {
     }
 
    /**Get all District list base on the selected state */
-  GetAllDistrict(arg)
+   PopulateDistrict(arg)
     {
+      this.ResetDropDowns(DropDownChangeEnum.StateChanged);
+      // let ArgObj = { District : this._SearchCriteria.DistrictId, Taluka : this._SearchCriteria.TalukaId ,Village : this._SearchCriteria.VillageId}
+      // this.CommonService.ResetDropDowns(DropDownChangeEnum.StateChanged, [this._DistrictDetails,this._TalukaDetails,this._VillageDetails], ArgObj);
+
       let url = this.urlService.GetDistrictByStateAPI + arg; 
       this.APIUtilityService.CallBack = this.CallBackAllDistrictDetails.bind(this);
       this.APIUtilityService.HttpGetRequest(url,null);  
@@ -121,8 +121,9 @@ export class DropdownsComponent implements OnInit {
     }
 
   /**get all Taluka details base on the selected DistrictId */
-  GetAllTaluka(argDistrictID)
+  PopulateTaluka(argDistrictID)
     {
+      this.ResetDropDowns(DropDownChangeEnum.DistrictChanged)
       let url = this.urlService.GetTalukaByDistrictAPI+ argDistrictID;
       this.APIUtilityService.get(url,null).subscribe(response => {
         this._TalukaDetails = response;
@@ -134,6 +135,7 @@ export class DropdownsComponent implements OnInit {
     /**get all village details base on the selected Taluka */
   GetAllVillageDetails(argTalukaId)
     {
+      this.ResetDropDowns(DropDownChangeEnum.TalukaChanged)
       let url = this.urlService.GetVillageByTalukaAPI + argTalukaId;
       this.APIUtilityService.get(url,null).subscribe(response => {
         this._VillageDetails = response;
@@ -147,11 +149,7 @@ export class DropdownsComponent implements OnInit {
       // console.log("dropdown values : ", this._DropdownDataModel)
       let AlertMessage = "Jurisdiction - " + this._DropdownDataModel.Jurisdiction + "\nSection - " + this._DropdownDataModel.Section + "\nChainage To - " + this._DropdownDataModel.ChainageTo + "\nChainage From - " + this._DropdownDataModel.ChainageFrom + "\nState - " + this._DropdownDataModel.State + "\nDistrict - " + this._DropdownDataModel.District + "\nTaluka - " + this._DropdownDataModel.Taluka + "\nVillage - " + this._DropdownDataModel.Village + "\nSurvey Number - " + this._DropdownDataModel.SurveyNumber
       alert(AlertMessage);
-      // if(this._DropdownDataModel.SurveyNumber == null && this._DropdownDataModel.Village == null )
-      // {
-      //   this._DropdownDataModel = null
-      // }
-  
+
       /**1. bind data in variable
        * 2.pass data child component to parent component 
        * */
@@ -163,12 +161,60 @@ export class DropdownsComponent implements OnInit {
     {
       console.log("event",event)
     }
-  
 
+    /**
+     * This fucntion empty the colelction which binds the dropdown for state/district/tehsil/vilage respectivly based onthe
+     * argument.
+     * @param argSelection This defines what dropdown has changed. Based on this value below dropdowns will be changed
+    */
+    ResetDropDowns(argSelection : DropDownChangeEnum)
+      {
+        switch(argSelection)
+        {
+          case DropDownChangeEnum.StateChanged: 
+            this._DistrictDetails = [];
+            this._TalukaDetails = [];
+            this._VillageDetails = [];
+            this.ResetSelectedValue(argSelection);
+            break;
+          case DropDownChangeEnum.DistrictChanged: 
+            this._TalukaDetails = [];
+            this._VillageDetails = [];
+            this.ResetSelectedValue(argSelection);
+            break;
+          case DropDownChangeEnum.TalukaChanged: 
+            this._VillageDetails = [];
+            this.ResetSelectedValue(argSelection);
+            break;
+        }
+      }
+  
+      ResetSelectedValue(argSelection : DropDownChangeEnum)
+        {
+          switch(argSelection)
+          {
+              case DropDownChangeEnum.StateChanged:
+                this._SearchCriteria.DistrictId = null;
+                this._SearchCriteria.TalukaId = null;
+                this._SearchCriteria.VillageId = null;
+                break;
+              case DropDownChangeEnum.DistrictChanged:
+                this._SearchCriteria.TalukaId = null;
+                this._SearchCriteria.VillageId = null;
+                break;
+              case DropDownChangeEnum.TalukaChanged:
+                this._SearchCriteria.VillageId = null;
+                break;
+          }
+        }
 }
 
-
-
-
-
-
+/**
+ * Defines the selection from the dropdown.
+ */
+ export enum DropDownChangeEnum
+ {
+    StateChanged = 1,
+    DistrictChanged = 2,
+    TalukaChanged = 3
+ }
