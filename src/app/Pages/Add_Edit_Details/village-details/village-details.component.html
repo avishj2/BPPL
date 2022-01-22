@@ -1,136 +1,145 @@
-<!-- <div>
+<div>
     <div class="row">
         <div class="col-lg-3">
-            <label class ="dropdownsLabel"> State  </label>
-            <select class="form-control"[(ngModel)]="_DropdownDataModel.State">
-                <option *ngFor="let data of _DropdownData" [value]="data.name">{{data.name}}</option>
+            <label class ="dropdownsLabel"> State </label>
+            <select class="form-control" [(ngModel)]="_SearchCriteria.StateId"(change)="PopulateDistrict($event.target.value)">
+                <option *ngFor="let data of _StateDataModel" [value]="data.StateId">{{data.Name}}</option>
             </select>
           </div>
           <div class="col-lg-3">
             <label class ="dropdownsLabel"> District  </label>
-            <select class="form-control"[(ngModel)]="_DropdownDataModel.District">
-                <option *ngFor="let data of _DropdownData"[value]="data.name">{{data.name}}</option>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.DistrictId"(change)="PopulateTaluka($event.target.value)">
+                <option *ngFor="let data of _DistrictDetails"[value]="data.DistrictId">{{data.DistrictName }}</option>
             </select>
         </div>
         <div class="col-lg-3">
             <label class ="dropdownsLabel"> Taluka  </label>
-            <select class="form-control"[(ngModel)]="_DropdownDataModel.Taluka">
-                <option *ngFor="let data of _DropdownData"[value]="data.name">{{data.name}}</option>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.TalukaId"(change)="GetAllVillageDetails($event.target.value)">
+                <option *ngFor="let data of _TalukaDetails"[value]="data.TalukaId">{{data.TalukaName}}</option>
             </select>
         </div>
         <div class="col-lg-3">
             <label class ="dropdownsLabel"> Village  </label>
-            <select class="form-control"[(ngModel)]="_DropdownDataModel.Village">
-                <option *ngFor="let data of _DropdownData" [value]="data.name">{{data.name}}</option>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.VillageId">
+                <option *ngFor="let data of _VillageDetails" [value]="data.VillageId">{{ data.VillageNameEng }}</option>
             </select>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-3">
-            <label class ="dropdownsLabel"> Chainage To </label>
-            <input type="text" class="form-control" [(ngModel)]="_DropdownDataModel.ChainageTo" appTwoDigitDecimaNumber>
-        </div>
-        <div class="col-lg-3">
             <label class ="dropdownsLabel"> Chainage From  </label>
-            <input type="text" class="form-control"[(ngModel)]="_DropdownDataModel.ChainageFrom" appTwoDigitDecimaNumber>
+            <input type="text" class="form-control"[(ngModel)]="_SearchCriteria.ChainageFrom" appTwoDigitDecimaNumber>
         </div>
-
         <div class="col-lg-3">
-            <label class ="dropdownsLabel"> Survey Number  </label>
-            <select class="form-control"[(ngModel)]="_DropdownDataModel.SurveyNumber">
-                <option *ngFor="let data of _DropdownData"[value]="data.id">{{data.id}}</option>
-            </select>
+            <label class ="dropdownsLabel"> Chainage To </label>
+            <input type="text" class="form-control" [(ngModel)]="_SearchCriteria.ChainageTo" appTwoDigitDecimaNumber>
         </div>
         <div class="col-lg-3">
            <button class="btn-round" (click)="SearchData()">Search</button>
          </div>
     </div>
-</div> -->
+</div>
 <br>
 
 <form>
-    <div class="card">
+    <div class="card"*ngIf ="_ShowVillageDetailsDiv == true">
         <div class="innercard">
-            <button class="btn-primary" (click)="OpenAddPopupModel()">
+            <button class="btn-primary" (click)="AddVillageDetails()">
                 <i class="fa fa-plus-circle"></i>&nbsp;
-                Add Village
+                Add New Village
             </button>&nbsp;&nbsp;
+            <button class="btn-primary" (click)="EditVillageDetails()">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                Edit Village Details
+            </button>
              <hr>   
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNo" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input type="text" class="form-control" [(ngModel)]="_BaseVillageResponseDataModel.VillageResponseModel.Result.VillageNumber" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (English)</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameEnglish"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input type="text" class="form-control" [(ngModel)]="_BaseVillageResponseDataModel.VillageResponseModel.Result.VillageNameEng"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Revenue Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.RevenueVillageNo"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input type="text" class="form-control"[(ngModel)]="_BaseVillageResponseDataModel.VillageResponseModel.Result.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Hindi) </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input type="text" class="form-control"[(ngModel)]="_BaseVillageResponseDataModel.VillageResponseModel.Result.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Number of Population </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.NoOfpopulation"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input type="text" class="form-control"[(ngModel)]="_BaseVillageResponseDataModel.VillageResponseModel.Result.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Local) </label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_BaseVillageResponseDataModel.VillageResponseModel.Result.VillageNameLocal" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+            </div>
+        </div> 
+
+        <div class="innercard">
+            <div class="labelrow">
+                Chainge Details
+                <!-- <label class="Title">Chainge Details</label>  -->
+            </div>
+           
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Chainge From(Km)</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.NoOfpopulation"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+
+                <label class="col-sm-2 col-form-label">Chainge To(Km) </label>
                 <div class="col-lg-3">
                     <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameLocal"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">InActive Reason </label>
+                <label class="col-sm-2 col-form-label">Survey Name</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.InActiveReason"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                   <select class="form-control"[(ngModel)]="_VillageDetailsDataModel.VillageDetails.VillageNameLocal"[ngModelOptions]="{standalone: true}">
+                       <option>gfdhfd</option>
+                   </select>
                 </div>
             </div>
-
-            <button class="btn-primary" (click)="OpenEditPopupModel()">
+        </div>
+    
+        <div class="row">
+            <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                <div class="div-to-align">
+                    <br>
+                    <button type="button" class="btn btn-primary" (click)=" SaveVillageDetails()">
+                        Save Village Details
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="EditVillageBtn">
+            <button class="btn-primary" (click)=" SaveVillageDetails()">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
-                Edit Village
+                Save Village Details
             </button>
-        </div> 
+        </div> -->
     </div>
 </form>
 <br>
-<!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="stripe table table-striped table-bordered" width="98%" >
-    <thead>
-        <tr>           
-        <th>Chaingae From</th>
-        <th>Chaingae To</th>
-        <th>Surveyor Name</th>
-        </tr>
-    </thead>
-    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length != 0" >
-        <tr *ngFor="let item of _VillageDetailsDataModel.VillageChainage">           
-            <td>{{item.ChainageFrom }}</td>
-            <td>{{item.ChainageTo}}</td>
-            <td>{{item.SurveyorName}}</td>
-        </tr>
-    </tbody>
-    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length == 0">
-        <tr>
-            <td colspan="3" class="no-data-available">No data!</td>
-        </tr>
-    </tbody>
-</table> -->
-
-<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="stripe table table-striped table-bordered" width="98%">
+<!-- *ngIf ="_ShowVillageDetailsDiv == true" -->
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="stripe table table-striped table-bordered" width="98%" >
     <thead *ngIf="_VillageDetailsDataModel.VillageChainage?.length != 0">
         <tr>           
             <th *ngFor="let header of getTableData()">{{header}}</th>

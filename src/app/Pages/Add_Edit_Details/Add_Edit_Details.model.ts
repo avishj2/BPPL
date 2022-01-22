@@ -295,35 +295,35 @@ export class AdhocPaymentDetails{
 }
 /**========================================API Data Model======================================== */
 /**add and update village data model */
-export class AddOrUpdateVillageDataModel{
-    AddOrUpdateVillage : AddOrUpdateVillage;
+// export class AddOrUpdateVillageDataModel{
+//     AddOrUpdateVillage : AddOrUpdateVillage;
   
-      constructor()
-      {
-        this.AddOrUpdateVillage = new AddOrUpdateVillage();
-      }
-  }
+//       constructor()
+//       {
+//         this.AddOrUpdateVillage = new AddOrUpdateVillage();
+//       }
+//   }
   
-  /**AddOrUpdateVillage properties */
-  export class AddOrUpdateVillage{
-      StatusCode: any;
-      Message: string;
-      ValidationFailed: true;
-      TotalCount: any;
-      Result : AddOrUpdateVillageResult;
+//   /**AddOrUpdateVillage properties */
+//   export class AddOrUpdateVillage{
+//       StatusCode: any;
+//       Message: string;
+//       ValidationFailed: true;
+//       TotalCount: any;
+//       Result : AddOrUpdateVillageResult;
   
-      constructor(){
-        this.Result = new AddOrUpdateVillageResult();
-      }
-  }
+//       constructor(){
+//         this.Result = new AddOrUpdateVillageResult();
+//       }
+//   }
   
-  export class AddOrUpdateVillageResult{
-    VillageId: any;
-    TalukaId: any;
-    VillageNumber: string;
-    RevenueVillageNumber: string;
-    NoOfPopulation: any;
-    VillageNameEng: string;
-    VillageNameLocal: string;
-    VillageNameHindi: string
-  }
+//   export class AddOrUpdateVillageResult{
+//     VillageId: any;
+//     TalukaId: any;
+//     VillageNumber: string;
+//     RevenueVillageNumber: string;
+//     NoOfPopulation: any;
+//     VillageNameEng: string;
+//     VillageNameLocal: string;
+//     VillageNameHindi: string
+//   }

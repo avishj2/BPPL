@@ -3,7 +3,7 @@
     font-weight: 550;
 }
 .innercard {
-    margin: 1%;
+    margin-left: 1%;
 }
 .btn-primary{
     margin-left: 5px;
@@ -16,4 +16,32 @@
 }
 .form-group input:disabled{
     color: black;
+}
+.row{
+    margin-bottom: 0.5%;
+    
+}
+.EditVillageBtn{
+    margin-left: 1.5%;
+    margin-bottom: 1%;
+}
+.labelrow{
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    margin-left: -1%;
+    margin-top: 0.5%;
+    height: 3.5%;
+    margin-bottom: 1%;
+    color: #000;
+    font-size: 16px;
+    font-weight: 550;
+    /*font-size: 15px; 
+    text-align: center;*/
+    
+}
+
+.Title{
+    font-size: 16px;
+    font-weight: 550;
+    margin-top: -5px;
 }
