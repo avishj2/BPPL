@@ -19,5 +19,10 @@ export class UrlService {
   GetAllVillagesAPI = this.url +'/api/CRUD/GetAllVillages';
   GetVillageByTalukaAPI = this.url +'/api/CRUD/GetVillageByTaluka?talukaId=';
   AddOrUpdateVillageAPI = this.url + '/api/CRUD/AddOrUpdateVillage';
+  GetVillageByVillageIdAPI = this.url +'/api/CRUD/GetVillageByVillageId?villageId=';
+  DeleteVillageAPI = this.url +'/api/CRUD/DeleteVillage?villageId=';
+  AddOrUpdateVillageChainageAPI = this.url +'/api/CRUD/AddOrUpdateVillageChainage';
+  DeleteVillageChainageAPI = this.url + '/api/CRUD/DeleteVillageChainage?villageChainageId=';
+  
 }
 

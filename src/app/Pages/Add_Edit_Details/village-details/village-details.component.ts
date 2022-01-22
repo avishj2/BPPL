@@ -6,8 +6,8 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
-import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria} from 'src/app/Common.Model/Filters.model';
-import { VillageRequestModel ,VillageResponseModel } from 'src/app/Common.Model/Village.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria} from 'src/app/Model/Filters.model';
+import { VillageResponseModel,VillageChainageModel } from 'src/app/Model/Village.model';
 
 @Component({
   selector: 'app-village-details',
@@ -22,16 +22,17 @@ export class VillageDetailsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtOptions: DataTables.Settings = {};
   datatable: any;
-
+  
   _StateDataModel : StateDetails[];
   _DistrictDetails : DistrictDetails[];
   _TalukaDetails : TalukaDetails[];
   _VillageDetails : VillageDetails[];
   _SearchCriteria : SearchCriteria;
-  _VillageRequestModel : VillageRequestModel;
   _VillageResponseModel : VillageResponseModel;
   /**onchange of taluka dropdown village details form show/hide */
   _ShowVillageDetailsDiv : boolean = false;
+  _DisabledInputField : boolean = true;
+  _AddNewVillage : boolean = false;
 
   constructor(
     public urlService: UrlService,
@@ -40,7 +41,6 @@ export class VillageDetailsComponent implements OnInit {
     private http: HttpClient,
     ){ 
       this._SearchCriteria = new SearchCriteria();
-      this._VillageRequestModel = new VillageRequestModel();
       this._VillageResponseModel = new VillageResponseModel();
     }
 
@@ -53,7 +53,6 @@ export class VillageDetailsComponent implements OnInit {
         };
       /**populated all states name on page*/
       this.PopulateState();
-      this._VillageRequestModel.IsEditable = true;
     }
 
   ngAfterViewInit(): void 
@@ -116,8 +115,6 @@ export class VillageDetailsComponent implements OnInit {
     GetVillageByTalukaId(argTalukaId)
     {
       this.ResetDropDowns(DropDownChangeEnum.TalukaChanged);
-      /**show village details html div */
-      this._ShowVillageDetailsDiv = true;
       let url = this.urlService.GetVillageByTalukaAPI + argTalukaId;
       this.APIUtilityService.get(url,null).subscribe(response => {
         this._VillageDetails = response;
@@ -131,28 +128,43 @@ export class VillageDetailsComponent implements OnInit {
     */
     SearchData(){
       console.log('SearchData',this._SearchCriteria)
-      this.PopulatedVillageDetails();
+      this.GetVillageByVillageId();
+
+    }
+
+  GetVillageByVillageId()
+    {
+      let url = this.urlService.GetVillageByVillageIdAPI + this._SearchCriteria.VillageId;
+      this.APIUtilityService.get(url,null).subscribe(response => {
+        this._VillageResponseModel.Result = response;
+        console.log('GetVillageByVillageIdAPI response', this._VillageResponseModel);
+        /**only for test */
+        this._VillageResponseModel.Result.Chainages = [
+          {
+            "VillageId": 0,
+            "VillageChainageId": 0,
+            "ChainageFrom": 0,
+            "ChainageTo": 0,
+            "SurveyAgency": "test",
+            "LengthInKm": 0
+          }
+        ];
+        /**show village details html div */
+        this._ShowVillageDetailsDiv = true;
+        },error => {
+          console.log("GetVillageByVillageIdAPI error",error);
+        });
     }
 
 
-  PopulatedVillageDetails(){
-    this._VillageRequestModel.TalukaId = this._SearchCriteria.TalukaId;
-    this._VillageRequestModel.VillageId = this._SearchCriteria.VillageId;
-    let url = this.urlService.AddOrUpdateVillageAPI;
-    this.APIUtilityService.Post(url,this._VillageRequestModel).subscribe(response => {
-      this._VillageResponseModel = response;
-      console.log('AddOrUpdateVillageAPI response', this._VillageResponseModel);
-      },error => {
-        console.log("AddOrUpdateVillageAPI error",error);
-      });
-  }
 
   /**add NEW village details in data base
   * show process button 
   */
   AddVillageDetails()
    {
-    this._VillageRequestModel.IsEditable = false
+    this._AddNewVillage = true
+    this._DisabledInputField = false
    }
 
   /**
@@ -160,12 +172,44 @@ export class VillageDetailsComponent implements OnInit {
   */
   EditVillageDetails()
     {
-      this._VillageRequestModel.IsEditable = false;
+      this._DisabledInputField = false;
+    }
+
+
+  /**when add new village or updated village information call
+  * AddOrUpdateVillage API 
+  * At the time of editing chainage save separately
+  */
+  AddOrUpdateVillageDetails(){
+    let url = this.urlService.AddOrUpdateVillageAPI;
+    this.APIUtilityService.Post(url,this._VillageResponseModel.Result).subscribe(response => {
+      this._VillageResponseModel = response;
+      console.log('AddOrUpdateVillageAPI response', this._VillageResponseModel);
+      },error => {
+        console.log("AddOrUpdateVillageAPI error",error);
+      });
+  }
+
+  AddChainageDetails(){
+      let data : VillageChainageModel;
+      this._VillageResponseModel.Result.Chainages.push(data)
+  }
+
+  /**delete village details base on the selected villageID */
+  DeleteVillageDetails()
+    {
+      let url = this.urlService.DeleteVillageAPI;
+      this.APIUtilityService.get(url,this._SearchCriteria.VillageId).subscribe(response => {
+        this._VillageResponseModel = response;
+        console.log('AddOrUpdateVillageAPI response', this._VillageResponseModel);
+        },error => {
+          console.log("AddOrUpdateVillageAPI error",error);
+        });
     }
 
     /**save VillageDetails */
     SaveVillageDetails(){
-
+      console.log("add data",this._VillageResponseModel.Result)
     }
 
     /**
@@ -182,16 +226,21 @@ export class VillageDetailsComponent implements OnInit {
            this._TalukaDetails = [];
            this._VillageDetails = [];
            this._ShowVillageDetailsDiv = false;
+           this._DisabledInputField = true;
+          //  this._VillageResponseModel = null;
            this.ResetSelectedValue(argSelection);
            break;
          case DropDownChangeEnum.DistrictChanged: 
            this._TalukaDetails = [];
            this._VillageDetails = [];
            this._ShowVillageDetailsDiv = false;
+           this._DisabledInputField = true;
+          //  this._VillageResponseModel = null;
            this.ResetSelectedValue(argSelection);
            break;
          case DropDownChangeEnum.TalukaChanged: 
            this._VillageDetails = [];
+          //  this._VillageResponseModel = null;
            this.ResetSelectedValue(argSelection);
            break;
        }

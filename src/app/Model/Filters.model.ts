@@ -3,7 +3,7 @@ export class StateDetails{
     StateId  : any;
     Name : string;
     StateNameHindi : string;
-    StateNameGuj :string;
+    StateNameLocal :string;
   }  
 
 /**get district details from api, data model */
@@ -12,7 +12,7 @@ export class DistrictDetails{
       StateId: any;
       DistrictName: string;
       DistrictNameHindi: string;
-      DistrictNameGuj: string
+      DistrictNameLocal: string
   }
   
 export class TalukaDetails
@@ -21,34 +21,16 @@ export class TalukaDetails
       TalukaId: any;
       TalukaName: string;
       TalukaNameHindi: string;
-      TalukaNameGuj: string
+      TalukaNameLocal: string
     }
 
 export class VillageDetails
     {
         VillageId: any;
-        TalukaId: any;
-        VillageNumber: string;
-        RevenueVillageNumber: string;
-        NoOfPopulation: any;
         VillageNameEng: string;
-        VillageNameLocal: string;
         VillageNameHindi: string;
-        Chainages : ChainageDetails;
-      
-        constructor(){
-          this.Chainages = new ChainageDetails();
-        }
-    }
-      
-export class ChainageDetails
-    {
-        VillageId: any;
-        VillageChainageId: any;
-        ChainageFrom: any;
-        ChainageTo: any;
-        SurveyAgency: string;
-        LengthInKm: any
+        VillageNameLocal: string;
+        
     }
 
 /**search data model */
