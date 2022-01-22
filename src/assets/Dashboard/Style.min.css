@@ -8341,7 +8341,8 @@ select {
     border-radius: 0;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    color: #858585;
+    color: #000000;
+    /* dropdown disable */
     background-color: #fff;
     border: 1px solid #d5d5d5;
 }
@@ -9536,7 +9537,7 @@ input.ace + .lbl.padding-0::before {
 .form-group input:disabled,
 .form-group input[disabled] {
     color: #000000 !important;  /* disabled input box font color change */
-    background-color: #e2e8f1 !important;
+    background-color: #f5f1f18c  !important;
 }
 .input-transparent,
 input[type].input-transparent,

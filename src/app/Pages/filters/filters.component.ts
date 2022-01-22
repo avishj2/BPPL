@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
-import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria,DropdownDataModel} from './filters.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria} from 'src/app/Model/Filters.model';
+import {DropdownDataModel} from './filters.model';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { CommonService} from 'src/app/services/common.service';
 import {from} from 'rxjs';
@@ -65,58 +66,45 @@ export class FiltersComponent implements OnInit {
     {
       let url = this.urlService.GetAllStatesAPI; 
       //=====method 1 ===      
-      this.APIUtilityService.CallBack = this.CallBackStateDetails.bind(this);
-      this.APIUtilityService.HttpGetRequest(url,null);  
+      // this.APIUtilityService.CallBack = this.CallBackStateDetails.bind(this);
+      // this.APIUtilityService.HttpGetRequest(url,null);  
 
       //===== method 2(without callback function)=====
-      // this.APIUtilityService.get(url,null).subscribe(res => {
-      //   console.log('data response', res);
-      //   this._StateDataModel = res;
-      //   },error => {
-      //     console.log("error",error);
-      //   });
+      this.APIUtilityService.get(url,null).subscribe(res => {
+        console.log('data response', res);
+        this._StateDataModel = res;
+        },error => {
+          console.log("error",error);
+        });
     }
 
     /**@abstract
      * =====method 1 ===      
      */
-  CallBackStateDetails(dtas : HttpResponse<StateDetails>)
-    {
-      if (dtas != null) 
-      {
-        let data;
-        data = dtas; 
-        this._StateDataModel = data;    
-      }
-    }
+  // CallBackStateDetails(dtas : HttpResponse<StateDetails>)
+  //   {
+  //     if (dtas != null) 
+  //     {
+  //       let data;
+  //       data = dtas; 
+  //       this._StateDataModel = data;    
+  //     }
+  //   }
 
    /**Get all District list base on the selected state */
    PopulateDistrict(arg)
     {
       this.ResetDropDowns(DropDownChangeEnum.StateChanged);
-      // let ArgObj = { District : this._SearchCriteria.DistrictId, Taluka : this._SearchCriteria.TalukaId ,Village : this._SearchCriteria.VillageId}
-      // this.CommonService.ResetDropDowns(DropDownChangeEnum.StateChanged, [this._DistrictDetails,this._TalukaDetails,this._VillageDetails], ArgObj);
-
-      let url = this.urlService.GetDistrictByStateAPI + arg; 
-      this.APIUtilityService.CallBack = this.CallBackAllDistrictDetails.bind(this);
-      this.APIUtilityService.HttpGetRequest(url,null);  
-      // this.APIUtilityService.get(url,null).subscribe(response => {
-      //   console.log('data response', response);
-      //   this._DistrictDetails = response;
-      //   },error => {
-      //     console.log("error",error);
-      //   });
+      let url = this.urlService.GetDistrictByStateAPI + arg;  
+      this.APIUtilityService.get(url,null).subscribe(response => {
+        console.log('data response', response);
+        this._DistrictDetails = response;
+        },error => {
+          console.log("error",error);
+        });
     }
 
-  CallBackAllDistrictDetails(dtas : HttpResponse<DistrictDetails>)
-    {
-      if (dtas != null) 
-      {
-        let data;
-        data = dtas; 
-        this._DistrictDetails = data;    
-      }
-    }
+
 
   /**get all Taluka details base on the selected DistrictId */
   PopulateTaluka(argDistrictID)

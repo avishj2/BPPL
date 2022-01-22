@@ -27,14 +27,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-3">
-            <label class ="dropdownsLabel"> Chainage From  </label>
-            <input type="text" class="form-control"[(ngModel)]="_SearchCriteria.ChainageFrom" appTwoDigitDecimaNumber>
-        </div>
-        <div class="col-lg-3">
-            <label class ="dropdownsLabel"> Chainage To </label>
-            <input type="text" class="form-control" [(ngModel)]="_SearchCriteria.ChainageTo" appTwoDigitDecimaNumber>
-        </div>
+        
         <div class="col-lg-3">
            <button class="btn-round" (click)="SearchData()">Search</button>
          </div>
@@ -45,48 +38,55 @@
 <form>
     <div class="card"*ngIf ="_ShowVillageDetailsDiv == true">
         <div class="innercard">
-            <button class="btn-primary" (click)="AddVillageDetails()">
-                <i class="fa fa-plus-circle"></i>&nbsp;
-                Add New Village
-            </button>&nbsp;&nbsp;
-            <button class="btn-primary" (click)="EditVillageDetails()">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
-                Edit Village Details
-            </button>
-             <hr>   
+            <div>
+                <button class="btn-primary" (click)="AddVillageDetails()">
+                    <i class="fa fa-plus-circle"></i>&nbsp;
+                    Add New Village
+                </button>&nbsp;&nbsp; 
+                <button class="btn-primary" (click)="EditVillageDetails()">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                    Edit Village Details
+                </button>&nbsp;&nbsp;  
+                <button class="btn-danger" (click)="DeleteVillageDetails()">
+                    <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                    Delete Village Details
+                </button>
+            </div>
+             <hr>  
+
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageResponseModel.Result.VillageNumber" [ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
+                    <input type="text" class="form-control" [(ngModel)]="_VillageResponseModel.Result.VillageNumber" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (English)</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageResponseModel.Result.VillageNameEng"[ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
+                    <input type="text" class="form-control" [(ngModel)]="_VillageResponseModel.Result.VillageNameEng"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Revenue Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Hindi) </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Number of Population </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Local) </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.VillageNameLocal" [ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.VillageNameLocal" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
             </div>
         </div> 
@@ -95,28 +95,29 @@
             <div class="labelrow">
                 <div class="Title">Chainge Details</div> 
             </div>
-           
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Chainge From(Km)</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
-                    <!-- [(ngModel)]="_VillageResponseModel.Result.Chainages.ChainageFrom" -->
-                </div>
 
-                <label class="col-sm-2 col-form-label">Chainge To(Km) </label>
+            <div class="form-group row"*ngFor="let data of _VillageResponseModel.Result.Chainages">
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
-                    <!-- [(ngModel)]="_VillageResponseModel.Result.Chainages.ChainageTo" -->
+                    <label class ="Label">Chainge From(Km)</label>
+                    <input class="form-control"[(ngModel)]="data.ChainageFrom"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Survey Name</label>
                 <div class="col-lg-3">
-                   <select class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_VillageRequestModel.IsEditable">
-                    <!-- [(ngModel)]="_VillageResponseModel.Result.Chainages.SurveyAgency" -->
-                       <option>gfdhfd</option>
-                   </select>
+                    <label class ="Label">Chainge To(Km)</label>
+                    <input class="form-control"[(ngModel)]="data.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Survey Agency</label>
+                    <select class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField"[(ngModel)]="data.SurveyAgency">
+                        <option value="1">NKBPL</option>
+                    </select>
+                </div>
+                <div class="col-lg-3"*ngIf="_AddNewVillage == true">
+                    <label class ="Label">Action</label>
+                    <div class="AddChainageDetailsBtn">
+                        <button class="btn-primary" (click)="AddChainageDetails()">
+                        Add 
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

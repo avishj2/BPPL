@@ -1,32 +1,15 @@
 import {BaseResponse} from './Base.model';
 
-/**Request datamodel for village details*/
-export class VillageRequestModel{
-    VillageId: any;
-    TalukaId: any;
-    VillageNumber: string;
-    RevenueVillageNumber: string;
-    NoOfPopulation: any;
-    VillageNameEng: string;
-    VillageNameLocal: string;
-    VillageNameHindi: string;
-    CreatedDate:  any;
-    UpdatedDate: any;
-    CreatedBy: string;
-    UpdatedBy: string;
-    IsEditable : boolean;
-}
-
 /**AddOrUpdateVillage data model */
 export class VillageResponseModel extends BaseResponse{
-    Result : VillageResultClass;
+    Result : VillageModel;
     constructor(){      
       super();
-      this.Result = new VillageResultClass();
+      this.Result = new VillageModel();
     }
 }
 
-export class VillageResultClass{
+export class VillageModel{
   VillageId: any;
   TalukaId: any;
   VillageNumber: string;
@@ -40,7 +23,6 @@ export class VillageResultClass{
   constructor(){
     this.Chainages = [];
   }
-
 }
 
 export class VillageChainageModel{
@@ -49,4 +31,5 @@ export class VillageChainageModel{
     ChainageFrom: any;
     ChainageTo: any;
     SurveyAgency : string;
+    LengthInKm : any;
   }
