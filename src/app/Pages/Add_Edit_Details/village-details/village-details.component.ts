@@ -41,7 +41,7 @@ export class VillageDetailsComponent implements OnInit {
     ){ 
       this._SearchCriteria = new SearchCriteria();
       this._VillageRequestModel = new VillageRequestModel();
-      this._VillageResponseModel = new VillageResponseModel()
+      this._VillageResponseModel = new VillageResponseModel();
     }
 
   ngOnInit(): void 

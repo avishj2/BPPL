@@ -1,3 +1,4 @@
+import {BaseResponse} from './Base.model';
 
 /**Request datamodel for village details*/
 export class VillageRequestModel{
@@ -17,14 +18,10 @@ export class VillageRequestModel{
 }
 
 /**AddOrUpdateVillage data model */
-export class VillageResponseModel{
-    StatusCode: any;
-    Message: string;
-    ValidationFailed: true;
-    TotalCount: any;
+export class VillageResponseModel extends BaseResponse{
     Result : VillageResultClass;
-
-    constructor(){
+    constructor(){      
+      super();
       this.Result = new VillageResultClass();
     }
 }
