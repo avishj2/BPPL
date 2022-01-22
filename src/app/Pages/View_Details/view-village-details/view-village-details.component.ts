@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
-import { VillageDetailsDataModel } from 'src/app/Pages/Add_Edit_Details/Add_Edit_Details.model';
+
 
 @Component({
   selector: 'app-view-village-details',
@@ -14,10 +14,9 @@ export class ViewVillageDetailsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = {};
   datatable: any;
-  _VillageDetailsDataModel : VillageDetailsDataModel;
   
 constructor() {
-    this._VillageDetailsDataModel = new VillageDetailsDataModel();
+    
    }
 
   ngOnInit(): void {
@@ -50,18 +49,17 @@ constructor() {
   }
 
   GetVillageData(){
-    let headers: string[] = [];
-    // this._VillageDetailsDataModel.VillageChainage = this._tableData
-    if(this._VillageDetailsDataModel.VillageChainage) {
-      this._VillageDetailsDataModel.VillageChainage.forEach((value) => 
-      {
-        Object.keys(value).forEach((key) => {
-          if(!headers.find((header) => header == key)){
-            headers.push(key)
-          }
-        })
-      })
-    }
-    return headers;
+    // let headers: string[] = [];
+    // if(this._VillageDetailsDataModel.VillageChainage) {
+    //   this._VillageDetailsDataModel.VillageChainage.forEach((value) => 
+    //   {
+    //     Object.keys(value).forEach((key) => {
+    //       if(!headers.find((header) => header == key)){
+    //         headers.push(key)
+    //       }
+    //     })
+    //   })
+    // }
+    // return headers;
   }
 }

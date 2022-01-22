@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import { AuthGuard } from './dash-board/auth.gurad';
-import { DropdownsComponent } from './Pages/dropdowns/dropdowns.component';
+import { FiltersComponent } from 'src/app/Pages/filters/filters.component';
 import { MasterDetailsComponent } from './Pages/master-details/master-details.component';
 import { GazetteDetailsComponent } from './Pages/Add_Edit_Details/gazette-details/gazette-details.component';
 import { PreEngineeringComponent } from './Pages/Add_Edit_Details/pre-engineering/pre-engineering.component';

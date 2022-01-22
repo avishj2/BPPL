@@ -2,23 +2,22 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
-import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria,DropdownDataModel} from './dropdown.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria,DropdownDataModel} from './filters.model';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { CommonService} from 'src/app/services/common.service';
 import {from} from 'rxjs';
 
 @Component({
-  selector: 'app-dropdowns',
-  templateUrl: './dropdowns.component.html',
-  styleUrls: ['./dropdowns.component.scss']
+  selector: 'app-filters',
+  templateUrl: './filters.component.html',
+  styleUrls: ['./filters.component.scss']
 })
 
-export class DropdownsComponent implements OnInit {
+export class FiltersComponent implements OnInit {
   @Output() child:EventEmitter<string>= new EventEmitter(); 
   DropdownValues = null;
   //dummy objects
   _DropdownData ;
-  _DropdownDataModel : DropdownDataModel;
  
   //api models
   _StateDataModel : StateDetails[];
@@ -54,7 +53,6 @@ export class DropdownsComponent implements OnInit {
     public CommonService : CommonService,
     ){
     this._DropdownData = this.DropdownData;
-    this._DropdownDataModel = new DropdownDataModel()
     this._SearchCriteria = new SearchCriteria();
    }
 
@@ -146,20 +144,6 @@ export class DropdownsComponent implements OnInit {
 
   
     SearchData(){
-      // console.log("dropdown values : ", this._DropdownDataModel)
-      let AlertMessage = "Jurisdiction - " + this._DropdownDataModel.Jurisdiction + "\nSection - " + this._DropdownDataModel.Section + "\nChainage To - " + this._DropdownDataModel.ChainageTo + "\nChainage From - " + this._DropdownDataModel.ChainageFrom + "\nState - " + this._DropdownDataModel.State + "\nDistrict - " + this._DropdownDataModel.District + "\nTaluka - " + this._DropdownDataModel.Taluka + "\nVillage - " + this._DropdownDataModel.Village + "\nSurvey Number - " + this._DropdownDataModel.SurveyNumber
-      alert(AlertMessage);
-
-      /**1. bind data in variable
-       * 2.pass data child component to parent component 
-       * */
-      this.DropdownValues = this._DropdownDataModel.SurveyNumber;
-      this.child.emit(this.DropdownValues);  
-  
-    }
-    input(event)
-    {
-      console.log("event",event)
     }
 
     /**
