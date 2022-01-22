@@ -22,16 +22,6 @@ export class StateDetails{
   StateNameGuj :string;
 }  
 
-
-/**District data model for api  */
-// export class DistrictDataModel{
-//   District : DistrictDetails[];
-
-//   constructor(){
-//     this.District =[];
-//   }
-// }
-
 export class DistrictDetails{
     DistrictId: any;
     StateId: any;
@@ -39,14 +29,6 @@ export class DistrictDetails{
     DistrictNameHindi: string;
     DistrictNameGuj: string
 }
-
-/**Taluka/tahsil data model for api */
-// export class TalukaDataModel{
-//   Taluka : TalukaDetails[];
-//   constructor(){
-//     this.Taluka =[];
-//   }
-// }
 
 export class TalukaDetails
   {
@@ -56,14 +38,6 @@ export class TalukaDetails
     TalukaNameHindi: string;
     TalukaNameGuj: string
   }
-
-// export class VillageDataModel{
-//   Village : VillageDetails[];
-
-//   constructor(){
-//     this.Village = [];
-//   }
-// }
 
 export class VillageDetails{
   VillageId: any;
@@ -97,4 +71,5 @@ export class SearchCriteria{
   VillageId : any;
   ChainageFrom : any;
   ChainageTo : any;
+  SurveyNumber : any;
 }

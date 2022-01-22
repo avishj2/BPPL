@@ -149,59 +149,6 @@ export class GazetteFields{
     HindiToPage :any;
 }
 
-/**VILLAGE Details */
-export class VillageDetailsDataModel{
-    VillageDetails : VillageDetails;
-    VillageChainage : VillageChainage[];
-
-    constructor(){
-        this.VillageDetails = new VillageDetails();
-        this.VillageChainage = [];
-    }
-}
-
-export class VillageDetails{
-    VillageNo : any;
-    RevenueVillageNo: any;
-    NoOfpopulation: any;
-    InActiveReason :any;
-    VillageNameEnglish : string;
-    VillageNameHindi : string;
-    VillageNameLocal : string;
-    VillageName : string;
-}
-
-export class VillageChainage{
-    SNo : any;
-    ChainageFrom : any;
-    ChainageTo : any;
-    SurveyorName : string;
-
-}
-
-export class VillageChainageColl{
-
-    VillageChainage : VillageChainage[];
-    ReadJson()
-        {
-        let data = [
-                {
-                    SNo : 1,
-                    ChainageFrom :324,
-                    ChainageTo : 326,
-                    SurveyorName : "dasadsad"
-                },
-                {
-                    SNo : 2,
-                    ChainageFrom :434,
-                    ChainageTo : 432,
-                    SurveyorName : "fsfdaw"
-                }
-        ]
-        this.VillageChainage =  JSON.parse(JSON.stringify(data));
-    }
-}
-
 /**crossing details  */
 export class CrossDetailsDataModel{
     CrossDetails :CrossDetails;
@@ -293,37 +240,3 @@ export class AdhocPaymentDetails{
     OwnerName : string; //serachdropdown
 
 }
-/**========================================API Data Model======================================== */
-/**add and update village data model */
-// export class AddOrUpdateVillageDataModel{
-//     AddOrUpdateVillage : AddOrUpdateVillage;
-  
-//       constructor()
-//       {
-//         this.AddOrUpdateVillage = new AddOrUpdateVillage();
-//       }
-//   }
-  
-//   /**AddOrUpdateVillage properties */
-//   export class AddOrUpdateVillage{
-//       StatusCode: any;
-//       Message: string;
-//       ValidationFailed: true;
-//       TotalCount: any;
-//       Result : AddOrUpdateVillageResult;
-  
-//       constructor(){
-//         this.Result = new AddOrUpdateVillageResult();
-//       }
-//   }
-  
-//   export class AddOrUpdateVillageResult{
-//     VillageId: any;
-//     TalukaId: any;
-//     VillageNumber: string;
-//     RevenueVillageNumber: string;
-//     NoOfPopulation: any;
-//     VillageNameEng: string;
-//     VillageNameLocal: string;
-//     VillageNameHindi: string
-//   }
