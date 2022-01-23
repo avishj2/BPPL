@@ -54,3 +54,18 @@ export class SearchCriteria
     TalukaChanged = 3,
     VillageChanged = 4
  }
+
+ /**
+  * This obejct will be sent to the filter from calling page and controls will be rendered based 
+  * on the state true/false of each control.
+  */
+ export class FilterControls
+ {
+     ShowState : boolean;
+     ShowDistrict : boolean;
+     ShowTaluka : boolean;
+     ShowVillage : boolean;
+     ShowChainageFrom : boolean;
+     ShowChainageTo : boolean;
+     ShowSurneyNos : boolean;
+ }

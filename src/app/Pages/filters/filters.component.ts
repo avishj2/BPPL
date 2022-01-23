@@ -2,10 +2,10 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
-import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria} from 'src/app/Model/Filters.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria, DropDownChangeEnum, FilterControls} from 'src/app/Model/Filters.model';
 import {DropdownDataModel} from './filters.model';
-import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { CommonService} from 'src/app/services/common.service';
+import { HttpService } from 'src/app/services/http.service';
 import {from} from 'rxjs';
 
 @Component({
@@ -15,7 +15,9 @@ import {from} from 'rxjs';
 })
 
 export class FiltersComponent implements OnInit {
-  @Output() child:EventEmitter<string>= new EventEmitter(); 
+  @Input() filterControls : FilterControls;
+  @Output() filterOutput:EventEmitter<string>= new EventEmitter(); 
+  
   DropdownValues = null;
   //dummy objects
   _DropdownData ;
@@ -48,10 +50,9 @@ export class FiltersComponent implements OnInit {
 
   constructor(
     public urlService: UrlService,
-    public APIUtilityService: APIUtilityService,
     private router: Router,
-    private http: HttpClient,
     public CommonService : CommonService,
+    public httpService : HttpService
     ){
     this._DropdownData = this.DropdownData;
     this._SearchCriteria = new SearchCriteria();
@@ -70,7 +71,7 @@ export class FiltersComponent implements OnInit {
       // this.APIUtilityService.HttpGetRequest(url,null);  
 
       //===== method 2(without callback function)=====
-      this.APIUtilityService.get(url,null).subscribe(res => {
+      this.httpService.get(url,null).subscribe(res => {
         console.log('data response', res);
         this._StateDataModel = res;
         },error => {
@@ -96,7 +97,7 @@ export class FiltersComponent implements OnInit {
     {
       this.ResetDropDowns(DropDownChangeEnum.StateChanged);
       let url = this.urlService.GetDistrictByStateAPI + arg;  
-      this.APIUtilityService.get(url,null).subscribe(response => {
+      this.httpService.get(url,null).subscribe(response => {
         console.log('data response', response);
         this._DistrictDetails = response;
         },error => {
@@ -111,7 +112,7 @@ export class FiltersComponent implements OnInit {
     {
       this.ResetDropDowns(DropDownChangeEnum.DistrictChanged)
       let url = this.urlService.GetTalukaByDistrictAPI+ argDistrictID;
-      this.APIUtilityService.get(url,null).subscribe(response => {
+      this.httpService.get(url,null).subscribe(response => {
         this._TalukaDetails = response;
         },error => {
           console.log("GetTalukaByDistrictAPI error",error);
@@ -123,7 +124,7 @@ export class FiltersComponent implements OnInit {
     {
       this.ResetDropDowns(DropDownChangeEnum.TalukaChanged)
       let url = this.urlService.GetVillageByTalukaAPI + argTalukaId;
-      this.APIUtilityService.get(url,null).subscribe(response => {
+      this.httpService.get(url,null).subscribe(response => {
         this._VillageDetails = response;
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
@@ -180,13 +181,3 @@ export class FiltersComponent implements OnInit {
           }
         }
 }
-
-/**
- * Defines the selection from the dropdown.
- */
- export enum DropDownChangeEnum
- {
-    StateChanged = 1,
-    DistrictChanged = 2,
-    TalukaChanged = 3
- }

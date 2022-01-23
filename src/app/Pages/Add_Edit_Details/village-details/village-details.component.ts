@@ -6,8 +6,9 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
-import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria} from 'src/app/Model/Filters.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria, DropDownChangeEnum, FilterControls} from 'src/app/Model/Filters.model';
 import { VillageResponseModel,VillageChainageModel } from 'src/app/Model/Village.model';
+import {HttpService} from '../../../services/http.service';
 
 @Component({
   selector: 'app-village-details',
@@ -34,16 +35,28 @@ export class VillageDetailsComponent implements OnInit {
   _DisabledInputField : boolean = true;
   _AddNewVillage : boolean = false;
 
+  _FilterControls : FilterControls;
+
   constructor(
     public urlService: UrlService,
     public APIUtilityService: APIUtilityService,
     private router: Router,
-    private http: HttpClient,
+    private httpService: HttpService,
     ){ 
       this._SearchCriteria = new SearchCriteria();
       this._VillageResponseModel = new VillageResponseModel();
+      this._FilterControls = new FilterControls();
+      this.SetFilterControls();
     }
 
+  SetFilterControls()
+  {
+    this._FilterControls.ShowState = true;
+    this._FilterControls.ShowDistrict = true;
+    this._FilterControls.ShowTaluka = true;
+    this._FilterControls.ShowVillage = true;
+  }
+  
   ngOnInit(): void 
     {
       this.dtOptions = 
@@ -80,7 +93,7 @@ export class VillageDetailsComponent implements OnInit {
   PopulateState()
     {
       let url = this.urlService.GetAllStatesAPI; 
-      this.APIUtilityService.get(url,null).subscribe(res => {
+      this.httpService.get(url,null).subscribe(res => {
         this._StateDataModel = res;
         },error => {
           console.log("error",error);
@@ -92,7 +105,7 @@ export class VillageDetailsComponent implements OnInit {
   {
     this.ResetDropDowns(DropDownChangeEnum.StateChanged);
     let url = this.urlService.GetDistrictByStateAPI + argStateId; 
-    this.APIUtilityService.get(url,null).subscribe(response => {
+    this.httpService.get(url,null).subscribe(response => {
       this._DistrictDetails = response;
       },error => {
         console.log("error",error);
@@ -104,7 +117,7 @@ export class VillageDetailsComponent implements OnInit {
     {
       this.ResetDropDowns(DropDownChangeEnum.DistrictChanged)
       let url = this.urlService.GetTalukaByDistrictAPI+ argDistrictID;
-      this.APIUtilityService.get(url,null).subscribe(response => {
+      this.httpService.get(url,null).subscribe(response => {
         this._TalukaDetails = response;
         },error => {
           console.log("GetTalukaByDistrictAPI error",error);
@@ -116,7 +129,7 @@ export class VillageDetailsComponent implements OnInit {
     {
       this.ResetDropDowns(DropDownChangeEnum.TalukaChanged);
       let url = this.urlService.GetVillageByTalukaAPI + argTalukaId;
-      this.APIUtilityService.get(url,null).subscribe(response => {
+      this.httpService.get(url,null).subscribe(response => {
         this._VillageDetails = response;
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
@@ -135,7 +148,7 @@ export class VillageDetailsComponent implements OnInit {
   GetVillageByVillageId()
     {
       let url = this.urlService.GetVillageByVillageIdAPI + this._SearchCriteria.VillageId;
-      this.APIUtilityService.get(url,null).subscribe(response => {
+      this.httpService.get(url,null).subscribe(response => {
         this._VillageResponseModel.Result = response;
         console.log('GetVillageByVillageIdAPI response', this._VillageResponseModel);
         /**only for test */
@@ -182,7 +195,7 @@ export class VillageDetailsComponent implements OnInit {
   */
   AddOrUpdateVillageDetails(){
     let url = this.urlService.AddOrUpdateVillageAPI;
-    this.APIUtilityService.Post(url,this._VillageResponseModel.Result).subscribe(response => {
+    this.httpService.Post(url,this._VillageResponseModel.Result).subscribe(response => {
       this._VillageResponseModel = response;
       console.log('AddOrUpdateVillageAPI response', this._VillageResponseModel);
       },error => {
@@ -199,7 +212,7 @@ export class VillageDetailsComponent implements OnInit {
   DeleteVillageDetails()
     {
       let url = this.urlService.DeleteVillageAPI;
-      this.APIUtilityService.get(url,this._SearchCriteria.VillageId).subscribe(response => {
+      this.httpService.get(url,this._SearchCriteria.VillageId).subscribe(response => {
         this._VillageResponseModel = response;
         console.log('AddOrUpdateVillageAPI response', this._VillageResponseModel);
         },error => {
@@ -264,14 +277,4 @@ export class VillageDetailsComponent implements OnInit {
                break;
          }
        }
-}
-
-/**
-* Defines the selection from the dropdown.
-*/
-export enum DropDownChangeEnum
-{
-   StateChanged = 1,
-   DistrictChanged = 2,
-   TalukaChanged = 3
 }

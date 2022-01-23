@@ -2,16 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UrlService } from './url.service';
-
+import {CommonService} from './common.service';
+import {UtilityService} from './utility.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AngularModuleHelperService {
+
+export class HttpService {
 
   constructor(private router: Router,
     private http: HttpClient,
-    public urlService: UrlService
+    public urlService: UrlService,
+    public commonService : CommonService,
+    public utilityService : UtilityService
     ) { }
 
     public CallBack : {(arg1 : any): any;};
@@ -23,44 +29,23 @@ export class AngularModuleHelperService {
      * @param argToastMessage  Message to display after successfully perform the API operation.
      * @param argRoutingKey  Routing key (pass null if routing is not needed !)
      */
-    HttpPostRequest(argURL,argParams,argToastMessage,argRoutingKey,argOptions = {})
+    HttpPostRequest(argURL,argParams,successCallBackFunction : {(arg : any) : any;}, errorCallBackFunction : {(arg : any) : any;})
     {      
-      // if (Object.keys(argOptions).length === 0) {
-      //   let options = {
-      //     //headers: null,
-      //     observe:'response'
-      //   }
-      //   argOptions = options;
-      // }
-      
-      //argOptions.observe = 'response';
-      this.http.post(argURL, argParams,argOptions)
+      this.http.post(argURL, argParams)
       .subscribe((data) => {
         let dtas  = data;
-        if (dtas) {
-          if(argToastMessage)
-          {
-            // this.commonService.presentToast(argToastMessage);
-          }
-          this.commonService.hideLoading();
-          if(this.CallBack)
-          {
-             this.CallBack(dtas);
-             this.CallBack = null;
-          }
-          if(argRoutingKey)
-          {
-            this.router.navigateByUrl(argRoutingKey);
-          }
+        this.commonService.hideLoading();
+        if(successCallBackFunction)
+        {
+           successCallBackFunction(data);
         }
       }, error => {
-            // this.commonService.presentToast(l_Message);
-            // this.commonService.presentToast(this.urlService.SomethingWentWrong);
-        }
-        
-        //console.log(error);
-        this.utilityService.LogText(error);
-        this.commonService.hideLoading();
+            this.utilityService.LogText(error);   
+            if(errorCallBackFunction)
+            {
+                errorCallBackFunction(error);
+            }      
+            this.commonService.hideLoading();
       });
     }
 
@@ -73,71 +58,50 @@ export class AngularModuleHelperService {
      * @param argToastMessage  Message to display after successfully perform the API operation.
      * @param argRoutingKey  Routing key (pass null if routing is not needed !)
      */
-    async HttpPostRequestAsync(argURL,argParams,argToastMessage,argRoutingKey,argOptions = {})
+    async HttpPostRequestAsync(argURL,argParams,successCallBackFunction : {(arg : any) : any;}, errorCallBackFunction : {(arg : any) : any;})
     {
-      let response = await this.http.post(argURL, argParams,argOptions)
+      let response = await this.http.post(argURL, argParams)
       .toPromise().then(data => {
         let dtas: any = data;
-        if (dtas) {
-          // if(argToastMessage)
-          // {
-          //   // this.commonService.presentToast(argToastMessage);
-          // }
-          //this.commonService.hideLoading();
-          if(this.CallBack)
-          {
-             this.CallBack(dtas);
-             this.CallBack = null;
-          }
-          if(argRoutingKey)
-          {
-            this.router.navigateByUrl(argRoutingKey);
-          }
+        if(successCallBackFunction)
+        {
+            successCallBackFunction(data);
         }
         //this.commonService.hideLoading();
         return dtas;
       },  error => {
-        // this.commonService.presentToast(l_Message);
-        // this.commonService.presentToast(this.urlService.SomethingWentWrong);
-    }
     
-    //console.log(error);
-    this.utilityService.LogText(error);
-    this.commonService.hideLoading();
-  });
+      //console.log(error);
+      this.utilityService.LogText(error);
+      if(errorCallBackFunction)
+         {
+            errorCallBackFunction(error);
+         }
+    });
       return response;
     }
 
   /**
    * get method to api call
    * */  
-  HttpGetRequest(argURL,argParams,argToastMessage,argRoutingKey, argOptions = {})
+  HttpGetRequest(argURL,successCallBackFunction : {(arg : any) : any;} = null, errorCallBackFunction : {(arg : any) : any;} = null, argOptions = {})
     {
       
       this.http.get(argURL, argOptions)
       .subscribe(data => {
         let dtas: any = data;
-        if (dtas) {
-          if(argToastMessage)
-          {
-            // this.commonService.presentToast(argToastMessage);
-          }
-          if(this.CallBack)
-          {
-             this.CallBack(dtas);
-             this.CallBack = null;
-          }
-          //this.loadingController.hideLoading();
-          if(argRoutingKey)
-          {
-            this.router.navigateByUrl(argRoutingKey);
-          }
+        if(successCallBackFunction)
+        {
+           successCallBackFunction(data);
         }
       }, error => {
         // this.commonService.presentToast(this.urlService.PleaseCheckInternetConnection);
         //console.log(error);
         this.utilityService.LogText(error);
-        this.commonService.hideLoading();
+        if(errorCallBackFunction)
+         {
+            errorCallBackFunction(error);
+         }
       });
     
    
@@ -169,4 +133,21 @@ export class AngularModuleHelperService {
     // this.utilityService.ValidateToken(dtas);    
     // this.utilityService.ProcessAPIResponseForToken();
   }
+
+  /**get api call */
+  public get(argurl,argParams ): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    return this.http.get(argurl, {headers: headers ,params: argParams })//params
+    .pipe(map(res => res));
+    
+    }
+
+   /**POST api call*/
+   /**get api call */
+   public Post(argurl,argParams ): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    return this.http.post(argurl, { params: argParams })//params
+    .pipe(map(res => res));
+  }
+  
 }
