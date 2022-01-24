@@ -8294,7 +8294,7 @@ input[type="time"]:hover,
 input[type="week"]:hover,
 input[type="number"]:hover,
 textarea:hover {
-    border-color: #b5b5b5;
+    border-color: #aacff1;
 }
 input[type="email"]:focus,
 input[type="url"]:focus,
@@ -8313,7 +8313,8 @@ input[type="number"]:focus,
 textarea:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
-    color: #696969;
+    /* input data color change */
+    color: #000000;
     border-color: #f59942;
     background-color: #fff;
     outline: 0;
