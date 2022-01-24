@@ -146,7 +146,7 @@ export class HttpService {
    /**get api call */
    public Post(argurl,argParams ): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
-    return this.http.post(argurl, { params: argParams })//params
+    return this.http.post(argurl, argParams)//params
     .pipe(map(res => res));
   }
   

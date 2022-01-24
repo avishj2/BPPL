@@ -13,7 +13,7 @@
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                     Edit Village Details
                 </button>&nbsp;&nbsp;  
-                <button class="btn-danger" (click)="DeleteVillageDetails()">
+                <button class="btn-danger" (click)="DeleteVillageDetails()" *ngIf="_NewVillageAdd == false">
                     <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                     Delete Village Details
                 </button>
@@ -23,36 +23,36 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageResponseModel.Result.VillageNumber" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNumber" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (English)</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_VillageResponseModel.Result.VillageNameEng"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNameEng"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Revenue Village Number</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageModel.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Hindi) </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageModel.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Number of Population </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageModel.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
 
                 <label class="col-sm-2 col-form-label">Village Name (Local) </label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_VillageResponseModel.Result.VillageNameLocal" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input type="text" class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
             </div>
         </div> 
@@ -90,15 +90,15 @@
         <div class="form-group row">
             <div class="col-lg-3">
                 <label class ="Label">Chainge From(Km)</label>
-                <input class="form-control"[(ngModel)]="_VillageChainageResModel.Result.ChainageFrom"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField">
+                <input class="form-control"[(ngModel)]="_NewChainage.ChainageFrom"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField">
             </div>
             <div class="col-lg-3">
                 <label class ="Label">Chainge To(Km)</label>
-                <input class="form-control"[(ngModel)]="_VillageChainageResModel.Result.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField">
+                <input class="form-control"[(ngModel)]="_NewChainage.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField">
             </div>
             <div class="col-lg-3">
                 <label class ="Label">Survey Agency</label>
-                <select class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField"[(ngModel)]="_VillageChainageResModel.Result.SurveyAgency">
+                <select class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField"[(ngModel)]="_NewChainage.SurveyAgency">
                     <option value="1">NKBPL</option>
                 </select>
             </div>
@@ -142,7 +142,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of _VillageResponseModel.Result.Chainages;let i = index">
+                <tr *ngFor="let data of _VillageModel.Chainages;let i = index">
                     <td>{{data.VillageChainageId}}</td>           
                     <td>{{data.ChainageFrom}}</td>
                     <td>{{data.ChainageTo}}</td>
@@ -160,27 +160,4 @@
         </table>
     </div>
 </div>
-
-<!-- 
-<table datatable [dtOptions]="dtOptions" class="row-border hover">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>First name</th>
-        <th>Last name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>4</td>
-        <td>Yoda</td>
-        <td>Skywalker</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Patrick</td>
-        <td>Dupont</td>
-      </tr>
-    </tbody>
-  </table> -->
 

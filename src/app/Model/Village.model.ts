@@ -10,8 +10,8 @@ export class VillageResponseModel extends BaseResponse{
 }
 
 export class VillageModel{
-  VillageId: any;
-  TalukaId: any;
+  VillageId: number;
+  TalukaId: number;
   VillageNumber: string;
   RevenueVillageNumber: string;
   NoOfPopulation: any;
@@ -26,20 +26,20 @@ export class VillageModel{
 }
 
 export class VillageChainageModel{
-    VillageId: any;
-    VillageChainageId: any;
-    ChainageFrom: any;
-    ChainageTo: any;
+    VillageId: number;
+    VillageChainageId: number;
+    ChainageFrom: number;
+    ChainageTo: number;
     SurveyAgency : string;
-    LengthInKm : any;
+    LengthInKm : number;
   }
 
 /**AddOrUpdateVillageChainage Response dataModel */
   export class AddOrUpdateVillageChainageResponseModel extends BaseResponse{
-      Result : VillageChainageModel;
+      Result : VillageChainageModel[];
 
         constructor(){
           super();
-          this.Result = new VillageChainageModel();
+          this.Result = [];
         }
   }

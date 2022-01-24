@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria, DropDownChangeEnum, FilterControls} from 'src/app/Model/Filters.model';
-import { VillageResponseModel,VillageChainageModel,AddOrUpdateVillageChainageResponseModel } from 'src/app/Model/Village.model';
+import { VillageResponseModel,VillageChainageModel,AddOrUpdateVillageChainageResponseModel, VillageModel } from 'src/app/Model/Village.model';
 import {HttpService} from '../../../services/http.service';
 import { Subject, from } from 'rxjs';
 
@@ -16,13 +16,10 @@ import { Subject, from } from 'rxjs';
 })
 
 export class VillageDetailsComponent implements OnInit {
-  _StateDataModel : StateDetails[];
-  _DistrictDetails : DistrictDetails[];
-  _TalukaDetails : TalukaDetails[];
-  _VillageDetails : VillageDetails[];
+
   _SearchCriteria : SearchCriteria;
-  _VillageResponseModel : VillageResponseModel;
-  _VillageChainageResModel : AddOrUpdateVillageChainageResponseModel;
+  _VillageModel : VillageModel;
+  _NewChainage : VillageChainageModel;
   /**onchange of taluka dropdown village details form show/hide */
   _ShowVillageDetailsDiv : boolean = false;
 
@@ -44,9 +41,11 @@ export class VillageDetailsComponent implements OnInit {
     public Utility :UtilityService
     ){ 
       this._SearchCriteria = new SearchCriteria();
-      this._VillageResponseModel = new VillageResponseModel();
-      this._VillageChainageResModel = new AddOrUpdateVillageChainageResponseModel();
+      //this._VillageResponseModel = new VillageResponseModel();
+      //this._VillageChainageResModel = new AddOrUpdateVillageChainageResponseModel();
+      this._VillageModel = new VillageModel();
       this._FilterControls = new FilterControls();
+      this._NewChainage = new VillageChainageModel();
       this.SetFilterControls();
 
     }
@@ -80,6 +79,12 @@ export class VillageDetailsComponent implements OnInit {
     else{
       /**show village details html div */
       this._ShowVillageDetailsDiv = true;
+
+      this._DisabledInputField  = true;
+      this._DisabledChainageField  = true;    
+      this._NewVillageAdd = false;
+      this._AdditingMode = false;
+
       this.GetVillageByVillageId();
     }
   }
@@ -89,21 +94,10 @@ export class VillageDetailsComponent implements OnInit {
     {
       let url = this.urlService.GetVillageByVillageIdAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
-        this._VillageResponseModel.Result = response;
-        console.log('GetVillageByVillageIdAPI response', this._VillageResponseModel);
-        /**only for test */
-        // this._VillageResponseModel.Result.Chainages = [
-        //   {
-        //     "VillageId": 0,
-        //     "VillageChainageId": 1,
-        //     "ChainageFrom": 0,
-        //     "ChainageTo": 0,
-        //     "SurveyAgency": "test",
-        //     "LengthInKm": 0
-        //   }
-        // ];
+        this._VillageModel = response;
+        this.Utility.LogText(this._VillageModel);
         },error => {
-          console.log("Get Village By VillageId API error",error);
+         this.Utility.LogText(error);
         });
     }
 
@@ -116,6 +110,7 @@ export class VillageDetailsComponent implements OnInit {
     {
       this._DisabledInputField = false;
       this._NewVillageAdd = true;
+      this._VillageModel = new VillageModel(); // This will wipe out any previously selected village
       // this._DisabledChainageField = false;
     }
 
@@ -127,7 +122,6 @@ export class VillageDetailsComponent implements OnInit {
       this._DisabledInputField = false;
       this._DisabledChainageField = false;
       this._NewVillageAdd = false;
-
     }
 
 
@@ -135,14 +129,17 @@ export class VillageDetailsComponent implements OnInit {
   AddChainageItem()
     {
       this._DisabledChainageField = false;
-      let data = new VillageChainageModel();
-      this._VillageResponseModel.Result.Chainages.push(data)
+      if(this._NewChainage.ChainageFrom > 0 && this._NewChainage.ChainageTo > 0 && this._NewChainage.SurveyAgency)
+      {
+        this._VillageModel.Chainages.push(this._NewChainage);
+        this._NewChainage = new VillageChainageModel(); // Creating new object so that new data can be added
+      }
     }
 
   /**delete Chainage Details item from chainage array*/
   DeleteChainageItem(index)
     {
-      this._VillageResponseModel.Result.Chainages.splice(index, 1);  
+      this._VillageModel.Chainages.splice(index, 1);  
     }
 
 
@@ -151,16 +148,19 @@ export class VillageDetailsComponent implements OnInit {
   */
   SaveVillageDetails()
     {
-      this._VillageResponseModel.Result.Chainages.push(this._VillageChainageResModel.Result);
       let url = this.urlService.AddOrUpdateVillageAPI;
-      this._VillageResponseModel.Result.VillageId = this._SearchCriteria.VillageId;
-      this._VillageResponseModel.Result.TalukaId = this._SearchCriteria.TalukaId;
-      this.httpService.Post(url,this._VillageResponseModel.Result).subscribe(response => {
-        this._VillageResponseModel = response;
-        console.log('AddOrUpdateVillageAPI response', this._VillageResponseModel);
+      if(this._NewVillageAdd == false)
+      {
+        this._VillageModel.VillageId = this._SearchCriteria.VillageId;
+      }
+      this._VillageModel.TalukaId = this._SearchCriteria.TalukaId;
+
+      this.httpService.Post(url,this._VillageModel).subscribe(response => {
+        let villageResponseModel : VillageResponseModel = response;
+        this.Utility.LogText(villageResponseModel);
         alert("Village added sucessfully!!")
         },error => {
-          console.log("AddOrUpdateVillageAPI error",error);
+          this.Utility.LogText(error);
         });
     }
 
@@ -168,12 +168,21 @@ export class VillageDetailsComponent implements OnInit {
   /**delete village details base on the selected villageID */
   DeleteVillageDetails()
     {
-      let url = this.urlService.DeleteVillageAPI;
-      this.httpService.get(url,this._SearchCriteria.VillageId).subscribe(response => {
-        this._VillageResponseModel = response;
-        console.log('AddOrUpdateVillageAPI response', this._VillageResponseModel);
+      let url = this.urlService.DeleteVillageAPI + this._SearchCriteria.VillageId;
+
+      this.httpService.get(url,null).subscribe(response => {
+        let villageDeleteResponse : any = response;
+         if(villageDeleteResponse.StatusCode != 200)
+         {
+            alert(villageDeleteResponse.Message);
+         }
+         else
+         {
+            alert("Villge deleted successfully !");
+         }
+         this.Utility.LogText("DeleteVillage success:" + villageDeleteResponse);
         },error => {
-          console.log("AddOrUpdateVillageAPI error",error);
+          this.Utility.LogText("DeleteVillage error"+error);
         });
     }
    
@@ -188,20 +197,28 @@ export class VillageDetailsComponent implements OnInit {
   /**AT the time of editing chainage details save separate API */
   SaveChaingeDetails()
     {
-      this._VillageResponseModel.Result.Chainages.forEach(element => {
-        element.VillageId = this._SearchCriteria.VillageId;
-      });
+
+      this._NewChainage.VillageId = this._SearchCriteria.VillageId;
+
       let url = this.urlService.AddOrUpdateVillageChainageAPI;
-      this.httpService.Post(url,this._VillageResponseModel.Result.Chainages).subscribe(response => {
-        this._VillageChainageResModel = response;
-        alert(this._VillageChainageResModel.Message);
-        console.log('AddOrUpdateVillageChainageAPI response', this._VillageChainageResModel);
-        /**added newly add chainge to the villaage details 
-         * Refresh datatable 
-        */
-        this._VillageResponseModel.Result.Chainages.push(this._VillageChainageResModel.Result);
+      this.httpService.Post(url,this._NewChainage).subscribe(response => {
+          let villageChainageResModel : AddOrUpdateVillageChainageResponseModel = response;
+
+          if(villageChainageResModel.StatusCode != 200)
+          {
+            alert(villageChainageResModel.Message);
+          }
+          else
+          {            
+            this._VillageModel.Chainages = villageChainageResModel.Result;
+            this._NewChainage = new VillageChainageModel();
+          }
+          this.Utility.LogText('AddOrUpdateVillageChainageAPI response' +response );
+          /**added newly add chainge to the villaage details 
+           * Refresh datatable 
+          */
         },error => {
-          console.log("AddOrUpdateVillageChainageAPI error",error);
+          this.Utility.LogText("AddOrUpdateVillageChainageAPI error :" + error);
         });
     }
 
@@ -209,11 +226,18 @@ export class VillageDetailsComponent implements OnInit {
   DeleteChaingeDetails(argVillageChainageId)
     {
       let url = this.urlService.DeleteVillageChainageAPI + argVillageChainageId;
-      this.httpService.Post(url,null).subscribe(response => {
+      this.httpService.get(url,null).subscribe(response => {
         let resp : AddOrUpdateVillageChainageResponseModel = response;
-        alert(resp.Message);
+        if(resp.StatusCode != 200)
+        {
+           alert(resp.Message);
+        }
+        else
+        {
+           this._VillageModel.Chainages = resp.Result;
+        }
         },error => {
-          console.log("AddOrUpdateVillageAPI error",error);
+          this.Utility.LogText("AddOrUpdateVillageAPI error" + error);
         });
     }
 
