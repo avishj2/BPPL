@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
 import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria, DropDownChangeEnum, FilterControls} from 'src/app/Model/Filters.model';
+import { UtilityService } from 'src/app/services/utility.service';
 import {DropdownDataModel} from './filters.model';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -15,12 +16,9 @@ import {from} from 'rxjs';
 })
 
 export class FiltersComponent implements OnInit {
+  /** FilterControls for filter menu show/hide */
   @Input() filterControls : FilterControls;
-  @Output() filterOutput:EventEmitter<string>= new EventEmitter(); 
-  
-  DropdownValues = null;
-  //dummy objects
-  _DropdownData ;
+  @Output() filterOutput:EventEmitter<SearchCriteria>= new EventEmitter(); 
  
   //api models
   _StateDataModel : StateDetails[];
@@ -30,7 +28,6 @@ export class FiltersComponent implements OnInit {
   _SearchCriteria : SearchCriteria;
  
   DropdownData = [
-    // { id : 24 , name  : "--select--" },
     { id : 27 , name  : "Ajmer" },
     { id : 84 , name  : "Alwar" },
     { id : 24 , name  : "Banswara" },
@@ -38,28 +35,25 @@ export class FiltersComponent implements OnInit {
     { id : 14 , name  : "Barmer" },
     { id : 34 , name  : "Bharatpur" },
     { id : 28 , name  : "Bhilwara" },
-    { id : 29 , name  : "Bikaner" },
-    { id : 246 , name  : "Bundi" },
-    { id : 20 , name  : "Chittorgarh" },
-    { id : 50 , name  : "Churu" },
-    { id : 87 , name  : "Dausa" },
-    { id : 90 , name  : "Dholpur" },
-    { id : 82 , name  : "Dungarpur" },
-    { id : 85 , name  : "Hanumangarh" }
+    { id : 29 , name  : "Bikaner" }
   ];
 
   constructor(
     public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
-    public httpService : HttpService
-    ){
-    this._DropdownData = this.DropdownData;
-    this._SearchCriteria = new SearchCriteria();
-   }
+    public httpService : HttpService,
+    public Utility :UtilityService,
+    )
+    {
+      this._SearchCriteria = new SearchCriteria();
+    }
 
-    ngOnInit() {
+  ngOnInit() 
+    {
       this.PopulateState();
+      /**get data From parent component */
+      this.Utility.LogText(this.filterControls)
     }
 
   /**API CALL FOR state details */
@@ -105,8 +99,6 @@ export class FiltersComponent implements OnInit {
         });
     }
 
-
-
   /**get all Taluka details base on the selected DistrictId */
   PopulateTaluka(argDistrictID)
     {
@@ -131,9 +123,14 @@ export class FiltersComponent implements OnInit {
         });
     }
 
-  
-    SearchData(){
-    }
+    /**
+    * pass data child(filter) component to parent component 
+    **/
+    PassDataToParent()
+      {
+        this.filterOutput.emit(this._SearchCriteria);  
+        // this.Utility.LogText(this._SearchCriteria);
+      }
 
     /**
      * This fucntion empty the colelction which binds the dropdown for state/district/tehsil/vilage respectivly based onthe

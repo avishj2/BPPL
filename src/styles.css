@@ -34,3 +34,17 @@ table{
   background:#2b97e4;
   box-shadow: #92c6eb;
 }
+
+/*
+   server-side-angular-way.component.css
+*/
+.no-data-available {
+  text-align: center;
+}
+
+.dataTables_empty {
+  display: none;
+}
+::ng-deep table.dataTable td.dataTables_empty {
+  display: none;
+}

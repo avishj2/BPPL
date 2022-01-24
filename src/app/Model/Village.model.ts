@@ -33,3 +33,13 @@ export class VillageChainageModel{
     SurveyAgency : string;
     LengthInKm : any;
   }
+
+/**AddOrUpdateVillageChainage Response dataModel */
+  export class AddOrUpdateVillageChainageResponseModel extends BaseResponse{
+      Result : VillageChainageModel;
+
+        constructor(){
+          super();
+          this.Result = new VillageChainageModel();
+        }
+  }
