@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GazetteFormDataModel } from '../Add_Edit_Details.model';
+import { GazetteFormDataModel } from '../Survey_Details.model';
 
 @Component({
   selector: 'app-gazette-details',

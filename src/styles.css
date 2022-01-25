@@ -34,11 +34,16 @@ table{
   background:#2b97e4;
   box-shadow: #92c6eb;
 }
+.Label{
+  font-weight: 550;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
 
 /*
    server-side-angular-way.component.css
 */
-.no-data-available {
+/* .no-data-available {
   text-align: center;
 }
 
@@ -47,4 +52,4 @@ table{
 }
 ::ng-deep table.dataTable td.dataTables_empty {
   display: none;
-}
+} */

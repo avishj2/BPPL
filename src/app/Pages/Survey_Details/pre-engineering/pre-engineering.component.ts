@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
-import { ShowUploadedDocModel ,CategoryDataModel,AddDocuments} from '../Add_Edit_Details.model';
+import { ShowUploadedDocModel ,CategoryDataModel,AddDocuments} from '../Survey_Details.model';
 
 @Component({
   selector: 'app-pre-engineering',

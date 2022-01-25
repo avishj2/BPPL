@@ -35,7 +35,7 @@ export class VillageChainageModel{
   }
 
 /**AddOrUpdateVillageChainage Response dataModel */
-  export class AddOrUpdateVillageChainageResponseModel extends BaseResponse{
+  export class VillageChainageResModel extends BaseResponse{
       Result : VillageChainageModel;
 
         constructor(){
