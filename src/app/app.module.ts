@@ -19,14 +19,12 @@ import { FiltersComponent } from 'src/app/Pages/filters/filters.component';
 import { TwoDigitDecimaNumberDirective } from './Pages/filters/two-digit-decima-number.directive';
 import { MasterDetailsComponent } from './Pages/master-details/master-details.component';
 import { LandDetailsComponent } from './Pages/land-details/land-details.component';
-import { PreEngineeringComponent } from './Pages/Add_Edit_Details/pre-engineering/pre-engineering.component';
-import { GazetteDetailsComponent } from './Pages/Add_Edit_Details/gazette-details/gazette-details.component';
-import { VillageDetailsComponent } from './Pages/Add_Edit_Details/village-details/village-details.component';
-import { CrossingDetailsComponent } from './Pages/Add_Edit_Details/crossing-details/crossing-details.component';
-import { TerminalsDetailsComponent } from './Pages/Add_Edit_Details/terminals-details/terminals-details.component';
-import { AddEditTerminalPopupComponent } from './Pages/Add_Edit_Details/terminals-details/add-edit-terminal-popup/add-edit-terminal-popup.component';
-import { AdhocPaymentDetailsComponent } from './Pages/Add_Edit_Details/adhoc-payment-details/adhoc-payment-details.component';
-import { AdhocPaymentPopupComponent } from './Pages/Add_Edit_Details/adhoc-payment-details/adhoc-payment-popup/adhoc-payment-popup.component';
+import { PreEngineeringComponent } from './Pages/Survey_Details/pre-engineering/pre-engineering.component';
+import { GazetteDetailsComponent } from './Pages/Survey_Details/gazette-details/gazette-details.component';
+import { VillageDetailsComponent } from './Pages/Survey_Details/village-details/village-details.component';
+import { CrossingDetailsComponent } from './Pages/Survey_Details/crossing-details/crossing-details.component';
+import { TerminalsDetailsComponent } from './Pages/Survey_Details/terminals-details/terminals-details.component';
+import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/adhoc-payment-details.component';
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
 
 
@@ -45,9 +43,7 @@ import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-d
     VillageDetailsComponent,
     CrossingDetailsComponent,
     TerminalsDetailsComponent,
-    AddEditTerminalPopupComponent,
     AdhocPaymentDetailsComponent,
-    AdhocPaymentPopupComponent,
     ViewVillageDetailsComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

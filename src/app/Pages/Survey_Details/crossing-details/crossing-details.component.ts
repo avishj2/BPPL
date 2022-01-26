@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CrossDetailsDataModel } from 'src/app/Pages/Add_Edit_Details/Add_Edit_Details.model';
+import { CrossDetailsDataModel } from 'src/app/Pages/Survey_Details/Survey_Details.model';
 
 @Component({
   selector: 'app-crossing-details',
