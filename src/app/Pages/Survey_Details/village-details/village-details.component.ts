@@ -133,7 +133,14 @@ export class VillageDetailsComponent implements OnInit {
     this.httpService.Post(url, this._VillageModel).subscribe(response => {
       let villageResponseModel: VillageResponseModel = response;
       this.Utility.LogText(villageResponseModel);
-      alert("Village added sucessfully!!")
+      if (this._NewVillageAdd == false)
+      {
+        alert("Village updated sucessfully!!")
+      }
+      else
+      {
+        alert("Village added sucessfully!!")
+      }
     }, error => {
       this.Utility.LogText(error);
     });
