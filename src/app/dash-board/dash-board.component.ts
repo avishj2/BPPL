@@ -10,7 +10,8 @@ import { ActivatedRoute, Router, CanActivate, ActivatedRouteSnapshot, RouterStat
 export class DashBoardComponent implements OnInit {
 
   constructor(
-    private router: Router, private route: ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
