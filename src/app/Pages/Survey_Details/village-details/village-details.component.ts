@@ -8,6 +8,7 @@ import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import { VillageResponseModel, VillageChainageModel, VillageChainageResModel, VillageModel } from 'src/app/Model/Village.model';
 import { HttpService } from '../../../services/http.service';
 import { Subject, from } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-village-details',
@@ -16,6 +17,13 @@ import { Subject, from } from 'rxjs';
 })
 
 export class VillageDetailsComponent implements OnInit {
+/**data table properties  */
+@ViewChild(DataTableDirective, {static: false})
+dtElement: DataTableDirective;
+dtOptions: DataTables.Settings = {};
+dtTrigger: Subject<any> = new Subject();
+/**REFERSH DATATABLE  */
+IsDtInitialized: boolean = false;
 
   _SearchCriteria: SearchCriteria;
   _VillageModel: VillageModel;
@@ -29,7 +37,7 @@ export class VillageDetailsComponent implements OnInit {
   _NewVillageAdd: boolean = false;
   _FilterControls: FilterControls;
   _AdditingMode: boolean = false;
-
+  _InvalidLengthInKm: boolean = false;
 
   constructor(
     public urlService: UrlService,
@@ -54,9 +62,45 @@ export class VillageDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      this.dtOptions = 
+      {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+      };
+    }
 
-  }
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+      console.log('ngAfterViewInit');
+    }
+  
+  // ngOnDestroy(): void 
+  //   {
+  //     // Do not forget to unsubscribe the event
+  //     console.log('ngOnDestroy');
+  //     this.dtTrigger.unsubscribe();
+  //   }
 
+	/**refresh/reload data table 
+   * when data update/delete/add in the datatable  
+   * */
+	ReloadDatatable(){
+      /**initialized datatable */
+    if (this.IsDtInitialized) 
+      {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+        {
+          dtInstance.destroy();// Destroy the table first
+          this.dtTrigger.next();// Call the dtTrigger to rerender again
+        });
+      }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
+    }
 
 
   /**1. Get Values From Filters component and assign into SearchCriteria
@@ -84,6 +128,7 @@ export class VillageDetailsComponent implements OnInit {
     let url = this.urlService.GetVillageByVillageIdAPI + this._SearchCriteria.VillageId;
     this.httpService.get(url, null).subscribe(response => {
       this._VillageModel = response;
+      this.ReloadDatatable();
       this.Utility.LogText(this._VillageModel);
     }, error => {
       this.Utility.LogText(error);
@@ -96,7 +141,8 @@ export class VillageDetailsComponent implements OnInit {
   AddNewVillageDetails() {
     this._DisabledInputField = false;
     this._NewVillageAdd = true;
-    this._VillageModel = new VillageModel(); // This will wipe out any previously selected village      
+    this._VillageModel = new VillageModel(); // This will wipe out any previously selected village 
+    this.ReloadDatatable();     
   }
 
   /**
@@ -119,6 +165,7 @@ export class VillageDetailsComponent implements OnInit {
   /**delete Chainage Details item from chainage array*/
   DeleteChainageItem(index) {
     this._VillageModel.Chainages.splice(index, 1);
+    this.ReloadDatatable();
   }
   /**1. when add new village or updated village information call AddOrUpdateVillage API
     *2. At the time of editing chainage details save separately
@@ -135,11 +182,13 @@ export class VillageDetailsComponent implements OnInit {
       this.Utility.LogText(villageResponseModel);
       if (this._NewVillageAdd == false)
       {
-        alert("Village updated sucessfully!!")
+        alert("Village updated sucessfully!!");
+        this._DisabledInputField = true;
       }
       else
       {
-        alert("Village added sucessfully!!")
+        alert("Village added sucessfully!!");
+        this._DisabledInputField = true;
       }
     }, error => {
       this.Utility.LogText(error);
@@ -151,6 +200,7 @@ export class VillageDetailsComponent implements OnInit {
     this._DisabledChainageField = false;
     if (this._NewChainage.ChainageFrom > 0 && this._NewChainage.ChainageTo > 0 && this._NewChainage.SurveyAgency) {
       this._VillageModel.Chainages.push(this._NewChainage);
+      this.ReloadDatatable();
       this._NewChainage = new VillageChainageModel(); // Creating new object so that new data can be added
     }
   }
@@ -160,6 +210,9 @@ export class VillageDetailsComponent implements OnInit {
   */
   CalculateGreaterValue(arg: VillageChainageModel) {
     if (arg.ChainageFrom && arg.ChainageTo) {
+      /**ChainageTo should be more than from ChainageFrom. */
+      // this._InvalidLengthInKm = arg.ChainageFrom > arg.ChainageTo;
+      /**auto calculate value of the LengthInKm*/
       arg.LengthInKm = arg.ChainageTo - arg.ChainageFrom;
     }
   }
@@ -190,11 +243,12 @@ export class VillageDetailsComponent implements OnInit {
       this._DisabledChainageField = false;
       if (this._NewChainage.ChainageFrom > 0 && this._NewChainage.ChainageTo > 0 && this._NewChainage.SurveyAgency) {
         this._VillageModel.Chainages.push(this._NewChainage);
+        this.ReloadDatatable();
         this._NewChainage = new VillageChainageModel(); // Creating new object so that new data can be added
       }
       return;
     }
-    if (data.ChainageFrom > 0 && data.ChainageTo > 0 && data.SurveyAgency) {
+    if (data.ChainageFrom > 0 && data.ChainageTo > 0 && data.SurveyAgency && data.ChainageTo > data.ChainageFrom) {
       // Add chainage in existing village
       if (addReq) {
         data.VillageId = this._SearchCriteria.VillageId;
@@ -208,6 +262,7 @@ export class VillageDetailsComponent implements OnInit {
         }
         else {
           this._VillageModel.Chainages = villageChainageResModel.Result;
+          this.ReloadDatatable();
           if (addReq) {
             this._NewChainage = new VillageChainageModel();
           }
@@ -221,7 +276,7 @@ export class VillageDetailsComponent implements OnInit {
       });
     }
     else {
-      alert("Please add chainage details before save !");
+      alert("Please add chainage details before save !\nChainageTo should be more than from ChainageFrom");
     }
   }
 
@@ -240,6 +295,7 @@ export class VillageDetailsComponent implements OnInit {
       }
       else {
         this._VillageModel.Chainages = resp.Result;
+        this.ReloadDatatable();
       }
     }, error => {
       this.Utility.LogText("AddOrUpdateVillageAPI error" + error);

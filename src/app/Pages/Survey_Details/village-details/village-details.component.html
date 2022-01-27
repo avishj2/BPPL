@@ -2,9 +2,8 @@
 <!-- add filter component ,pass and get data from child -->
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
     <div class="ParentBtn" *ngIf ="_ShowVillageDetailsDiv == true"> 
-
         <button class="btn-primary" (click)="AddNewVillageDetails()">
-            <i class="fa fa-circle-plus" aria-hidden="true"></i>&nbsp;
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
             Add Village Details
         </button>&nbsp;&nbsp;  
         <button class="btn-primary" (click)="EditingModeOntoVillageDetails()">
@@ -21,7 +20,9 @@
 <form>
     <div class="card" *ngIf ="_ShowVillageDetailsDiv == true">
         <div class="innercard">
-
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Village Details</div> 
+            </div>
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class="Label">Village Number</label>
@@ -52,8 +53,8 @@
                     <input type="text" class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                 </div>
                 <div class="col-lg-3" *ngIf="_DisabledInputField == false && _NewVillageAdd == false">
-                    <button type="button" class="btn-save" style="margin-top: 10px;" (click)="SaveVillageDetails()">
-                        Edit Village Details
+                    <button type="button" class="btn-primary"style="margin-top: 10%;" (click)="SaveVillageDetails()">
+                        Save Village Details
                     </button>
                 </div>
             </div>
@@ -65,42 +66,38 @@
 <div class="card" *ngIf ="_ShowVillageDetailsDiv == true">
     <div class="innercard">
         <div class="d-flex justify-content-between">
-            <div class="Title">Chainge Details</div> 
+            <div class="CardTitle">Chainge Details</div> 
             <div>
-                <i class="fa fa-plus-circle" (click)="SaveChaingeDetails(_NewChainage,true)"ngbTooltip="Add Chainage"></i>
+                <i class="fa fa-plus-circle" (click)="SaveChaingeDetails(_NewChainage,true)"ngbTooltip="Add More Chainage"></i>
             </div>
        </div>
-        <div class="form-group row">
-            <div class="col-lg-3">
-                <label class ="Label">Chainge From(Km)</label>
-                <input class="form-control"(input)="CalculateGreaterValue(_NewChainage)"[(ngModel)]="_NewChainage.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
+       <form> 
+            <div class="form-group row">
+                <div class="col-lg-3">
+                    <label class ="Label">Chainge From(Km)</label>
+                    <input class="form-control"(input)="CalculateGreaterValue(_NewChainage)"[(ngModel)]="_NewChainage.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Chainge To(Km)</label>
+                    <input class="form-control"(input)="CalculateGreaterValue(_NewChainage)" [(ngModel)]="_NewChainage.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
+                    <!-- <span style="color: red" *ngIf="_InvalidLengthInKm">
+                        ChainageTo should be more than ChainageFrom.
+                    </span>  -->
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Chainge Length(Km)</label>
+                    <input class="form-control"[(ngModel)]="_NewChainage.LengthInKm"[ngModelOptions]="{standalone: true}"[disabled]="true" appTwoDigitDecimaNumber>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Survey Agency</label>
+                    <select class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField"[(ngModel)]="_NewChainage.SurveyAgency">
+                        <option value="1">NKBPL</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-lg-3">
-                <label class ="Label">Chainge To(Km)</label>
-                <input class="form-control"(input)="CalculateGreaterValue(_NewChainage)" [(ngModel)]="_NewChainage.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
-            </div>
-            <div class="col-lg-3">
-                <label class ="Label">Chainge Length(Km)</label>
-                <input class="form-control"[(ngModel)]="_NewChainage.LengthInKm"[ngModelOptions]="{standalone: true}"[disabled]="true" appTwoDigitDecimaNumber>
-            </div>
-            <div class="col-lg-3">
-                <label class ="Label">Survey Agency</label>
-                <select class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField"[(ngModel)]="_NewChainage.SurveyAgency">
-                    <option value="1">NKBPL</option>
-                </select>
-            </div>
-
-            <div class="col-lg-1">
-                <!-- <div class="AddChainageDetailsBtn" *ngIf ="_NewVillageAdd == true">
-                    <button class="btn-primary"(click)="AddChainageItem()">
-                    <i class="fa fa-plus-circle"></i>&nbsp;
-                    Add Chainage
-                    </button>
-                </div> -->
-            </div>
-        </div>
+        </form>
         <br>
-        <table datatable class="stripe table table-striped table-bordered" width="98%" >
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%" >
             <thead>
                 <tr>      
                     <th>ChainageFrom</th>
@@ -112,12 +109,24 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of _VillageModel.Chainages;let i = index">        
-                    <td><input class="form-control"(input)="CalculateGreaterValue(data)"[(ngModel)]="data.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit" appTwoDigitDecimaNumber></td>
-                    <td><input class="form-control"(input)="CalculateGreaterValue(data)" [(ngModel)]="data.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit" appTwoDigitDecimaNumber></td>
-                    <td><input class="form-control"[(ngModel)]="data.LengthInKm"[ngModelOptions]="{standalone: true}"[disabled]="true" appTwoDigitDecimaNumber></td>
-                    <td><select class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit"[(ngModel)]="data.SurveyAgency">
+                    <td>
+                        <input *ngIf="data.IsEdit == true"class="form-control"(input)="CalculateGreaterValue(data)"[(ngModel)]="data.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit" appTwoDigitDecimaNumber>
+                        <div *ngIf="data.IsEdit != true">{{data.ChainageFrom}}</div>
+                    </td>
+                    <td>
+                        <input *ngIf="data.IsEdit == true"class="form-control"(input)="CalculateGreaterValue(data)" [(ngModel)]="data.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit" appTwoDigitDecimaNumber>
+                        <div *ngIf="data.IsEdit != true">{{data.ChainageTo}}</div>
+                    </td>
+                    <td>
+                        <input *ngIf="data.IsEdit == true"class="form-control"[(ngModel)]="data.LengthInKm"[ngModelOptions]="{standalone: true}"[disabled]="true" appTwoDigitDecimaNumber>
+                        <div *ngIf="data.IsEdit != true">{{data.LengthInKm}}</div>
+                    </td>
+                    <td>
+                        <select *ngIf="data.IsEdit == true"class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit"[(ngModel)]="data.SurveyAgency">
                         <option value="1">NKBPL</option>
-                    </select></td>
+                        </select>
+                        <div *ngIf="data.IsEdit != true">{{data.SurveyAgency}}</div>
+                    </td>
                     <td>
                         <button type="button" class="btn-success"(click)="EditOnlyChaingeDetails(data)" title="Edit" *ngIf="!data.IsEdit">
                             <i class="fa fa-edit "></i>
@@ -125,7 +134,7 @@
                         <button type="button" class="btn-success" title="Save" (click)="SaveChaingeDetails(data,false)" *ngIf="data.IsEdit">
                             <i class="fa fa-save "></i>
                         </button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn-success" title="Cancel" (click)="CancelChainageReq(data)" *ngIf="data.IsEdit">
+                        <button type="button" class="btn-danger" title="Cancel" (click)="CancelChainageReq(data)" *ngIf="data.IsEdit">
                             <i class="fa fa-close "></i>
                         </button>&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn-danger"(click)="DeleteChaingeDetails(data.VillageChainageId)" title="Delete">
@@ -141,8 +150,8 @@
     <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
         <div class="div-to-align"*ngIf="_DisabledInputField == false && _NewVillageAdd == true">
             <br>
-            <button type="button" class="btn-save" (click)="SaveVillageDetails()">
-               Save Village 
+            <button type="button" class="btn-primary" (click)="SaveVillageDetails()">
+               Save Village Details
             </button>
         </div>
     </div>

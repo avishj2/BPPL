@@ -1,17 +1,13 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"> 
-    <div class="form-group row">
-        <div class="col-lg-6">
-            <button class="btn-primary" (click)="AddNewPaymentDetails()">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                Add Payment Details
-            </button>
-        </div>    
-        <div class="col-lg-6">
-            <button class="btn-primary" (click)="EditPaymentDetails()">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;
-                Edit Payment Details
-            </button> 
-        </div>
+    <div class="AddEditBtn"> 
+        <button class="btn-primary" (click)="AddNewPaymentDetails()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Payment Details
+        </button>&nbsp;&nbsp; 
+        <button class="btn-primary" (click)="EditPaymentDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Payment Details
+        </button> 
     </div>
 </app-filters>
 <br>
@@ -19,6 +15,9 @@
 <form>
     <div class="card">
         <div class="innercard"> 
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Adhoc Payment Details </div> 
+            </div>
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class="Label">Payment Amount(Rs.)</label>
@@ -61,7 +60,11 @@
                     <input type="text" class="form-control"[(ngModel)]="_AdhocPaymentDataModel.AdhocPaymentDetails.ChequeIssuedTo" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
                 <div class="col-lg-3">
-                    <button class="btn-save" (click)="SavePaymentDetails()">Save Payment Details</button>
+                    <div class="SaveBtnClass">
+                        <button class="btn-primary" (click)="SavePaymentDetails()">
+                            Save Payment Details
+                        </button>
+                    </div>
                 </div>
             </div>
         </div> 

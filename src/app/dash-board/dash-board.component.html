@@ -37,7 +37,7 @@
             <!-- 1st step -->
 			<ul class="nav nav-list">
                 <!-- 2nd step -->
-				<li class="open" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+				<li class="open" routerLinkActive="active">
 					<a routerLink="dashboard">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Home &nbsp;</span>
@@ -45,7 +45,7 @@
 				</li>
 
                 <!-- project management -->
-				<li class="open" routerLinkActive="active">
+				<li class="open"role="navigation" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
 					<a class="dropdown-toggle">
 					<i class="menu-icon fa fa-id-badge"></i>
 					<span class="menu-text"> Project Management </span>
@@ -118,13 +118,13 @@
 							</a>
 						</li>	
 						<li class="" routerLinkActive="active">
-							<a routerLink="">
+							<a>
 								<i class="menu-icon fa fa-caret-right"></i>
 								Survey Numbers
 							</a>
 						</li>
                         <li class="" routerLinkActive="active">
-							<a routerLink="" >
+							<a>
 								<i class="menu-icon fa fa-caret-right"></i>
 								Crossings
 							</a>	

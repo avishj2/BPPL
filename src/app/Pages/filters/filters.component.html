@@ -41,9 +41,14 @@
             </select>
         </div>
         <div class="col-lg-3">
-           <button class="btn-round" (click)="PassDataToParent()">Search</button>
+            <button class="btn-primary" (click)="PassDataToParent()">
+                <i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;
+                   Search
+                </button>
         </div>
         <!-- add parent html  -->
-        <ng-content></ng-content>
+        <div class="col-lg-5">
+            <ng-content></ng-content>
+        </div>
     </div>
 </div>
