@@ -149,6 +149,15 @@ export class GazetteFields{
     HindiToPage :any;
 }
 
+
+export class DocumentDataModel{
+    DocumentType: string;
+    FileName : string;
+
+    constructor(){
+        
+    }
+}
 /**crossing details  */
 export class CrossDetailsDataModel{
     CrossDetails :CrossDetails;
