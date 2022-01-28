@@ -109,9 +109,14 @@ IsDtInitialized: boolean = false;
   GetValuesFromFilters(event) {
     this.Utility.LogText(event);
     this._SearchCriteria = event;
-    if (Object.keys(this._SearchCriteria).length === 0) {
-      alert("Please Select State,District,taluka or village!!")
-    }
+    if (Object.keys(this._SearchCriteria).length === 0) 
+      {
+        alert("Please Select State,District,taluka or village!!")
+      }
+    else if(this._SearchCriteria.VillageId == null)
+      {
+        alert("Please Select Village Name!!");
+      }
     else {
       this._ShowVillageDetailsDiv = true;
       this._DisabledInputField = true;
@@ -221,7 +226,6 @@ IsDtInitialized: boolean = false;
   /**delete village details base on the selected villageID */
   DeleteVillageDetails() {
     let url = this.urlService.DeleteVillageAPI + this._SearchCriteria.VillageId;
-
     this.httpService.get(url, null).subscribe(response => {
       let villageDeleteResponse: any = response;
       if (villageDeleteResponse.StatusCode != 200) {

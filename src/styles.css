@@ -40,3 +40,10 @@ table{
   margin-right: -0.5%;
   margin-top: -0.5%;
 }
+
+.DisabledFieldLabel{
+  margin-top: 2%;
+  font-weight: 550;
+  font-size: 14px;
+  margin-left: 3%;
+}
