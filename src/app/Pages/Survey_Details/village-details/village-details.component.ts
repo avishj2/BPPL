@@ -38,6 +38,9 @@ IsDtInitialized: boolean = false;
   _FilterControls: FilterControls;
   _AdditingMode: boolean = false;
   _InvalidLengthInKm: boolean = false;
+  /**popup message variables */
+  popoverTitle ="Delete Details";
+  popoverMessage = "Are you sure you want to delete it ?";
 
   constructor(
     public urlService: UrlService,
@@ -256,6 +259,7 @@ IsDtInitialized: boolean = false;
       // Add chainage in existing village
       if (addReq) {
         data.VillageId = this._SearchCriteria.VillageId;
+        this._DisabledChainageField= false;
       }
       let url = this.urlService.AddOrUpdateVillageChainageAPI;
       this.httpService.Post(url, data).subscribe(response => {
@@ -280,13 +284,19 @@ IsDtInitialized: boolean = false;
       });
     }
     else {
+      if(this._DisabledInputField== true){
+        alert("Please Enable Editing Mode");
+      }else{
       alert("Please add chainage details before save !\nChainageTo should be more than from ChainageFrom");
+      }
     }
   }
 
   CancelChainageReq(data: VillageChainageModel) {
     data.IsEdit = false;
   }
+
+
   /**At the time of chainage details editing delete single(row) 
    * chainge information through the API call
    * */

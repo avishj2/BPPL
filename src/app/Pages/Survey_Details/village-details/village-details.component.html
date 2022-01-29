@@ -10,7 +10,7 @@
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
             Edit Village Details
         </button>&nbsp;&nbsp;  
-        <button class="btn-danger" (click)="DeleteVillageDetails()" *ngIf="_NewVillageAdd == false" ngbTooltip ="Delete Village Information from Database">
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteVillageDetails()" *ngIf="_NewVillageAdd == false" ngbTooltip ="Delete Village Information from Database">
             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
             Delete Village Details
         </button>
@@ -165,7 +165,7 @@
                         <button type="button" class="btn-danger" title="Cancel" (click)="CancelChainageReq(data)" *ngIf="data.IsEdit">
                             <i class="fa fa-close"></i>
                         </button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn-danger"(click)="DeleteChaingeDetails(data.VillageChainageId)" title="Delete">
+                        <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteChaingeDetails(data.VillageChainageId)" title="Delete">
                             <i class="fa fa-trash"></i>
                         </button>  
                     </td>

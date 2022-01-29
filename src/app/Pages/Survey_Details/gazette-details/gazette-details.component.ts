@@ -6,6 +6,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { GazetteFormDataModel,AddDocuments ,DocumentDataModel } from '../Survey_Details.model';
 import { saveAs } from 'file-saver';
 import { DownloadService } from '../../../services/download.service';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: 'app-gazette-details',
@@ -26,6 +27,7 @@ export class GazetteDetailsComponent implements OnInit {
     private httpService: HttpService,
     public Utility: UtilityService,
     private downloadService: DownloadService,
+    private http: HttpClient
     ) 
     { 
       this._GazetteFormDataModel = new GazetteFormDataModel();
@@ -33,10 +35,11 @@ export class GazetteDetailsComponent implements OnInit {
       this._DocumentDataModel = [];
     }
 
-  ngOnInit(): void {
-    this._AddDocuments.ReadJson();
-    this._DisabledInputField = false;//test
-  }
+  ngOnInit(): void 
+    {
+      this._AddDocuments.ReadJson();
+      this._DisabledInputField = false;//test
+    }
 
   /**
    * 
@@ -79,9 +82,23 @@ export class GazetteDetailsComponent implements OnInit {
 
   DownlaodDocument()
     {
-      this.downloadService.SavePdfFile("http://www.africau.edu/images/default/sample.pdf","downloadfile");
+      //this.downloadService.SavePdfFile("http://www.africau.edu/images/default/sample.pdf","downloadfile");
       //this.downloadService.SavePdfFile("C:/Users/admin/Downloads/CL-10-Model", "downloadfile");
-      
+      let url =  "http://www.africau.edu/images/default/sample.pdf";
+      let link = document.createElement('a');
+      link.setAttribute('type', 'hidden');
+      link.href = url;
+      link.download = "C:/Users/admin/Downloads/";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    test(){
+      let url =  "http://www.africau.edu/images/default/sample.pdf"
+      let headers = new HttpHeaders();
+      headers = headers.set('Accept', 'application/pdf');
+      return this.http.get(url, { headers: headers, responseType: 'blob' as 'json' });
     }
 
   EditDetails(arg)

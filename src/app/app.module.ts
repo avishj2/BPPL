@@ -15,6 +15,9 @@ import { AppComponent } from './app.component';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import { LoginComponent } from './login/login.component';
 import { FiltersComponent } from 'src/app/Pages/filters/filters.component';
+import { DialogService } from './services/dialog.service';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+
 
 import { TwoDigitDecimaNumberDirective } from './Pages/filters/two-digit-decima-number.directive';
 import { MasterDetailsComponent } from './Pages/master-details/master-details.component';
@@ -58,8 +61,11 @@ import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-d
     NgSelectModule,
     HttpClientModule,
     AlertsModule.forRoot(),
+    ConfirmationPopoverModule.forRoot({
+      focusButton: 'confirm',
+    }),
   ],
-  providers: [],
+  providers: [DialogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
