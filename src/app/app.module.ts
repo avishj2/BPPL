@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule ,NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngb-modal';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
@@ -9,6 +9,7 @@ import { BreadCrumbComponent } from 'src/app/dash-board/breadcrumb.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AlertsModule } from 'angular-alert-module';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,6 +55,7 @@ import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-d
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     ModalModule,
     NgbModule,
     DataTablesModule,

@@ -1,4 +1,15 @@
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"></app-filters>
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+    <div class="AddEditBtnClass"> 
+        <button class="btn-primary" (click)="AddNewTerminalDetails()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add AGI/Terminal Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-primary" (click)="EditTerminalDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit AGI/Terminal Details
+        </button>
+    </div>
+</app-filters>
 <br>
 <form>
     <div class="card">
@@ -6,115 +17,185 @@
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class="Label">AGI Terminals Name</label>
-                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Registry"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-                    
+                    <input *ngIf ="_DisabledInputField != true"type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.AGITerminalsName"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.AGITerminalsName}}
+                    </div>
+                </div>     
                 <div class="col-lg-3">
                     <label class="Label">ChainageFrom</label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField"appTwoDigitDecimaNumber>
+                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField"appTwoDigitDecimaNumber>
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.Chainage}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">ChainageTo</label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField"appTwoDigitDecimaNumber>
+                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField"appTwoDigitDecimaNumber>
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.Chainage}}
+                    </div>
                 </div>
-                
                 <div class="col-lg-3">
                     <label class="Label">Registry</label>
-                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Registry"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Registry"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.Registry}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Classification Of Land</label>
-                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.TypesOfland"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.TypesOfland"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.TypesOfland}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Plot Area</label>
-                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PlotSizeInMeter" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PlotSizeInMeter" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.PlotSizeInMeter}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label"> Sub Register Irrigated(Rs.) </label>
-                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                   <input *ngIf ="_DisabledInputField != true" type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                   <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.SubRegisterIrrigated}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">From 7/12  </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From7upon12" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From7upon12" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.From7upon12}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">DLC Irrigated (Rs./Ha)</label>
-                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.DLCIrrigated}}
+                    </div>
                 </div>
                 <div class="col-lg-3">    
                 <label class="Label">Sub Register Non-Irrigated(Rs./Ha)</label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterNonIrrigated" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterNonIrrigated" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.SubRegisterNonIrrigated}}
+                    </div>
                 </div>
-                <!-- <div class="col-lg-3">
-                    <label class="Label">Owner Name  </label>
-                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.OwnerNameCount"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div> -->
                 <div class="col-lg-3">
                     <label class="Label"> From 8A </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From8A" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From8A" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.From8A}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">From No 6 </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FromNo6" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FromNo6" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.FromNo6}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Rate Expected By Farmer(Rs/sqmt) </label>
-                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.RateExpectedByFarmer" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.RateExpectedByFarmer" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.RateExpectedByFarmer}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Remarks </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Remarks" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true"type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Remarks" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.Remarks}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
-                <label class="Label">Map with details from Talhati </label>
-                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MapWithDetailsFromTalhati" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <label class="Label">Map with details from Talhati </label>
+                   <input *ngIf ="_DisabledInputField != true"type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MapWithDetailsFromTalhati" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                   <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.MapWithDetailsFromTalhati}}
+                    </div>
                 </div>
-               
+                <div class="col-lg-3">
+                    <label class="Label">DLC (yantri) </label>
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCYantri" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.DLCYantri}}
+                    </div>
+                </div>
                 <div class="col-lg-3">
                     <label class="Label">Construction Start Date </label>
-                    <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate | date:'mediumDate'}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Construction End Date </label>
-                    <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true"type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate | date:'mediumDate'}}
+                    </div>
                 </div> 
                 <div class="col-lg-3">
-                    <label class="Label">DLC (yantri) </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCYantri" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-                <div class="col-lg-3">
                     <label class="Label">Notice 65BB</label>
-                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice65BB"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice65BB"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.Notice65BB}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">DILR Survey </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DILRSurvey" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DILRSurvey" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.DILRSurvey}}
+                    </div>
                 </div>  
                 <div class="col-lg-3">    
-                    <label class="Label">5yrs Sale deed from sub resigter</label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FiveyrsSaledeed" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <label class="Label">5 yrs Sale deed from sub resigter</label>
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FiveyrsSaledeed" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.FiveyrsSaledeed}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label"> Notice 63AA </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice63AA" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice63AA" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.Notice63AA}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Panchanamma For village Details</label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForAVillage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForAVillage" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForAVillage}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Panchanamma for present market value </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForMarketValue" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input  *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForMarketValue" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForMarketValue}}
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Negociation with owner and his statement </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.NegociationwithVillage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.NegociationwithVillage" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.NegociationwithVillage}}
+                    </div>
                 </div>
-
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <label class="Label">Misc Details to be collect from the land owner </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MiscDetails" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <input *ngIf ="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MiscDetails" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                        {{this._AGITerminalsDataModel.AGITerminalsDetails.MiscDetails}}
+                    </div>
                 </div>
             </div>
         </div> 

@@ -9,6 +9,7 @@ import { VillageResponseModel, VillageChainageModel, VillageChainageResModel, Vi
 import { HttpService } from '../../../services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-village-details',
@@ -41,13 +42,17 @@ IsDtInitialized: boolean = false;
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
+  /**form fields validation */
+  _IsFirstLoad = false;
+  myFormGroup: FormGroup;
 
   constructor(
     public urlService: UrlService,
     public APIUtilityService: APIUtilityService,
     private router: Router,
     private httpService: HttpService,
-    public Utility: UtilityService
+    public Utility: UtilityService,
+    public formBuilder: FormBuilder,
   ) {
     this._SearchCriteria = new SearchCriteria();
     this._VillageModel = new VillageModel();
@@ -70,6 +75,14 @@ IsDtInitialized: boolean = false;
         pagingType: 'full_numbers',
         pageLength: 5,
       };
+       /**validation for input fields */
+       this.myFormGroup = this.formBuilder.group(
+        {
+          VillageNumber :['', [Validators.required]],
+          VillageNameEng :['', [Validators.required]],
+          VillageNameHindi :['', [Validators.required]],
+          VillageNameLocal :['', [Validators.required]],
+        });
     }
 
   ngAfterViewInit(): void 
@@ -78,12 +91,11 @@ IsDtInitialized: boolean = false;
       console.log('ngAfterViewInit');
     }
   
-  // ngOnDestroy(): void 
-  //   {
-  //     // Do not forget to unsubscribe the event
-  //     console.log('ngOnDestroy');
-  //     this.dtTrigger.unsubscribe();
-  //   }
+  /**validation error control required*/  
+  get errorControl() 
+  {
+    return this.myFormGroup.controls;
+  }
 
 	/**refresh/reload data table 
    * when data update/delete/add in the datatable  
@@ -94,8 +106,8 @@ IsDtInitialized: boolean = false;
       {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
         {
-          dtInstance.destroy();// Destroy the table first
-          this.dtTrigger.next();// Call the dtTrigger to rerender again
+          dtInstance.destroy();//Destroy the table first
+          this.dtTrigger.next();//Call the dtTrigger to rerender again
         });
       }
       else
@@ -166,41 +178,43 @@ IsDtInitialized: boolean = false;
   EditOnlyChaingeDetails(arg: VillageChainageModel) {
     // this.CalculateGreaterValue(arg);
     arg.IsEdit = true;
-    //this._VillageChainageResModel.Result = arg;
   }
 
-
-  /**delete Chainage Details item from chainage array*/
-  DeleteChainageItem(index) {
-    this._VillageModel.Chainages.splice(index, 1);
-    this.ReloadDatatable();
-  }
   /**1. when add new village or updated village information call AddOrUpdateVillage API
     *2. At the time of editing chainage details save separately
   */
   SaveVillageDetails() {
-    let url = this.urlService.AddOrUpdateVillageAPI;
-    if (this._NewVillageAdd == false) {
-      this._VillageModel.VillageId = this._SearchCriteria.VillageId;
-    }
-    this._VillageModel.TalukaId = this._SearchCriteria.TalukaId;
-
-    this.httpService.Post(url, this._VillageModel).subscribe(response => {
-      let villageResponseModel: VillageResponseModel = response;
-      this.Utility.LogText(villageResponseModel);
-      if (this._NewVillageAdd == false)
-      {
-        alert("Village updated sucessfully!!");
-        this._DisabledInputField = true;
-      }
-      else
-      {
-        alert("Village added sucessfully!!");
-        this._DisabledInputField = true;
-      }
-    }, error => {
-      this.Utility.LogText(error);
-    });
+    this._IsFirstLoad = true; //for time validation
+      if (!this.myFormGroup.valid)
+        {
+          alert("Please Add Village details!!");
+          return false;
+        }
+        else 
+        {
+          let url = this.urlService.AddOrUpdateVillageAPI;
+          if (this._NewVillageAdd == false) 
+            {
+              this._VillageModel.VillageId = this._SearchCriteria.VillageId;
+            }
+            this._VillageModel.TalukaId = this._SearchCriteria.TalukaId;
+            this.httpService.Post(url, this._VillageModel).subscribe(response => {
+            let villageResponseModel: VillageResponseModel = response;
+            this.Utility.LogText(villageResponseModel);
+            if (this._NewVillageAdd == false)
+            {
+              alert("Village updated sucessfully!!");
+              this._DisabledInputField = true;
+            }
+            else
+            {
+              alert("Village added sucessfully!!");
+              this._DisabledInputField = true;
+            }
+          },error => {
+            this.Utility.LogText(error);
+          });
+        }
   }
 
   /**add more items in the chainage array*/
@@ -218,16 +232,14 @@ IsDtInitialized: boolean = false;
   */
   CalculateGreaterValue(arg: VillageChainageModel) {
     if (arg.ChainageFrom && arg.ChainageTo) {
-      /**ChainageTo should be more than from ChainageFrom. */
-      // this._InvalidLengthInKm = arg.ChainageFrom > arg.ChainageTo;
       /**auto calculate value of the LengthInKm*/
       arg.LengthInKm = arg.ChainageTo - arg.ChainageFrom;
     }
   }
 
-
   /**delete village details base on the selected villageID */
   DeleteVillageDetails() {
+
     let url = this.urlService.DeleteVillageAPI + this._SearchCriteria.VillageId;
     this.httpService.get(url, null).subscribe(response => {
       let villageDeleteResponse: any = response;
@@ -300,19 +312,28 @@ IsDtInitialized: boolean = false;
   /**At the time of chainage details editing delete single(row) 
    * chainge information through the API call
    * */
-  DeleteChaingeDetails(argVillageChainageId) {
-    let url = this.urlService.DeleteVillageChainageAPI + argVillageChainageId;
-    this.httpService.get(url, null).subscribe(response => {
-      let resp: VillageChainageResModel = response;
-      if (resp.StatusCode != 200) {
-        alert(resp.Message);
-      }
-      else {
-        this._VillageModel.Chainages = resp.Result;
+  DeleteChaingeDetails(argVillageChainageId) 
+    {
+      if(this._NewVillageAdd == true)
+      {
+        this._VillageModel.Chainages.splice(argVillageChainageId, 1);
         this.ReloadDatatable();
       }
-    }, error => {
-      this.Utility.LogText("AddOrUpdateVillageAPI error" + error);
-    });
-  }
+      else{
+        let url = this.urlService.DeleteVillageChainageAPI + argVillageChainageId;
+        this.httpService.get(url, null).subscribe(response => {
+          let resp: VillageChainageResModel = response;
+          if (resp.StatusCode != 200) {
+            alert(resp.Message);
+          }
+          else {
+            this._VillageModel.Chainages = resp.Result;
+            this.ReloadDatatable();
+          }
+        }, error => {
+          this.Utility.LogText("AddOrUpdateVillageAPI error" + error);
+        });
+      }
+    }
+    
 }

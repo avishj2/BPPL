@@ -20,6 +20,8 @@ import { HttpService } from '../../../services/http.service';
 export class TerminalsDetailsComponent implements OnInit {
   DisableInputField : boolean = true;
   _AGITerminalsDataModel : AGITerminalsDataModel;
+  /**enable/disable input fields variables*/
+  _DisabledInputField: boolean = true;
 
   _FilterControls : FilterControls;
 
@@ -52,5 +54,22 @@ export class TerminalsDetailsComponent implements OnInit {
   GetValuesFromFilters(event)
     {
       this.Utility.LogText(event);
+      this._DisabledInputField = true;
+    }
+
+  /**
+   *  
+   * */  
+  EditTerminalDetails()
+    {
+      this._DisabledInputField = false;
+    }
+
+  /***
+   * 
+   */
+  AddNewTerminalDetails()
+    {
+      this._DisabledInputField = false;
     }
 }
