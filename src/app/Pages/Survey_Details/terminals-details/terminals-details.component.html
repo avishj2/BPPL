@@ -10,8 +10,12 @@
                 </div>
                     
                 <div class="col-lg-3">
-                    <label class="Label">Chainage</label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                    <label class="Label">ChainageFrom</label>
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField"appTwoDigitDecimaNumber>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">ChainageTo</label>
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Chainage" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField"appTwoDigitDecimaNumber>
                 </div>
                 
                 <div class="col-lg-3">
@@ -27,28 +31,28 @@
                     <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PlotSizeInMeter" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
                 <div class="col-lg-3">
-                    <label class="Label">From 7/12  </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From7upon12" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-                <div class="col-lg-3">
                     <label class="Label"> Sub Register Irrigated(Rs.) </label>
                    <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
                 <div class="col-lg-3">
-                    <label class="Label">DLC Irrigated </label>
+                    <label class="Label">From 7/12  </label>
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From7upon12" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">DLC Irrigated (Rs./Ha)</label>
                     <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCIrrigated"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
+                <div class="col-lg-3">    
+                <label class="Label">Sub Register Non-Irrigated(Rs./Ha)</label>
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterNonIrrigated" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <!-- <div class="col-lg-3">
+                    <label class="Label">Owner Name  </label>
+                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.OwnerNameCount"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div> -->
                 <div class="col-lg-3">
                     <label class="Label"> From 8A </label>
                     <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.From8A" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-                <div class="col-lg-3">    
-                <label class="Label">Sub Register Non-Irrigated(Rs.)</label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.SubRegisterNonIrrigated" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-                <div class="col-lg-3">
-                    <label class="Label">Owner Name  </label>
-                   <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.OwnerNameCount"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">From No 6 </label>
@@ -62,28 +66,31 @@
                     <label class="Label">Remarks </label>
                     <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Remarks" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
-
-                <div class="col-lg-3">
-                    <label class="Label">Notice 65BB</label>
-                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice65BB"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-
                 <div class="col-lg-3">
                 <label class="Label">Map with details from Talhati </label>
                    <input type="text"class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.MapWithDetailsFromTalhati" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
+               
                 <div class="col-lg-3">
                     <label class="Label">Construction Start Date </label>
                     <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionStartDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
                 </div>
                 <div class="col-lg-3">
-                    <label class="Label">DILR Survey </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DILRSurvey" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-                <div class="col-lg-3">
                     <label class="Label">Construction End Date </label>
                     <input type="date" class="form-control"[value]="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate | date:'yyyy-MM-dd'" (input)="_AGITerminalsDataModel.AGITerminalsDetails.ConstructionEndDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[disabled]="DisableInputField">
-                </div>   
+                </div> 
+                <div class="col-lg-3">
+                    <label class="Label">DLC (yantri) </label>
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCYantri" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Notice 65BB</label>
+                    <input type="text" class="form-control" [(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.Notice65BB"[ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">DILR Survey </label>
+                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DILRSurvey" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
+                </div>  
                 <div class="col-lg-3">    
                     <label class="Label">5yrs Sale deed from sub resigter</label>
                     <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.FiveyrsSaledeed" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
@@ -99,10 +106,6 @@
                 <div class="col-lg-3">
                     <label class="Label">Panchanamma for present market value </label>
                     <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.PanchanammaForMarketValue" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
-                </div>
-                <div class="col-lg-3">
-                    <label class="Label">DLC (yantri) </label>
-                    <input type="text" class="form-control"[(ngModel)]="_AGITerminalsDataModel.AGITerminalsDetails.DLCYantri" [ngModelOptions]="{standalone: true}"[disabled]="DisableInputField">
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Negociation with owner and his statement </label>

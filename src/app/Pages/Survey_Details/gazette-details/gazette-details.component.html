@@ -26,7 +26,7 @@
                 <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                 Add Gazette Details
             </button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="btn-primary"(click)="EditGazetteDetails()">
+            <button class="btn-primary"(click)="test()">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                 Edit Gazette Details
             </button>
@@ -133,6 +133,11 @@
                         {{this._GazetteFormDataModel.GazetteFields.HindiToPage}}
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Village</label>
+                    <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_AddDocuments.Documents" bindLabel="DocumentName" bindValue ="IsGazette" [(ngModel)]="GazetteName"[multiple]="true"> 
+                    </ng-select>
+                </div>
                 <div class="col-lg-1"></div>
                 <div class="col-lg-3">
                     <div class="SaveDataClass">
@@ -151,7 +156,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <label class ="Label">Village</label>
+                <label class ="Label">Type Of Gazette</label>
                 <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_AddDocuments.Documents" bindLabel="DocumentName" bindValue ="IsGazette" [(ngModel)]="GazetteName"[multiple]="true"> 
                 </ng-select>
             </div>
