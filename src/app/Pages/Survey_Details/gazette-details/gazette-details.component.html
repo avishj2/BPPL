@@ -65,42 +65,42 @@
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Generate Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazetteGeneratedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazetteGeneratedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazetteGeneratedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazetteGeneratedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._GazetteFormDataModel.GazetteFields.GazetteGeneratedDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Print Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazettePrintDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazettePrintDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazettePrintDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazettePrintDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._GazetteFormDataModel.GazetteFields.GazettePrintDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Recevied Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazetteReceviedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazetteReceviedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazetteReceviedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazetteReceviedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._GazetteFormDataModel.GazetteFields.GazetteReceviedDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Dispatch Date </label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.DispatchDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.DispatchDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.DispatchDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.DispatchDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._GazetteFormDataModel.GazetteFields.DispatchDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">SO Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.SODate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.SODate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.SODate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.SODate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._GazetteFormDataModel.GazetteFields.SODate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Publish Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazettePublishedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazettePublishedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazettePublishedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazettePublishedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._GazetteFormDataModel.GazetteFields.GazettePublishedDate | date:'mediumDate'}}
                     </div>
@@ -135,7 +135,7 @@
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Village</label>
-                    <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_AddDocuments.Documents" bindLabel="DocumentName" bindValue ="IsGazette" [(ngModel)]="GazetteName"[multiple]="true"> 
+                    <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_AddDocuments.Documents" bindLabel="DocumentName" bindValue ="IsGazette" [(ngModel)]="GazetteName"[multiple]="true"[ngModelOptions]="{standalone: true}"> 
                     </ng-select>
                 </div>
                 <div class="col-lg-1"></div>

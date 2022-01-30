@@ -17,7 +17,7 @@
     </div>
 </app-filters>
 <br>
-<form>
+<form [formGroup]="myFormGroup">
     <div class="card" *ngIf ="_ShowVillageDetailsDiv == true">
         <div class="innercard">
             <div class="d-flex justify-content-between">
@@ -25,8 +25,8 @@
             </div>
             <div class="form-group row">
                 <div class="col-lg-3">
-                    <label class="Label">Village Number</label>
-                    <input  *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNumber" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <label class="Label">Village Number <b><h7 style="color: red;">*</h7></b> </label>
+                    <input  *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNumber" formControlName="VillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._VillageModel.VillageNumber}}
                     </div>
@@ -47,8 +47,8 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <label class="Label">Village Name (English)</label>
-                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNameEng"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <label class="Label">Village Name (English) <b><h7 style="color: red;">*</h7></b></label>
+                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNameEng" formControlName="VillageNameEng"[ngModelOptions]="{standalone: true}" [disabled]="_DisabledInputField">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameEng}}
                     </div>
@@ -57,15 +57,15 @@
 
             <div class="form-group row">
                 <div class="col-lg-3">                
-                    <label class="Label">Village Name (Hindi) </label>
-                    <input *ngIf ="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <label class="Label">Village Name (Hindi) <b><h7 style="color: red;">*</h7></b> </label>
+                    <input *ngIf ="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameHindi" formControlName="VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameHindi}}
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <label class="Label">Village Name (Local) </label>
-                    <input *ngIf ="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <label class="Label">Village Name (Local) <b><h7 style="color: red;">*</h7></b>  </label>
+                    <input *ngIf ="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" formControlName ="VillageNameLocal"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameLocal}}
                     </div>
@@ -89,7 +89,7 @@
                 <i class="fa fa-plus-circle" (click)="SaveChaingeDetails(_NewChainage,true)"ngbTooltip="Add More Chainage"></i>
             </div>
        </div>
-       <form> 
+       <form [formGroup]="myFormGroup"> 
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class ="Label">Chainge From(Km)</label>
@@ -127,7 +127,8 @@
         <br>
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
             <thead>
-                <tr>      
+                <tr>  
+                    <th>S.No.</th>    
                     <th>ChainageFrom</th>
                     <th>ChainageTo</th>
                     <th>LengthInKm</th>
@@ -136,7 +137,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of _VillageModel.Chainages;let i = index">        
+                <tr *ngFor="let data of _VillageModel.Chainages;let i = index">      
+                    <td>{{i+1}}</td>  
                     <td>
                         <input *ngIf="data.IsEdit == true"class="form-control"(input)="CalculateGreaterValue(data)"[(ngModel)]="data.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit" appTwoDigitDecimaNumber>
                         <div *ngIf="data.IsEdit != true">{{data.ChainageFrom}}</div>
@@ -150,10 +152,10 @@
                         <div *ngIf="data.IsEdit != true">{{data.LengthInKm}}</div>
                     </td>
                     <td>
-                        <select *ngIf="data.IsEdit == true"class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="!data.IsEdit"[(ngModel)]="data.SurveyAgency">
+                        <select *ngIf="data.IsEdit == true"class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="true"[(ngModel)]="data.SurveyAgency">
                         <option value="1">NKBPL</option>
                         </select>
-                        <div *ngIf="data.IsEdit != true">{{data.SurveyAgency}}</div>
+                        <div *ngIf="data.IsEdit != true">{{"NKBPL"}}</div>
                     </td>
                     <td>
                         <button type="button" class="btn-success"(click)="EditOnlyChaingeDetails(data)" title="Edit" *ngIf="!data.IsEdit">
@@ -179,7 +181,7 @@
         <div class="div-to-align"*ngIf="_DisabledInputField == false && _NewVillageAdd == true">
             <br>
             <button type="button" class="btn-primary" (click)="SaveVillageDetails()">
-               Save Village Details
+               Add Village Details
             </button>
         </div>
     </div>
