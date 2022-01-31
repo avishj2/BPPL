@@ -24,6 +24,14 @@ export class UrlService {
   DeleteVillageAPI = this.url +'/api/Village/DeleteVillage?villageId=';
   AddOrUpdateVillageChainageAPI = this.url +'/api/Village/AddOrUpdateVillageChainage';
   DeleteVillageChainageAPI = this.url + '/api/Village/DeleteVillageChainage?villageChainageId=';
+
+  /**gazette APIs */
+  GetTypeOfNotificationsAPI = this.url + '/api/Gazzate/GetTypeOfNotifications';
+  GetStateVillageAPI = this.url + '/api/Gazzate/GetStateVillage';
+  GetAllNotificationNosAPI = this.url + '/api/Gazzate/GetAllNotificationNos?typeOfNotification=';
+  AddOrUpdateGazzateAPI = this.url + '/api/Gazzate/AddOrUpdateGazzate';
+  DeleteGazzateAPI = this.url + '/api/Gazzate/DeleteGazzate?gazzateId=';
+  GetGazzateByNotificationAPI = this.url + '/api/Gazzate/GetGazzateByNotification?notificationNo=';
   
 }
 

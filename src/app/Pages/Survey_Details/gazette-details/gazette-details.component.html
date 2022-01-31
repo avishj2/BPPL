@@ -2,19 +2,21 @@
 <div class="row">
     <div class="col-lg-3">
         <label class ="Label">Type of Notification</label>
-        <select class="form-control">
-            <option ></option>
+        <select class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.typeOfNotification"(change)="GetAllNotificationNos()">
+            <option *ngFor="let data of _NotificationTypeDataModel"[value]="data.LookupId">
+                {{data.lookupName}}
+            </option>
         </select>
     </div>
     <div class="col-lg-3">
         <label class ="Label">Notification No.</label>
-        <select class="form-control">
-            <option >65465</option>
+        <select class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.notificationNo">
+            <option *ngFor="let data of _NotificationDetails" [value]="data.Value">{{data.Text}}</option>
         </select>
     </div>
     <div class="col-lg-2">
         <div class="SearchBtnClass">
-            <button class="btn-primary" style="margin-left: 10%;"(click)="SearchGazetteDetails()">
+            <button class="btn-primary" (click)="SearchGazetteDetails()">
                 <i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;
                 Search
             </button>
@@ -24,11 +26,15 @@
         <div class="AddEditBtnClass">
             <button class="btn-primary"(click)="AddNewGazetteDetails()">
                 <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-                Add Gazette Details
-            </button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="btn-primary"(click)="test()">
+                Add Gazette
+            </button>&nbsp;&nbsp;
+            <button class="btn-primary"(click)="EditGazetteDetails()">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                 Edit Gazette Details
+            </button>&nbsp;&nbsp;
+            <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteGazetteDetails()"  ngbTooltip ="Delete Gazette Information from Database">
+                <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                Delete Gazette Details
             </button>
         </div>
     </div>
@@ -44,104 +50,104 @@
             <div class="row">
                 <div class="col-lg-3">
                     <label class ="Label">File Number</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteFormDataModel.GazetteFields.FileNo"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.fileNo"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.FileNo}}
+                        {{this._GazetteDetailsDataModel.Result.fileNo}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Hindi File Number</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteFormDataModel.GazetteFields.HindiFileNo"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.hindiFileNo"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.HindiFileNo}}
+                        {{this._GazetteDetailsDataModel.Result.hindiFileNo}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">SO Number</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteFormDataModel.GazetteFields.SONumber"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.soNo"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.SONumber}}
+                        {{this._GazetteDetailsDataModel.Result.soNo}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Generate Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazetteGeneratedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazetteGeneratedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteDetailsDataModel.Result.GazetteGeneratedDate | date:'yyyy-MM-dd'" (input)="_GazetteDetailsDataModel.Result.GazetteGeneratedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.GazetteGeneratedDate | date:'mediumDate'}}
+                        {{this._GazetteDetailsDataModel.Result.GazetteGeneratedDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Print Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazettePrintDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazettePrintDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteDetailsDataModel.Result.gazzatePrintedDate | date:'yyyy-MM-dd'" (input)="_GazetteDetailsDataModel.Result.gazzatePrintedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.GazettePrintDate | date:'mediumDate'}}
+                        {{this._GazetteDetailsDataModel.Result.gazzatePrintedDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Recevied Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazetteReceviedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazetteReceviedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteDetailsDataModel.Result.gazzateRecievedDate | date:'yyyy-MM-dd'" (input)="_GazetteDetailsDataModel.Result.gazzateRecievedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.GazetteReceviedDate | date:'mediumDate'}}
+                        {{this._GazetteDetailsDataModel.Result.gazzateRecievedDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Dispatch Date </label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.DispatchDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.DispatchDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteDetailsDataModel.Result.dispatchDate | date:'yyyy-MM-dd'" (input)="_GazetteDetailsDataModel.Result.dispatchDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.DispatchDate | date:'mediumDate'}}
+                        {{this._GazetteDetailsDataModel.Result.dispatchDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">SO Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.SODate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.SODate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteDetailsDataModel.Result.soDate | date:'yyyy-MM-dd'" (input)="_GazetteDetailsDataModel.Result.soDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.SODate | date:'mediumDate'}}
+                        {{this._GazetteDetailsDataModel.Result.soDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Gazette Publish Date</label>
-                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteFormDataModel.GazetteFields.GazettePublishedDate | date:'yyyy-MM-dd'" (input)="_GazetteFormDataModel.GazetteFields.GazettePublishedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" type="date" class="form-control"[value]="_GazetteDetailsDataModel.Result.gazzatePublishedDate | date:'yyyy-MM-dd'" (input)="_GazetteDetailsDataModel.Result.gazzatePublishedDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.GazettePublishedDate | date:'mediumDate'}}
+                        {{this._GazetteDetailsDataModel.Result.gazzatePublishedDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">English From Page</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteFormDataModel.GazetteFields.EnglishFromPage"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.englishFromPage"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.EnglishFromPage}}
+                        {{this._GazetteDetailsDataModel.Result.englishFromPage}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">English To Page</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteFormDataModel.GazetteFields.EnglishToPage"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.englishToPage"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.EnglishToPage}}
+                        {{this._GazetteDetailsDataModel.Result.englishToPage}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Hindi From Page</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteFormDataModel.GazetteFields.HindiFromPage"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.hindiFromPage"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.HindiFromPage}}
+                        {{this._GazetteDetailsDataModel.Result.hindiFromPage}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Hindi To Page</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteFormDataModel.GazetteFields.HindiToPage"[ngModelOptions]="{standalone: true}">
+                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_GazetteDetailsDataModel.Result.hindiToPage"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
-                        {{this._GazetteFormDataModel.GazetteFields.HindiToPage}}
+                        {{this._GazetteDetailsDataModel.Result.hindiToPage}}
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <label class ="Label">Village</label>
-                    <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_AddDocuments.Documents" bindLabel="DocumentName" bindValue ="IsGazette" [(ngModel)]="GazetteName"[multiple]="true"[ngModelOptions]="{standalone: true}"> 
+                    <label class ="Label">State-Village</label>
+                    <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_StateVillageDetails" bindLabel="Text" bindValue ="Value" [(ngModel)]="_GazetteDetailsDataModel.Result.Villages"[multiple]="true"[ngModelOptions]="{standalone: true}"> 
                     </ng-select>
                 </div>
                 <div class="col-lg-1"></div>
                 <div class="col-lg-3">
                     <div class="SaveDataClass">
-                        <button class="btn-primary"(click)="submit()">Save Details</button>
+                        <button class="btn-primary"(click)="SaveGazzateDetails()">Save Details</button>
                     </div>
                 </div>
             </div>
@@ -157,21 +163,25 @@
         <div class="row">
             <div class="col-lg-4">
                 <label class ="Label">Type Of Gazette</label>
-                <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_AddDocuments.Documents" bindLabel="DocumentName" bindValue ="IsGazette" [(ngModel)]="GazetteName"[multiple]="true"> 
+                <ng-select *ngIf ="_DisabledInputField != true" [allowClear]="true" [items]="_AddDocuments.Documents" bindLabel="DocumentName" bindValue ="IsGazette" [(ngModel)]="_GazetteDetailsDataModel.Result.typeOfNotification"[multiple]="true"> 
                 </ng-select>
             </div>
             <div class="col-lg-3">
-                <div class="custom-file">
+                <!-- <div class="custom-file">
                     <label class="custom-file-label" for="customFile">Choose File</label>
-                    <input *ngIf ="_DisabledInputField != true" type="file"class="custom-file-input" id="customFile"(change)="FileUpload($event)" #UploadFileInput>
+                    <input *ngIf ="_DisabledInputField != true"class="custom-file-input" id="customFile"#fileInput (change)="FileUpload($event)" type="file" >
                     <label class="custom-file-label" for="customFile">{{_InputFileLabel || 'Choose File'}}</label>
-                </div> 
+                </div>  -->
+                <div class="FileInputClass">
+                    <input #fileInput (change)="FileUpload($event)"type="file"/>
+                </div>
             </div>
             <div class="col-lg-3">
                 <div class="UploattchClass">
                     <button class="btn-primary">Upload Details</button>
                 </div>
             </div>
+ 
         </div><br>
         <table class="stripe table table-striped table-bordered" width="98%">
             <thead>
@@ -182,11 +192,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of _DocumentDataModel;let i = index">
-                    <td>{{data.FileName}}</td>
-                    <td>{{data.DocumentType}}</td>
+                <tr *ngFor="let data of _GazetteDetailsDataModel.Result.Documents;let i = index">
+                    <td>{{data.fileName}}</td>
+                    <td>{{data.filePath}}</td>
                     <td>
-                        <button type="button" class="btn-success"(click)="EditDetails(data)" title="Edit">
+                        <button type="button" class="btn-success" (click)="fileInput.click()"title="Edit">
                             <i class="fa fa-edit"></i>
                         </button>&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument()">

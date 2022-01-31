@@ -16,8 +16,12 @@
 }
 .SearchBtnClass{
     margin-top: 18%;
+    margin-left: 2%;
 }
 .AddEditBtnClass{
     margin-top: 8%;
-    margin-left: -22%;
+    margin-left: -28%;
+}
+.FileInputClass{
+    margin-top: 11%;
 }
