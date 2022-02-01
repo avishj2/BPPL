@@ -15,10 +15,10 @@ import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-d
 import { TestLoginComponent } from './test-login/test-login.component';
 
 const routes: Routes = [
-  // {path: 'login', component: LoginComponent},
-  //   { path: '' , redirectTo: '/login', pathMatch: 'full'},
-    {path: 'login', component: TestLoginComponent},
+  {path: 'login', component: LoginComponent},
     { path: '' , redirectTo: '/login', pathMatch: 'full'},
+    // {path: 'login', component: TestLoginComponent},
+    // { path: '' , redirectTo: '/login', pathMatch: 'full'},
     {path: 'dashboard', component: DashBoardComponent , canActivate:[AuthGuard], 
      data: { breadcrumb: 'Home'},
     children: [
