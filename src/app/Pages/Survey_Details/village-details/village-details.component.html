@@ -1,7 +1,7 @@
 
 <!-- add filter component ,pass and get data from child -->
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
-    <div class="ParentBtn" *ngIf ="_ShowVillageDetailsDiv == true"> 
+    <div class="ParentBtn" *ngIf="_ShowVillageDetailsDiv == true"> 
         <button class="btn-primary" (click)="AddNewVillageDetails()">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
             Add Village Details
@@ -26,30 +26,30 @@
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class="Label">Village Number <b><h7 style="color: red;">*</h7></b> </label>
-                    <input  *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNumber" formControlName="VillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                    <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNumber" formControlName="VillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNumber}}
                     </div>
                 </div>
 
                 <div class="col-lg-3">                
                     <label class="Label">Revenue Village Number</label>
-                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.RevenueVillageNumber}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Number of Population </label>
-                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.NoOfPopulation}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Village Name (English) <b><h7 style="color: red;">*</h7></b></label>
-                    <input *ngIf ="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNameEng" formControlName="VillageNameEng"[ngModelOptions]="{standalone: true}" [disabled]="_DisabledInputField">
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNameEng" formControlName="VillageNameEng"[ngModelOptions]="{standalone: true}" [disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameEng}}
                     </div>
                 </div>
@@ -58,15 +58,15 @@
             <div class="form-group row">
                 <div class="col-lg-3">                
                     <label class="Label">Village Name (Hindi) <b><h7 style="color: red;">*</h7></b> </label>
-                    <input *ngIf ="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameHindi" formControlName="VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameHindi" formControlName="VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameHindi}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Village Name (Local) <b><h7 style="color: red;">*</h7></b>  </label>
-                    <input *ngIf ="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" formControlName ="VillageNameLocal"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true">
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" formControlName ="VillageNameLocal"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameLocal}}
                     </div>
                 </div>
@@ -81,7 +81,7 @@
 </form>
 <br>
 
-<div class="card" *ngIf ="_ShowVillageDetailsDiv == true">
+<div class="card" *ngIf="_ShowVillageDetailsDiv == true">
     <div class="innercard">
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Chainge Details</div> 
@@ -93,7 +93,7 @@
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class ="Label">Chainge From(Km)</label>
-                    <input *ngIf ="_DisabledInputField != true"class="form-control"(input)="CalculateGreaterValue(_NewChainage)"[(ngModel)]="_NewChainage.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
+                    <input *ngIf="_DisabledInputField != true"class="form-control"(input)="CalculateGreaterValue(_NewChainage)"[(ngModel)]="_NewChainage.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
                     <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true && _DisabledChainageField ==true">
                         {{this._NewChainage.ChainageFrom}}
                     </div>
@@ -101,24 +101,24 @@
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Chainge To(Km)</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"(input)="CalculateGreaterValue(_NewChainage)" [(ngModel)]="_NewChainage.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true && _DisabledChainageField ==true">
+                    <input *ngIf="_DisabledInputField != true" class="form-control"(input)="CalculateGreaterValue(_NewChainage)" [(ngModel)]="_NewChainage.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true && _DisabledChainageField ==true">
                         {{this._NewChainage.ChainageTo}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Chainge Length(Km)</label>
-                    <input *ngIf ="_DisabledInputField != true" class="form-control"[(ngModel)]="_NewChainage.LengthInKm"[ngModelOptions]="{standalone: true}"[disabled]="true" appTwoDigitDecimaNumber>
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true && _DisabledChainageField ==true">
+                    <input *ngIf="_DisabledInputField != true" class="form-control"[(ngModel)]="_NewChainage.LengthInKm"[ngModelOptions]="{standalone: true}"[disabled]="true" appTwoDigitDecimaNumber>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true && _DisabledChainageField ==true">
                         {{this._NewChainage.LengthInKm}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Survey Agency</label>
-                    <select *ngIf ="_DisabledInputField != true"class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField"[(ngModel)]="_NewChainage.SurveyAgency">
+                    <select *ngIf="_DisabledInputField != true"class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField"[(ngModel)]="_NewChainage.SurveyAgency">
                         <option value="1">NKBPL</option>
                     </select>
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true && _DisabledChainageField ==true">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true && _DisabledChainageField ==true">
                         {{this._NewChainage.SurveyAgency}}
                     </div>
                 </div>
