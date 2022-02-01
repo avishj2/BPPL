@@ -1,30 +1,30 @@
 import {BaseResponse} from './Base.model';
 
 export class GazetteDetailsDataModel extends BaseResponse {
-    Result : GazetteDetails;
+    Result : GazetteModel;
     constructor(){      
       super();
-      this.Result = new GazetteDetails();
+      this.Result = new GazetteModel();
     }
 }
+export class GazetteModel{
+    Gazzateid: any;
+    NotificationNo: any;
+    FileNo:  any;
+    HindiFileNo: string;
+    SoNo: 0;
+    TypeOfNotification: any;
+    GazzateGeneratedDate: any;
+    DispatchDate: any;
+    SODate: any;
+    GazzatePublishedDate: any;
+    GazzatePrintedDate: any;
+    GazzateRecievedDate: any;
+    EnglishFromPage: any;
+    EnglishToPage: any;
+    HindiFromPage: any;
+    HindiToPage: any;
 
-export class GazetteDetails{
-    gazzateid: any;
-    notificationNo: string;
-    fileNo: string;
-    hindiFileNo: string;
-    soNo: any;
-    typeOfNotification: any;
-    gazzateGeneratedDate: any;
-    dispatchDate: any;
-    soDate: any;
-    gazzatePublishedDate: any;
-    gazzatePrintedDate: any;
-    gazzateRecievedDate: any;
-    englishFromPage: any;
-    englishToPage: any;
-    hindiFromPage: any;
-    hindiToPage: any;
     Villages : any[];
     Documents : Documents[];
 

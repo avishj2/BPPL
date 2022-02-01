@@ -12,10 +12,12 @@ import { CrossingDetailsComponent } from './Pages/Survey_Details/crossing-detail
 import { TerminalsDetailsComponent } from './Pages/Survey_Details/terminals-details/terminals-details.component';
 import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/adhoc-payment-details.component';
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
-
+import { TestLoginComponent } from './test-login/test-login.component';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
+  // {path: 'login', component: LoginComponent},
+  //   { path: '' , redirectTo: '/login', pathMatch: 'full'},
+    {path: 'login', component: TestLoginComponent},
     { path: '' , redirectTo: '/login', pathMatch: 'full'},
     {path: 'dashboard', component: DashBoardComponent , canActivate:[AuthGuard], 
      data: { breadcrumb: 'Home'},
