@@ -12,7 +12,6 @@ export class GazetteModel{
     NotificationNo: any;
     FileNo:  any;
     HindiFileNo: string;
-    SoNo: any;
     TypeOfNotification: any;
     GazzateGeneratedDate: any;
     DispatchDate: any;
