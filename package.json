@@ -40,6 +40,7 @@
     "datatables.net-dt": "^1.10.21",
     "file-saver": "^2.0.2",
     "jquery": "^3.5.1",
+    "ng-multiselect-dropdown": "^0.3.8",
     "ngb-modal": "^2.0.3",
     "ngx-select-dropdown": "^1.4.4",
     "primeicons": "^4.1.0",

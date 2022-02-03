@@ -5,3 +5,9 @@ export class BaseResponse
     ValidationFailed: true;
     TotalCount: any;
 }
+
+export class CommonDropdownModel{
+    Value: any;
+    Text: string;
+    Selected: boolean;
+}

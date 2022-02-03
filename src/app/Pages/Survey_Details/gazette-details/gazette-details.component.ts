@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { HttpService } from '../../../services/http.service';
 import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
@@ -6,7 +6,8 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { saveAs } from 'file-saver';
 import { DownloadService } from '../../../services/download.service';
 import { HttpClient,HttpResponse, HttpHeaders } from "@angular/common/http";
-import { NotificationTypeDataModel,CommonDropdownModel,GazetteDetailsDataModel ,GazetteModel } from 'src/app/Model/Gazette.model';
+import { TypeOfNotificationDataModel,GazetteDetailsDataModel ,GazetteModel,NotificationModel } from 'src/app/Model/Gazette.model';
+import { CommonDropdownModel} from 'src/app/Model/Base.model';
 
 
 @Component({
@@ -15,27 +16,32 @@ import { NotificationTypeDataModel,CommonDropdownModel,GazetteDetailsDataModel ,
   styleUrls: ['./gazette-details.component.css']
 })
 export class GazetteDetailsComponent implements OnInit {
+  @ViewChild('multiSelect') multiSelect;
   /**enable/disable input fields variables*/
-  _DisabledInputField: boolean = true;
+  _DisabledGazetteInputField: boolean = true;
+  _DisabledNoticeInputField: boolean = true;
+  /**add new gazette/notification details */
+  _AddNewGazette : boolean = false;
+  _AddNewNotification : boolean = false;
 
-  _InputFileLabel;//file type label
-
-  _NotificationTypeDataModel :NotificationTypeDataModel[];
+  _ShowGazetteDetailsDiv : boolean = false;
+  _ShowNotificationDetailsDiv : boolean = false;
+  
+  _TypeOfNotificationDataModel :TypeOfNotificationDataModel[];
   _NotificationDetails : CommonDropdownModel[];
-  _StateVillageDetails : CommonDropdownModel[];
   _GazetteModel : GazetteModel;
+  _NotificationModel : NotificationModel;
+  /**TypeOfNotification and notification DD values save in these variables */
   _TypeOfNotification : any;
   _NotificationValue;
-  _ShowGazetteDetailsDiv : boolean = false;
-  _AddNewGazette : boolean = false;
-
+  /**test */
   _IsEdit : boolean = false;
   _EditDocument;
 
- /**popup message variables */
+ /**confirmation popup, message variables */
  popoverTitle ="Delete Details";
  popoverMessage = "Are you sure you want to delete it ?";
-
+ currentJustify = 'justified';//tab alignment 
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -45,10 +51,10 @@ export class GazetteDetailsComponent implements OnInit {
     private http: HttpClient
     ) 
     { 
-      this._NotificationTypeDataModel = [];
+      this._TypeOfNotificationDataModel = [];
       this._NotificationDetails = [];
-      this._StateVillageDetails = [];
       this._GazetteModel = new GazetteModel();
+      this._NotificationModel = new NotificationModel();
 
     }
 
@@ -64,58 +70,42 @@ export class GazetteDetailsComponent implements OnInit {
     {
       let url = this.urlService.GetTypeOfNotificationsAPI;
       this.httpService.get(url, null).subscribe(response => {
-        this._NotificationTypeDataModel = response;
-        this.Utility.LogText(this._NotificationTypeDataModel);
+        this._TypeOfNotificationDataModel = response;
+        this.Utility.LogText(this._TypeOfNotificationDataModel);
       }, error => {
         this.Utility.LogText(error);
       });
     }
-
-  /**
-   * get all notification api call on type of notification dropdown onchange
-   */
-   GetAllNotificationNos()
-   {
-      let url = this.urlService.GetAllNotificationNosAPI + this._TypeOfNotification;
-      this.httpService.get(url, null).subscribe(response => {
-        this._NotificationDetails = response;
-        this.Utility.LogText(this._NotificationDetails);
-      }, error => {
-        this.Utility.LogText(error);
-      });
-   }
 
   /**
    * search gazette details based on the selected typeofNotification and NotificationNo.
    */
   SearchGazetteDetails()
     {
-      if(this._TypeOfNotification != null && this._NotificationValue != null)
+      if(this._TypeOfNotification != null)
       {
-        this.GetGazzateByNotification();
+        // this.GetGazzateByNotification();
         this._ShowGazetteDetailsDiv = true
-        this._DisabledInputField = true;
+        this._DisabledGazetteInputField = true;
       }
       else
         {
-          alert("Please select Type of Notification and Notification No.!!");
+          alert("Please select Type of Notification!!");
         }
     }
 
   /***
-   * Get Gazzate details By NotificationAPI
+   * Get Gazzate details By NotificationAPI 
    */
   GetGazzateByNotification()
     {
-      // let url = this.urlService.GetGazzateByNotificationAPI + this._TypeOfNotification;
-      let url = this.urlService.GetGazzateByNotificationAPI + this._NotificationValue;
+      let url = this.urlService.GetGazzateByNotificationAPI + this._NotificationValue;//change
       this.httpService.get(url, null).subscribe(response => {
         this._GazetteModel = response;
         this.Utility.LogText(this._GazetteModel);
       }, error => {
         this.Utility.LogText(error);
-      });
-        
+      }); 
     }  
 
   /**
@@ -123,8 +113,7 @@ export class GazetteDetailsComponent implements OnInit {
    */
   AddNewGazetteDetails()
     {
-      this._DisabledInputField = false;
-      this.GetStateVillage();
+      this._DisabledGazetteInputField = false;
       this._GazetteModel = new GazetteModel();
       this._AddNewGazette = true;
     }
@@ -134,26 +123,13 @@ export class GazetteDetailsComponent implements OnInit {
    */
   EditGazetteDetails()
     {
-      this._DisabledInputField = false;
-      this.GetStateVillage();
+      this._DisabledGazetteInputField = false;
+      this._AddNewGazette = false;
     }
 
+ 
   /**
-  * Get State Village list
-  */
-  GetStateVillage()
-    {
-      let url = this.urlService.GetStateVillageAPI;
-      this.httpService.get(url, null).subscribe(response => {
-        this._StateVillageDetails = response;
-        this.Utility.LogText(this._StateVillageDetails);
-      }, error => {
-        this.Utility.LogText(error);
-      });
-    }
-
-  /**
-  * Document upload 
+  * Document upload in gazette details tab
   */
   FileUpload(argEvent: any) 
     {
@@ -171,15 +147,16 @@ export class GazetteDetailsComponent implements OnInit {
           const reader: FileReader = new FileReader();
           reader.readAsBinaryString(target.files[0]);
           const file = argEvent.target.files[0];
-          this._InputFileLabel = file.name; //saved file name with extn.
           let FileName = file.name.split('.').slice(0, -1).join('.');
           let Extension = file.name.split(".").pop();//file extension save 
 
           this._GazetteModel.Documents.push({'filePath':Extension ,'fileName': FileName,documentId : 0,gazzateId : this._GazetteModel.Gazzateid,lookupid : this._TypeOfNotification})
           console.log(this._GazetteModel.Documents);
+          this._IsEdit = false;
     }
 
-  EditDocument(arg)
+    /**edit uploaded gazette document */
+  EditGazetteDocument(arg)
     {
       this._IsEdit = true;
       this._EditDocument = arg
@@ -191,14 +168,9 @@ export class GazetteDetailsComponent implements OnInit {
    */
   SaveGazzateDetails()
     {
-      /**array datatype change */
-      this._GazetteModel.Villages = this._GazetteModel.Villages.map(i=>Number(i));
-      console.log(this._GazetteModel.Villages);
       this._GazetteModel.TypeOfNotification = this._TypeOfNotification;
       this._GazetteModel.NotificationNo = this._NotificationValue;
       let url = this.urlService.AddOrUpdateGazzateAPI;    
-      // this.httpService.CallBack = this.AddOrUpdateGazzateCallBack.bind(this);
-      //let options :{} = this.utility.PrepareRequestHeaderWithToken();
       this.httpService.HttpPostRequest(url,this._GazetteModel,this.AddOrUpdateGazzateCallBack.bind(this),null);
     }
    
@@ -214,12 +186,12 @@ export class GazetteDetailsComponent implements OnInit {
             {
               alert(GazetteRespDataModel.Message);
             }
-          this._DisabledInputField = true;           
+          this._DisabledGazetteInputField = true;           
         }
     }
  
 
-  DeleteDocument(index)
+  DeleteGazetteDocument(index)
     {
       this._GazetteModel.Documents.splice(index, 1);
     }
@@ -244,12 +216,58 @@ export class GazetteDetailsComponent implements OnInit {
       });
     }
 
+/**================================== Notification Tab methods ========================================**/
+ /**
+   * get all notification api call on type of notification dropdown onchange
+   */
+  GetAllNotificationNos()
+  {
+     let url = this.urlService.GetAllNotificationNosAPI + this._TypeOfNotification;//change
+     this.httpService.get(url, null).subscribe(response => {
+       this._NotificationDetails = response;
+       this.Utility.LogText(this._NotificationDetails);
+     }, error => {
+       this.Utility.LogText(error);
+     });
+  }  
 
+/**add new Notification details */
+  AddNewNotificationDetails()
+    {
+      this._AddNewNotification = true;
+      this._DisabledNoticeInputField = false;
+      this._NotificationModel = new NotificationModel();
+    }
+
+  /**edit Notification details */  
+  EditNotificationDetails()
+    {
+      this._DisabledNoticeInputField = false;
+      this._AddNewNotification = false;
+    }
+
+  SearchNotificationDetails()
+    {
+      this._ShowNotificationDetailsDiv = true;
+      this._DisabledNoticeInputField = true;
+      this._AddNewNotification = false;
+    }
+
+  /**
+   * delete notification delete permanently
+   */
+  DeleteNotificationDetails()
+    {
+
+    }
+
+  DeleteNotificationDocument(index)
+    {
+      // array.splice(index, 1);
+    }
 
   DownlaodDocument()
     {
-      //this.downloadService.SavePdfFile("http://www.africau.edu/images/default/sample.pdf","downloadfile");
-      //this.downloadService.SavePdfFile("C:/Users/admin/Downloads/CL-10-Model", "downloadfile");
       let url =  "http://www.africau.edu/images/default/sample.pdf";
       let link = document.createElement('a');
       link.setAttribute('type', 'hidden');
@@ -259,14 +277,5 @@ export class GazetteDetailsComponent implements OnInit {
       link.click();
       link.remove();
     }
-
-  test()
-    {
-      let url =  "http://www.africau.edu/images/default/sample.pdf"
-      let headers = new HttpHeaders();
-      headers = headers.set('Accept', 'application/pdf');
-      return this.http.get(url, { headers: headers, responseType: 'blob' as 'json' });
-    }
-
 
 }
