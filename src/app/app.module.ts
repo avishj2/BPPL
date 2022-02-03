@@ -10,6 +10,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AlertsModule } from 'angular-alert-module';
 import { CommonModule } from '@angular/common';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -68,6 +69,7 @@ import { TestLoginComponent } from './test-login/test-login.component';
     ConfirmationPopoverModule.forRoot({
       focusButton: 'confirm',
     }),
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [DialogService],
   bootstrap: [AppComponent]

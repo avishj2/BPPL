@@ -12,11 +12,9 @@ export class GazetteModel{
     NotificationNo: any;
     FileNo:  any;
     HindiFileNo: string;
-    SoNo: 0;
     TypeOfNotification: any;
     GazzateGeneratedDate: any;
     DispatchDate: any;
-    SODate: any;
     GazzatePublishedDate: any;
     GazzatePrintedDate: any;
     GazzateRecievedDate: any;
@@ -25,11 +23,9 @@ export class GazetteModel{
     HindiFromPage: any;
     HindiToPage: any;
 
-    Villages : any[];
     Documents : Documents[];
 
     constructor(){
-        this.Villages =[];
         this.Documents = [];
 
     }
@@ -43,7 +39,7 @@ export class Documents{
     lookupid : any;
 }
 
-export class NotificationTypeDataModel{
+export class TypeOfNotificationDataModel{
     LookupId: any;
     LookupGroupId: any;
     lookupName:string;
@@ -51,9 +47,18 @@ export class NotificationTypeDataModel{
     CreatedDate: any;
 }
 
-export class CommonDropdownModel{
-    Value: any;
-    Text: string;
-    Selected: boolean;
-}
+export class NotificationModel{
+    Gazzateid: any;
+    GazetteFileNo : any;
+    NotificationNo: any;
+    SoNo: any;
+    EnglishFromPage: any;
+    EnglishToPage: any;
+    HindiFromPage: any;
+    HindiToPage: any;
+    Documents : Documents[];
 
+    constructor(){
+        this.Documents = [];
+    }
+}

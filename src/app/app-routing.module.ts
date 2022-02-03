@@ -32,8 +32,8 @@ const routes: Routes = [
       {path: 'AGI_Terminals', component: TerminalsDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / AGI/Terminals Details'}},
       {path: 'PreEngineering', component: PreEngineeringComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Pre-Engineering'}},
       {path: 'Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'}},
-       /**View details section components */
-       {path: 'VeiwVillageDetails', component: ViewVillageDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / Village Details'}},
+      /**View details section components */
+      {path: 'VeiwVillageDetails', component: ViewVillageDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / Village Details'}},
 
     ]},
 ];
