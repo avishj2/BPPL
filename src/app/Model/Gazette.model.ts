@@ -16,7 +16,6 @@ export class GazetteModel{
     TypeOfNotification: any;
     GazzateGeneratedDate: any;
     DispatchDate: any;
-    SODate: any;
     GazzatePublishedDate: any;
     GazzatePrintedDate: any;
     GazzateRecievedDate: any;
