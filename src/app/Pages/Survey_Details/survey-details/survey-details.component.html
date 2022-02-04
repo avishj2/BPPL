@@ -1,0 +1,242 @@
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+    <!-- <div class="ParentBtn" *ngIf="_ShowVillageDetailsDiv == true"> 
+        <button class="btn-primary" (click)="AddNewVillageDetails()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Village Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-primary" (click)="EditingModeOntoVillageDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Village Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteVillageDetails()" *ngIf="_NewVillageAdd == false" ngbTooltip ="Delete Village Information from Database">
+            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+            Delete Village Details
+        </button>
+    </div> -->
+</app-filters>
+<br>
+<div class="row" >
+    <div class="col-lg-12">
+      <!-- <div class="md-tabs">*ngIf="_showTabs == true" -->
+        <ngb-tabset>
+          <ngb-tab title="Land Details">
+            <ng-template ngbTabContent>
+                <div class="m-t-15">
+                    Land Detail
+                  </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Survey No. Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                <!-- Survey Number Details -->
+               <div class="ParentBtn"> 
+                    <button class="btn-primary" (click)="AddNewSurveyDetails()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                        Add Survey Details
+                    </button>&nbsp;&nbsp;  
+                    <button class="btn-primary" (click)="EditSurveyDetails()">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                        Edit Survey Details
+                    </button>&nbsp;&nbsp;  
+                    <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteSurveyDetails()" *ngIf="_AddNewSurveyDetails == false" ngbTooltip ="Delete Village Information from Database">
+                        <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                        Delete Survey Details
+                    </button>
+                </div> 
+                <div class="card" *ngIf ="_ShowSurveyDetailsDiv == true">
+                    <div class="innercard">
+                        <div class="d-flex justify-content-between">
+                            <div class="CardTitle">Survey Details</div> 
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label class="Label">Survey No (English) <b><h7 style="color: red;">*</h7></b> </label>
+                                <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.SurveyNoEng" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.SurveyNoEng}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Survey No  (Hindi) </label>
+                                <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_SurveyModel.SurveyNoHindi"[ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.SurveyNoHindi}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">                
+                                <label class="Label">Survey No (Local)</label>
+                                <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_SurveyModel.SurveyNoLocal"[ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.SurveyNoLocal}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Electric Poles</label>
+                                <input *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.ElectricPoles" [ngModelOptions]="{standalone: true}" >
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.ElectricPoles}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">                
+                                <label class="Label">LandType</label>
+                                <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.LandType">
+                                    <option></option>
+                                </select>
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.LandType}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Panchanama Date</label>
+                                <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.PanchanamaDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.PanchanamaDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.PanchanamaDate}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">NOC Date</label>
+                                <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.NOCDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.NOCDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.NOCDate}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">                
+                                <label class="Label">Telephonic Poles </label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_SurveyModel.TelephonicPoles" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.TelephonicPoles}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Corridor Width</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.CorridorWidth" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.CorridorWidth}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Corridor Width</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.CorridorWidth" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.CorridorWidth}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Cultivalted/Non-Cultivalted</label>
+                                <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.CultivaltedNonCultivalted">
+                                    <option></option>
+                                </select>
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.CorridorWidth}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Mortgage Details</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.MortgageDetails" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.MortgageDetails}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Khata Number</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.KhataNumber}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3" *ngIf="_DisabledInputField == false && _AddNewSurveyDetails == false">
+                                <button type="button" class="btn-primary"style="margin-top: 10%;" (click)="SaveSurveyDetails()">
+                                    Save Survey Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+          
+          <ngb-tab title="Crop Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Crop Details
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Tree Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Tree
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Restoration Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Restoration Details
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Assign Panch">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <!-- info card start -->
+                Assign Panch
+                <!-- info card end -->
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Crossing Details">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Revenue Form">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                   
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Gazette And Notice">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                Gazette And Notice
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+          <ngb-tab title="Compensation">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                Compensation
+              </div>
+            </ng-template>
+          </ngb-tab>
+  
+        </ngb-tabset><!-- close tabs -->
+      <!-- </div> -->
+    </div>
+  </div>

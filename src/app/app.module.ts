@@ -32,6 +32,7 @@ import { TerminalsDetailsComponent } from './Pages/Survey_Details/terminals-deta
 import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/adhoc-payment-details.component';
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
 import { TestLoginComponent } from './test-login/test-login.component';
+import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/survey-details.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { TestLoginComponent } from './test-login/test-login.component';
     TerminalsDetailsComponent,
     AdhocPaymentDetailsComponent,
     ViewVillageDetailsComponent,
-    TestLoginComponent
+    TestLoginComponent,
+    SurveyDetailsComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [
