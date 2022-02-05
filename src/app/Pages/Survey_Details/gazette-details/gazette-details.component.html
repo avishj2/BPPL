@@ -34,7 +34,7 @@
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                             Edit Gazette Details
                         </button>&nbsp;&nbsp;
-                        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteGazetteDetails()" ngbTooltip ="Delete Gazette Information from Database">
+                        <button class="btn-danger"*ngIf="_AddNewGazette == false" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteGazetteDetails()" ngbTooltip ="Delete Gazette Information from Database">
                             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                             Delete Gazette Details
                         </button>
@@ -231,7 +231,7 @@
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                             Edit Notification Details
                         </button>&nbsp;&nbsp;
-                        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteNotificationDetails()" ngbTooltip ="Delete Gazette Notification Information from Database">
+                        <button class="btn-danger"*ngIf="_AddNewGazette == false" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteNotificationDetails()" ngbTooltip ="Delete Gazette Notification Information from Database">
                             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                             Delete Notification Details
                         </button>
