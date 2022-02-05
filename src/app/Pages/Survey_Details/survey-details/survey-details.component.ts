@@ -4,7 +4,7 @@ import { HttpService } from '../../../services/http.service';
 import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
-import {SurveyeModel } from 'src/app/Model/Survey.model';
+import {SurveyeModel,LandModel } from 'src/app/Model/Survey.model';
 @Component({
   selector: 'app-survey-details',
   templateUrl: './survey-details.component.html',
@@ -20,6 +20,8 @@ _AddNewSurveyDetails: boolean = false;
 _ShowSurveyDetailsDiv: boolean = false;
 _DisabledInputField: boolean = true;
 _SurveyModel : SurveyeModel;
+_LandModel : LandModel;
+_AddNewLand : boolean = false;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -30,6 +32,7 @@ _SurveyModel : SurveyeModel;
       this._FilterControls = new FilterControls();
       this.SetFilterControls();
       this._SurveyModel = new SurveyeModel();
+      this._LandModel = new LandModel();
     }
 
   /**hide/show filter menu based on the component requirement */
@@ -46,6 +49,7 @@ _SurveyModel : SurveyeModel;
     {
       //TEST
       this._ShowSurveyDetailsDiv = true;
+      this._DisabledInputField = false;
     }
 
 
@@ -81,6 +85,26 @@ _SurveyModel : SurveyeModel;
     }
 
   SaveSurveyDetails()
+    {
+
+    }
+    /***==========================  LandDetails    =========================== */
+  AddNewLandDetails()
+    {
+      this._AddNewLand = true;
+      this._DisabledInputField = false;
+    }
+
+  EditLandDetails()
+    {
+      this._DisabledInputField = false;
+    }
+
+  DeleteLandDetails()
+    {
+
+    }
+  SaveLandDetails()
     {
 
     }

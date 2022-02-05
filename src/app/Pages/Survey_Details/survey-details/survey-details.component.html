@@ -1,32 +1,92 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
-    <!-- <div class="ParentBtn" *ngIf="_ShowVillageDetailsDiv == true"> 
-        <button class="btn-primary" (click)="AddNewVillageDetails()">
-            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-            Add Village Details
-        </button>&nbsp;&nbsp;  
-        <button class="btn-primary" (click)="EditingModeOntoVillageDetails()">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
-            Edit Village Details
-        </button>&nbsp;&nbsp;  
-        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteVillageDetails()" *ngIf="_NewVillageAdd == false" ngbTooltip ="Delete Village Information from Database">
-            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
-            Delete Village Details
-        </button>
-    </div> -->
 </app-filters>
 <br>
 <div class="row" >
     <div class="col-lg-12">
       <!-- <div class="md-tabs">*ngIf="_showTabs == true" -->
         <ngb-tabset>
+            <!-- Land details start -->
           <ngb-tab title="Land Details">
             <ng-template ngbTabContent>
                 <div class="m-t-15">
-                    Land Detail
-                  </div>
+                    <div class="ParentBtn"> 
+                        <button class="btn-primary" (click)="AddNewLandDetails()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                            Add Land Details
+                        </button>&nbsp;&nbsp;  
+                        <button class="btn-primary" (click)="EditLandDetails()">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                            Edit Land Details
+                        </button>&nbsp;&nbsp;  
+                        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteLandDetails()" *ngIf="_AddNewLand == false" ngbTooltip ="Delete Village Information from Database">
+                            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                            Delete Land Details
+                        </button>
+                    </div>
+                    <div class="card">
+                        <div class="innercard">
+                            <div class="d-flex justify-content-between">
+                                <div class="CardTitle">Land Details</div> 
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-3">
+                                    <label class="Label">Owner Name</label>
+                                    <select class="form-control">
+                                        <option></option>
+                                    </select>
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.OwnerName}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Type of Land</label>
+                                    <select class="form-control">
+                                        <option></option>
+                                    </select>
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.LandType}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="Label">Ha</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Ha}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="Label">Are</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Are}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="Label">Sqmt</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Sqmt}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                                    <div class="div-to-align">
+                                        <br>
+                                    <button type="button" class="btn-primary" (click)="SaveLandDetails()">
+                                            Save Land Details  
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </ng-template>
           </ngb-tab>
-  
+           <!-- Land details End -->
+
           <ngb-tab title="Survey No. Details">
             <ng-template ngbTabContent>
               <div class="m-t-15">
@@ -53,7 +113,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-3">
-                                <label class="Label">Survey No (English) <b><h7 style="color: red;">*</h7></b> </label>
+                                <label class="Label">Survey No (English) <b><h7 style="color: red;">*</h7></b></label>
                                 <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.SurveyNoEng" [ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                                     {{this._SurveyModel.SurveyNoEng}}
@@ -86,28 +146,28 @@
                                     <option></option>
                                 </select>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.LandType}}
+                                    {{ this._SurveyModel.LandType }}
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <label class="Label">Panchanama Date</label>
                                 <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.PanchanamaDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.PanchanamaDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.PanchanamaDate}}
+                                    {{ this._SurveyModel.PanchanamaDate }}
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <label class="Label">NOC Date</label>
                                 <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.NOCDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.NOCDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.NOCDate}}
+                                    {{ this._SurveyModel.NOCDate }}
                                 </div>
                             </div>
                             <div class="col-lg-3">                
                                 <label class="Label">Telephonic Poles </label>
                                 <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_SurveyModel.TelephonicPoles" [ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.TelephonicPoles}}
+                                    {{ this._SurveyModel.TelephonicPoles }}
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -115,7 +175,7 @@
                                 <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
                                 [(ngModel)]="_SurveyModel.CorridorWidth" [ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.CorridorWidth}}
+                                    {{ this._SurveyModel.CorridorWidth }}
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -135,6 +195,15 @@
                                     {{this._SurveyModel.CorridorWidth}}
                                 </div>
                             </div>
+                            <!-- <div class="col-lg-2">
+                                <label class="Label">ROU Area</label>
+                                <label class="Label">Ha</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.KhataNumber}}
+                                </div>
+                            </div> -->
                             <div class="col-lg-3">
                                 <label class="Label">Mortgage Details</label>
                                 <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
@@ -151,15 +220,96 @@
                                     {{this._SurveyModel.KhataNumber}}
                                 </div>
                             </div>
-                            <div class="col-lg-3" *ngIf="_DisabledInputField == false && _AddNewSurveyDetails == false">
-                                <button type="button" class="btn-primary"style="margin-top: 10%;" (click)="SaveSurveyDetails()">
-                                    Save Survey Details
-                                </button>
+                            <div class="col-lg-3">
+                                <label class="Label">Inactive</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.KhataNumber}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">If Inactive give the reasons</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.KhataNumber}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Rev. Rec. Updated</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.KhataNumber}}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="Label">ROU Area</label>
+                                <div class="form-group row" style="margin-left: 1.2%;">
+                                    <label class="col-sm-0.5 col-form-label">Ha</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Are</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="Label" style="margin-left: -6%;">Total Area</label>
+                                <div class="form-group row" style="margin-left: -6%;">
+                                    <label class="col-sm-0.5 col-form-label">Ha</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Are</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="Label" style="margin-left: -6%;">Panchanama Area</label>
+                                <div class="form-group row" style="margin-left: -6%;">
+                                    <label class="col-sm-0.5 col-form-label">Ha</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Are</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                    <div class="col-lg-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                                <div class="div-to-align">
+                                    <br>
+                                    <button type="button" class="btn-primary" (click)="SaveSurveyDetails()">
+                                        Save Survey Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                     </div>   
                 </div>
-
                 <!-- info card end -->
               </div>
             </ng-template>
@@ -174,14 +324,228 @@
               </div>
             </ng-template>
           </ngb-tab>
-  
-          <ngb-tab title="Tree Details">
+          <ngb-tab title="Owner Details">
             <ng-template ngbTabContent>
               <div class="m-t-15">
-                <!-- info card start -->
-                Tree
-                <!-- info card end -->
+                <div class="ParentBtn"> 
+                    <button class="btn-primary" (click)="AddNewLandDetails()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                        Add Owner Details
+                    </button>&nbsp;&nbsp;  
+                    <button class="btn-primary" (click)="EditLandDetails()">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                        Edit Owner Details
+                    </button>&nbsp;&nbsp;  
+                    <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteLandDetails()" *ngIf="_AddNewLand == false" ngbTooltip ="Delete Village Information from Database">
+                        <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                        Delete Owner Details
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="innercard">
+                        <div class="d-flex justify-content-between">
+                            <div class="CardTitle">Owner Details</div> 
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label class="Label">Owner Name (English)</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.KhataNumber}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Owner Name (Hindi)</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Owner Name  (Local)</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Owner Type</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Address (English)</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    {{this._SurveyModel.KhataNumber}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Address (Hindi)</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Address (Local)</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Owner Code</label>
+                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                                [ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">InActive Status</label>
+                            <div class="col-lg-1">
+                                <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
+                            [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                <!-- {{this._SurveyModel.KhataNumber}} -->
+                            </div>
+                            </div>
+            
+                            <label class="col-sm-2 col-form-label">Minor Owner </label>
+                            <div class="col-lg-1">
+                                <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
+                            [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                <!-- {{this._SurveyModel.KhataNumber}} -->
+                            </div>
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-3">
+                                <button  type="button" class="btn-primary"style="margin-top: 3%;">
+                                Save Owner Details
+                                </button>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
               </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Tree Details">
+            <ng-template ngbTabContent>
+                <div class="m-t-15">
+                    <div class="ParentBtn"> 
+                        <button class="btn-primary" (click)="AddNewLandDetails()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                            Add Tree Details
+                        </button>&nbsp;&nbsp;  
+                        <!-- <button class="btn-primary" (click)="EditLandDetails()">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                            Edit Tree Details
+                        </button>&nbsp;&nbsp;  
+                        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteLandDetails()" *ngIf="_AddNewLand == false" ngbTooltip ="Delete Village Information from Database">
+                            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                            Delete Tree Details
+                        </button> -->
+                    </div>
+                    <div class="card">
+                        <div class="innercard">
+                            <div class="d-flex justify-content-between">
+                                <div class="CardTitle">Tree Details</div> 
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-3">
+                                    <label class="Label">Owner Name</label>
+                                    <select class="form-control">
+                                        <option></option>
+                                    </select>
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.OwnerName}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Range</label>
+                                    <select class="form-control">
+                                        <option></option>
+                                    </select>
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.LandType}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Tree Name</label>
+                                    <select class="form-control">
+                                        <option></option>
+                                    </select>
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.LandType}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Number Of Tree</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Ha}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Age (Years)</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Are}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Girth (cms)</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Sqmt}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Height (m)</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Sqmt}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="Label">Remarks</label>
+                                   <input type="text" class="form-control">
+                                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._LandModel.Sqmt}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                                    <div class="div-to-align">
+                                        <br>
+                                    <button type="button" class="btn-primary" (click)="SaveLandDetails()">
+                                            Save Tree Details  
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </ng-template>
           </ngb-tab>
   
@@ -204,14 +568,6 @@
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Crossing Details">
-            <ng-template ngbTabContent>
-              <div class="m-t-15">
-                
-              </div>
-            </ng-template>
-          </ngb-tab>
-  
           <ngb-tab title="Revenue Form">
             <ng-template ngbTabContent>
               <div class="m-t-15">

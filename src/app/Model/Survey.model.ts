@@ -3,7 +3,7 @@ export class SurveyeModel{
     SurveyNoEng : string;
     SurveyNoLocal: string;
     SurveyNoHindi: string;
-    ROUArea 
+    ROUAreaHa: any; 
     CultivaltedNonCultivalted : any;
     ElectricPoles : any;
     TelephonicPoles: any;
@@ -23,3 +23,15 @@ export class SurveyeModel{
     }
   }
 
+
+  export class OwnerModel{
+
+  }
+
+  export class LandModel{
+      OwnerName : string;
+      LandType : string;
+      Ha: any;
+      Are: any;
+      Sqmt: any;
+  }
