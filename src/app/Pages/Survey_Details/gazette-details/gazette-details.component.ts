@@ -6,7 +6,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { saveAs } from 'file-saver';
 import { DownloadService } from '../../../services/download.service';
 import { HttpClient,HttpResponse, HttpHeaders } from "@angular/common/http";
-import { TypeOfNotificationDataModel,GazetteDetailsDataModel ,GazetteModel,NotificationModel } from 'src/app/Model/Gazette.model';
+import { GazzateDropDownsDataModel,GazetteDetailsDataModel ,GazetteModel,NotificationModel,NotificationDetailsDataModel} from 'src/app/Model/Gazette.model';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 
 
@@ -19,24 +19,29 @@ export class GazetteDetailsComponent implements OnInit {
   @ViewChild('multiSelect') multiSelect;
   /**enable/disable input fields variables*/
   _DisabledGazetteInputField: boolean = true;
-  _DisabledNoticeInputField: boolean = true;
   /**add new gazette/notification details */
   _AddNewGazette : boolean = false;
-  _AddNewNotification : boolean = false;
-
   _ShowGazetteDetailsDiv : boolean = false;
-  _ShowNotificationDetailsDiv : boolean = false;
-  
-  _TypeOfNotificationDataModel :TypeOfNotificationDataModel[];
-  _NotificationDetails : CommonDropdownModel[];
-  _GazetteModel : GazetteModel;
-  _NotificationModel : NotificationModel;
-  /**TypeOfNotification and notification DD values save in these variables */
+  /**selected TypeOfNotification DD value save in this variable */
   _TypeOfNotification : any;
-  _NotificationValue;
-  /**test */
-  _IsEdit : boolean = false;
-  _EditDocument;
+  /**edit uploaded documents flag */
+  _IsEditGazetteDoc : boolean = false;
+  _GazetteDocIndex : any;
+  /**new apis data model */
+  _GazzateDropDownsDataModel : GazzateDropDownsDataModel;
+  _GetGazetteByTypeNotification  : CommonDropdownModel[];
+  _GetAllGazetteDetails : CommonDropdownModel[];
+  _GazetteModel : GazetteModel;
+
+  /**notification tab variables/ object */
+  _IsEditNotificationDoc : boolean = false;
+  _NotificationValue: any;
+  _NotificationDetails : CommonDropdownModel[];
+  _NotificationModel : NotificationModel;
+  _ShowNotificationDetailsDiv : boolean = false;
+  _AddNewNotification : boolean = false;//add new notification
+  _DisabledNoticeInputField: boolean = true;
+  _NotificationDocIndex : any;
 
  /**confirmation popup, message variables */
  popoverTitle ="Delete Details";
@@ -51,27 +56,44 @@ export class GazetteDetailsComponent implements OnInit {
     private http: HttpClient
     ) 
     { 
-      this._TypeOfNotificationDataModel = [];
-      this._NotificationDetails = [];
       this._GazetteModel = new GazetteModel();
+      this._GazzateDropDownsDataModel =  new GazzateDropDownsDataModel();
+      this._NotificationDetails = [];
+      this._GetGazetteByTypeNotification =[];
+      /**notification tab object */
       this._NotificationModel = new NotificationModel();
+      this._GetAllGazetteDetails = [];
 
     }
 
   ngOnInit(): void 
     {
-      this.GetTypeOfNotification();
+      this.GetGazzateDropDowns();//gazette tab api
+      this.GetAllNotificationNos();//Notification Tab API
     }
 
   /**
    * Get type of notification list
    */
-  GetTypeOfNotification()
+   GetGazzateDropDowns()
     {
-      let url = this.urlService.GetTypeOfNotificationsAPI;
+      let url = this.urlService.GetGazzateDropDownsAPI;
       this.httpService.get(url, null).subscribe(response => {
-        this._TypeOfNotificationDataModel = response;
-        this.Utility.LogText(this._TypeOfNotificationDataModel);
+        this._GazzateDropDownsDataModel = response;
+        this.Utility.LogText(this._GazzateDropDownsDataModel);
+      }, error => {
+        this.Utility.LogText(error);
+      });
+    }
+
+  /**
+   * Get All Gazzates based on the selected TypeOfNotification
+   */
+  GetGazzatesByTypeOfNotification()
+    {
+      let url = this.urlService.GetAllGazzatesAPI + this._TypeOfNotification;
+      this.httpService.get(url, null).subscribe(response => {
+        this._GetGazetteByTypeNotification = response;
       }, error => {
         this.Utility.LogText(error);
       });
@@ -82,24 +104,25 @@ export class GazetteDetailsComponent implements OnInit {
    */
   SearchGazetteDetails()
     {
-      if(this._TypeOfNotification != null)
+      console.log(this._GazetteModel.Gazzateid);
+      if(this._GazetteModel.Gazzateid != null)
       {
-        // this.GetGazzateByNotification();
+        this.GetGazzateByGazzateID();
         this._ShowGazetteDetailsDiv = true
         this._DisabledGazetteInputField = true;
       }
       else
         {
-          alert("Please select Type of Notification!!");
+          alert("Please select Gazette!!");
         }
     }
 
   /***
-   * Get Gazzate details By NotificationAPI 
+   * Get Gazzate details By Gazetteid 
    */
-  GetGazzateByNotification()
+  GetGazzateByGazzateID()
     {
-      let url = this.urlService.GetGazzateByNotificationAPI + this._NotificationValue;//change
+      let url = this.urlService.GetGazzateByIdAPI + this._GazetteModel.Gazzateid;
       this.httpService.get(url, null).subscribe(response => {
         this._GazetteModel = response;
         this.Utility.LogText(this._GazetteModel);
@@ -134,9 +157,9 @@ export class GazetteDetailsComponent implements OnInit {
   FileUpload(argEvent: any) 
     {
       const target: DataTransfer = <DataTransfer>(argEvent.target);
-      if(this._IsEdit == true && target.files.length != 0)
+      if(this._IsEditGazetteDoc == true && target.files.length != 0)
         {
-          this._GazetteModel.Documents.splice(this._EditDocument, 1);
+          this._GazetteModel.Documents.splice(this._GazetteDocIndex, 1);
           //let data = document.getElementById("Edit");
         }
       else if(target.files.length === 0)
@@ -150,16 +173,17 @@ export class GazetteDetailsComponent implements OnInit {
           let FileName = file.name.split('.').slice(0, -1).join('.');
           let Extension = file.name.split(".").pop();//file extension save 
 
-          this._GazetteModel.Documents.push({'filePath':Extension ,'fileName': FileName,documentId : 0,gazzateId : this._GazetteModel.Gazzateid,lookupid : this._TypeOfNotification})
+          this._GazetteModel.Documents.push({'filePath':Extension ,'fileName': FileName,documentId : 0,gazzateId : this._GazetteModel.Gazzateid,lookupid : this._TypeOfNotification,notificationId : 0})
           console.log(this._GazetteModel.Documents);
-          this._IsEdit = false;
+          this._IsEditGazetteDoc = false;
     }
 
     /**edit uploaded gazette document */
   EditGazetteDocument(arg)
     {
-      this._IsEdit = true;
-      this._EditDocument = arg
+      this._IsEditGazetteDoc = true;
+      const index = this._GazetteModel.Documents.indexOf(arg);
+      this._GazetteDocIndex = index
     }
   
   /**
@@ -169,8 +193,7 @@ export class GazetteDetailsComponent implements OnInit {
   SaveGazzateDetails()
     {
       this._GazetteModel.TypeOfNotification = this._TypeOfNotification;
-      this._GazetteModel.NotificationNo = this._NotificationValue;
-      let url = this.urlService.AddOrUpdateGazzateAPI;    
+      let url = this.urlService.AddOrUpdateGazzateAPI;     
       this.httpService.HttpPostRequest(url,this._GazetteModel,this.AddOrUpdateGazzateCallBack.bind(this),null);
     }
    
@@ -186,16 +209,18 @@ export class GazetteDetailsComponent implements OnInit {
             {
               alert(GazetteRespDataModel.Message);
             }
-          this._DisabledGazetteInputField = true;           
+          if (this._AddNewGazette == false)
+            {
+              alert("Gazette updated sucessfully!!");
+              this._DisabledGazetteInputField = true;
+            }
+          else
+            {
+              alert("Gazette added sucessfully!!");
+              this._DisabledGazetteInputField = true;
+            }   
         }
     }
- 
-
-  DeleteGazetteDocument(index)
-    {
-      this._GazetteModel.Documents.splice(index, 1);
-    }
-
 
   /**Delete Gazette Details */
   DeleteGazetteDetails()
@@ -210,10 +235,16 @@ export class GazetteDetailsComponent implements OnInit {
         else {
           alert("Gazette deleted successfully !");
           this._GazetteModel = new GazetteModel();
+          this.GetGazzatesByTypeOfNotification();
         }
       }, error => {
         this.Utility.LogText(error);
       });
+    }
+
+  DeleteGazetteDocument(index)
+    {
+      this._GazetteModel.Documents.splice(index, 1);
     }
 
 /**================================== Notification Tab methods ========================================**/
@@ -221,21 +252,57 @@ export class GazetteDetailsComponent implements OnInit {
    * get all notification api call on type of notification dropdown onchange
    */
   GetAllNotificationNos()
-  {
-     let url = this.urlService.GetAllNotificationNosAPI + this._TypeOfNotification;//change
-     this.httpService.get(url, null).subscribe(response => {
-       this._NotificationDetails = response;
-       this.Utility.LogText(this._NotificationDetails);
-     }, error => {
-       this.Utility.LogText(error);
-     });
-  }  
+    {
+      let url = this.urlService.GetAllNotificationNosAPI;
+      this.httpService.get(url, null).subscribe(response => {
+        this._NotificationDetails = response;
+        this.Utility.LogText(this._NotificationDetails);
+      }, error => {
+        this.Utility.LogText(error);
+      });
+    } 
+
+  /**
+   * Search notification details based on the selected Notification no
+   **/  
+  SearchNotificationDetails()
+    {
+      this.GetNotificationById();
+      this._ShowNotificationDetailsDiv = true;
+      this._DisabledNoticeInputField = true;
+      this._AddNewNotification = false;
+    }
+
+  /**get Notification By Notification Id*/
+  GetNotificationById()
+    {
+      let url = this.urlService.GetNotificationByIdAPI + this._NotificationValue;
+      this.httpService.get(url, null).subscribe(response => {
+        this._NotificationModel = response;
+        this.Utility.LogText(this._NotificationModel);
+      }, error => {
+        this.Utility.LogText(error);
+      });
+    } 
+
+  GetAllGazette()
+    {
+      let url = this.urlService.GetAllGazzatesAPI; //null;
+      this.httpService.get(url, null).subscribe(response => {
+        this._GetAllGazetteDetails = response;
+        // this.Utility.LogText(this._GetAllGazetteDetails);
+      }, error => {
+        this.Utility.LogText(error);
+      });
+    } 
+
 
 /**add new Notification details */
   AddNewNotificationDetails()
     {
       this._AddNewNotification = true;
       this._DisabledNoticeInputField = false;
+      this.GetAllGazette();
       this._NotificationModel = new NotificationModel();
     }
 
@@ -244,13 +311,43 @@ export class GazetteDetailsComponent implements OnInit {
     {
       this._DisabledNoticeInputField = false;
       this._AddNewNotification = false;
+      this.GetAllGazette();
     }
 
-  SearchNotificationDetails()
+    /**
+   *  add new Notification details or edit details 
+   *  api call
+   */
+  SaveNotificationDetails()
     {
-      this._ShowNotificationDetailsDiv = true;
-      this._DisabledNoticeInputField = true;
-      this._AddNewNotification = false;
+      this._NotificationModel.NotificationNo = this._NotificationValue;
+      let url = this.urlService.AddOrUpdateNotificationAPI;    
+      this.httpService.HttpPostRequest(url,this._NotificationModel,this.AddOrUpdateNotificationCallBack.bind(this),null);
+    }
+ 
+  /**
+  * @param dtas 
+  */
+  AddOrUpdateNotificationCallBack(dtas)
+    {
+      if (dtas != null)
+        {
+          let NotificationRespDataModel : NotificationDetailsDataModel = dtas;
+          if (NotificationRespDataModel.StatusCode != 200) 
+            {
+              alert(NotificationRespDataModel.Message);
+            }
+          if (this._AddNewNotification == false)
+            {
+              alert("Notification updated sucessfully!!");
+              this._DisabledNoticeInputField = true;
+            }
+          else
+            {
+              alert("Notification added sucessfully!!");
+              this._DisabledNoticeInputField = true;
+            }   
+        }
     }
 
   /**
@@ -258,11 +355,61 @@ export class GazetteDetailsComponent implements OnInit {
    */
   DeleteNotificationDetails()
     {
-
+      let url = this.urlService.DeleteNotificationAPI + this._NotificationModel.NotificationId;
+      this.httpService.get(url, null).subscribe(response => {
+        let NotificationDeleteResp: any = response;
+        if (NotificationDeleteResp.StatusCode != 200) 
+        {
+          alert(NotificationDeleteResp.Message);
+        }
+        else {
+          alert("Notification deleted successfully !");
+          this._NotificationModel = new NotificationModel();
+          this.GetAllNotificationNos();
+        }
+      }, error => {
+        this.Utility.LogText(error);
+      });
     }
 
-  DeleteNotificationDocument(index)
+  /**
+   * Upload notification documents
+   */
+  NotificationDocUpload(argEvent : any)
     {
+      const target: DataTransfer = <DataTransfer>(argEvent.target);
+      if(this._IsEditNotificationDoc == true && target.files.length != 0)
+        {
+          //at the time of doc edit, removed existing document
+          this._NotificationModel.Documents.splice(this._NotificationDocIndex, 1);//delete existing document
+        }
+      else if(target.files.length === 0)
+        {
+          alert("Please select file!!");
+          return;
+        }
+          const reader: FileReader = new FileReader();
+          reader.readAsBinaryString(target.files[0]);
+          const file = argEvent.target.files[0];
+          let FileName = file.name.split('.').slice(0, -1).join('.');
+          let Extension = file.name.split(".").pop();//file extension save 
+
+          this._NotificationModel.Documents.push({'filePath':Extension ,'fileName': FileName,documentId : 0,gazzateId : this._GazetteModel.Gazzateid,lookupid : this._TypeOfNotification,notificationId : 0})
+          console.log(this._GazetteModel.Documents);
+          this._IsEditNotificationDoc = false;
+    }
+
+  EditNotificationDocument(arg)
+    {
+      this._IsEditNotificationDoc = true;
+      this._NotificationDocIndex = this._NotificationModel.Documents.indexOf(arg);
+    }
+
+    /**delete uploaded document */
+  DeleteNotificationDocument(arg)
+    {
+      let Index = this._NotificationModel.Documents.indexOf(arg);
+      this._NotificationModel.Documents.splice(Index , 1);
       // array.splice(index, 1);
     }
 

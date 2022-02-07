@@ -4,16 +4,18 @@
             <div class="row">
                 <div class="col-lg-3">
                     <label class ="Label">Type of Notification</label>
-                    <select class="form-control"[(ngModel)]="_TypeOfNotification"(change)="GetAllNotificationNos()">
-                        <option *ngFor="let data of _TypeOfNotificationDataModel"[value]="data.LookupId">
-                            {{data.lookupName}}
+                    <select class="form-control"[(ngModel)]="_TypeOfNotification"(change)="GetGazzatesByTypeOfNotification()">
+                        <option *ngFor="let data of _GazzateDropDownsDataModel.TypeOfNotifications"[value]="data.Value">
+                            {{data.Text}}
                         </option>
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <label class ="Label">Gazette Number</label>
-                    <select class="form-control">
-                        <option></option>
+                    <label class ="Label">Gazette </label>
+                    <select class="form-control"[(ngModel)]="_GazetteModel.Gazzateid">
+                        <option *ngFor="let data of _GetGazetteByTypeNotification"[value]="data.Value">
+                            {{data.Text}}
+                        </option>
                     </select>
                 </div>
                 <div class="col-lg-2">
@@ -142,8 +144,8 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class ="Label">Type Of Gazette</label>
-                                <ng-select [allowClear]="true" [items]="_NotificationTypeDataModel" bindLabel="lookupName" bindValue ="LookupId" [(ngModel)]="_GazetteModel.typeOfNotification"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <label class ="Label">Type Of Notification</label>
+                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.TypeOfNotifications" bindLabel="Text" bindValue ="Value" [(ngModel)]="_GazetteModel.TypeOfNotification"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">
@@ -209,7 +211,7 @@
                 <div class="col-lg-3">
                     <label class ="Label">Notification Number</label>
                     <select class="form-control"[(ngModel)]="_NotificationValue">
-                        <option *ngFor="let data of _NotificationDetails" [value]="data.Text">{{data.Text}}</option>
+                        <option *ngFor="let data of _NotificationDetails" [value]="data.Value">{{data.Text}}</option>
                     </select>
                 </div>
                 <div class="col-lg-2">
@@ -248,26 +250,26 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <label class ="Label">Gazette File Number</label>
-                                <select class="form-control" *ngIf="_DisabledNoticeInputField != true">
-                                    <option></option>
+                                <select class="form-control"[(ngModel)]="GazzateId" *ngIf="_DisabledNoticeInputField != true"[ngModelOptions]="{standalone: true}">
+                                    <option *ngFor="let data of _GetAllGazetteDetails" [value]="data.Value">{{data.Text}}</option>
                                 </select>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledNoticeInputField == true">
-                                    {{this._NotificationModel.GazetteFileNo}}
+                                    {{this._NotificationModel.GazzateId}}
                                 </div>
                             </div>
                           
                             <div class="col-lg-3">
-                                <label class ="Label">SO Number</label>
-                                <input *ngIf="_DisabledNoticeInputField != true" class="form-control"[(ngModel)]="_NotificationModel.SoNo"[ngModelOptions]="{standalone: true}">
+                                <label class ="Label">SO Numbers</label>
+                                <input *ngIf="_DisabledNoticeInputField != true" class="form-control"[(ngModel)]="_NotificationModel.SONames"[ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledNoticeInputField == true">
-                                    {{this._NotificationModel.SoNo}}
+                                    {{this._NotificationModel.SONames}}
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <label class ="Label">Notification No</label>
-                                <input *ngIf="_DisabledNoticeInputField != true" class="form-control"[(ngModel)]="_NotificationModel.NotificationNo"[ngModelOptions]="{standalone: true}">
+                                <label class ="Label">Notification Name</label>
+                                <input *ngIf="_DisabledNoticeInputField != true" class="form-control"[(ngModel)]="_NotificationModel.NottificationName"[ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledNoticeInputField == true">
-                                    {{this._NotificationModel.NotificationNo | date:'mediumDate'}}
+                                    {{this._NotificationModel.NottificationName}}
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -300,7 +302,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="SaveDataClass">
-                                    <button class="btn-primary"*ngIf="_DisabledNoticeInputField == false && _AddNewNotification == false"(click)="SaveGazzateDetails()">Save Notification Details</button>
+                                    <button class="btn-primary"*ngIf="_DisabledNoticeInputField == false && _AddNewNotification == false"(click)="SaveNotificationDetails()">Save Notification Details</button>
                                 </div>
                             </div>
                         </div>
@@ -314,12 +316,12 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class ="Label">Type Of Notification</label>
-                                <ng-select [allowClear]="true" [items]="_NotificationTypeDataModel" bindLabel="lookupName" bindValue ="LookupId" [(ngModel)]="_GazetteModel.typeOfNotification"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <ng-select [allowClear]="true" [items]="_NotificationDetails" bindLabel="Text" bindValue ="Value" [(ngModel)]="_NotificationModel.NotificationId"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">
                                 <div class="FileInputClass">
-                                    <input #fileInput (change)="FileUpload($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                                    <input #Notificationfile (change)="NotificationDocUpload($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -327,7 +329,6 @@
                                     <button class="btn-primary">Upload Details</button>
                                 </div>
                             </div>
-                    
                         </div><br>
                         <table class="stripe table table-striped table-bordered" width="98%">
                             <thead>
@@ -342,7 +343,7 @@
                                     <td>{{data.filePath}}</td>
                                     <td>{{data.fileName}}</td>
                                     <td>
-                                        <button type="button" class="btn-success" (click)="EditGazetteDocument(data,fileInput.click())"title="Edit">
+                                        <button type="button" class="btn-success" (click)="EditNotificationDocument(data,Notificationfile.click())"title="Edit">
                                             <i class="fa fa-edit"></i>
                                         </button>&nbsp;&nbsp;&nbsp;
                                         <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument()">
@@ -362,7 +363,7 @@
                 <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
                     <div class="div-to-align"*ngIf="_DisabledNoticeInputField == false && _AddNewNotification == true">
                         <br>
-                        <button type="button" class="btn-primary" (click)="SaveGazzateDetails()">
+                        <button type="button" class="btn-primary" (click)="SaveNotificationDetails()">
                            Add Notification Details
                         </button>
                     </div>

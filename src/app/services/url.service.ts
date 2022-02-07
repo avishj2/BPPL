@@ -27,11 +27,16 @@ export class UrlService {
 
   /**gazette APIs */
   GetTypeOfNotificationsAPI = this.url + '/api/Gazzate/GetTypeOfNotifications';
-  GetStateVillageAPI = this.url + '/api/Gazzate/GetStateVillage';
-  GetAllNotificationNosAPI = this.url + '/api/Gazzate/GetAllNotificationNos?typeOfNotification=';
+  GetGazzateDropDownsAPI = this.url + '/api/Gazzate/GetGazzateDropDowns';
+  GetAllNotificationNosAPI = this.url + '/api/Gazzate/GetAllNotificationNos';
+  GetAllGazzatesAPI =  this.url +'/api/Gazzate/GetAllGazzates?typeOfNotification=';
+  GetGazzateByIdAPI = this.url +'/api/Gazzate/GetGazzateById?gazzateId=';
   AddOrUpdateGazzateAPI = this.url + '/api/Gazzate/AddOrUpdateGazzate';
   DeleteGazzateAPI = this.url + '/api/Gazzate/DeleteGazzate?gazzateId=';
-  GetGazzateByNotificationAPI = this.url + '/api/Gazzate/GetGazzateByNotification?notificationNo=';
+
   
+  GetNotificationByIdAPI = this.url + '/api/Gazzate/GetNotificationById?notificationId=';
+  AddOrUpdateNotificationAPI = this.url +'/api/Gazzate/AddOrUpdateNotification';
+  DeleteNotificationAPI = this.url +'/api/Gazzate/DeleteNotification?notificationId=';
 }
 

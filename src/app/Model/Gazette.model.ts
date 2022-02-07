@@ -1,4 +1,4 @@
-import {BaseResponse} from './Base.model';
+import {BaseResponse, CommonDropdownModel} from './Base.model';
 
 export class GazetteDetailsDataModel extends BaseResponse {
     Result : GazetteModel;
@@ -9,7 +9,6 @@ export class GazetteDetailsDataModel extends BaseResponse {
 }
 export class GazetteModel{
     Gazzateid: any;
-    NotificationNo: any;
     FileNo:  any;
     HindiFileNo: string;
     TypeOfNotification: any;
@@ -22,7 +21,6 @@ export class GazetteModel{
     EnglishToPage: any;
     HindiFromPage: any;
     HindiToPage: any;
-
     Documents : Documents[];
 
     constructor(){
@@ -37,6 +35,7 @@ export class Documents{
     documentId : any;
     gazzateId : any;
     lookupid : any;
+    notificationId : any;
 }
 
 export class TypeOfNotificationDataModel{
@@ -47,18 +46,45 @@ export class TypeOfNotificationDataModel{
     CreatedDate: any;
 }
 
+
+export class NotificationDetailsDataModel extends BaseResponse {
+    Result : NotificationModel;
+    constructor(){      
+      super();
+      this.Result = new NotificationModel();
+    }
+}
+
 export class NotificationModel{
-    Gazzateid: any;
-    GazetteFileNo : any;
+    NotificationId : any;
+    GazzateId: any;
+    NottificationName : string;
     NotificationNo: any;
-    SoNo: any;
+    SONames: string;
     EnglishFromPage: any;
     EnglishToPage: any;
     HindiFromPage: any;
     HindiToPage: any;
     Documents : Documents[];
 
-    constructor(){
+    constructor()
+    {
         this.Documents = [];
     }
+}
+
+
+export class GazzateDropDownsDataModel{
+    TypeOfNotifications :CommonDropdownModel[];
+    GazzateDocumentTypes:CommonDropdownModel[];
+    NotificationDocumentTypes:CommonDropdownModel[];
+    AwardSequence:CommonDropdownModel[];
+
+    constructor(){
+        this.TypeOfNotifications = [];
+        this.GazzateDocumentTypes = [];
+        this.NotificationDocumentTypes = [];
+        this.AwardSequence = [];
+    }
+
 }
