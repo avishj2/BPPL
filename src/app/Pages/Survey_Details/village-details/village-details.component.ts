@@ -217,16 +217,6 @@ IsDtInitialized: boolean = false;
         }
   }
 
-  /**add more items in the chainage array*/
-  AddChainageItem() {
-    this._DisabledChainageField = false;
-    if (this._NewChainage.ChainageFrom > 0 && this._NewChainage.ChainageTo > 0 && this._NewChainage.SurveyAgency) {
-      this._VillageModel.Chainages.push(this._NewChainage);
-      this.ReloadDatatable();
-      this._NewChainage = new VillageChainageModel(); // Creating new object so that new data can be added
-    }
-  }
-
   /**1.ChangeTo value will be more than chaniageFrom 
    * 2. Auto calculate lengthinkm, it will be difference b/w chaniageFrom and ChangeTo
   */
@@ -254,24 +244,24 @@ IsDtInitialized: boolean = false;
       this.Utility.LogText("DeleteVillage error" + error);
     });
   }
-
+  
   /**AT the time of editing/or on pageload chainage details save separate API */
-  SaveChaingeDetails(data: VillageChainageModel, addReq: boolean) {
+  SaveChainageDetails(data: VillageChainageModel, addReq: boolean) {
     if (this._NewVillageAdd == true) {
       // Add chianage in new village
       this._DisabledChainageField = false;
-      if (this._NewChainage.ChainageFrom > 0 && this._NewChainage.ChainageTo > 0 && this._NewChainage.SurveyAgency) {
+      if (this._NewChainage.ChainageFrom > 0 && this._NewChainage.ChainageTo > 0 && this._NewChainage.SurveyAgency && data.ChainageTo > data.ChainageFrom) {
         this._VillageModel.Chainages.push(this._NewChainage);
         this.ReloadDatatable();
         this._NewChainage = new VillageChainageModel(); // Creating new object so that new data can be added
       }
       return;
     }
-    if (data.ChainageFrom > 0 && data.ChainageTo > 0 && data.SurveyAgency && data.ChainageTo > data.ChainageFrom) {
-      // Add chainage in existing village
+    if (Number(data.ChainageFrom) > 0 && Number(data.ChainageTo) > 0 && data.SurveyAgency && Number(data.ChainageTo) > Number(data.ChainageFrom)) {
+      // Add chainage in existing village(edit mode)
       if (addReq) {
         data.VillageId = this._SearchCriteria.VillageId;
-        this._DisabledChainageField= false;
+        this._DisabledChainageField = false;
       }
       let url = this.urlService.AddOrUpdateVillageChainageAPI;
       this.httpService.Post(url, data).subscribe(response => {
@@ -283,6 +273,7 @@ IsDtInitialized: boolean = false;
         else {
           this._VillageModel.Chainages = villageChainageResModel.Result;
           this.ReloadDatatable();
+          this._DisabledInputField = true;
           if (addReq) {
             this._NewChainage = new VillageChainageModel();
           }
@@ -294,13 +285,6 @@ IsDtInitialized: boolean = false;
       }, error => {
         this.Utility.LogText("AddOrUpdateVillageChainageAPI error :" + error);
       });
-    }
-    else {
-      if(this._DisabledInputField== true){
-        alert("Please Enable Editing Mode");
-      }else{
-      alert("Please add chainage details before save !\nChainageTo should be more than from ChainageFrom");
-      }
     }
   }
 

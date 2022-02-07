@@ -86,28 +86,28 @@
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Chainge Details</div> 
             <div>
-                <i class="fa fa-plus-circle" (click)="SaveChaingeDetails(_NewChainage,true)"ngbTooltip="Add More Chainage"></i>
+                <i class="fa fa-plus-circle" (click)="SaveChainageDetails(_NewChainage,true)"ngbTooltip="Add More Chainage"></i>
             </div>
        </div>
        <form [formGroup]="myFormGroup"> 
             <div class="form-group row">
                 <div class="col-lg-3">
-                    <label class ="Label">Chainge From(Km)</label>
-                    <input *ngIf="_DisabledInputField != true"class="form-control"(input)="CalculateGreaterValue(_NewChainage)"[(ngModel)]="_NewChainage.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
-                    <div class="DisabledFieldLabel" *ngIf ="_DisabledInputField == true && _DisabledChainageField ==true">
+                    <label class ="Label">Chainage From(Km)</label>
+                    <input *ngIf="_DisabledInputField != true"class="form-control"(input)="CalculateGreaterValue(_NewChainage)"[(ngModel)]="_NewChainage.ChainageFrom" [ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber integer>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true && _DisabledChainageField ==true">
                         {{this._NewChainage.ChainageFrom}}
                     </div>
 
                 </div>
                 <div class="col-lg-3">
-                    <label class ="Label">Chainge To(Km)</label>
-                    <input *ngIf="_DisabledInputField != true" class="form-control"(input)="CalculateGreaterValue(_NewChainage)" [(ngModel)]="_NewChainage.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber>
+                    <label class ="Label">Chainage To(Km)</label>
+                    <input *ngIf="_DisabledInputField != true" class="form-control"(input)="CalculateGreaterValue(_NewChainage)" [(ngModel)]="_NewChainage.ChainageTo"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField" appTwoDigitDecimaNumber integer>
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true && _DisabledChainageField ==true">
                         {{this._NewChainage.ChainageTo}}
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <label class ="Label">Chainge Length(Km)</label>
+                    <label class ="Label">Chainage Length(Km)</label>
                     <input *ngIf="_DisabledInputField != true" class="form-control"[(ngModel)]="_NewChainage.LengthInKm"[ngModelOptions]="{standalone: true}"[disabled]="true" appTwoDigitDecimaNumber>
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true && _DisabledChainageField ==true">
                         {{this._NewChainage.LengthInKm}}
@@ -123,6 +123,16 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="row">
+                <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                    <div class="div-to-align" *ngIf="_DisabledInputField == false && _NewVillageAdd == false">
+                        <button type="button" class="btn-primary" (click)="SaveChainageDetails()">
+                            Save Chainage
+                         </button>
+                    </div>
+                </div>
+            </div> -->
+            
         </form>
         <br>
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
@@ -161,7 +171,7 @@
                         <button type="button" class="btn-success"(click)="EditOnlyChaingeDetails(data)" title="Edit" *ngIf="!data.IsEdit">
                             <i class="fa fa-edit "></i>
                         </button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn-success" title="Save" (click)="SaveChaingeDetails(data,false)" *ngIf="data.IsEdit">
+                        <button type="button" class="btn-success" title="Save" (click)="SaveChainageDetails(data,false)" *ngIf="data.IsEdit">
                             <i class="fa fa-save "></i>
                         </button>&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn-danger" title="Cancel" (click)="CancelChainageReq(data)" *ngIf="data.IsEdit">

@@ -29,7 +29,7 @@ export class VillageChainageModel{
     VillageId: number;
     VillageChainageId: number;
     ChainageFrom: number;
-    ChainageTo: number;
+    ChainageTo: any;
     SurveyAgency : string;
     LengthInKm : number;
     IsEdit:boolean;
