@@ -8,7 +8,7 @@ export class UrlService {
   constructor(   
   ) { }
 
-  url = "https://bppl.dgdatam.com"
+  url = "https://localhost:44340"; //"https://bppl.dgdatam.com"
 
   /**bppl api url **/
   GetAllStatesAPI = this.url + '/api/Filter/GetAllStates';
@@ -34,6 +34,9 @@ export class UrlService {
   AddOrUpdateGazzateAPI = this.url + '/api/Gazzate/AddOrUpdateGazzate';
   DeleteGazzateAPI = this.url + '/api/Gazzate/DeleteGazzate?gazzateId=';
 
+  AddGazzetteDocument = this.url + '/api/Gazzate/AddGazzetteDocument';
+  DownloadGazzete = this.url + '/api/Gazzate/Download?documentId=';
+  DeleteGazzetteDocument = this.url+ '/api/Gazzate/DeleteGazzetteDocument?documentId=';
   
   GetNotificationByIdAPI = this.url + '/api/Gazzate/GetNotificationById?notificationId=';
   AddOrUpdateNotificationAPI = this.url +'/api/Gazzate/AddOrUpdateNotification';

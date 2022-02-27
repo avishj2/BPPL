@@ -6,7 +6,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { saveAs } from 'file-saver';
 import { DownloadService } from '../../../services/download.service';
 import { HttpClient,HttpResponse, HttpHeaders } from "@angular/common/http";
-import { GazzateDropDownsDataModel,GazetteDetailsDataModel ,GazetteModel,NotificationModel,NotificationDetailsDataModel} from 'src/app/Model/Gazette.model';
+import { GazzateDropDownsDataModel,GazetteDetailsDataModel ,GazetteModel,NotificationModel,NotificationDetailsDataModel, GazzetteDocuments} from 'src/app/Model/Gazette.model';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 
 
@@ -43,10 +43,17 @@ export class GazetteDetailsComponent implements OnInit {
   _DisabledNoticeInputField: boolean = true;
   _NotificationDocIndex : any;
 
+  _gazzettedoc : GazzetteDocuments ;
+  _notificationDoc : GazzetteDocuments;
+
  /**confirmation popup, message variables */
  popoverTitle ="Delete Details";
  popoverMessage = "Are you sure you want to delete it ?";
  currentJustify = 'justified';//tab alignment 
+
+ file: File = null; // Variable to store file
+ notificationFile : File = null;
+
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -63,6 +70,8 @@ export class GazetteDetailsComponent implements OnInit {
       /**notification tab object */
       this._NotificationModel = new NotificationModel();
       this._GetAllGazetteDetails = [];
+      this._gazzettedoc = new GazzetteDocuments();
+      this._notificationDoc = new GazzetteDocuments();
 
     }
 
@@ -139,6 +148,7 @@ export class GazetteDetailsComponent implements OnInit {
       this._DisabledGazetteInputField = false;
       this._GazetteModel = new GazetteModel();
       this._AddNewGazette = true;
+      this._ShowGazetteDetailsDiv = false;
     }
 
   /** 
@@ -150,32 +160,75 @@ export class GazetteDetailsComponent implements OnInit {
       this._AddNewGazette = false;
     }
 
- 
+   // On file Select
+   onChange(event) {
+    this.file = event.target.files[0];
+   } 
+
   /**
   * Document upload in gazette details tab
   */
-  FileUpload(argEvent: any) 
+   FileUpload(isGazzette : boolean) 
     {
-      const target: DataTransfer = <DataTransfer>(argEvent.target);
-      if(this._IsEditGazetteDoc == true && target.files.length != 0)
-        {
-          this._GazetteModel.Documents.splice(this._GazetteDocIndex, 1);
-          //let data = document.getElementById("Edit");
-        }
-      else if(target.files.length === 0)
+        let gDoc : GazzetteDocuments;
+        if(!this.file && isGazzette)
         {
           alert("Please select file!!");
           return;
         }
-          const reader: FileReader = new FileReader();
-          reader.readAsBinaryString(target.files[0]);
-          const file = argEvent.target.files[0];
-          let FileName = file.name.split('.').slice(0, -1).join('.');
-          let Extension = file.name.split(".").pop();//file extension save 
+        if(!this._gazzettedoc.Lookupid && isGazzette)
+        {
+           alert("Please select gazzette doc type !");
+           return;
+        }
 
-          this._GazetteModel.Documents.push({'filePath':Extension ,'fileName': FileName,documentId : 0,gazzateId : this._GazetteModel.Gazzateid,lookupid : this._TypeOfNotification,notificationId : 0})
-          console.log(this._GazetteModel.Documents);
-          this._IsEditGazetteDoc = false;
+        if(!this.notificationFile && !isGazzette)
+        {
+          alert("Please select file!!");
+          return;
+        }
+        if(!this._notificationDoc.Lookupid && !isGazzette)
+        {
+           alert("Please select Notification doc type !");
+           return;
+        }
+
+        // Need to check if the gazzate is in edit mode ( Send current doc) or add mode ( send all docs at once)
+        if(isGazzette)
+        {
+          this._gazzettedoc.GazzateId = this._GazetteModel.Gazzateid;
+          this._gazzettedoc.Document = this.file;
+          gDoc = this._gazzettedoc;
+        }
+        else
+        {
+          this._notificationDoc.GazzateId = this._NotificationModel.GazzateId;
+          this._notificationDoc.NotificationId = this._NotificationModel.NotificationId;
+          this._notificationDoc.Document = this.notificationFile;
+          gDoc = this._notificationDoc;
+        }
+
+        let url = this.urlService.AddGazzetteDocument; 
+        this.httpService.Post(url, gDoc.GetFormData()).subscribe(response => {
+          let gazzetteDocumentModelResp: GazzetteDocuments[] = response.Result;   
+          if(isGazzette)
+          {       
+            this._GazetteModel.Documents = gazzetteDocumentModelResp;
+          }
+          else
+          {
+             this._NotificationModel.Documents = gazzetteDocumentModelResp;
+          }
+          this.Utility.LogText(gazzetteDocumentModelResp);
+          alert("Document updated sucessfully!!");
+        },error => {
+          this.Utility.LogText(error);
+        });
+    }
+
+    downloadFile(documentId : number): any {
+      let url = this.urlService.DownloadGazzete + documentId;
+      return this.http.get(url, {responseType: 'blob'});
     }
 
     /**edit uploaded gazette document */
@@ -192,6 +245,11 @@ export class GazetteDetailsComponent implements OnInit {
    */
   SaveGazzateDetails()
     {
+      if(!this._TypeOfNotification)
+      {
+         alert("Please select type of notification !");
+         return;
+      }
       this._GazetteModel.TypeOfNotification = this._TypeOfNotification;
       let url = this.urlService.AddOrUpdateGazzateAPI;     
       this.httpService.HttpPostRequest(url,this._GazetteModel,this.AddOrUpdateGazzateCallBack.bind(this),null);
@@ -218,8 +276,11 @@ export class GazetteDetailsComponent implements OnInit {
             {
               alert("Gazette added sucessfully!!");
               this._DisabledGazetteInputField = true;
+              this._GazetteModel.Gazzateid = GazetteRespDataModel.Result.Gazzateid;
             }   
         }
+        this._AddNewGazette = false;
+        this._ShowGazetteDetailsDiv = true;
     }
 
   /**Delete Gazette Details */
@@ -242,9 +303,24 @@ export class GazetteDetailsComponent implements OnInit {
       });
     }
 
-  DeleteGazetteDocument(index)
+  DeleteGazetteDocument( doc : GazzetteDocuments, isGazzette : boolean)
     {
-      this._GazetteModel.Documents.splice(index, 1);
+        let url = this.urlService.DeleteGazzetteDocument + doc.DocumentId;
+        this.httpService.get(url,null).subscribe(response => {
+          alert("Gazzette document deleted !");
+          if(isGazzette)
+          {
+            let index = this._GazetteModel.Documents.indexOf(doc);
+            this._GazetteModel.Documents.splice(index,1);
+          }
+          else
+          {
+            let index = this._NotificationModel.Documents.indexOf(doc);
+            this._NotificationModel.Documents.splice(index,1);
+          }
+        }, error => {
+          this.Utility.LogText(error);
+        });
     }
 
 /**================================== Notification Tab methods ========================================**/
@@ -271,6 +347,7 @@ export class GazetteDetailsComponent implements OnInit {
       this._ShowNotificationDetailsDiv = true;
       this._DisabledNoticeInputField = true;
       this._AddNewNotification = false;
+      this.GetAllGazette();
     }
 
   /**get Notification By Notification Id*/
@@ -304,6 +381,7 @@ export class GazetteDetailsComponent implements OnInit {
       this._DisabledNoticeInputField = false;
       this.GetAllGazette();
       this._NotificationModel = new NotificationModel();
+      this._ShowNotificationDetailsDiv = false;
     }
 
   /**edit Notification details */  
@@ -377,52 +455,30 @@ export class GazetteDetailsComponent implements OnInit {
    */
   NotificationDocUpload(argEvent : any)
     {
-      const target: DataTransfer = <DataTransfer>(argEvent.target);
-      if(this._IsEditNotificationDoc == true && target.files.length != 0)
-        {
-          //at the time of doc edit, removed existing document
-          this._NotificationModel.Documents.splice(this._NotificationDocIndex, 1);//delete existing document
-        }
-      else if(target.files.length === 0)
-        {
-          alert("Please select file!!");
-          return;
-        }
-          const reader: FileReader = new FileReader();
-          reader.readAsBinaryString(target.files[0]);
-          const file = argEvent.target.files[0];
-          let FileName = file.name.split('.').slice(0, -1).join('.');
-          let Extension = file.name.split(".").pop();//file extension save 
-
-          this._NotificationModel.Documents.push({'filePath':Extension ,'fileName': FileName,documentId : 0,gazzateId : this._GazetteModel.Gazzateid,lookupid : this._TypeOfNotification,notificationId : 0})
-          console.log(this._GazetteModel.Documents);
-          this._IsEditNotificationDoc = false;
+      this.notificationFile = argEvent.target.files[0];
     }
 
-  EditNotificationDocument(arg)
+  DownlaodDocument(doc : GazzetteDocuments)
     {
-      this._IsEditNotificationDoc = true;
-      this._NotificationDocIndex = this._NotificationModel.Documents.indexOf(arg);
-    }
-
-    /**delete uploaded document */
-  DeleteNotificationDocument(arg)
-    {
-      let Index = this._NotificationModel.Documents.indexOf(arg);
-      this._NotificationModel.Documents.splice(Index , 1);
-      // array.splice(index, 1);
-    }
-
-  DownlaodDocument()
-    {
-      let url =  "http://www.africau.edu/images/default/sample.pdf";
+      let url = this.urlService.DownloadGazzete + doc.DocumentId;
       let link = document.createElement('a');
       link.setAttribute('type', 'hidden');
+      link.setAttribute("target","_blank");
       link.href = url;
       link.download = "C:/Users/admin/Downloads/";
       document.body.appendChild(link);
       link.click();
       link.remove();
+    }
+
+    GetLookupValue(lookups : CommonDropdownModel[],lookUpid: number) : any
+    {
+        let object = lookups.find(elm=>elm.Value == lookUpid );
+        if(object)
+        {
+          return object.Text;
+        }
+        else { return lookUpid;}
     }
 
 }

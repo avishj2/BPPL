@@ -198,6 +198,7 @@ IsDtInitialized: boolean = false;
               this._VillageModel.VillageId = this._SearchCriteria.VillageId;
             }
             this._VillageModel.TalukaId = this._SearchCriteria.TalukaId;
+            
             this.httpService.Post(url, this._VillageModel).subscribe(response => {
             let villageResponseModel: VillageResponseModel = response;
             this.Utility.LogText(villageResponseModel);

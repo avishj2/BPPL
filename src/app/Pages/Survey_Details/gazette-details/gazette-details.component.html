@@ -26,24 +26,24 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="AddEditBtnClass" *ngIf="_ShowGazetteDetailsDiv == true">
+                <div class="col-lg-4" >
+                    <div class="AddEditBtnClass">
                         <button class="btn-primary"(click)="AddNewGazetteDetails()">
                             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                             Add Gazette
                         </button>&nbsp;&nbsp;
-                        <button class="btn-primary"(click)="EditGazetteDetails()">
+                        <button class="btn-primary"(click)="EditGazetteDetails()" *ngIf="_ShowGazetteDetailsDiv == true">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                             Edit Gazette Details
                         </button>&nbsp;&nbsp;
-                        <button class="btn-danger"*ngIf="_AddNewGazette == false" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteGazetteDetails()" ngbTooltip ="Delete Gazette Information from Database">
+                        <button class="btn-danger" *ngIf="_ShowGazetteDetailsDiv == true" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteGazetteDetails()" ngbTooltip ="Delete Gazette Information from Database">
                             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                             Delete Gazette Details
                         </button>
                     </div>
                 </div>
             </div> <br>
-            <form *ngIf="_ShowGazetteDetailsDiv == true">
+            <form *ngIf="_ShowGazetteDetailsDiv == true || _AddNewGazette == true">
                 <div class="card">
                     <div class="innercard">
                         <div class="d-flex justify-content-between">
@@ -137,25 +137,25 @@
                         </div>
                     </div> 
                 </div>
-                <div class="card">
+                <div class="card" *ngIf="_ShowGazetteDetailsDiv == true && _AddNewGazette == false">
                     <div class="innercard">
                         <div class="d-flex justify-content-between">
                             <div class="CardTitle">Documents Details</div> 
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class ="Label">Type Of Notification</label>
-                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.TypeOfNotifications" bindLabel="Text" bindValue ="Value" [(ngModel)]="_GazetteModel.TypeOfNotification"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <label class ="Label">Gazzete document types</label>
+                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.GazzateDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_gazzettedoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">
                                 <div class="FileInputClass">
-                                    <input #fileInput (change)="FileUpload($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                                    <input #fileInput (change)="onChange($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="UploattchClass">
-                                    <button class="btn-primary">Upload Details</button>
+                                    <button class="btn-primary" (click)="FileUpload(true)">Upload Details</button>
                                 </div>
                             </div>
                     
@@ -170,16 +170,13 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let data of _GazetteModel.Documents;let i = index">
-                                    <td>{{data.fileName}}</td>
-                                    <td>{{data.filePath}}</td>
+                                    <td>{{data.FileName}}</td>
+                                    <td>{{GetLookupValue(_GazzateDropDownsDataModel.GazzateDocumentTypes,data.Lookupid)}}</td>
                                     <td>
-                                        <button type="button" class="btn-success" (click)="EditGazetteDocument(data,fileInput.click())"title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </button>&nbsp;&nbsp;&nbsp;
-                                        <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument()">
+                                        <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument(data)">
                                             <i class="fa fa-download"></i>
                                         </button>&nbsp;&nbsp;&nbsp;
-                                        <button type="button" class="btn-danger"(click)="DeleteGazetteDocument(data)" title="Delete">
+                                        <button type="button" class="btn-danger"(click)="DeleteGazetteDocument(data,true)" title="Delete">
                                             <i class="fa fa-trash"></i>
                                         </button>   
                                     </td>
@@ -223,17 +220,17 @@
                     </div>
                 </div>
                 <div class="col-lg-1"></div>
-                <div class="col-lg-5" *ngIf="_ShowNotificationDetailsDiv == true">
+                <div class="col-lg-5">
                     <div class="AddEditNotificationBtnClass">
                         <button class="btn-primary"(click)="AddNewNotificationDetails()">
                             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                             Add Notification Details 
                         </button>&nbsp;&nbsp;
-                        <button class="btn-primary"(click)="EditNotificationDetails()">
+                        <button class="btn-primary" *ngIf="_ShowNotificationDetailsDiv == true" (click)="EditNotificationDetails()">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                             Edit Notification Details
                         </button>&nbsp;&nbsp;
-                        <button class="btn-danger"*ngIf="_AddNewGazette == false" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteNotificationDetails()" ngbTooltip ="Delete Gazette Notification Information from Database">
+                        <button class="btn-danger" *ngIf="_AddNewNotification == false && _ShowNotificationDetailsDiv == true" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteNotificationDetails()" ngbTooltip ="Delete Gazette Notification Information from Database">
                             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                             Delete Notification Details
                         </button>
@@ -241,7 +238,7 @@
                 </div>
             </div> 
             <br>
-            <form *ngIf="_ShowNotificationDetailsDiv == true">
+            <form *ngIf="_ShowNotificationDetailsDiv == true || _AddNewNotification == true">
                 <div class="card">
                     <div class="innercard">
                         <div class="d-flex justify-content-between">
@@ -250,11 +247,11 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <label class ="Label">Gazette File Number</label>
-                                <select class="form-control"[(ngModel)]="GazzateId" *ngIf="_DisabledNoticeInputField != true"[ngModelOptions]="{standalone: true}">
+                                <select class="form-control"[(ngModel)]="_NotificationModel.GazzateId" *ngIf="_DisabledNoticeInputField != true"[ngModelOptions]="{standalone: true}">
                                     <option *ngFor="let data of _GetAllGazetteDetails" [value]="data.Value">{{data.Text}}</option>
                                 </select>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledNoticeInputField == true">
-                                    {{this._NotificationModel.GazzateId}}
+                                    {{GetLookupValue(_GetAllGazetteDetails,_NotificationModel.GazzateId)}}
                                 </div>
                             </div>
                           
@@ -302,21 +299,21 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="SaveDataClass">
-                                    <button class="btn-primary"*ngIf="_DisabledNoticeInputField == false && _AddNewNotification == false"(click)="SaveNotificationDetails()">Save Notification Details</button>
+                                    <button class="btn-primary"*ngIf="_DisabledNoticeInputField == false && _AddNewNotification == false"(click)="SaveNotificationDetails()">Save Notification</button>
                                 </div>
                             </div>
                         </div>
                     </div> 
                 </div> 
-                <div class="card">
+                <div class="card" *ngIf="_ShowNotificationDetailsDiv == true && _AddNewNotification == false">
                     <div class="innercard">
                         <div class="d-flex justify-content-between">
                             <div class="CardTitle">Documents Details</div> 
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class ="Label">Type Of Notification</label>
-                                <ng-select [allowClear]="true" [items]="_NotificationDetails" bindLabel="Text" bindValue ="Value" [(ngModel)]="_NotificationModel.NotificationId"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <label class ="Label">Notification document types</label>
+                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.NotificationDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_notificationDoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">
@@ -326,30 +323,27 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="UploattchClass">
-                                    <button class="btn-primary">Upload Details</button>
+                                    <button class="btn-primary" (click)="FileUpload(false)">Upload Details</button>
                                 </div>
                             </div>
                         </div><br>
                         <table class="stripe table table-striped table-bordered" width="98%">
                             <thead>
                                 <tr>
-                                    <th>Document Type</th>
                                     <th>FileName</th>
+                                    <th>Document Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let data of _NotificationModel.Documents;let i = index">
-                                    <td>{{data.filePath}}</td>
-                                    <td>{{data.fileName}}</td>
+                                    <td>{{data.FileName}}</td>
+                                    <td>{{GetLookupValue(_GazzateDropDownsDataModel.NotificationDocumentTypes,data.Lookupid)}}</td>
                                     <td>
-                                        <button type="button" class="btn-success" (click)="EditNotificationDocument(data,Notificationfile.click())"title="Edit">
-                                            <i class="fa fa-edit"></i>
-                                        </button>&nbsp;&nbsp;&nbsp;
-                                        <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument()">
+                                        <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument(data)">
                                             <i class="fa fa-download"></i>
                                         </button>&nbsp;&nbsp;&nbsp;
-                                        <button type="button" class="btn-danger"(click)="DeleteNotificationDocument(data)" title="Delete">
+                                        <button type="button" class="btn-danger"(click)="DeleteGazetteDocument(data,false)" title="Delete">
                                             <i class="fa fa-trash"></i>
                                         </button>   
                                     </td>

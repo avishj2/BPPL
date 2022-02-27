@@ -40,6 +40,7 @@ export class DownloadService {
             var link = document.createElement("a");
             link.href = data;
             link.download = fileName + ".pdf";
+            
             link.dispatchEvent(
               new MouseEvent("click", {
                 bubbles: true,

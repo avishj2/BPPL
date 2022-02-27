@@ -21,21 +21,42 @@ export class GazetteModel{
     EnglishToPage: any;
     HindiFromPage: any;
     HindiToPage: any;
-    Documents : Documents[];
+    Documents : GazzetteDocuments[];
 
     constructor(){
         this.Documents = [];
-
     }
+
+    
 }
 
-export class Documents{
-    fileName : string;
-    filePath : string;
-    documentId : any;
-    gazzateId : any;
-    lookupid : any;
-    notificationId : any;
+export class GazzetteDocuments{
+    FileName : string;
+    FilePath : string;
+    DocumentId : any;
+    GazzateId : any;
+    Lookupid : any;
+    NotificationId : any;
+    FileNameWithGuid : string;
+    Document : File
+
+    public GetFormData() : FormData
+    {
+        let formDataIn = new FormData();
+        this.DocumentId = this.DocumentId ? this.DocumentId : 0;
+        this.NotificationId = this.NotificationId ? this.NotificationId : null;
+
+        formDataIn.append('DocumentId', JSON.stringify(this.DocumentId));
+        formDataIn.append('GazzateId', JSON.stringify(this.GazzateId));
+        formDataIn.append('Lookupid', this.Lookupid);
+        if(this.NotificationId)
+        {
+           formDataIn.append('NotificationId', JSON.stringify(this.NotificationId));
+        }
+        formDataIn.append('Document', this.Document);
+
+        return formDataIn;
+    }
 }
 
 export class TypeOfNotificationDataModel{
@@ -65,7 +86,7 @@ export class NotificationModel{
     EnglishToPage: any;
     HindiFromPage: any;
     HindiToPage: any;
-    Documents : Documents[];
+    Documents : GazzetteDocuments[];
 
     constructor()
     {
