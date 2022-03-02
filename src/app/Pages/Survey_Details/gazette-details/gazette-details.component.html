@@ -128,6 +128,15 @@
                                 </div>
                             </div>
                             <div class="col-lg-3">
+                                <label class ="Label">Award Sequence</label>
+                                <select class="form-control"[(ngModel)]="_GazetteModel.AwardSeqId" *ngIf="_DisabledGazetteInputField != true"[ngModelOptions]="{standalone: true}">
+                                    <option *ngFor="let data of _GazzateDropDownsDataModel.AwardSequence" [value]="data.Value">{{data.Text}}</option>
+                                </select>
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
+                                    {{GetLookupValue(_GazzateDropDownsDataModel.AwardSequence,_GazetteModel.AwardSeqId)}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
                                 <div class="SaveDataClass">
                                     <button class="btn-primary" *ngIf="_DisabledGazetteInputField == false && _AddNewGazette == false"(click)="SaveGazzateDetails()">
                                         Save Gazette Details

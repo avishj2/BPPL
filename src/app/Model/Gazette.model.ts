@@ -21,6 +21,7 @@ export class GazetteModel{
     EnglishToPage: any;
     HindiFromPage: any;
     HindiToPage: any;
+    AwardSeqId : any;
     Documents : GazzetteDocuments[];
 
     constructor(){

@@ -277,6 +277,7 @@ export class GazetteDetailsComponent implements OnInit {
               alert("Gazette added sucessfully!!");
               this._DisabledGazetteInputField = true;
               this._GazetteModel.Gazzateid = GazetteRespDataModel.Result.Gazzateid;
+              this._AddNewGazette = false;
             }   
         }
         this._AddNewGazette = false;
@@ -424,6 +425,7 @@ export class GazetteDetailsComponent implements OnInit {
             {
               alert("Notification added sucessfully!!");
               this._DisabledNoticeInputField = true;
+              this._AddNewNotification = false;
             }   
         }
     }
