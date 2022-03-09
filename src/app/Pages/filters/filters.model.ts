@@ -1,3 +1,4 @@
+
 export class DropdownDataModel{
   Jurisdiction : any;
   Section : any;
@@ -8,6 +9,8 @@ export class DropdownDataModel{
   Taluka : any;
   Village : any;
   SurveyNumber : any;
+  CrossingTypes: any;
+  CrossingID: any;
 
   constructor(){
 

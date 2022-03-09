@@ -1,10 +1,12 @@
-.col-sm-3 {
-    /* max-width: 6%; */
-    font-weight: 550;
+.ParentBtn{
+    margin-top: 3%;
+    margin-left: -33%;
+   
 }
-.innercard {
-    margin: 1%;
+.SaveDataClass,.UploattchClass{
+    margin-top: 11%;
+    width: 50%;
 }
-.form-group {
-    margin-bottom: 0.6rem;
+.FileInputClass{
+    margin-top: 11%;
 }

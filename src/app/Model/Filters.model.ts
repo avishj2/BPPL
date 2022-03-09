@@ -1,3 +1,5 @@
+import {CommonDropdownModel} from 'src/app/Model/Base.model';
+
 /**get all states details from api, data model */
 export class StateDetails{
     StateId  : any;
@@ -43,6 +45,8 @@ export class SearchCriteria
         ChainageFrom : any;
         ChainageTo : any;
         SurveyNumber : any;
+        CrossingType : any;
+        CrossingID : any;
     }
 /**
  * Defines the selection from the dropdown.
@@ -68,4 +72,18 @@ export class SearchCriteria
      ShowChainageFrom : boolean;
      ShowChainageTo : boolean;
      ShowSurneyNos : boolean;
+     ShowCrossingTypes: boolean;
+     ShowCrossingNumber: boolean;
  }
+
+ export class CrossingDropdownDataModel{
+    CrossingApprovalTypes :CommonDropdownModel[];
+    CrossingDocumentTypes : CommonDropdownModel[];
+    CrossingTypes : CommonDropdownModel[];
+      constructor()
+        {
+          this.CrossingApprovalTypes =[];
+          this.CrossingDocumentTypes =[];
+          this.CrossingTypes =[];
+        }
+  }

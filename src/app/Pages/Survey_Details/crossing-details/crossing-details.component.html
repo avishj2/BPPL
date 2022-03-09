@@ -1,102 +1,211 @@
-<form>
+<!-- add filter component ,pass and get data from child -->
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+    <div class="ParentBtn"> 
+        <button class="btn-primary" (click)="AddNewCrossingDetails()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Crossing Details
+        </button>&nbsp;&nbsp;  
+        <button *ngIf="_ShowCrossingDetailsDiv == true" class="btn-primary"(click)="EditCrossingDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Crossing Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteCrossingDetails()" *ngIf="_ShowCrossingDetailsDiv == true" ngbTooltip ="Delete Crossing Information from Database">
+            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+            Delete Crossing Details
+        </button>
+    </div>
+</app-filters>
+<br>
+
+<form *ngIf="_ShowCrossingDetailsDiv == true || _AddNewCrosssing == true">
     <div class="card">
         <div class="innercard"> 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Crossing Number</label>
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Crossing Details</div> 
+            </div>
+            <div class="row">
                 <div class="col-lg-3">
-                    <select class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingNo"[ngModelOptions]="{standalone: true}">
-                        <option> </option>
+                    <label class ="Label">Crossing Number</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"
+                    [(ngModel)]="_CrossingDataModel.CrossingNo" [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField ==true">
+                        {{this._CrossingDataModel.CrossingNo}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Crossing Name</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.CrossingName" [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.CrossingName}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Crossing Chainage(Km)</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.CrossingChainage" [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.CrossingChainage}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Crossing B/W IP-TP From</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.CrossingIpTpStart" [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.CrossingIpTpStart}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Crossing B/W IP-TP To</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control" [(ngModel)]="_CrossingDataModel.CrossingIpTpEnd" [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.CrossingIpTpEnd}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">One Time Rent</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.OneTimeRent" [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.OneTimeRent}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Refundable</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.Refundable" [ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.Refundable}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Non Refundable</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.NonRefundable" [ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.NonRefundable}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Date Of Application</label>
+                    <input type="date"*ngIf="_DisabledCrossingInputField != true" class="form-control"[value]="_CrossingDataModel.DateOfApplication | date:'yyyy-MM-dd'" (input)="_CrossingDataModel.DateOfApplication = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.DateOfApplication | date:'mediumDate'}}
+                    </div>
+                </div>
+                <!-- <div class="col-lg-3">
+                    <label class ="Label">Date Of Demand Note</label>
+                    <input type="date"*ngIf="_DisabledCrossingInputField != true" class="form-control"[value]="_CrossingDataModel.DateofPermission | date:'yyyy-MM-dd'" (input)="_CrossingDataModel.DateofPermission = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.DateofPermission | date:'mediumDate'}}
+                    </div>
+                </div> -->
+                <div class="col-lg-3">
+                    <label class ="Label">Crossing Authority Name</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control" [(ngModel)]="_CrossingDataModel.AuthorityName"[ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.AuthorityName}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Crossing Authority Address</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true"class="form-control" [(ngModel)]="_CrossingDataModel.AuthorityAddress"[ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.AuthorityAddress}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Description</label>
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true"class="form-control" [(ngModel)]="_CrossingDataModel.Description"[ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.Description}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Date Of Permission/Aggrement </label>
+                    <input type="date" *ngIf="_DisabledCrossingInputField != true"class="form-control"[value]="_CrossingDataModel.DateofPermission | date:'yyyy-MM-dd'" (input)="_CrossingDataModel.DateofPermission = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.DateofPermission | date:'mediumDate'}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Approved </label>
+                    <select class="form-control"*ngIf="_DisabledCrossingInputField != true"[(ngModel)]="_CrossingDataModel.CrossingApproval"[ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let data of _CrossingDropdowns.CrossingApprovalTypes" [value]="data.Value">
+                            {{data.Text}}
+                        </option>
                     </select>
-                    <!-- [(ngModel)]="_DropdownDataModel.SurveyNumber"-->
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{GetLookupValue(_CrossingDropdowns.CrossingApprovalTypes, _CrossingDataModel.CrossingApproval)}}
+                    </div>
                 </div>
-
-                <label class="col-sm-3 col-form-label">Crossing Name</label>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingName"[ngModelOptions]="{standalone: true}">
+                    <div class="SaveDataClass">
+                        <button class="btn-primary"*ngIf="_DisabledCrossingInputField == false && _AddNewCrosssing == false" (click)="SaveCrossingDetails()">
+                            Save Crossing
+                        </button>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Crossing Chainage(Km)</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingChainageKm" [ngModelOptions]="{standalone: true}">
-                </div>
-
-                <label class="col-sm-3 col-form-label">Crossing B/W IP-TP From  </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingIPTPFrom" [ngModelOptions]="{standalone: true}">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Crossing B/W IP-TP To</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingIPTPTo" [ngModelOptions]="{standalone: true}">
-                </div>
-
-                <label class="col-sm-3 col-form-label">One Time Rent </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.oneTimeRent" [ngModelOptions]="{standalone: true}">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Non Refundable</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.NonRefundable"[ngModelOptions]="{standalone: true}">
-                </div>
-
-                <label class="col-sm-3 col-form-label">Refundable </label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.Refundable" [ngModelOptions]="{standalone: true}">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Date Of Application </label>
-                <div class="col-lg-3">
-                    <input type="date" class="form-control"[value]="_CrossDetailsDataModel.CrossDetails.DateOfApplication | date:'yyyy-MM-dd'" (input)="_CrossDetailsDataModel.CrossDetails.DateOfApplication = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
-                </div>
-
-                <label class="col-sm-3 col-form-label">Date Of Demand Note </label>
-                <div class="col-lg-3">
-                    <input type="date" class="form-control"[value]="_CrossDetailsDataModel.CrossDetails.DateOfDemandNote | date:'yyyy-MM-dd'" (input)="_CrossDetailsDataModel.CrossDetails.DateOfDemandNote = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Crossing Authority Name </label>
-                <div class="col-lg-3">
-                   <input type="text"class="form-control" [(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingAuthorityName"[ngModelOptions]="{standalone: true}">
-                </div>
-
-                <label class="col-sm-3 col-form-label">Crossing Authority Address</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.CrossingAuthorityAddress" [ngModelOptions]="{standalone: true}">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Description</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.Description" [ngModelOptions]="{standalone: true}">
-                </div>
-
-                <label class="col-sm-3 col-form-label">Date Of Permission/Aggrement </label>
-                <div class="col-lg-3">
-                    <input type="date" class="form-control"[value]="_CrossDetailsDataModel.CrossDetails.DateOfPermission | date:'yyyy-MM-dd'" (input)="_CrossDetailsDataModel.CrossDetails.DateOfPermission = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
-                </div>
-            </div>
-            
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Approved </label>
-                <div class="col-lg-3">
-                    <select class="form-control"[(ngModel)]="_CrossDetailsDataModel.CrossDetails.Approved"[ngModelOptions]="{standalone: true}">
-                        <option> </option>
-                    </select>
-                    
-                </div>
-            </div>
+            <br>
         </div> 
+    </div>
+
+    <div class="card" *ngIf="_ShowCrossingDetailsDiv == true && _AddNewCrosssing == false">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Documents Details</div> 
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class ="Label">Gazzete document types</label>
+                    <ng-select [allowClear]="true" [items]="_CrossingDropdowns.CrossingDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Crossingdoc.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                    </ng-select>
+                </div>
+                <div class="col-lg-3">
+                    <div class="FileInputClass">
+                        <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="UploattchClass">
+                        <button class="btn-primary" (click)="FileUpload(true)">Upload Details</button>
+                    </div>
+                </div>
+        
+            </div><br>
+            <table class="stripe table table-striped table-bordered" width="98%">
+                <thead>
+                    <tr>
+                        <th>FileName</th>
+                        <th>Document Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _CrossingDataModel.Documents;let i = index">
+                        <td>{{data.FileName}}</td>
+                        <td>
+                        {{GetLookupValue(_CrossingDropdowns.CrossingDocumentTypes, data.Lookupid)}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn-info" title="Download" (click)="DownlaodCrossingDocument(data)">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger"(click)="DeleteCrossingDocument(data)" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>   
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div> 
+
+    <div class="row">
+        <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+            <div class="div-to-align"*ngIf="_DisabledCrossingInputField == false && _AddNewCrosssing == true">
+                <br>
+                <button type="button" class="btn-primary" (click)="SaveCrossingDetails()">
+                   Add Crossing Details
+                </button>
+            </div>
+        </div>
     </div>
 </form>

@@ -8,7 +8,7 @@ export class UrlService {
   constructor(   
   ) { }
 
-  url = "https://localhost:44340"; //"https://bppl.dgdatam.com"
+  url ="https://bppl.dgdatam.com"; //"https://localhost:44340"; 
 
   /**bppl api url **/
   GetAllStatesAPI = this.url + '/api/Filter/GetAllStates';
@@ -41,5 +41,15 @@ export class UrlService {
   GetNotificationByIdAPI = this.url + '/api/Gazzate/GetNotificationById?notificationId=';
   AddOrUpdateNotificationAPI = this.url +'/api/Gazzate/AddOrUpdateNotification';
   DeleteNotificationAPI = this.url +'/api/Gazzate/DeleteNotification?notificationId=';
+
+  //crosssing api
+  GetCrossingDropDownsAPI = this.url +'/api/Crossing/GetCrossingDropDowns';
+  AddOrUpdateCrossingAPI = this.url + '/api/Crossing/AddOrUpdateCrossing';
+  DeleteCrossingAPI= this.url + '/api/Crossing/DeleteCrossing?crossingId=';
+  GetCrossingByIdAPI= this.url + '/api/Crossing/GetCrossingById?crossingId=';
+  GetAllCrossingsAPI= this.url + '/api/Crossing/GetAllCrossings?typeOfCrossing=';
+  AddCrossingDocumentAPI= this.url + '/api/Crossing/AddCrossingDocument';
+  DownloadCrossingDocAPI= this.url + '/api/Crossing/Download?documentId=';
+  DeleteCrossingDocumentAPI = this.url + '/api/Crossing/DeleteGazzetteDocument?documentId=';
 }
 
