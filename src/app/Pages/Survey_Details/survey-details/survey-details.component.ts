@@ -63,6 +63,7 @@ _AddNewLand : boolean = false;
       if (Object.keys(this._SearchCriteria).length === 0) 
       {
         alert("Please Select State, District, taluka or village!!");
+        
       }
     }
 
