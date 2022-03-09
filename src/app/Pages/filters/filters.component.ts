@@ -2,12 +2,14 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
-import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria, DropDownChangeEnum, FilterControls} from 'src/app/Model/Filters.model';
+import { StateDetails,DistrictDetails,TalukaDetails,VillageDetails,SearchCriteria, DropDownChangeEnum, FilterControls,CrossingDropdownDataModel} from 'src/app/Model/Filters.model';
 import { UtilityService } from 'src/app/services/utility.service';
-import {DropdownDataModel} from './filters.model';
+import { DropdownDataModel } from './filters.model';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
 import {from} from 'rxjs';
+import { TwoDigitDecimaNumberDirective } from './two-digit-decima-number.directive';
+import {CommonDropdownModel} from 'src/app/Model/Base.model';
 
 @Component({
   selector: 'app-filters',
@@ -26,7 +28,9 @@ export class FiltersComponent implements OnInit {
   _TalukaDetails : TalukaDetails[];
   _VillageDetails : VillageDetails[];
   _SearchCriteria : SearchCriteria;
- 
+  _CrossingDetails :CrossingDropdownDataModel;
+  _CrossingIds : CommonDropdownModel[];
+
   DropdownData = [
     { id : 27 , name  : "Ajmer" },
     { id : 84 , name  : "Alwar" },
@@ -47,13 +51,15 @@ export class FiltersComponent implements OnInit {
     )
     {
       this._SearchCriteria = new SearchCriteria();
+      this._CrossingDetails = new CrossingDropdownDataModel();
     }
 
   ngOnInit() 
     {
       this.PopulateState();
       /**get data From parent component */
-      this.Utility.LogText(this.filterControls)
+      this.Utility.LogText(this.filterControls);
+      this.PopulateCrossingType();
     }
 
   /**API CALL FOR state details */
@@ -120,6 +126,27 @@ export class FiltersComponent implements OnInit {
         this._VillageDetails = response;
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
+        });
+    }
+
+
+  PopulateCrossingType()
+    {
+      let url = this.urlService.GetCrossingDropDownsAPI;
+      this.httpService.get(url,null).subscribe(response => {
+        this._CrossingDetails = response;
+        },error => {
+          console.log("GetCrossingDropDownsAPI error",error);
+        });
+    }
+
+  GetAllCrossingsData(argtypeOfCrossing)
+    {
+      let url = this.urlService.GetAllCrossingsAPI + argtypeOfCrossing;
+      this.httpService.get(url,null).subscribe(response => {
+        this._CrossingIds = response;
+        },error => {
+          console.log("GetAllCrossingsAPI error",error);
         });
     }
 

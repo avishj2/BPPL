@@ -226,7 +226,8 @@ export class GazetteDetailsComponent implements OnInit {
         });
     }
 
-    downloadFile(documentId : number): any {
+    downloadFile(documentId : number): any 
+    {
       let url = this.urlService.DownloadGazzete + documentId;
       return this.http.get(url, {responseType: 'blob'});
     }
@@ -420,12 +421,14 @@ export class GazetteDetailsComponent implements OnInit {
             {
               alert("Notification updated sucessfully!!");
               this._DisabledNoticeInputField = true;
+              this.GetAllNotificationNos();//Notification Tab API
             }
           else
             {
               alert("Notification added sucessfully!!");
               this._DisabledNoticeInputField = true;
               this._AddNewNotification = false;
+              this.GetAllNotificationNos();//Notification Tab API
             }   
         }
     }

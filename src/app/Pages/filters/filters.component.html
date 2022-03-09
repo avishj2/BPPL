@@ -1,50 +1,62 @@
 <div>
     <div class="row">
-        <div class="col-lg-3" *ngIf ="filterControls.ShowState == true">
+        <div class="col-lg-3" *ngIf="filterControls.ShowState == true">
             <label class ="dropdownsLabel"> State </label>
             <select class="form-control" [(ngModel)]="_SearchCriteria.StateId"(change)="PopulateDistrict($event.target.value)">
                 <option *ngFor="let data of _StateDataModel" [value]="data.StateId">{{data.Name}}</option>
             </select>
         </div>
-        <div class="col-lg-3" *ngIf ="filterControls.ShowDistrict == true">
+        <div class="col-lg-3" *ngIf="filterControls.ShowDistrict == true">
             <label class ="dropdownsLabel"> District  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.DistrictId"(change)="PopulateTaluka($event.target.value)">
                 <option *ngFor="let data of _DistrictDetails"[value]="data.DistrictId">{{data.DistrictName }}</option>
             </select>
         </div>
-        <div class="col-lg-3" *ngIf ="filterControls.ShowTaluka == true">
+        <div class="col-lg-3" *ngIf="filterControls.ShowTaluka == true">
             <label class ="dropdownsLabel"> Taluka  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.TalukaId"(change)="GetAllVillageDetails($event.target.value)">
                 <option *ngFor="let data of _TalukaDetails"[value]="data.TalukaId">{{data.TalukaName}}</option>
             </select>
         </div>
-        <div class="col-lg-3" *ngIf ="filterControls.ShowVillage == true">
-            <label class ="dropdownsLabel"> Village  </label>
+        <div class="col-lg-3" *ngIf="filterControls.ShowVillage == true">
+            <label class="dropdownsLabel"> Village  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.VillageId">
                 <option *ngFor="let data of _VillageDetails" [value]="data.VillageId">{{data.VillageNameEng}}</option>
             </select>
         </div>
-        <div class="col-lg-3" *ngIf ="filterControls.ShowChainageFrom == true">
-            <label class ="dropdownsLabel"> Chainage From  </label>
+        <div class="col-lg-3" *ngIf="filterControls.ShowChainageFrom == true">
+            <label class="dropdownsLabel"> Chainage From  </label>
             <input type="text" class="form-control"[(ngModel)]="_SearchCriteria.ChainageFrom" appTwoDigitDecimaNumber>
         </div>
-        <div class="col-lg-3" *ngIf ="filterControls.ShowChainageTo == true">
+        <div class="col-lg-3" *ngIf="filterControls.ShowChainageTo == true">
             <label class ="dropdownsLabel"> Chainage To </label>
             <input type="text" class="form-control" [(ngModel)]="_SearchCriteria.ChainageTo" appTwoDigitDecimaNumber>
             <!-- (input)="input($event.target.value)"
             <label>{{this._DropdownDataModel.ChainageTo}}</label> -->
         </div>
-        <div class="col-lg-3" *ngIf ="filterControls.ShowSurneyNos == true">
+        <div class="col-lg-3" *ngIf="filterControls.ShowSurneyNos == true">
             <label class ="dropdownsLabel"> Survey Number  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyNumber">
                 <option *ngFor="let data of DropdownData"[value]="data.id">{{data.id}}</option>
             </select>
         </div>
+        <div class="col-lg-3" *ngIf="filterControls.ShowCrossingTypes == true">
+            <label class ="dropdownsLabel"> Crossing Type </label>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.CrossingType" (change)="GetAllCrossingsData($event.target.value)">
+                <option *ngFor="let data of _CrossingDetails.CrossingTypes" [value]="data.Value">{{data.Text}}</option>
+            </select>
+        </div>
+        <div class="col-lg-3" *ngIf="filterControls.ShowCrossingNumber == true">
+            <label class ="dropdownsLabel">Crossing Number  </label>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.CrossingID">
+                <option *ngFor="let data of _CrossingIds"[value]="data.Value">{{data.Text}}</option>
+            </select>
+        </div>
         <div class="col-lg-3">
-            <button class="btn-primary" (click)="PassDataToParent()">
+            <button class="btn-primary" (click)="PassDataToParent()" style="margin-top: 5%;">
                 <i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;
                    Search
-                </button>
+            </button>
         </div>
         <!-- add parent html  -->
         <div class="col-lg-5">
