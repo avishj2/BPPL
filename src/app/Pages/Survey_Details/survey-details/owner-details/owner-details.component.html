@@ -1,0 +1,117 @@
+<div>
+    <div class="AddEditBtn"> 
+        <button class="btn-primary" (click)="AddNewOwnerDetails()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Owner Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-primary" (click)="EditOwnerDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Owner Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteOwnerDetails()" *ngIf="_AddNewOwner == false" ngbTooltip ="Delete Village Information from Database">
+            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+            Delete Owner Details
+        </button>
+    </div>
+    <div class="card">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Owner Details</div> 
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-3">
+                    <label class="Label">Owner Name (English)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                    [ngModelOptions]="{standalone: true}">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._SurveyModel.KhataNumber}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Owner Name (Hindi)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                     [ngModelOptions]="{standalone: true}">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._SurveyModel.KhataNumber}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Owner Name  (Local)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                     [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        <!-- {{this._SurveyModel.KhataNumber}} -->
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Owner Type</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                     [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        <!-- {{this._SurveyModel.KhataNumber}} -->
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Address (English)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                     [ngModelOptions]="{standalone: true}">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._SurveyModel.KhataNumber}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Address (Hindi)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                     [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        <!-- {{this._SurveyModel.KhataNumber}} -->
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Address (Local)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                    [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        <!-- {{this._SurveyModel.KhataNumber}} -->
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Owner Code</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                    [ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        <!-- {{this._SurveyModel.KhataNumber}} -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">InActive Status</label>
+                <div class="col-lg-1">
+                    <input *ngIf="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"
+                [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                </div>
+                </div>
+
+                <label class="col-sm-2 col-form-label">Minor Owner </label>
+                <div class="col-lg-1">
+                    <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
+                [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    <!-- {{this._SurveyModel.KhataNumber}} -->
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-3">
+                    <button  type="button" class="btn-primary"style="margin-top: 3%;">
+                    Save Owner Details
+                    </button>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<div>
+    <!-- info card start -->
+    <div class="AddEditBtn"> 
+        <button class="btn-primary" (click)="AddNewRestorationDetails()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Restoration Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-primary" (click)="EditRestorationDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Restoration Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteRestorationDetails()" *ngIf="_AddNewDetails == false" ngbTooltip ="Delete Restoration Information from Database">
+            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+            Delete Restoration Details
+        </button>
+    </div>
+    <div class="card">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Restoration Details</div> 
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-3">
+                    <label class="Label">Owner Name</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.OwnerName}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Damage Type</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Damage Name</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Length(m)</label>
+                    <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Approximate Value(Rs.)</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Ha}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Diameter(inch)</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Are}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Width</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Sqmt}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Depth(m)</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Sqmt}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Height(m)</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Sqmt}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Description</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Sqmt}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Remarks</label>
+                    <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Remarks(Local)</label>
+                    <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                    <div class="div-to-align">
+                        <br>
+                    <button type="button" class="btn-primary" (click)="SaveDetails()">
+                            Save Restoration Details  
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+  </div>

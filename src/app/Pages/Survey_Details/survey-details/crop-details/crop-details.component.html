@@ -1,0 +1,100 @@
+<div>
+    <div class="AddEditBtn"> 
+        <button class="btn-primary" (click)="AddNewCropDetails()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Crop Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-primary" (click)="EditCropDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Crop Details
+        </button>&nbsp;&nbsp;  
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteCropDetails()" *ngIf="_AddNewCropDetails == false" ngbTooltip ="Delete Crop Information from Database">
+            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+            Delete Crop Details
+        </button>
+    </div>
+    <div class="card">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Crop Details</div> 
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-3">
+                    <label class="Label">Owner Name</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.OwnerName}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Award</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Season Name</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Crop Name</label>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+                <div class="col-lg-2">
+                    <label class="Label">Ha</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Ha}}
+                    </div> -->
+                </div>
+                <div class="col-lg-2">
+                    <label class="Label">Are</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Are}}
+                    </div> -->
+                </div>
+                <div class="col-lg-2">
+                    <label class="Label">Sqmt</label>
+                   <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.Sqmt}}
+                    </div> -->
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Crop Status</label>
+                    <input type="text" class="form-control">
+                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._LandModel.LandType}}
+                    </div> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                    <div class="div-to-align">
+                        <br>
+                    <button type="button" class="btn-primary" (click)="SaveDetails()">
+                            Save Crop Details  
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>

@@ -4,7 +4,10 @@ import { HttpService } from '../../../services/http.service';
 import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
-import {SurveyeModel,LandModel } from 'src/app/Model/Survey.model';
+import {SurveyeModel,LandModel,ChildControlModel } from 'src/app/Model/Survey.model';
+import { Subject, from } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+
 @Component({
   selector: 'app-survey-details',
   templateUrl: './survey-details.component.html',
@@ -13,15 +16,14 @@ import {SurveyeModel,LandModel } from 'src/app/Model/Survey.model';
 export class SurveyDetailsComponent implements OnInit {
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
-/**popup message variables */
-popoverTitle ="Delete Details";
-popoverMessage = "Are you sure you want to delete it ?";
-_AddNewSurveyDetails: boolean = false;
-_ShowSurveyDetailsDiv: boolean = false;
-_DisabledInputField: boolean = true;
-_SurveyModel : SurveyeModel;
-_LandModel : LandModel;
-_AddNewLand : boolean = false;
+  _ChildControlModel : ChildControlModel;
+  /**popup message variables */
+  popoverTitle ="Delete Details";
+  popoverMessage = "Are you sure you want to delete it ?";
+  _AddNewSurveyDetails: boolean = false;
+  _ShowSurveyDetailsDiv: boolean = false;
+  _DisabledInputField: boolean = true;
+  _SurveyModel : SurveyeModel;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -30,9 +32,9 @@ _AddNewLand : boolean = false;
     {
       this._SearchCriteria = new SearchCriteria();
       this._FilterControls = new FilterControls();
+      this._ChildControlModel = new ChildControlModel();
       this.SetFilterControls();
       this._SurveyModel = new SurveyeModel();
-      this._LandModel = new LandModel();
     }
 
   /**hide/show filter menu based on the component requirement */
@@ -53,8 +55,9 @@ _AddNewLand : boolean = false;
     }
 
 
+
   /**1. Get Values From Filters component and assign into SearchCriteria
-  *  2. 
+  * 2. 
   */
   GetValuesFromFilters(event) 
     {
@@ -82,31 +85,18 @@ _AddNewLand : boolean = false;
 
   DeleteSurveyDetails()
     {
-
+      
     }
 
   SaveSurveyDetails()
     {
 
     }
-    /***==========================  LandDetails    =========================== */
-  AddNewLandDetails()
-    {
-      this._AddNewLand = true;
-      this._DisabledInputField = false;
+
+  ActiveTab(evt){
+      //console.log('evte',evt);
+      console.log('ActiveTab ID=>', evt.nextId)
     }
 
-  EditLandDetails()
-    {
-      this._DisabledInputField = false;
-    }
 
-  DeleteLandDetails()
-    {
-
-    }
-  SaveLandDetails()
-    {
-
-    }
 }

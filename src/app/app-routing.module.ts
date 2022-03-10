@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import { AuthGuard } from './dash-board/auth.gurad';
-import { FiltersComponent } from 'src/app/Pages/filters/filters.component';
 import { MasterDetailsComponent } from './Pages/master-details/master-details.component';
 import { GazetteDetailsComponent } from 'src/app/Pages/Survey_Details/gazette-details/gazette-details.component';
 import { PreEngineeringComponent } from './Pages/Survey_Details/pre-engineering/pre-engineering.component';
