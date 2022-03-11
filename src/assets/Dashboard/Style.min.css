@@ -4117,8 +4117,8 @@ body.mob-safari .sidebar.sidebar-fixed {
     box-shadow: none;
 }
 .modal-footer {
-    padding-top: 12px;
-    padding-bottom: 14px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     border-top-color: #e4e9ee;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -19087,7 +19087,8 @@ input.typeahead.scrollable ~ .tt-menu {
     background-color: #000;
     filter: alpha(opacity=5);
     background-color: rgba(0, 0, 0, 0.05);
-}
+    /* background-color: transparent !important; */
+} 
 .onpage-help-section {
     display: block;
     position: absolute;

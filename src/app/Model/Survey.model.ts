@@ -35,3 +35,15 @@ export class SurveyeModel{
       Are: any;
       Sqmt: any;
   }
+
+  export class ChildControlModel{
+    ShowLand : boolean;
+    ShowTree : boolean;
+    ShowOwner : boolean;
+    ShowRestoration : boolean;
+    ShowCrop : boolean;
+    ShowRevenue : boolean;
+    ShowAssignPuch : boolean;
+    ShowCompensation : boolean;
+    ShowGazetteNotice : boolean;
+  }

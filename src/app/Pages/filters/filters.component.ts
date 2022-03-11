@@ -144,9 +144,9 @@ export class FiltersComponent implements OnInit {
     {
       let url = this.urlService.GetAllCrossingsAPI + argtypeOfCrossing;
       this.httpService.get(url,null).subscribe(response => {
-        this._CrossingIds = response;
+        this._CrossingIds = response; 
         },error => {
-          console.log("GetAllCrossingsAPI error",error);
+          console.log("GetAllCrossingsAPI error",error); 
         });
     }
 

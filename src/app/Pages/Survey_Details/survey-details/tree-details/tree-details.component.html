@@ -1,0 +1,140 @@
+<div>
+    <div class="AddEditBtn"> 
+        <button class="btn-primary" (click)="AddNewTreeDetails()"data-toggle="modal" data-target="#treeModal">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Tree Details
+        </button> &nbsp;&nbsp;  
+        <button class="btn-primary" (click)="EditTreeDetails()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Tree Details
+        </button>&nbsp;&nbsp;  
+        <!-- <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteTreeDetails()" *ngIf="_AddNewTree == false" ngbTooltip ="Delete Village Information from Database">
+            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+            Delete Tree Details
+        </button> -->
+    </div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr>  
+                <th>Owner Name</th>
+                <th>Tree Name</th>  
+                <th>Range</th>  
+                <th>No. of Tree</th>  
+                <th>Age (Years)</th>  
+                <th>Girth (cms)</th>       
+                <th>Height (m)</th>   
+                <th>Remarks</th>  
+            </tr>
+        </thead>
+        <tbody>
+            <tr>      
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal" id="treeModal" role="dialog" >
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><b>
+                    <i class='fa fa-edit'style='font-size:24px'></i> 
+                    Add Tree Details
+                </b></h5>  
+                <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label class="Label">Owner Name</label>
+                        <select class="form-control">
+                            <option></option>
+                        </select>
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.OwnerName}}
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Range</label>
+                        <select class="form-control">
+                            <option></option>
+                        </select>
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.LandType}}
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Tree Name</label>
+                        <select class="form-control">
+                            <option></option>
+                        </select>
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.LandType}}
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Number Of Tree</label>
+                       <input type="text" class="form-control">
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.Ha}}
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Age (Years)</label>
+                       <input type="text" class="form-control">
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.Are}}
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Girth (cms)</label>
+                       <input type="text" class="form-control">
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.Sqmt}}
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Height (m)</label>
+                       <input type="text" class="form-control">
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.Sqmt}}
+                        </div> -->
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Remarks</label>
+                       <input type="text" class="form-control">
+                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            {{this._LandModel.Sqmt}}
+                        </div> -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary" (click)="SaveTreeDetails()">
+                                Save Tree Details  
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+      </div>
+    </div>
+  </div>

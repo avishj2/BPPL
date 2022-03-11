@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule ,NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngb-modal';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule ,NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadCrumbComponent } from 'src/app/dash-board/breadcrumb.component';
@@ -20,10 +20,8 @@ import { FiltersComponent } from 'src/app/Pages/filters/filters.component';
 import { DialogService } from './services/dialog.service';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
-
 import { TwoDigitDecimaNumberDirective } from './Pages/filters/two-digit-decima-number.directive';
 import { MasterDetailsComponent } from './Pages/master-details/master-details.component';
-import { LandDetailsComponent } from './Pages/land-details/land-details.component';
 import { PreEngineeringComponent } from './Pages/Survey_Details/pre-engineering/pre-engineering.component';
 import { GazetteDetailsComponent } from './Pages/Survey_Details/gazette-details/gazette-details.component';
 import { VillageDetailsComponent } from './Pages/Survey_Details/village-details/village-details.component';
@@ -33,7 +31,13 @@ import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payme
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
 import { TestLoginComponent } from './test-login/test-login.component';
 import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/survey-details.component';
-
+import { CropDetailsComponent } from './Pages/Survey_Details/survey-details/crop-details/crop-details.component';
+import { TreeDetailsComponent } from './Pages/Survey_Details/survey-details/tree-details/tree-details.component';
+import { OwnerDetailsComponent } from './Pages/Survey_Details/survey-details/owner-details/owner-details.component';
+import { RevenueFormComponent } from './Pages/Survey_Details/survey-details/revenue-form/revenue-form.component';
+import { RestorationDetailsComponent } from './Pages/Survey_Details/survey-details/restoration-details/restoration-details.component';
+import { GazetteNoticeDetailsComponent } from './Pages/Survey_Details/survey-details/gazette-notice-details/gazette-notice-details.component';
+import { LandDetailsComponent } from './Pages/Survey_Details/survey-details/land-details/land-details.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,13 @@ import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/su
     AdhocPaymentDetailsComponent,
     ViewVillageDetailsComponent,
     TestLoginComponent,
-    SurveyDetailsComponent
+    SurveyDetailsComponent,
+    CropDetailsComponent,
+    TreeDetailsComponent,
+    OwnerDetailsComponent,
+    RevenueFormComponent,
+    RestorationDetailsComponent,
+    GazetteNoticeDetailsComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [
@@ -73,7 +83,7 @@ import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/su
     }),
     NgMultiSelectDropDownModule.forRoot(),
   ],
-  providers: [DialogService],
+  providers: [DialogService,NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

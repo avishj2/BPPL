@@ -138,7 +138,6 @@ IsDtInitialized: boolean = false;
       this._DisabledChainageField = true;
       this._NewVillageAdd = false;
       this._AdditingMode = false;
-
       this.GetVillageByVillageId();
     }
   }

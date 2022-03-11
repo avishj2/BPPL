@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Revenue Details</div> 
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-3">
+                <label class="Label">Select Form</label>
+                <select class="form-control">
+                    <option></option>
+                </select>
+                <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{this._LandModel.OwnerName}}
+                </div> -->
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <div class="FileInputClass">
+                    <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="UploattchClass">
+                    <button class="btn-primary">Upload Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div> 
