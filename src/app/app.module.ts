@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule ,NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngb-modal';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule ,NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadCrumbComponent } from 'src/app/dash-board/breadcrumb.component';
@@ -19,7 +19,6 @@ import { LoginComponent } from './login/login.component';
 import { FiltersComponent } from 'src/app/Pages/filters/filters.component';
 import { DialogService } from './services/dialog.service';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
-
 
 import { TwoDigitDecimaNumberDirective } from './Pages/filters/two-digit-decima-number.directive';
 import { MasterDetailsComponent } from './Pages/master-details/master-details.component';
@@ -84,7 +83,7 @@ import { LandDetailsComponent } from './Pages/Survey_Details/survey-details/land
     }),
     NgMultiSelectDropDownModule.forRoot(),
   ],
-  providers: [DialogService],
+  providers: [DialogService,NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

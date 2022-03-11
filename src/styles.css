@@ -55,3 +55,8 @@ table{
   margin-top: 1%;
   margin-bottom: 1%;
 }
+
+.fade.in {
+  opacity: 1;
+  top: 10px;
+}

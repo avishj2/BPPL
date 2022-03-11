@@ -19,6 +19,9 @@ export class GazetteNoticeDetailsComponent implements OnInit {
 dtElement: DataTableDirective;
 dtOptions: DataTables.Settings = {};
 dtTrigger: Subject<any> = new Subject();
+/**REFERSH DATATABLE  */
+IsDtInitialized: boolean = false;
+
 _DisabledInputField: boolean = false;
 _AddNewDetails : boolean;
 /**popup message variables */
@@ -28,6 +31,7 @@ popoverMessage = "Are you sure you want to delete it ?";
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

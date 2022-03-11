@@ -2,11 +2,8 @@
     display: block;
     width: 100%;
     height: calc(0.7em + 0.5rem + 1px);
-    /* padding: 0.375rem 0.75rem; */
-    
-    /* margin-top : 10%; */
     margin-left: -45%;
-    margin-top: 13%;
+    margin-top: 40%;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1;
@@ -19,6 +16,7 @@
     cursor: pointer;
 
 }
-.col-sm-2{
+.col-sm-2, .col-sm-4{
     font-weight: 550;
+    margin-top: 13px;
 }
