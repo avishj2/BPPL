@@ -20,7 +20,7 @@
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowVillage == true">
             <label class="dropdownsLabel"> Village  </label>
-            <select class="form-control"[(ngModel)]="_SearchCriteria.VillageId">
+            <select class="form-control"[(ngModel)]="_SearchCriteria.VillageId" (change)="GetAllSurveyDetails($event.target.value)">
                 <option *ngFor="let data of _VillageDetails" [value]="data.VillageId">{{data.VillageNameEng}}</option>
             </select>
         </div>
@@ -31,13 +31,11 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowChainageTo == true">
             <label class ="dropdownsLabel"> Chainage To </label>
             <input type="text" class="form-control" [(ngModel)]="_SearchCriteria.ChainageTo" appTwoDigitDecimaNumber>
-            <!-- (input)="input($event.target.value)"
-            <label>{{this._DropdownDataModel.ChainageTo}}</label> -->
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowSurneyNos == true">
             <label class ="dropdownsLabel"> Survey Number  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyNumber">
-                <option *ngFor="let data of DropdownData"[value]="data.id">{{data.id}}</option>
+                <option *ngFor="let data of _SurveyDetails"[value]="data.Value">{{data.Text}}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowCrossingTypes == true">

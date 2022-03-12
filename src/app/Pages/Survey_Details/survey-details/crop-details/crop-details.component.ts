@@ -12,7 +12,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-
+import { SurveyDropDownsDataModel} from 'src/app/Model/Survey.model';
 
 @Component({
   selector: 'app-crop-details',
@@ -20,19 +20,22 @@ import {
   styleUrls: ['./crop-details.component.css']
 })
 export class CropDetailsComponent implements OnInit {
+  @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
+  @Output() Output:EventEmitter<any>= new EventEmitter(); 
   /**data table properties  */
-// @ViewChild(DataTableDirective, {static: false})
-@ViewChild('closebutton') closebutton;
-
-dtElement: DataTableDirective;
-dtOptions: DataTables.Settings = {};
-dtTrigger: Subject<any> = new Subject();
-/**REFERSH DATATABLE  */
-IsDtInitialized: boolean = false;
+  // @ViewChild(DataTableDirective, {static: false})
+  @ViewChild('closebutton') closebutton;
+  _PopupTitle : string;
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  /**REFERSH DATATABLE  */
+  IsDtInitialized: boolean = false;
   _AddNewCropDetails : boolean;
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
+
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
@@ -42,14 +45,13 @@ IsDtInitialized: boolean = false;
     ) { }
 
     public ngOnInit(): void {
-
-
-  }
+      console.log("FromParentData=>",this.SurveyDropDownsData);
+    }
   AddNewCropDetails(){
-
+    this._PopupTitle = "Add Crop Details";
   }
   EditCropDetails(){
-
+    this._PopupTitle = "Edit Crop Details";
   }
   DeleteCropDetails(){
     

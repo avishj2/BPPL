@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
+import { SurveyDropDownsDataModel} from 'src/app/Model/Survey.model';
 
 @Component({
   selector: 'app-revenue-form',
@@ -18,11 +19,17 @@ export class RevenueFormComponent implements OnInit {
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
-
-  constructor() { }
+  @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
+  @Output() Output:EventEmitter<any>= new EventEmitter();
+  
+  constructor(public urlService: UrlService,
+    private router: Router,
+    public CommonService : CommonService,
+    public httpService : HttpService,
+    public Utility :UtilityService,) { }
 
   ngOnInit(): void {
-
+    console.log("FromParentData=>",this.SurveyDropDownsData);
   }
   
   onChangeDocument(event){

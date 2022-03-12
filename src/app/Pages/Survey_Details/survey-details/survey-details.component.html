@@ -5,17 +5,7 @@
     <div class="col-lg-12">
       <!-- <div class="md-tabs">*ngIf="_showTabs == true" -->
         <ngb-tabset (tabChange)="ActiveTab($event)">
-            <!-- Land details start -->
-          <ngb-tab title="Land Details" [id]="0">
-            <ng-template ngbTabContent>
-                <div class="m-t-15">
-                    <app-land-details></app-land-details>
-                </div>
-            </ng-template>
-          </ngb-tab>
-           <!-- Land details End *ngIf="_ChildControlModel.ShowLand==true"-->
-
-          <ngb-tab title="Survey No. Details" [id]="1">
+          <ngb-tab title="Survey No. Details" [id]="0">
             <ng-template ngbTabContent>
               <div class="m-t-15">
                 <!-- info card start -->
@@ -25,231 +15,247 @@
                         <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                         Add Survey Details
                     </button>&nbsp;&nbsp;  
-                    <button class="btn-primary" (click)="EditSurveyDetails()">
+                    <button class="btn-primary" (click)="EditSurveyDetails()"*ngIf="_ShowSurveyDetailsDiv == true">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                         Edit Survey Details
                     </button>&nbsp;&nbsp;  
-                    <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteSurveyDetails()" *ngIf="_AddNewSurveyDetails == false" ngbTooltip ="Delete Village Information from Database">
+                    <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteSurveyDetails()" *ngIf="_ShowSurveyDetailsDiv == true"ngbTooltip ="Delete Village Information from Database">
                         <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                         Delete Survey Details
                     </button>
                 </div> 
-                <div class="card" *ngIf ="_ShowSurveyDetailsDiv == true">
-                    <div class="innercard">
-                        <div class="d-flex justify-content-between">
-                            <div class="CardTitle">Survey Details</div> 
+                <div class="card" *ngIf="_ShowSurveyDetailsDiv == true || _AddNewSurveyDetails == true">
+                    <div class="form-group row">
+                        <div class="col-lg-3">
+                            <label class="Label">Survey No (English) <b><h7 style="color: red;">*</h7></b></label>
+                            <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.SurveyNo" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.SurveyNo}}
+                            </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-lg-3">
-                                <label class="Label">Survey No (English) <b><h7 style="color: red;">*</h7></b></label>
-                                <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.SurveyNoEng" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.SurveyNoEng}}
+                        <div class="col-lg-3">
+                            <label class="Label">Survey No  (Hindi) </label>
+                            <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_SurveyModel.surveyNoHindi"[ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.SurveyNoHindi }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">                
+                            <label class="Label">Survey No (Local)</label>
+                            <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_SurveyModel.SurveyNoLocal"[ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.SurveyNoLocal}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Electric Poles</label>
+                            <input *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.ElectricPoles" [ngModelOptions]="{standalone: true}" >
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.ElectricPoles}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">                
+                            <label class="Label">LandType</label>
+                            <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.LandType">
+                                <option *ngFor="let data of _SurveyDropDownsDataModel.SurveyLandTypes" [value]="data.Value">{{data.Text }}</option>
+                            </select>
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{ this._SurveyModel.LandType }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Panchanama Date</label>
+                            <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.PanchnamaDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.PanchnamaDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{ this._SurveyModel.PanchnamaDate | date:'mediumDate'}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">NOC Date</label>
+                            <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.NOCDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.NOCDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{ this._SurveyModel.NOCDate | date:'mediumDate' }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">                
+                            <label class="Label">Telephonic Poles </label>
+                            <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_SurveyModel.TelephonePoles" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{ this._SurveyModel.TelephonePoles }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Corridor Width</label>
+                            <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                            [(ngModel)]="_SurveyModel.CorridorWidth" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{ this._SurveyModel.CorridorWidth }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Cultivalted/Non-Cultivalted</label>
+                            <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.CultivatedType">
+                                <option *ngFor="let data of _SurveyDropDownsDataModel.CultivateLandTypes" [value]="data.Value">
+                                    {{data.Text }}
+                                </option>
+                            </select>
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.CultivatedType}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Mortgage Details</label>
+                            <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                            [(ngModel)]="_SurveyModel.MortgageDetails" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.MortgageDetails}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Khata Number</label>
+                            <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                            [(ngModel)]="_SurveyModel.KhataNo" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.KhataNo}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Rev. Rec. Updated</label>
+                            <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
+                            [(ngModel)]="_SurveyModel.RevRecUpdated" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.RevRecUpdated}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Inactive</label>
+                            <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
+                            [(ngModel)]="_SurveyModel.InActive" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.InActive}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">If Inactive give the reasons</label>
+                            <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
+                            [(ngModel)]="_SurveyModel.InactiveReason" [ngModelOptions]="{standalone: true}">
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.InactiveReason}}
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <br>
+                            <label class="Label">ROU Area</label>
+                            <div class="form-group row" style="margin-left: 1.2%;">
+                                <label class="col-sm-0.5 col-form-label">Ha</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.ROUHa" *ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.ROUHa}}
+                                    </div>
+                                </div>
+                                <label class="col-sm-0.5 col-form-label">Are</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.ROUAre"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.ROUAre}}
+                                    </div>
+                                </div>
+                                <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.ROUSqmt"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.ROUSqmt}}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Survey No  (Hindi) </label>
-                                <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_SurveyModel.SurveyNoHindi"[ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.SurveyNoHindi}}
+                        </div>
+                        <div class="col-lg-4">
+                            <br>
+                            <label class="Label" style="margin-left: -6%;">Total Area</label>
+                            <div class="form-group row" style="margin-left: -6%;">
+                                <label class="col-sm-0.5 col-form-label">Ha</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.TotalHa"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.TotalHa}}
+                                    </div>
+                                </div>
+                                <label class="col-sm-0.5 col-form-label">Are</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control" [(ngModel)]="_SurveyModel.TotalAre"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.TotalAre}}
+                                    </div>
+                                </div>
+                                <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.TotalSqmt"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.TotalSqmt}}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">                
-                                <label class="Label">Survey No (Local)</label>
-                                <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_SurveyModel.SurveyNoLocal"[ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.SurveyNoLocal}}
+                        </div>
+                        <div class="col-lg-4"><br>
+                            <label class="Label" style="margin-left: -6%;">Panchanama Area</label>
+                            <div class="form-group row" style="margin-left: -6%;">
+                                <label class="col-sm-0.5 col-form-label">Ha</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.PanchnamaHa"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.PanchnamaHa}}
+                                    </div>
+                                </div>
+                                <label class="col-sm-0.5 col-form-label">Are</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.PanchnamaAre"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.PanchnamaAre}}
+                                    </div>
+                                </div>
+                                <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control"[(ngModel)]="_SurveyModel.PanchnamaSqmt"*ngIf="_DisabledInputField != true">
+                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                        {{this._SurveyModel.PanchnamaSqmt}}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Electric Poles</label>
-                                <input *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.ElectricPoles" [ngModelOptions]="{standalone: true}" >
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.ElectricPoles}}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">                
-                                <label class="Label">LandType</label>
-                                <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.LandType">
-                                    <option></option>
-                                </select>
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{ this._SurveyModel.LandType }}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Panchanama Date</label>
-                                <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.PanchanamaDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.PanchanamaDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{ this._SurveyModel.PanchanamaDate }}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">NOC Date</label>
-                                <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyModel.NOCDate | date:'yyyy-MM-dd'" (input)="_SurveyModel.NOCDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{ this._SurveyModel.NOCDate }}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">                
-                                <label class="Label">Telephonic Poles </label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_SurveyModel.TelephonicPoles" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{ this._SurveyModel.TelephonicPoles }}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Corridor Width</label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                                [(ngModel)]="_SurveyModel.CorridorWidth" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{ this._SurveyModel.CorridorWidth }}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Corridor Width</label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                                [(ngModel)]="_SurveyModel.CorridorWidth" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.CorridorWidth}}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Cultivalted/Non-Cultivalted</label>
-                                <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.CultivaltedNonCultivalted">
-                                    <option></option>
-                                </select>
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.CorridorWidth}}
-                                </div>
-                            </div>
-                            <!-- <div class="col-lg-2">
-                                <label class="Label">ROU Area</label>
-                                <label class="Label">Ha</label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.KhataNumber}}
-                                </div>
-                            </div> -->
-                            <div class="col-lg-3">
-                                <label class="Label">Mortgage Details</label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                                [(ngModel)]="_SurveyModel.MortgageDetails" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.MortgageDetails}}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Khata Number</label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.KhataNumber}}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Rev. Rec. Updated</label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.KhataNumber}}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">Inactive</label>
-                                <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
-                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.KhataNumber}}
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="Label">If Inactive give the reasons</label>
-                                <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                                [(ngModel)]="_SurveyModel.KhataNumber" [ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                                    {{this._SurveyModel.KhataNumber}}
-                                </div>
-                            </div>
-                           
-                            <div class="col-lg-4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                            <div class="div-to-align">
                                 <br>
-                                <label class="Label">ROU Area</label>
-                                <div class="form-group row" style="margin-left: 1.2%;">
-                                    <label class="col-sm-0.5 col-form-label">Ha</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <label class="col-sm-0.5 col-form-label">Are</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <br>
-                                <label class="Label" style="margin-left: -6%;">Total Area</label>
-                                <div class="form-group row" style="margin-left: -6%;">
-                                    <label class="col-sm-0.5 col-form-label">Ha</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <label class="col-sm-0.5 col-form-label">Are</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4"><br>
-                                <label class="Label" style="margin-left: -6%;">Panchanama Area</label>
-                                <div class="form-group row" style="margin-left: -6%;">
-                                    <label class="col-sm-0.5 col-form-label">Ha</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <label class="col-sm-0.5 col-form-label">Are</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
+                                <button type="button" class="btn-primary" (click)="SaveSurveyDetails()">
+                                    Save Survey Details
+                                </button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
-                                <div class="div-to-align">
-                                    <br>
-                                    <button type="button" class="btn-primary" (click)="SaveSurveyDetails()">
-                                        Save Survey Details
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>   
+                    </div>  
                 </div>
                 <!-- info card end -->
               </div>
             </ng-template>
           </ngb-tab>
+
+           <!-- Land details start -->
+           <ngb-tab title="Land Details" [id]="1">
+            <ng-template ngbTabContent>
+                <div class="m-t-15">
+                    <app-land-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyNumber"></app-land-details>
+                </div>
+            </ng-template>
+            </ngb-tab>
+           <!-- Land details End -->
           
           <ngb-tab title="Crop Details" [id]="2">
             <ng-template ngbTabContent>
               <div class="m-t-15">
                 <!-- info card start -->
-                <app-crop-details></app-crop-details>
+                <app-crop-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"></app-crop-details>
                 <!-- info card end -->
               </div>
             </ng-template>
@@ -258,7 +264,7 @@
           <ngb-tab title="Owner Details" [id]="3">
             <ng-template ngbTabContent>
               <div class="m-t-15">
-                <app-owner-details></app-owner-details>
+                <app-owner-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"></app-owner-details>
               </div>
             </ng-template>
           </ngb-tab>
@@ -266,7 +272,7 @@
           <ngb-tab title="Tree Details" [id]="4">
             <ng-template ngbTabContent>
                 <div class="m-t-15">
-                    <app-tree-details></app-tree-details>
+                    <app-tree-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"></app-tree-details>
                 </div>
             </ng-template>
           </ngb-tab>
@@ -276,7 +282,7 @@
               <div class="m-t-15">
                 <!-- info card start -->
                 <div class="m-t-15">
-                   <app-restoration-details></app-restoration-details>
+                   <app-restoration-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"></app-restoration-details>
                   </div>
                 <!-- info card end -->
               </div>
@@ -296,7 +302,7 @@
           <ngb-tab title="Revenue Form" [id]="7">
             <ng-template ngbTabContent>
               <div class="m-t-15">
-                  <app-revenue-form></app-revenue-form>
+                  <app-revenue-form [SurveyDropDownsData]="_SurveyDropDownsDataModel"></app-revenue-form>
               </div>
             </ng-template>
           </ngb-tab>

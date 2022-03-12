@@ -30,6 +30,7 @@ export class FiltersComponent implements OnInit {
   _SearchCriteria : SearchCriteria;
   _CrossingDetails :CrossingDropdownDataModel;
   _CrossingIds : CommonDropdownModel[];
+  _SurveyDetails : CommonDropdownModel[];
 
   DropdownData = [
     { id : 27 , name  : "Ajmer" },
@@ -128,6 +129,18 @@ export class FiltersComponent implements OnInit {
           console.log("GetVillageByTalukaAPI error",error);
         });
     }
+  
+    /**get all Survey details base on the selected village */
+  GetAllSurveyDetails(argVillageId)
+    {
+      this.ResetDropDowns(DropDownChangeEnum.VillageChanged)
+      let url = this.urlService.GetSurveyDetailsByVillageId + argVillageId;
+      this.httpService.get(url,null).subscribe(response => {
+        this._SurveyDetails = response;
+        },error => {
+          console.log("GetVillageByTalukaAPI error",error);
+        });
+    }
 
 
   PopulateCrossingType()
@@ -172,15 +185,22 @@ export class FiltersComponent implements OnInit {
             this._DistrictDetails = [];
             this._TalukaDetails = [];
             this._VillageDetails = [];
+            this._SurveyDetails =[];
             this.ResetSelectedValue(argSelection);
             break;
           case DropDownChangeEnum.DistrictChanged: 
             this._TalukaDetails = [];
             this._VillageDetails = [];
+            this._SurveyDetails =[];
             this.ResetSelectedValue(argSelection);
             break;
           case DropDownChangeEnum.TalukaChanged: 
             this._VillageDetails = [];
+            this._SurveyDetails =[];
+            this.ResetSelectedValue(argSelection);
+            break;
+          case DropDownChangeEnum.VillageChanged: 
+            this._SurveyDetails =[];
             this.ResetSelectedValue(argSelection);
             break;
         }
@@ -194,13 +214,19 @@ export class FiltersComponent implements OnInit {
                 this._SearchCriteria.DistrictId = null;
                 this._SearchCriteria.TalukaId = null;
                 this._SearchCriteria.VillageId = null;
+                this._SearchCriteria.SurveyNumber = null;
                 break;
               case DropDownChangeEnum.DistrictChanged:
                 this._SearchCriteria.TalukaId = null;
                 this._SearchCriteria.VillageId = null;
+                this._SearchCriteria.SurveyNumber = null;
                 break;
               case DropDownChangeEnum.TalukaChanged:
                 this._SearchCriteria.VillageId = null;
+                this._SearchCriteria.SurveyNumber = null;
+                break;
+              case DropDownChangeEnum.VillageChanged:
+                this._SearchCriteria.SurveyNumber = null;
                 break;
           }
         }
