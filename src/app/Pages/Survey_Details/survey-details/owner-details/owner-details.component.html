@@ -3,20 +3,13 @@
         <button class="btn-primary" (click)="AddNewOwnerDetails()" data-toggle="modal" data-target="#OwnerModal">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
             Add Owner Details
-        </button>&nbsp;&nbsp;  
-        <!-- <button class="btn-primary" (click)="EditOwnerDetails()">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
-            Edit Owner Details
-        </button>&nbsp;&nbsp;  
-        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteOwnerDetails()" *ngIf="_AddNewOwner == false" ngbTooltip ="Delete Village Information from Database">
-            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
-            Delete Owner Details
-        </button> -->
+        </button>
     </div>
   
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
             <tr>  
+                <th>Action</th>
                 <th>Owner Name (English)</th>
                 <th>Owner Name (Hindi)</th>  
                 <th>Owner Name (Hindi)</th>  
@@ -25,12 +18,20 @@
                 <th>Address (Hindi)</th>       
                 <th>Address (Local)</th>   
                 <th>Owner Code</th>
-                <th>InActive Status</th>
-                <th>Minor Owner</th>
+                <th>InActive</th>
+                <th>Minor</th>
             </tr>
         </thead>
         <tbody>
-            <tr>      
+            <tr>
+                <td>
+                    <button type="button" class="btn-success"(click)="EditOwnerDetails()" title="Edit" data-toggle="modal" data-target="#OwnerModal">
+                        <i class="fa fa-edit "></i>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteOwnerDetails()" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>      
                 <td></td>
                 <td></td>
                 <td></td>
@@ -56,10 +57,11 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><b>
-                    <i class='fa fa-edit'style='font-size:24px'></i> 
-                    Add Owner Details
-                </b></h5>  
+                <h5 class="modal-title">
+                    <b><i class='fa fa-edit'style='font-size:24px'></i> 
+                    {{_PopupTitle}}
+                    </b>
+                </h5> 
                 <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
             </div>
 

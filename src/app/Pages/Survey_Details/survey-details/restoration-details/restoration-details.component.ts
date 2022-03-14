@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
-import {LandModel } from 'src/app/Model/Survey.model';
+import {LandModel,SurveyDropDownsDataModel } from 'src/app/Model/Survey.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 
@@ -28,6 +28,9 @@ export class RestorationDetailsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
+  @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
+  @Output() Output:EventEmitter<any>= new EventEmitter();
+  _PopupTitle : string;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -41,13 +44,13 @@ export class RestorationDetailsComponent implements OnInit {
 
   AddNewRestorationDetails()
     {
-
-    }
+      this._PopupTitle = "Add Restoration Details"
+    } 
 
 
   EditRestorationDetails()
     {
-
+      this._PopupTitle = "Edit Restoration Details"
     }
 
 

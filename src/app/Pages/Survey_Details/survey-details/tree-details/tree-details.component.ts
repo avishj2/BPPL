@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
-import {LandModel } from 'src/app/Model/Survey.model';
+import {LandModel ,SurveyDropDownsDataModel} from 'src/app/Model/Survey.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 
@@ -18,6 +18,9 @@ import { DataTableDirective } from 'angular-datatables';
 export class TreeDetailsComponent implements OnInit {
   _DisabledInputField: boolean = false;
   _AddNewTree : boolean;
+  @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
+  @Output() Output:EventEmitter<any>= new EventEmitter();
+
   /**data table properties  */
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;

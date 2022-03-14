@@ -30,4 +30,10 @@
     cursor: pointer;
 
 }
-
+.DisabledLabel{
+    margin-top: 13%;
+    font-weight: 550;
+    font-size: 14px;
+    margin-left: 10%;
+    margin-bottom: 2.5%;
+}

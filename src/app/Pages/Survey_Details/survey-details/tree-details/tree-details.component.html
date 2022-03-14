@@ -63,62 +63,38 @@
                         <select class="form-control">
                             <option></option>
                         </select>
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.OwnerName}}
-                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Range</label>
                         <select class="form-control">
-                            <option></option>
+                            <option *ngFor="let data of SurveyDropDownsData.TreeRanges" [value]="data.Value">{{data.Text }}</option>
                         </select>
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.LandType}}
-                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Tree Name</label>
                         <select class="form-control">
-                            <option></option>
+                            <option *ngFor="let data of SurveyDropDownsData.TreeNames" [value]="data.Value">{{ data.Text }}</option>
                         </select>
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.LandType}}
-                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Number Of Tree</label>
                        <input type="text" class="form-control">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.Ha}}
-                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Age (Years)</label>
                        <input type="text" class="form-control">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.Are}}
-                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Girth (cms)</label>
                        <input type="text" class="form-control">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.Sqmt}}
-                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Height (m)</label>
                        <input type="text" class="form-control">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.Sqmt}}
-                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Remarks</label>
                        <input type="text" class="form-control">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._LandModel.Sqmt}}
-                        </div> -->
                     </div>
                 </div>
                 <div class="row">

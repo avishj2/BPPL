@@ -18,6 +18,7 @@ export class UrlService {
   GetTalukaByDistrictAPI = this.url + '/api/Filter/GetTalukaByDistrict?districtId=';
   GetAllVillagesAPI = this.url +'/api/Filter/GetAllVillages';
   GetVillageByTalukaAPI = this.url +'/api/Filter/GetVillageByTaluka?talukaId=';
+  GetSurveyDetailsByVillageId  = this.url +'/api/Survey/GetSurveyDetailsByVillageId?villageId=';
 
   AddOrUpdateVillageAPI = this.url + '/api/Village/AddOrUpdateVillage';
   GetVillageByVillageIdAPI = this.url +'/api/Village/GetVillageByVillageId?villageId=';
@@ -51,5 +52,14 @@ export class UrlService {
   AddCrossingDocumentAPI= this.url + '/api/Crossing/AddCrossingDocument';
   DownloadCrossingDocAPI= this.url + '/api/Crossing/Download?documentId=';
   DeleteCrossingDocumentAPI = this.url + '/api/Crossing/DeleteGazzetteDocument?documentId=';
+
+  /**survey numbers apis */
+  GetSurveyDropDownsAPI = this.url + '/api/Survey/GetSurveyDropDowns';
+  AddOrUpdateSurveyAPI = this.url + '/api/Survey/AddOrUpdateSurvey';
+  DeleteSurveyAPI = this.url + '/api/Survey/DeleteSurvey?surveyId=';
+  GetSurveyDetailsByIdAPI = this.url +'/api/Survey/GetSurveyDetailsById?surveyId=';
+  AddOrUpdateSurveyLandAPI = this.url+ '/api/Survey/AddOrUpdateSurveyLand';
+
+
 }
 

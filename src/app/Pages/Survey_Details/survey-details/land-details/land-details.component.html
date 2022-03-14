@@ -3,15 +3,7 @@
         <button class="btn-primary" (click)="AddNewLandDetails()" data-toggle="modal" data-target="#LandModal">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
             Add Land Details
-        </button>&nbsp;&nbsp;  
-        <!-- <button class="btn-primary" (click)="EditLandDetails()">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
-            Edit Land Details
-        </button>&nbsp;&nbsp;  
-        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteLandDetails()" *ngIf="_AddNewLand == false" ngbTooltip ="Delete Village Information from Database">
-            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
-            Delete Land Details
-        </button> -->
+        </button>
     </div>
 
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
@@ -22,23 +14,32 @@
                 <th>Ha.</th>
                 <th>Are.</th>
                 <th>Sqmt.</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>      
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.LandDetails;let i = index">
+                <td>{{data.SurveyOwnerId}}</td>
+                <td>{{data.LandType}}</td>
+                <td>{{data.Ha}}</td>
+                <td>{{data.Are}}</td>
+                <td>{{data.Sqmt}}</td>
+                <td>
+                    <button type="button" class="btn-success"(click)="EditLandDetails(data)" title="Edit" data-toggle="modal" data-target="#LandModal">
+                        <i class="fa fa-edit "></i>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandDetails()" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
             </tr>
         </tbody>
     </table>
            
 </div>
 
-<div class="container">
-<!-- Modal -->
+<div class="container" >
+<!-- Modal *ngIf="_LandDataModel.SurveyId != null"-->
 <div class="modal" id="LandModal" role="dialog" >
     <div class="modal-dialog">
     
@@ -47,7 +48,7 @@
         <div class="modal-header">
             <h5 class="modal-title"><b>
                 <i class='fa fa-edit'style='font-size:24px'></i> 
-                Add Land Details
+                {{_PopupTitle}}
             </b></h5>  
             <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
         </div>
@@ -56,42 +57,27 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label class="Label">Owner Name</label>
-                    <select class="form-control">
+                    <select class="form-control"[(ngModel)]="_LandDataModel.SurveyOwnerId" >
                         <option></option>
                     </select>
-                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        {{this._LandModel.OwnerName}}
-                    </div> -->
                 </div>
                 <div class="col-lg-6">
                     <label class="Label">Type Of Land</label>
-                    <select class="form-control">
-                        <option></option>
+                    <select class="form-control"[(ngModel)]="_LandDataModel.LandType" >
+                        <option *ngFor="let data of SurveyDropDownsData.LandClassifications" [value]="data.Value">{{data.Text}}</option>
                     </select>
-                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        {{this._LandModel.LandType}}
-                    </div> -->
                 </div>
                 <div class="col-lg-4">
                     <label class="Label">Ha</label>
-                    <input type="text" class="form-control">
-                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        {{this._LandModel.Ha}}
-                    </div> -->
+                    <input type="text" class="form-control"[(ngModel)]="_LandDataModel.Ha">
                 </div>
                 <div class="col-lg-4">
                     <label class="Label">Are</label>
-                    <input type="text" class="form-control">
-                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        {{this._LandModel.Are}}
-                    </div> -->
+                    <input type="text" class="form-control" [(ngModel)]="_LandDataModel.Are">
                 </div>
                 <div class="col-lg-4">
                     <label class="Label">Sqmt</label>
-                    <input type="text" class="form-control">
-                    <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        {{this._LandModel.Sqmt}}
-                    </div> -->
+                    <input type="text" class="form-control"[(ngModel)]="_LandDataModel.Sqmt">
                 </div>
             </div>
             <div class="row">
