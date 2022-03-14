@@ -3,19 +3,12 @@
         <button class="btn-primary" (click)="AddNewTreeDetails()"data-toggle="modal" data-target="#treeModal">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
             Add Tree Details
-        </button> &nbsp;&nbsp;  
-        <button class="btn-primary" (click)="EditTreeDetails()">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
-            Edit Tree Details
-        </button>&nbsp;&nbsp;  
-        <!-- <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteTreeDetails()" *ngIf="_AddNewTree == false" ngbTooltip ="Delete Village Information from Database">
-            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
-            Delete Tree Details
-        </button> -->
+        </button> 
     </div>
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
             <tr>  
+                <th>Action</th>
                 <th>Owner Name</th>
                 <th>Tree Name</th>  
                 <th>Range</th>  
@@ -27,15 +20,23 @@
             </tr>
         </thead>
         <tbody>
-            <tr>      
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.Trees;let i = index">
+                <td>
+                    <button type="button" class="btn-success"(click)="EditTreeDetails(data)" title="Edit" data-toggle="modal" data-target="#treeModal">
+                        <i class="fa fa-edit"></i>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteTreeDetails(data)" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>          
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.TreeNames, data.TreeName)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.TreeRanges, data.Range)}}</td>
+                <td>{{data.NumberOfTree}}</td>
+                <td>{{data.AgeYears}}</td>
+                <td>{{data.GirthCMS}}</td>
+                <td>{{data.HeightM}}</td>
+                <td>{{data.Remarks}}</td> 
             </tr>
         </tbody>
     </table>
@@ -43,15 +44,14 @@
 
 <div class="container">
     <!-- Modal -->
-    <div class="modal" id="treeModal" role="dialog" >
+    <div class="modal" id="treeModal" role="dialog"*ngIf="SurveyNumber != null">
       <div class="modal-dialog">
-      
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><b>
                     <i class='fa fa-edit'style='font-size:24px'></i> 
-                    Add Tree Details
+                    {{_PopupTitle}}
                 </b></h5>  
                 <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
             </div>
@@ -60,41 +60,43 @@
                 <div class="form-group row">
                     <div class="col-lg-6">
                         <label class="Label">Owner Name</label>
-                        <select class="form-control">
-                            <option></option>
+                        <select class="form-control"[(ngModel)]="_TreeDataModel.SurveyOwnerId"[ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
+                                {{data.Text}}
+                            </option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Range</label>
-                        <select class="form-control">
+                        <select class="form-control"[(ngModel)]="_TreeDataModel.Range"[ngModelOptions]="{standalone: true}">
                             <option *ngFor="let data of SurveyDropDownsData.TreeRanges" [value]="data.Value">{{data.Text }}</option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Tree Name</label>
-                        <select class="form-control">
+                        <select class="form-control"[(ngModel)]="_TreeDataModel.TreeName"[ngModelOptions]="{standalone: true}">
                             <option *ngFor="let data of SurveyDropDownsData.TreeNames" [value]="data.Value">{{ data.Text }}</option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Number Of Tree</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.NumberOfTree"[ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Age (Years)</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.AgeYears"[ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Girth (cms)</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.GirthCMS"[ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Height (m)</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.HeightM"[ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Remarks</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.Remarks"[ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="row">

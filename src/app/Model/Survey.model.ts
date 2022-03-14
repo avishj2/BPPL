@@ -1,41 +1,4 @@
-import {BaseResponse, CommonDropdownModel} from './Base.model';
-
-export class SurveyeModel{
-    SurveyNoEng : string;
-    SurveyNoLocal: string;
-    SurveyNoHindi: string;
-    ROUAreaHa: any; 
-    CultivaltedNonCultivalted : any;
-    ElectricPoles : any;
-    TelephonicPoles: any;
-    CorridorWidth: any;
-    LandType : any;
-    PanchanamaDate : any;
-    NOCDate : any;
-    MortgageDetails : string;
-    KhataNumber : any;
-    Inactive: boolean;
-    InactiveReason: string;
-    IsMurabaNo : boolean;
-    RevenueUpdated : boolean;
-    
-    constructor(){
-
-    }
-  }
-
-
-  export class OwnerModel{
-
-  }
-
-  export class LandModel{
-      OwnerName : string;
-      LandType : any;
-      Ha: any;
-      Are: any;
-      Sqmt: any;
-  }
+import {BaseResponse, CommonDropdownModel,CommonDocDataModel} from './Base.model';
 
   export class ChildControlModel{
     ShowLand : boolean;
@@ -60,6 +23,8 @@ export class SurveyeModel{
     LandClassifications: CommonDropdownModel[];
     TreeNames: CommonDropdownModel[];
     TreeRanges: CommonDropdownModel[];
+    AwardTypes :CommonDropdownModel[];
+    OwnerTypes : CommonDropdownModel[];
     SurveyID :Number;
     
     constructor() {
@@ -73,6 +38,7 @@ export class SurveyeModel{
       this.SurveyLandTypes = [];
       this.TreeNames=[];
       this.TreeRanges =[];
+      this.AwardTypes =[];
       
     }
   }
@@ -130,8 +96,12 @@ export class SurveyResult{
     SurveyOwners :SurveyOwnerModel[];
     LandDetails :LandDataModel[];
     Crops :CropDataModel[];
-    Trees :RestorationDataModel[];
+    Trees :TreeModel[];
     RestorationDetails :RestorationDataModel[];
+    SurveyOwnersDrp :  CommonDropdownModel[];
+    SurveyDocuments : CommonDocDataModel[];
+
+
     constructor(){
       this.Survey = new SurveyModel();
       this.SurveyOwners = [];
@@ -139,23 +109,33 @@ export class SurveyResult{
       this.Crops = [];
       this.Trees =[];
       this.RestorationDetails = [];
+      this.SurveyOwnersDrp =[];
+      this.SurveyDocuments =[];
     }
 }
 
 
-  export class SurveyOwnerModel{
-      surveyOwnerId: any;
-      surveyId: any;
-      ownerName: string;
-      ownerNamehindi: string;
-      ownerNameLocal: string;
-      ownerType: any;
-      address: string;
-      addressHindi: string;
-      addressLocal: string;
-      ownerCode: string;
-      inActive: boolean;
-      minorOwner: boolean;
+export class OwnerRespDataModel extends BaseResponse {
+  Result : SurveyOwnerModel[];
+  constructor(){      
+    super();
+    this.Result = [];
+  }
+}
+
+export class SurveyOwnerModel{
+      SurveyOwnerId: any;
+      SurveyId: any;
+      OwnerName: string;
+      OwnerNamehindi: string;
+      OwnerNameLocal: string;
+      OwnerType: any;
+      Address: string;
+      AddressHindi: string;
+      AddressLocal: string;
+      OwnerCode: string;
+      InActive: boolean;
+      MinorOwner: boolean;
   }
 
   export class LandRespDataModel extends BaseResponse {
@@ -164,7 +144,7 @@ export class SurveyResult{
       super();
       this.Result = [];
     }
-}
+  }
     
 
   export class LandDataModel{
@@ -175,6 +155,14 @@ export class SurveyResult{
     Ha: any;
     Are: any;
     Sqmt: any;
+}
+
+export class CropRespDataModel extends BaseResponse {
+  Result : CropDataModel[];
+  constructor(){      
+    super();
+    this.Result = [];
+  }
 }
 
 export class CropDataModel{
@@ -190,7 +178,16 @@ export class CropDataModel{
   CropStatus: string
 }
 
-export class TreeModel {
+
+export class TreeRespDataModel extends BaseResponse {
+  Result : TreeModel[];
+  constructor(){      
+    super();
+    this.Result = [];
+  }
+}
+
+export class TreeModel{
     SurveyTreeId: any;
     SurveyOwnerId: any;
     SurveyId: any;
@@ -201,6 +198,15 @@ export class TreeModel {
     GirthCMS: any;
     HeightM: any;
     Remarks: string
+}
+
+
+export class RestorationRespDataModel extends BaseResponse {
+  Result : RestorationDataModel[];
+  constructor(){      
+    super();
+    this.Result = [];
+  }
 }
 
 export class RestorationDataModel{
@@ -219,4 +225,12 @@ export class RestorationDataModel{
     Remarks: string;
     RemarksLocal: string
 
+}
+
+export class RevenueRespDataModel extends BaseResponse {
+  Result : CommonDocDataModel[];
+  constructor(){      
+    super();
+    this.Result = [];
+  }
 }

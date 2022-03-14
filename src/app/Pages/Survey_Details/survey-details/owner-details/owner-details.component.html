@@ -23,25 +23,25 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.SurveyOwners;let i = index">
                 <td>
-                    <button type="button" class="btn-success"(click)="EditOwnerDetails()" title="Edit" data-toggle="modal" data-target="#OwnerModal">
+                    <button type="button" class="btn-success"(click)="EditOwnerDetails(data)" title="Edit" data-toggle="modal" data-target="#OwnerModal">
                         <i class="fa fa-edit "></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteOwnerDetails()" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteOwnerDetails(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>      
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{data.OwnerName}}</td>
+                <td>{{data.OwnerNamehindi}}</td>
+                <td>{{data.OwnerNameLocal}}</td>
+                <td>{{data.OwnerType}}</td>
+                <td>{{data.Address}}</td>
+                <td>{{data.AddressHindi}}</td>
+                <td>{{data.AddressLocal}}</td>
+                <td>{{data.OwnerCode}}</td>
+                <td>{{data.InActive}}</td>
+                <td>{{data.MinorOwner}}</td>
             </tr>
         </tbody>
     </table>
@@ -51,9 +51,8 @@
 
 <div class="container">
     <!-- Modal -->
-    <div class="modal" id="OwnerModal" role="dialog" >
+    <div class="modal" id="OwnerModal" role="dialog" *ngIf="SurveyNumber != null">
       <div class="modal-dialog">
-      
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -64,89 +63,62 @@
                 </h5> 
                 <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
             </div>
-
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-lg-6">
                         <label class="Label">Owner Name (English)</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                        [ngModelOptions]="{standalone: true}">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._SurveyModel.KhataNumber}}
-                        </div> -->
+                        <input type="text"class="form-control"
+                        [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerName">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Owner Name (Hindi)</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._SurveyModel.KhataNumber}}
-                        </div> -->
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerNamehindi">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Owner Name  (Local)</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            <!-- {{this._SurveyModel.KhataNumber}} -->
-                        </div>
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerNameLocal">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Owner Type</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            <!-- {{this._SurveyModel.KhataNumber}} -->
-                        </div>
+                        <select class="form-control"
+                        [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerType">
+                            <option *ngFor="let data of SurveyDropDownsData.OwnerTypes"[value]="data.Value">
+                                {{data.Text }}
+                            </option>
+                        </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Address (English)</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            {{this._SurveyModel.KhataNumber}}
-                        </div> -->
+                        <input   type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.Address">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Address (Hindi)</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            <!-- {{this._SurveyModel.KhataNumber}} -->
-                        </div>
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.AddressHindi">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Address (Local)</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                        [ngModelOptions]="{standalone: true}">
-                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            <!-- {{this._SurveyModel.KhataNumber}} -->
-                        </div>
+                        <input type="text"class="form-control"
+                        [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.AddressLocal">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Owner Code</label>
-                        <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
-                        [ngModelOptions]="{standalone: true}">
-                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                            <!-- {{this._SurveyModel.KhataNumber}} -->
-                        </div>
+                        <input type="text"class="form-control"
+                        [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerCode">
                     </div>
                     <label class="col-sm-4 col-form-label">InActive Status</label>
                     <div class="col-lg-2">
-                        <input *ngIf="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox"
-                    [ngModelOptions]="{standalone: true}">
-                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        <!-- {{this._SurveyModel.KhataNumber}} -->
-                    </div>
+                        <input type="checkbox" class="form-controlCheckBox"
+                    [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.InActive">
                     </div>
 
                     <label class="col-sm-4 col-form-label">Minor Owner </label>
                     <div class="col-lg-2">
-                        <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
-                    [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        <!-- {{this._SurveyModel.KhataNumber}} -->
+                        <input type="checkbox"class="form-controlCheckBox"
+                    [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.MinorOwner">
                     </div>
                 
                 </div>
@@ -154,7 +126,7 @@
                     <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
                         <div class="div-to-align">
                             <br>
-                        <button type="button" class="btn-primary">
+                        <button type="button" class="btn-primary"(click)="SaveOwnerDetails()">
                                 Save Owner Details  
                         </button>
                         </div>

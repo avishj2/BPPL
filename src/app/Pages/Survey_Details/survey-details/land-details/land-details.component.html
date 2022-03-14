@@ -8,30 +8,30 @@
 
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
-            <tr>  
+            <tr> 
+                <th>Action</th> 
                 <th>Owner Name</th>    
                 <th>LandType</th>
                 <th>Ha.</th>
                 <th>Are.</th>
                 <th>Sqmt.</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of _AllSurveyDetails.Result.LandDetails;let i = index">
-                <td>{{data.SurveyOwnerId}}</td>
-                <td>{{data.LandType}}</td>
-                <td>{{data.Ha}}</td>
-                <td>{{data.Are}}</td>
-                <td>{{data.Sqmt}}</td>
                 <td>
                     <button type="button" class="btn-success"(click)="EditLandDetails(data)" title="Edit" data-toggle="modal" data-target="#LandModal">
                         <i class="fa fa-edit "></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandDetails()" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandDetails(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.LandClassifications, data.LandType)}}</td>
+                <td>{{data.Ha}}</td>
+                <td>{{data.Are}}</td>
+                <td>{{data.Sqmt}}</td>
             </tr>
         </tbody>
     </table>
@@ -40,7 +40,7 @@
 
 <div class="container" >
 <!-- Modal *ngIf="_LandDataModel.SurveyId != null"-->
-<div class="modal" id="LandModal" role="dialog" >
+<div class="modal" id="LandModal" role="dialog" *ngIf="SurveyNumber != null" >
     <div class="modal-dialog">
     
     <!-- Modal content-->
@@ -57,8 +57,10 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label class="Label">Owner Name</label>
-                    <select class="form-control"[(ngModel)]="_LandDataModel.SurveyOwnerId" >
-                        <option></option>
+                    <select class="form-control"[(ngModel)]="_LandDataModel.SurveyOwnerId">
+                        <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
+                            {{data.Text}}
+                        </option>
                     </select>
                 </div>
                 <div class="col-lg-6">

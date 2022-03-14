@@ -9,6 +9,7 @@
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
             <tr>  
+                <th>Action</th>
                 <th>Owner Name</th>    
                 <th>Award</th>
                 <th>Season Name</th>
@@ -17,27 +18,26 @@
                 <th>Are.</th>
                 <th>Sqmt.</th>
                 <th>Crop Status</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>      
-                <td></td>  
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.Crops;let i = index">
                 <td>
-                    <button type="button" class="btn-success"(click)="EditCropDetails()" title="Edit" data-toggle="modal" data-target="#CropModal">
+                    <button type="button" class="btn-success"(click)="EditCropDetails(data)" title="Edit" data-toggle="modal" data-target="#CropModal">
                         <i class="fa fa-edit "></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteCropDetails()" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteCropDetails(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
-                </td>
+                </td>      
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>  
+                <td>{{GetLookupValue(SurveyDropDownsData.AwardTypes ,data.AwardType)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.SeasonNameTypes ,data.SeasonType)}}</td>
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.Crops,data.CropName)}}</td>
+                <td>{{data.Ha}}</td>
+                <td>{{data.Are}}</td>
+                <td>{{data.Sqmt}}</td>
+                <td>{{data.CropStatus}}</td>
             </tr>
         </tbody>
     </table>
@@ -48,7 +48,7 @@
 
 <div class="container">
     <!-- Modal -->
-    <div class="modal" id="CropModal" role="dialog" >
+    <div class="modal" id="CropModal" role="dialog" *ngIf="SurveyNumber != null">
       <div class="modal-dialog">
       
         <!-- Modal content-->
@@ -66,43 +66,47 @@
                 <div class="form-group row">
                     <div class="col-lg-6">
                         <label class="Label">Owner Name</label>
-                        <select class="form-control">
-                            <option></option>
+                        <select class="form-control"[(ngModel)]="_CropDataModel.SurveyOwnerId">
+                            <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
+                                {{data.Text}}
+                            </option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Award</label>
-                        <select class="form-control">
-                            <option></option>
+                        <select class="form-control"[(ngModel)]="_CropDataModel.AwardType">
+                            <option *ngFor="let data of SurveyDropDownsData.AwardTypes"[value]="data.Value">
+                                {{data.Text}}
+                            </option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Season Name</label>
-                        <select class="form-control">
+                        <select class="form-control"[(ngModel)]="_CropDataModel.SeasonType">
                             <option *ngFor="let data of SurveyDropDownsData.SeasonNameTypes" [value]="data.Value">{{data.Text }}</option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Crop Name</label>
-                        <select class="form-control">
+                        <select class="form-control" [(ngModel)]="_CropDataModel.CropName">
                             <option *ngFor="let data of SurveyDropDownsData.CropNames" [value]="data.Value">{{data.Text }}</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
                         <label class="Label">Ha</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_CropDataModel.Ha">
                     </div>
                     <div class="col-lg-4">
                         <label class="Label">Are</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_CropDataModel.Are">
                     </div>
                     <div class="col-lg-4">
                         <label class="Label">Sqmt</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_CropDataModel.Sqmt">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Crop Status</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control"[(ngModel)]="_CropDataModel.CropStatus">
                     </div>
                 </div>
                 <div class="row">

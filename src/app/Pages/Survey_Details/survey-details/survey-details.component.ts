@@ -7,6 +7,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import {SurveyModel,ChildControlModel ,SurveyDropDownsDataModel,SurveyResponeDataModel, AllSurveyDetailsDataModel } from 'src/app/Model/Survey.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { CommonDropdownModel} from 'src/app/Model/Base.model';
 
 @Component({
   selector: 'app-survey-details',
@@ -26,6 +27,10 @@ export class SurveyDetailsComponent implements OnInit {
   _SurveyModel : SurveyModel;
   _SurveyDropDownsDataModel : SurveyDropDownsDataModel;
   _AllSurveyDetails : AllSurveyDetailsDataModel
+
+
+  @ViewChild('tabset')
+  tabset: any;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -77,12 +82,14 @@ export class SurveyDetailsComponent implements OnInit {
         this._AddNewSurveyDetails = false;
         this._DisabledInputField = true;
         this._SurveyModel.SurveyId = this._SearchCriteria.SurveyNumber;
+        this.tabset.select(0);
         this.GetSurveyDetailsById();
       }
       else{
         alert("Please Select Village and Survey Details!!")
       }
     }
+
 
   /**Get ALL Survey details DropDowns */
   GetSurveyDropDowns()
@@ -100,6 +107,8 @@ export class SurveyDetailsComponent implements OnInit {
         this._SurveyDropDownsDataModel.SurveyLandTypes = response.SurveyLandTypes;
         this._SurveyDropDownsDataModel.TreeNames = response.TreeNames;
         this._SurveyDropDownsDataModel.TreeRanges = response.TreeRanges;
+        this._SurveyDropDownsDataModel.AwardTypes = response.AwardTypes;
+        this._SurveyDropDownsDataModel.OwnerTypes = response.OwnerTypes;
         this.Utility.LogText(this._SurveyDropDownsDataModel);
         this._SurveyDropDownsDataModel.SurveyID = this._SearchCriteria.SurveyNumber;
       }, error => {
@@ -209,5 +218,14 @@ export class SurveyDetailsComponent implements OnInit {
       console.log('ActiveTab ID=>', evt.nextId)
     }
 
+  GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
+    {
+      let object = lookups.find(elm=>elm.Value == lookUpid );
+      if(object)
+      {
+        return object.Text;
+      }
+      else { return lookUpid;}
+    }
 
 }

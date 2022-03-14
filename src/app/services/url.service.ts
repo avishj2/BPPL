@@ -59,6 +59,19 @@ export class UrlService {
   DeleteSurveyAPI = this.url + '/api/Survey/DeleteSurvey?surveyId=';
   GetSurveyDetailsByIdAPI = this.url +'/api/Survey/GetSurveyDetailsById?surveyId=';
   AddOrUpdateSurveyLandAPI = this.url+ '/api/Survey/AddOrUpdateSurveyLand';
+  DeleteSurveyLandAPI = this.url + '/api/Survey/DeleteSurveyLand?surveyLandId=';
+  AddOrUpdateSurveyOwnerAPI = this.url + '/api/Survey/AddOrUpdateSurveyOwner';
+  DeleteSurveyOwnerAPI = this.url +  '/api/Survey/DeleteSurveyOwner?surveyOwnerId=';
+  AddOrUpdateSurveyTreeAPI = this.url + '/api/Survey/AddOrUpdateSurveyTree';
+  DeleteSurveyTreeAPI = this.url +'/api/Survey/DeleteSurveyTree?surveyTreeId=';
+  AddOrUpdateSurveyCropAPI = this.url +'/api/Survey/AddOrUpdateSurveyCrop';
+  DeleteSurveyCropAPI = this.url +'/api/Survey/DeleteSurveyCrop?surveyCropId=';
+  AddOrUpdateSurveyRestorationAPI = this.url +'/api/Survey/AddOrUpdateSurveyRestoration';
+  DeleteSurveyRestorationAPI = this.url +'/api/Survey/DeleteSurveyRestoration?surveyRestorationId=';
+  AddSurveyDocumentAPI = this.url+'/api/Survey/AddSurveyDocument';
+  DownloadRevDocAPI = this.url +'/api/Survey/Download?documentId=';
+  DeleteSurveyDocumentAPI = this.url+'/api/Survey/DeleteSurveyDocument?documentId=';
+
 
 
 }

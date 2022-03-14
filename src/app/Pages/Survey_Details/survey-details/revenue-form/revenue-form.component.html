@@ -2,14 +2,11 @@
 <div class="form-group row">
     <div class="col-lg-3">
         <label class="Label">Select Form</label>
-        <select class="form-control">
+        <select class="form-control"[(ngModel)]="_Revenuedoc.Lookupid">
             <option *ngFor="let data of SurveyDropDownsData.RevenueFormTypes" [value]="data.Value">
                 {{data.Text }}
             </option>
         </select>
-        <!-- <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-            {{this._LandModel.OwnerName}}
-        </div> -->
     </div>
     <div class="col-lg-1"></div>
     <div class="col-lg-3">
@@ -19,7 +16,32 @@
     </div>
     <div class="col-lg-3">
         <div class="UploattchClass">
-            <button class="btn-primary">Upload Details</button>
+            <button class="btn-primary"(click)="FileUpload()">Upload Details</button>
         </div>
     </div>
+</div>
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr> 
+                <th>Action</th> 
+                <th>FileName</th>    
+                <th>Document Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.SurveyDocuments; let i = index">
+                <td>
+                    <button type="button" class="btn-success"(click)="DownloadDocument(data)" title="Edit" data-toggle="modal" data-target="#LandModal">
+                        <i class="fa fa-download "></i>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteDocument(data)" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+                <td>{{data.FileName}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.RevenueFormTypes, data.Lookupid)}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
