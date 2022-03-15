@@ -6,9 +6,10 @@ import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
-import {LandModel ,SurveyDropDownsDataModel} from 'src/app/Model/Survey.model';
+import { TreeRespDataModel,TreeModel, SurveyDropDownsDataModel,AllSurveyDetailsDataModel} from 'src/app/Model/Survey.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { CommonDropdownModel} from 'src/app/Model/Base.model';
 
 @Component({
   selector: 'app-tree-details',
@@ -16,43 +17,133 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./tree-details.component.css']
 })
 export class TreeDetailsComponent implements OnInit {
-  _DisabledInputField: boolean = false;
-  _AddNewTree : boolean;
   @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
+  @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
+  @Input() SurveyNumber : any;
   @Output() Output:EventEmitter<any>= new EventEmitter();
-
+  @ViewChild('closebutton') closebutton;
+  /**popup message variables */
+  popoverTitle ="Delete Details";
+  popoverMessage = "Are you sure you want to delete it?";
   /**data table properties  */
-  @ViewChild(DataTableDirective, {static: false})
+  // @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
-  
+  _AddNewTree : boolean;
+  _PopupTitle : string;
+
+  _TreeDataModel : TreeModel;
+  _AllSurveyDetails : AllSurveyDetailsDataModel;
+
     constructor(
       public urlService: UrlService,
       private router: Router,
       public CommonService : CommonService,
       public httpService : HttpService,
-      public Utility :UtilityService,) { }
+      public Utility :UtilityService,) 
+      {
+        this._TreeDataModel = new TreeModel();
+        this._AllSurveyDetails = new AllSurveyDetailsDataModel();
+      }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+    {
+      this._TreeDataModel.SurveyId = this.SurveyNumber;
+      this._AllSurveyDetails.Result.Trees = this.AllSurveyDetails.Result.Trees;
+      this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
+    }
 
-  }
+  AddNewTreeDetails()
+    {
+      if(this.SurveyNumber != null)
+        {
+          this._AddNewTree = true;
+          this._PopupTitle = "Add Tree Details";
+          this._TreeDataModel = new TreeModel();
+        }
+        else
+          {
+            alert("Please Select Survey Number!!");
+          }
+    }
 
-  AddNewTreeDetails(){
+  EditTreeDetails(arg)
+    {
+      this._TreeDataModel = arg;
+      this._AddNewTree = false;
+      this._PopupTitle = "Edit Tree Details";
+    }
 
-  }
-  EditTreeDetails(){
+  SaveTreeDetails()
+    {
+      this._TreeDataModel.SurveyId = this.SurveyNumber;
+      let url = this.urlService.AddOrUpdateSurveyTreeAPI;     
+      this.httpService.HttpPostRequest(url,this._TreeDataModel,this.AddOrUpdateTreeCallBack.bind(this),null);
+    }
 
-  }
+  AddOrUpdateTreeCallBack(dtas)
+    {
+      if (dtas != null)
+        {
+          let RespDataModel : TreeRespDataModel  = dtas;
+          if (RespDataModel.StatusCode != 200) 
+            {
+              alert(RespDataModel.Message);
+            }
+          if (this._AddNewTree == false)
+            {
+              alert("Tree updated sucessfully!!");
+              this._AllSurveyDetails.Result.Trees = RespDataModel.Result;
+              this.SetParentData();
+              this.closebutton.nativeElement.click();
+            }
+          else
+            {
+              alert("Tree added sucessfully!!");
+              this._AllSurveyDetails.Result.Trees = RespDataModel.Result;
+              this.SetParentData();
+              this._AddNewTree = false;
+              this.closebutton.nativeElement.click();
+            }   
+        }
+        this._AddNewTree = false;
+    }
 
-  DeleteTreeDetails(){
+  SetParentData()
+    {
+      this.AllSurveyDetails.Result.Trees = this._AllSurveyDetails.Result.Trees
+    }
 
-  }
+  DeleteTreeDetails(arg)
+    {
+      let url = this.urlService.DeleteSurveyTreeAPI + arg.SurveyTreeId + '&surveyId='+ arg.SurveyId;
+        this.httpService.get(url,null).subscribe(response => {
+          let OwnerDetails : any = response;
+          if (OwnerDetails.StatusCode != 200) 
+            {
+              alert(OwnerDetails.Message);
+            }
+            else {
+              alert("Tree Details deleted successfully!");
+              this._AllSurveyDetails.Result.Trees = response.Result;
+              this.SetParentData();
+            }
+          },error => {
+            this.Utility.LogText(error);
+          });
+    }
 
-  SaveTreeDetails(){
-
-  }
+  GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
+    {
+      let object = lookups.find(elm=>elm.Value == lookUpid );
+      if(object)
+      {
+        return object.Text;
+      }
+      else { return lookUpid;}
+    }
 
 }

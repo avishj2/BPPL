@@ -8,7 +8,8 @@
     </div>
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
-            <tr>  
+            <tr> 
+                <th>Action</th> 
                 <th>Owner Name</th> 
                 <th>Damage Name</th>   
                 <th>Damage Type</th>
@@ -21,31 +22,30 @@
                 <th>Description</th>
                 <th>Remarks</th>
                 <th>Remarks(Local)</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>      
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.RestorationDetails;let i = index">  
                 <td>
-                    <button type="button" class="btn-success"(click)="EditRestorationDetails()" title="Edit" data-toggle="modal" data-target="#RestorationModal">
+                    <button type="button" class="btn-success"(click)="EditRestorationDetails(data)" title="Edit" data-toggle="modal" data-target="#RestorationModal">
                         <i class="fa fa-edit "></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteRestorationDetails()" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteRestorationDetails(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
-                </td>
+                </td>    
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.DamageTypes,data.DamageType)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.DamageNames,data.DamageName)}}</td>
+                <td>{{data.LengthM}}</td>
+                <td>{{data.ApproxValue}}</td>
+                <td>{{data.DiameterInch}}</td>
+                <td>{{data.WidthM}}</td>
+                <td>{{data.DepthM}}</td>
+                <td>{{data.HeightM}}</td>
+                <td>{{data.Description}}</td>
+                <td>{{data.Remarks}}</td>
+                <td>{{data.RemarksLocal}}</td>
             </tr>
         </tbody>
     </table>
@@ -53,7 +53,7 @@
 
 <div class="container">
 <!-- Modal -->
-    <div class="modal" id="RestorationModal" role="dialog" >
+    <div class="modal" id="RestorationModal" role="dialog"*ngIf="SurveyNumber != null" >
         <div class="modal-dialog">
         
         <!-- Modal content-->
@@ -72,57 +72,59 @@
                 <div class="form-group row">
                     <div class="col-lg-6">
                         <label class="Label">Owner Name</label>
-                        <select class="form-control">
-                            <option></option>
+                        <select class="form-control"[(ngModel)]="_RestorationDataModel.SurveyOwnerId">
+                            <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
+                                {{data.Text}}
+                            </option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Damage Type</label>
-                        <select class="form-control">
+                        <select class="form-control"[(ngModel)]="_RestorationDataModel.DamageType">
                             <option *ngFor="let data of SurveyDropDownsData.DamageTypes" [value]="data.Value">{{data.Text }}</option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Damage Name</label>
-                        <select class="form-control">
+                        <select class="form-control"[(ngModel)]="_RestorationDataModel.DamageName">
                             <option *ngFor="let data of SurveyDropDownsData.DamageNames" [value]="data.Value">{{data.Text }}</option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Length(m)</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.LengthM">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Approximate Value(Rs.)</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.ApproxValue">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Diameter(inch)</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.DiameterInch">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Width</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.WidthM">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Depth(m)</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.DepthM">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Height(m)</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.HeightM">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Description</label>
-                       <input type="text" class="form-control">
+                       <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.Description">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Remarks</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.Remarks">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Remarks(Local)</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control"[(ngModel)]="_RestorationDataModel.RemarksLocal">
                     </div>
                 </div>
                 <div class="row">

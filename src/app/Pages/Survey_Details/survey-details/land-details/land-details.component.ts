@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
+import { Component, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { UrlService } from 'src/app/services/url.service';
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
-import {LandModel ,SurveyDropDownsDataModel,AllSurveyDetailsDataModel,LandDataModel,LandRespDataModel} from 'src/app/Model/Survey.model';
+import { SurveyDropDownsDataModel,AllSurveyDetailsDataModel,LandDataModel,LandRespDataModel} from 'src/app/Model/Survey.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
@@ -18,8 +18,6 @@ import { CommonDropdownModel} from 'src/app/Model/Base.model';
 })
 
 export class LandDetailsComponent implements OnInit {
-  _DisabledInputField : boolean = true;
-  _LandModel : LandModel;
   _LandDataModel : LandDataModel;
   _AddNewLand : boolean = false;
   _PopupTitle : string;
@@ -53,18 +51,18 @@ export class LandDetailsComponent implements OnInit {
   
 
   ngOnInit() {
-    console.log("FromParentData=>", this.SurveyDropDownsData);
-    console.log("FromParentData AllSurveyDetails=>",this.AllSurveyDetails)
+    console.log("tdtgrg=>", this.SurveyDropDownsData);
+    console.log("vxcbcb AllSurveyDetails=>",this.AllSurveyDetails)
     this._LandDataModel.SurveyId = this.SurveyNumber;
     this._AllSurveyDetails.Result.LandDetails = this.AllSurveyDetails.Result.LandDetails;
-  
+    this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
+    
   }
 
   AddNewLandDetails()
     {
       if(this.SurveyNumber != null){
         this._AddNewLand = true;
-        this._DisabledInputField = false;
         this._PopupTitle = "Add Land Details";
         this._LandDataModel = new LandDataModel(); 
       }
@@ -72,21 +70,15 @@ export class LandDetailsComponent implements OnInit {
         {
           alert("Please Select Survey Number!!");
         }
-      
     }
 
   EditLandDetails(arg)
     {
       this._LandDataModel = arg;
-      this._DisabledInputField = false;
       this._PopupTitle = "Edit Land Details";
-      this.GetLookupValue(this.SurveyDropDownsData.LandClassifications, this._LandDataModel.LandType);
+      //this.GetLookupValue(this.SurveyDropDownsData.LandClassifications, this._LandDataModel.LandType);
     }
 
-  DeleteLandDetails()
-    {
-
-    }
   SaveLandDetails()
     {
       this._LandDataModel.SurveyId = this.SurveyNumber;
@@ -105,23 +97,49 @@ export class LandDetailsComponent implements OnInit {
             }
           if (this._AddNewLand == false)
             {
-              alert("Survey updated sucessfully!!");
+              alert("Survey Land updated sucessfully!!");
+              this._AllSurveyDetails.Result.LandDetails = RespDataModel.Result;
+              this.SetParentData();
               this.closebutton.nativeElement.click();
             }
           else
             {
-              alert("Survey added sucessfully!!");
+              alert("Survey Land added sucessfully!!");
               this._AllSurveyDetails.Result.LandDetails = RespDataModel.Result;
               this._AddNewLand = false;
+              this.SetParentData();
               this.closebutton.nativeElement.click();
             }   
         }
         this._AddNewLand = false;
         
     }
+    SetParentData()
+      {
+        this.AllSurveyDetails.Result.LandDetails = this._AllSurveyDetails.Result.LandDetails
+      }
+
+  DeleteLandDetails(arg)
+    {
+      let url = this.urlService.DeleteSurveyLandAPI + arg.SurveyLandId + '&surveyId='+ arg.SurveyId;
+      this.httpService.get(url,null).subscribe(response => {
+        let LandDetails : any = response;
+        if (LandDetails.StatusCode != 200) 
+          {
+            alert(LandDetails.Message);
+          }
+          else {
+            alert("Land Details deleted successfully!");
+            this._AllSurveyDetails.Result.LandDetails = response.Result;
+            this.SetParentData();
+          }
+        },error => {
+          this.Utility.LogText(error);
+        });
+    }
 
 
-  GetLookupValue(lookups : CommonDropdownModel[],lookUpid: Number) : any
+  GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
     {
       let object = lookups.find(elm=>elm.Value == lookUpid );
       if(object)
