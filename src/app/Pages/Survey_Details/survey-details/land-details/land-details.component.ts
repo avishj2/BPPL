@@ -9,7 +9,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { SurveyDropDownsDataModel,AllSurveyDetailsDataModel,LandDataModel,LandRespDataModel} from 'src/app/Model/Survey.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import { CommonDropdownModel} from 'src/app/Model/Base.model';
+import { CommonDropdownModel,BaseResponse} from 'src/app/Model/Base.model';
 
 @Component({
   selector: 'app-land-details',
@@ -81,6 +81,7 @@ export class LandDetailsComponent implements OnInit {
 
   SaveLandDetails()
     {
+      this.CommonService.ShowSpinner();
       this._LandDataModel.SurveyId = this.SurveyNumber;
       let url = this.urlService.AddOrUpdateSurveyLandAPI;     
       this.httpService.HttpPostRequest(url,this._LandDataModel,this.AddOrUpdateLandCallBack.bind(this),null);
@@ -114,6 +115,19 @@ export class LandDetailsComponent implements OnInit {
         this._AddNewLand = false;
         
     }
+
+  ErrorLandCallBack(dtas)
+    {
+      if (dtas != null)
+        {
+          let RespDataModel : BaseResponse  = dtas;
+          if (RespDataModel.StatusCode != 200) 
+            {
+              alert(RespDataModel.Message);
+            }
+        }
+    }
+
     SetParentData()
       {
         this.AllSurveyDetails.Result.LandDetails = this._AllSurveyDetails.Result.LandDetails

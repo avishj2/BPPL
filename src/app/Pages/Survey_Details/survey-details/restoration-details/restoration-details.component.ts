@@ -85,6 +85,7 @@ export class RestorationDetailsComponent implements OnInit {
 
   SaveDetails()
     {
+      this.CommonService.ShowSpinner();
       this._RestorationDataModel.SurveyId = this.SurveyNumber;
       let url = this.urlService.AddOrUpdateSurveyRestorationAPI;     
       this.httpService.HttpPostRequest(url,this._RestorationDataModel,this.AddOrUpdateCallBack.bind(this),null);
@@ -120,11 +121,12 @@ export class RestorationDetailsComponent implements OnInit {
 
   SetParentData()
     {
-      this.AllSurveyDetails.Result.Trees = this._AllSurveyDetails.Result.Trees
+      this.AllSurveyDetails.Result.RestorationDetails = this._AllSurveyDetails.Result.RestorationDetails
     }
    
   DeleteRestorationDetails(arg)
     {
+      this.CommonService.ShowSpinner();
       let url = this.urlService.DeleteSurveyRestorationAPI + arg.SurveyRestorationId + '&surveyId='+ arg.SurveyId;
         this.httpService.get(url,null).subscribe(response => {
           let OwnerDetails : any = response;
@@ -134,7 +136,7 @@ export class RestorationDetailsComponent implements OnInit {
             }
             else {
               alert("Restoration Details deleted successfully!");
-              this._AllSurveyDetails.Result.RestorationDetails = response.RestorationDetails;
+              this._AllSurveyDetails.Result.RestorationDetails = response.Result;
               this.SetParentData()
             }
           },error => {

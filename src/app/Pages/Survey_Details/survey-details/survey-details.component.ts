@@ -8,6 +8,7 @@ import {SurveyModel,ChildControlModel ,SurveyDropDownsDataModel,SurveyResponeDat
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-survey-details',
@@ -35,7 +36,8 @@ export class SurveyDetailsComponent implements OnInit {
   constructor(public urlService: UrlService,
     private router: Router,
     private httpService: HttpService,
-    public Utility: UtilityService) 
+    public Utility: UtilityService,
+    public CommonService :CommonService ) 
     {
       this._SearchCriteria = new SearchCriteria();
       this._FilterControls = new FilterControls();
@@ -74,8 +76,8 @@ export class SurveyDetailsComponent implements OnInit {
       this._SearchCriteria = event;
       if (Object.keys(this._SearchCriteria).length === 0) 
       {
+        // this.CommonService.hideSpinnerLoading();
         alert("Please Select State, District, taluka or village!!");
-        
       }
       if(this._SearchCriteria.VillageId != null && this._SearchCriteria.SurveyNumber != null){
         this._ShowSurveyDetailsDiv = true;
@@ -86,7 +88,7 @@ export class SurveyDetailsComponent implements OnInit {
         this.GetSurveyDetailsById();
       }
       else{
-        alert("Please Select Village and Survey Details!!")
+        alert("Please Select Village and Survey Details!!");
       }
     }
 
@@ -119,6 +121,7 @@ export class SurveyDetailsComponent implements OnInit {
   /**get survey and all tabs details based on survey Number*/
   GetSurveyDetailsById()
     {
+      this.CommonService.ShowSpinner();
       let url = this.urlService.GetSurveyDetailsByIdAPI + this._SurveyModel.SurveyId;
       this.httpService.get(url,null).subscribe(response => {
         this._AllSurveyDetails  = response;
@@ -161,6 +164,7 @@ export class SurveyDetailsComponent implements OnInit {
 
   DeleteSurveyDetails()
     {
+      this.CommonService.ShowSpinner();
       let url = this.urlService.DeleteSurveyAPI + this._SurveyModel.SurveyId;
       this.httpService.get(url,null).subscribe(response => {
         let SurveyDetails : any = response;

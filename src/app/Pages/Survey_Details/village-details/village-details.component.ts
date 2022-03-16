@@ -10,6 +10,7 @@ import { HttpService } from '../../../services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-village-details',
@@ -53,6 +54,7 @@ IsDtInitialized: boolean = false;
     private httpService: HttpService,
     public Utility: UtilityService,
     public formBuilder: FormBuilder,
+    public CommonService: CommonService,
   ) {
     this._SearchCriteria = new SearchCriteria();
     this._VillageModel = new VillageModel();
@@ -191,6 +193,7 @@ IsDtInitialized: boolean = false;
         }
         else 
         {
+          this.CommonService.ShowSpinner();
           let url = this.urlService.AddOrUpdateVillageAPI;
           if (this._NewVillageAdd == false) 
             {
@@ -228,8 +231,8 @@ IsDtInitialized: boolean = false;
   }
 
   /**delete village details base on the selected villageID */
-  DeleteVillageDetails() {
-
+  DeleteVillageDetails() 
+  {
     let url = this.urlService.DeleteVillageAPI + this._SearchCriteria.VillageId;
     this.httpService.get(url, null).subscribe(response => {
       let villageDeleteResponse: any = response;

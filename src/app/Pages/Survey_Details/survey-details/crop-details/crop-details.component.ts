@@ -84,6 +84,7 @@ export class CropDetailsComponent implements OnInit {
 
   SaveDetails()
     {
+      this.CommonService.ShowSpinner();
       this._CropDataModel.SurveyId = this.SurveyNumber;
       let url = this.urlService.AddOrUpdateSurveyCropAPI;     
       this.httpService.HttpPostRequest(url,this._CropDataModel,this.AddOrUpdateCropCallBack.bind(this),null);
@@ -124,6 +125,7 @@ export class CropDetailsComponent implements OnInit {
 
   DeleteCropDetails(arg)
     {
+      this.CommonService.ShowSpinner();
       let url = this.urlService.DeleteSurveyCropAPI + arg.SurveyCropId + '&surveyId='+ arg.SurveyId;
       this.httpService.get(url,null).subscribe(response => {
         let CropDetails : any = response;

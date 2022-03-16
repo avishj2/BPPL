@@ -79,6 +79,7 @@ export class TreeDetailsComponent implements OnInit {
 
   SaveTreeDetails()
     {
+      this.CommonService.ShowSpinner();
       this._TreeDataModel.SurveyId = this.SurveyNumber;
       let url = this.urlService.AddOrUpdateSurveyTreeAPI;     
       this.httpService.HttpPostRequest(url,this._TreeDataModel,this.AddOrUpdateTreeCallBack.bind(this),null);
@@ -119,6 +120,7 @@ export class TreeDetailsComponent implements OnInit {
 
   DeleteTreeDetails(arg)
     {
+      this.CommonService.ShowSpinner();
       let url = this.urlService.DeleteSurveyTreeAPI + arg.SurveyTreeId + '&surveyId='+ arg.SurveyId;
         this.httpService.get(url,null).subscribe(response => {
           let OwnerDetails : any = response;

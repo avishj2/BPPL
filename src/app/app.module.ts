@@ -11,6 +11,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AlertsModule } from 'angular-alert-module';
 import { CommonModule } from '@angular/common';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -82,6 +83,7 @@ import { LandDetailsComponent } from './Pages/Survey_Details/survey-details/land
       focusButton: 'confirm',
     }),
     NgMultiSelectDropDownModule.forRoot(),
+    NgxSpinnerModule
   ],
   providers: [DialogService,NgbActiveModal],
   bootstrap: [AppComponent]
