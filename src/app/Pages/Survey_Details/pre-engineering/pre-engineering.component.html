@@ -1,87 +1,123 @@
 <div class="row">
     <div class="col-lg-4">
     <label class ="dropdownsLabel">Category</label>
-    <select class="form-control"[(ngModel)]="_CategoryID">
+    <select class="form-control"[(ngModel)]="_CategoryID"(change)="CategoryChange()">
         <option *ngFor="let data of _CategoryDataModel.Categories"[value]="data.CategoryID">{{data.CategoryName}}</option>
     </select>
     </div>
 </div>
 <br>
 
-<div class="row"*ngIf ="_CategoryID == 1">
-    <div class="col-lg-4">
-    <label class ="dropdownsLabel">Description</label>
-    <!-- [(ngModel)]="_InventoryFormDataModel.InventoryField.Remarks"[ngModelOptions]="{standalone: true}"[disabled]="DisableAssetEditField" -->
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" ></textarea>  
+<div *ngIf ="_CategoryID == 1">
+    <div class="row">
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel">Project Wise Report</label>
+            <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.ProjectWiseReportTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Projectdoc.Lookupid">
+            </ng-select>
+        </div>
+        <div class="col-lg-3">
+            <label class ="dropdownsLabel">Description</label>
+            <textarea class="form-control"[(ngModel)]="_Projectdoc.Description"[ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="1"></textarea>  
+        </div>
+        <div class="col-lg-3">
+            <div class="FileInputClass">
+                <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+            </div>
+            <!-- <div class="custom-file">
+                <label class="custom-file-label" for="customFile">Choose File</label>
+                <input type="file"class="custom-file-input" id="customFile"(change)="onChangeDocument($event)" title="Chooes File" #UploadFileInput>
+            </div>  -->
+        </div>
+        <div class="col-lg-2">
+            <button class="btn-primary"style="margin-top: 18%"(click)="UploadProjectReport()" > Upload </button>
+        </div>
     </div>
-    <div class="col-lg-4">
-        <div class="custom-file">
-            <label class="custom-file-label" for="customFile">Choose File</label>
-            <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
-        </div> 
-    </div>
-    <div class="col-lg-1"></div>
-    <div class="col-lg-3">
-        <button class="btn-primary" >Upload</button>
+    <br>
+    <div class="row">
+        <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="95%" >
+            <thead>
+                <tr>           
+                    <th>Report Type</th>
+                    <th>Document Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr *ngFor="let data of _ProjectReports; let i = index">           
+                    <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.ProjectWiseReportTypes, data.Lookupid)}}</td>
+                    <td>{{data.FileName}}</td>
+                    <td>{{data.Description}}</td>
+                    <td>
+                        <button type="button" class="btn-success"title="download" (click)="DownloadDocument(data)">
+                            <i class="fa fa-download"></i>
+                        </button>&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn-danger"title="Delete"(click)="DeleteProjectDocument(data)">
+                            <i class="fa fa-trash"></i>
+                        </button>    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 
-
-    <div class="card"*ngIf ="_CategoryID == 2">
-        <div class="innercard">
-            <div class="d-flex justify-content-between">
-                <div class="CardTitle">Alignment Sheet Details</div> 
+<div class="card"*ngIf ="_CategoryID == 2">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Alignment Sheet Details</div> 
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+            <label class ="dropdownsLabel">Alignment Number </label>
+            <input (keypress)="NumberOnly($event)" type="text"class="form-control">
             </div>
-            <div class="row">
-                <div class="col-lg-2">
-                <label class ="dropdownsLabel">Alignment Number </label>
-                <input (keypress)="NumberOnly($event)" type="text"class="form-control">
-                </div>
-                <div class="col-lg-2">
-                    <label class ="dropdownsLabel">From Chainage </label>
-                    <input class="form-control">
-                </div>
-                <div class="col-lg-2">
-                    <label class ="dropdownsLabel">To Chainage </label>
-                    <input class="form-control">
-                </div>
-                <div class="col-lg-3">
-                    <div class="custom-file">
-                        <label class="custom-file-label" for="customFile">Choose File</label>
-                        <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
-                    </div> 
-                </div>
-                <div class="col-lg-2">
-                    <button class="btn-primary"style="margin-top: 18%" (click)="UploadData()" >Upload</button>
-                </div>
-            </div><br>
-            <div>
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
-                    <thead>
-                        <tr> 
-                            <th>Alignment Number</th>
-                            <th>Chainage From</th> 
-                            <th>Chainage To</th>
-                            <th>FileName</th>    
-                            <th>Document Type</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-lg-2">
+                <label class ="dropdownsLabel">From Chainage </label>
+                <input class="form-control">
             </div>
-        </div>    
+            <div class="col-lg-2">
+                <label class ="dropdownsLabel">To Chainage </label>
+                <input class="form-control">
+            </div>
+            <div class="col-lg-3">
+                <div class="custom-file">
+                    <label class="custom-file-label" for="customFile">Choose File</label>
+                    <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+                </div> 
+            </div>
+            <div class="col-lg-2">
+                <button class="btn-primary"style="margin-top: 18%" (click)="UploadData()" >Upload</button>
+            </div>
+        </div><br>
+        <div>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+                <thead>
+                    <tr> 
+                        <th>Alignment Number</th>
+                        <th>Chainage From</th> 
+                        <th>Chainage To</th>
+                        <th>FileName</th>    
+                        <th>Document Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>    
+</div>    
 
 
 <div class="card" *ngIf ="_CategoryID == 3">

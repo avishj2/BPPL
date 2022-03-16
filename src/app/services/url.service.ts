@@ -72,7 +72,12 @@ export class UrlService {
   DownloadRevDocAPI = this.url +'/api/Survey/Download?documentId=';
   DeleteSurveyDocumentAPI = this.url+'/api/Survey/DeleteSurveyDocument?documentId=';
 
-
+  //survey documents APIs
+  GetSurveyDocumentDropDowns = this.url+'/api/SurveyDocuments/GetSurveyDocumentDropDowns';
+  GetProjectReports= this.url+'/api/SurveyDocuments/GetProjectReports';
+  AddProjectReportAPI = this.url+'/api/SurveyDocuments/AddProjectReport';
+  DownloadProjectReportAPI =  this.url+'/api/SurveyDocuments/DownloadProjectReport?documentId=';
+  DeleteProjectReportAPI = this.url+'/api/SurveyDocuments/DeleteProjectReport?documentId=';
 
 }
 

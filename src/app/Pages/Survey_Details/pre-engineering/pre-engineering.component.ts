@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
+import {SurveyDocDropDownsDataModel,ProjectReportsDataModel } from 'src/app/Model/SurveyDocument.model';
+import {BaseResponse, CommonDropdownModel,CommonDocDataModel} from 'src/app/Model/Base.model';
 
 @Component({
   selector: 'app-pre-engineering',
@@ -23,7 +25,13 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
   datatable: any;
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
+  _SurveyDocDropDownsDataModel : SurveyDocDropDownsDataModel;
+  _ProjectReports : ProjectReportsDataModel[];
+  Documentfile: File = null; 
+  _Projectdoc : CommonDocDataModel;
 
+
+  //test
   _ShowUploadedDocModel : ShowUploadedDocModel;
   _CategoryDataModel :CategoryDataModel;
   _CategoryID : any;
@@ -31,11 +39,7 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
   _IsGazette : boolean; //
   _StateValue : any;
   _TalukaName : string;
-  tabs = [
-    { tab: 'One', title: 'one' },
-    { tab: 'Two', title: 'two' },
-    { tab: 'Three', title: 'three' }
-  ];
+
   constructor(
     public urlService: UrlService,
     private router: Router,
@@ -50,6 +54,9 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
       this._SearchCriteria = new SearchCriteria();
       this._FilterControls = new FilterControls();
       this.SetFilterControls();
+      this._SurveyDocDropDownsDataModel = new SurveyDocDropDownsDataModel();
+      this._ProjectReports = [];
+      this._Projectdoc = new CommonDocDataModel();
     }
 
    /**hide/show filter menu based on the component requirement */
@@ -72,7 +79,105 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
         pagingType: 'full_numbers',
         pageLength: 10,//onpage load loaded 5 rows, datatable bydefault shows 10 rows
       };
+    this.GetSurveyDocumentDropDowns();
   }
+
+  CategoryChange()
+    {
+      this.Documentfile = null;
+      if(this._CategoryID == 1)
+      {
+        this.GetProjectReports();
+      }
+    }
+ /**Get Survey Document DropDowns values*/
+ GetSurveyDocumentDropDowns()
+  {
+    //this.CommonService.ShowSpinner();
+    let url = this.urlService.GetSurveyDocumentDropDowns;
+    this.httpService.get(url,null).subscribe(response => {
+      this._SurveyDocDropDownsDataModel  = response;
+      },error => {
+        this.Utility.LogText(error);
+      });
+  }
+
+GetProjectReports()
+  {
+    let url = this.urlService.GetProjectReports;
+    this.httpService.get(url,null).subscribe(response => {
+      this._ProjectReports  = response;
+      },error => {
+        this.Utility.LogText(error);
+      });
+  }
+
+  onChangeDocument(event)
+    {
+      this.Documentfile = event.target.files[0];
+    }
+
+  UploadProjectReport()
+    {
+      let Doc : CommonDocDataModel;
+      if(!this.Documentfile)
+      {
+        alert("Please select file!!");
+        return;
+      }
+      if(!this._Projectdoc.Lookupid)
+        {
+          alert("Please select Form doc type !");
+          return;
+        }
+
+      this._Projectdoc.RequestId = 0;
+      this._Projectdoc.Document = this.Documentfile;
+      this._Projectdoc.LookupGroupId = 0;
+      this._Projectdoc.DocumentId = 0;
+      this._Projectdoc.ToChainage= '';
+      this._Projectdoc.FromChainage= '';
+      Doc = this._Projectdoc;
+
+      /**api call */
+      this.CommonService.ShowSpinner();
+      let url = this.urlService.AddProjectReportAPI; 
+      this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
+        let DocumentModelResp: CommonDocDataModel[] = response.Result;         
+        this._ProjectReports = DocumentModelResp;
+        this.Utility.LogText(DocumentModelResp);
+        alert("Document updated sucessfully!!");
+      },error => {
+        this.Utility.LogText(error);
+      });
+    }
+
+  DownloadDocument(arg)
+    {
+      let url = this.urlService.DownloadProjectReportAPI + arg.DocumentId;
+      let link = document.createElement('a');
+      link.setAttribute('type', 'hidden');
+      link.setAttribute("target","_blank");
+      link.href = url;
+      link.download = "C:/Users/admin/Downloads/";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    
+  DeleteProjectDocument(arg)
+    {
+      let url = this.urlService.DeleteCrossingDocumentAPI + arg.DocumentId;
+        this.httpService.get(url,null).subscribe(response => {
+        let index = this._ProjectReports.indexOf(arg);
+        this._ProjectReports.splice(index,1);
+        alert("document deleted Sucessfully!");  
+        }, 
+        error => {
+          this.Utility.LogText(error);
+        });
+      }
 
   ngAfterViewInit(): void 
   {
@@ -85,6 +190,15 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
+  GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
+    {
+      let object = lookups.find(elm=>elm.Value == lookUpid );
+      if(object)
+      {
+        return object.Text;
+      }
+      else { return lookUpid;}
+    }
   GetValuesFromFilters(event) 
     {
       this.Utility.LogText2("Pre-eng",event);

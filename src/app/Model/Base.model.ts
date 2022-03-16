@@ -22,6 +22,10 @@ export class CommonDocDataModel{
     FilePath: string;
     Document: File;
 
+    Description: string;
+    FromChainage: any;
+    ToChainage: any;
+
 
 
     public GetFormData() : FormData
@@ -29,14 +33,20 @@ export class CommonDocDataModel{
             let formDataIn = new FormData();
             this.DocumentId = this.DocumentId ? this.DocumentId : 0;
             this.RequestId = this.RequestId ? this.RequestId : null;
+            // this.LookupGroupId = this.LookupGroupId ? this.LookupGroupId : 0;
 
             formDataIn.append('DocumentId', JSON.stringify(this.DocumentId));
             formDataIn.append('Lookupid', this.Lookupid);
+            
             if(this.RequestId)
             {
                 formDataIn.append('RequestId', JSON.stringify(this.RequestId));
             }
             formDataIn.append('Document', this.Document);
+            formDataIn.append('LookupGroupId', this.LookupGroupId);
+            formDataIn.append('Description', this.Description);
+            formDataIn.append('FromChainage', this.FromChainage);
+            formDataIn.append('ToChainage', this.ToChainage);
 
             return formDataIn;
         }
