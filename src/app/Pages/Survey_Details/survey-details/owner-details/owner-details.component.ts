@@ -92,6 +92,7 @@ export class OwnerDetailsComponent implements OnInit {
 
   SaveOwnerDetails()
     {
+      this.CommonService.ShowSpinner();
       this._SurveyOwnerModel.SurveyId = this.SurveyNumber;
       let url = this.urlService.AddOrUpdateSurveyOwnerAPI;     
       this.httpService.HttpPostRequest(url,this._SurveyOwnerModel,this.AddOrUpdateOwnerCallBack.bind(this),null);
@@ -139,6 +140,7 @@ export class OwnerDetailsComponent implements OnInit {
 
   DeleteOwnerDetails(arg)
     {
+      this.CommonService.ShowSpinner();
       let url = this.urlService.DeleteSurveyOwnerAPI + arg.SurveyOwnerId + '&surveyId='+ arg.SurveyId;
         this.httpService.get(url,null).subscribe(response => {
           let OwnerDetails : any = response;

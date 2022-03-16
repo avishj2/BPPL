@@ -22,139 +22,124 @@
     </div>
     <div class="col-lg-1"></div>
     <div class="col-lg-3">
-        <button class="btn-round" >Upload</button>
+        <button class="btn-primary" >Upload</button>
     </div>
 </div>
 
 
-<div *ngIf ="_CategoryID == 2">
-    <div class="row">
-        <div class="col-lg-4">
-        <label class ="dropdownsLabel">Alignment Number </label>
-        <input (keypress)="NumberOnly($event)" type="text"class="form-control">
+
+    <div class="card"*ngIf ="_CategoryID == 2">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Alignment Sheet Details</div> 
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                <label class ="dropdownsLabel">Alignment Number </label>
+                <input (keypress)="NumberOnly($event)" type="text"class="form-control">
+                </div>
+                <div class="col-lg-2">
+                    <label class ="dropdownsLabel">From Chainage </label>
+                    <input class="form-control">
+                </div>
+                <div class="col-lg-2">
+                    <label class ="dropdownsLabel">To Chainage </label>
+                    <input class="form-control">
+                </div>
+                <div class="col-lg-3">
+                    <div class="custom-file">
+                        <label class="custom-file-label" for="customFile">Choose File</label>
+                        <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+                    </div> 
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn-primary"style="margin-top: 18%" (click)="UploadData()" >Upload</button>
+                </div>
+            </div><br>
+            <div>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+                    <thead>
+                        <tr> 
+                            <th>Alignment Number</th>
+                            <th>Chainage From</th> 
+                            <th>Chainage To</th>
+                            <th>FileName</th>    
+                            <th>Document Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>    
+
+
+<div class="card" *ngIf ="_CategoryID == 3">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Award and Mutation Details</div> 
         </div>
-        <div class="col-lg-4">
-            <label class ="dropdownsLabel">From Chainage </label>
-            <input class="form-control">
+        <app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)">
+        </app-filters>
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+            <label class ="dropdownsLabel">Select Document</label>
+            <!--  [items]="_AddDocuments.Documents " bindLabel="DocumentName" bindValue ="DocumentName" [(ngModel)]="_TransferFieldSubmitModel.UserFrom"-->
+            <ng-select [allowClear]="true"[items]="_AddDocuments.Documents"bindLabel="DocumentName" bindValue ="IsGazette"[(ngModel)]="_IsGazette"> </ng-select>
+            </div>
+
+            <div class="col-lg-3" *ngIf ="_IsGazette == true">
+                <label class ="dropdownsLabel">Gazette Notification No.</label>
+                <ng-select [allowClear]="true"> </ng-select>
+            </div>
+
+            <div class="col-lg-3" *ngIf ="_IsGazette != true">
+                <div class="custom-file">
+                    <label class="custom-file-label" for="customFile">Choose File</label>
+                    <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+                </div> 
+            </div>
+            <!-- <a (click)="openDocument()"target="_blank"> open pdf </a> -->
+            <div class="col-lg-3">
+                <button class="btn-primary" style="margin-top: 12%">Upload</button>
+            </div>
         </div>
-        <div class="col-lg-4">
-            <label class ="dropdownsLabel">To Chainage </label>
-            <input class="form-control">
+        <br>
+        <div class="tableDiv">
+            <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="98%" >
+                <thead>
+                    <tr>           
+                    <th>Document Type</th>
+                    <th>Document Name</th>
+                    <th>Action</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr *ngFor="let item of _ShowUploadedDocModel.DisplayDocument">           
+                    <td>{{item.DocumentType}}</td>
+                    <td>{{item.DocumentName}}</td>
+                    <!-- <td></td> -->
+                    <td>
+                        <button type="button" class="btn-danger"title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>    
+                    </td>
+                    <!-- (click)="DeleteAccessoryDetails(data)"  -->
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        
     </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="custom-file">
-                <label class="custom-file-label" for="customFile">Choose File</label>
-
-                <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
-            </div> 
-        </div>
-        <!-- <div class="col-lg-2"></div> -->
-        <div class="col-lg-3">
-            <button class="btn-round"(click)="UploadData()" >Upload</button>
-        </div>
-    </div>
-</div>
-
-<div *ngIf ="_CategoryID == 3">
-    <div class="row">
-        <div class="col-lg-2">
-            <label class ="dropdownsLabel">Category </label>
-            <select class="form-control">
-                <option></option>
-            </select>
-        </div>
-        <div class="col-lg-2">
-            <label class ="dropdownsLabel">State </label>
-            <select class="form-control"[(ngModel)]="_StateValue"(change)="StateChange($event.target.value)">
-                <option value="1">Rajasthan</option>
-                <option value="2">Gujrat</option>
-            </select>
-        </div>
-        <div class="col-lg-2">
-            <label class ="dropdownsLabel">District </label>
-            <select class="form-control">
-                <option></option>
-            </select>
-        </div>
-        <div class="col-lg-2">
-            <label class ="dropdownsLabel">{{this._TalukaName}} </label>
-            <select class="form-control">
-                <option></option>
-            </select>
-        </div>
-        <div class="col-lg-2">
-            <label class ="dropdownsLabel">Village </label>
-            <select class="form-control">
-                <option></option>
-            </select>
-        </div>
-    </div>
-    <br>
-    <ngb-tabset>
-        <ngb-tab [attr.id]="tab.id" *ngFor="let tab of tabs">
-            <ng-template ngbTabTitle>
-                <span>{{ tab.title }}</span>
-            </ng-template>
-            <ng-template ngbTabContent> 
-                Content of {{ tab.tab }}
-            </ng-template>
-        </ngb-tab>
-    </ngb-tabset>
-
-    <br>
-    <div class="row">
-        <div class="col-lg-3">
-        <label class ="dropdownsLabel">Select Document</label>
-        <!--  [items]="_AddDocuments.Documents " bindLabel="DocumentName" bindValue ="DocumentName" [(ngModel)]="_TransferFieldSubmitModel.UserFrom"-->
-        <ng-select [allowClear]="true"[items]="_AddDocuments.Documents " bindLabel="DocumentName" bindValue ="IsGazette"[(ngModel)]="_IsGazette"> </ng-select>
-        </div>
-
-        <div class="col-lg-3" *ngIf ="_IsGazette == true">
-            <label class ="dropdownsLabel">Gazette Notification No.</label>
-            <ng-select [allowClear]="true"> </ng-select>
-        </div>
-
-        <div class="col-lg-3" *ngIf ="_IsGazette != true">
-            <div class="custom-file">
-                <label class="custom-file-label" for="customFile">Choose File</label>
-                <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
-            </div> 
-        </div>
-        <!-- <a (click)="openDocument()"target="_blank"> open pdf </a> -->
-        <div class="col-lg-3">
-            <button class="btn-round" >Upload</button>
-        </div>
-    </div>
-    <br><hr>
-
-
-    <div class="tableDiv">
-        <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="98%" >
-            <thead>
-                <tr>           
-                <th>Document Type</th>
-                <th>Document Name</th>
-                <th>Action</th>
-                </tr>
-            </thead>
-            
-            <tbody>
-                <tr *ngFor="let item of _ShowUploadedDocModel.DisplayDocument">           
-                <td>{{item.DocumentType}}</td>
-                <td>{{item.DocumentName}}</td>
-                <!-- <td></td> -->
-                <td>
-                    <button type="button" class="btn-danger"title="Delete">
-                        <i class="fa fa-trash"></i>
-                    </button>    
-                </td>
-                <!-- (click)="DeleteAccessoryDetails(data)"  -->
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
 </div>

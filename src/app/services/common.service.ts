@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 //import { NgxSpinnerService } from "ngx-spinner";
 import { AlertsService } from 'angular-alert-module';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Injectable({
     providedIn: 'root'
@@ -16,9 +18,10 @@ import { AlertsService } from 'angular-alert-module';
     public toast;
     // tslint:disable-next-line: variable-name
     validation_msg: any;
+    
   
     constructor(
-      //private spinner: NgxSpinnerService,
+      private spinner: NgxSpinnerService,
       //public loadingCtrl: LoadingController,
       //private alertCtrl: AlertController,
       //public toastCtrl: ToastController,
@@ -103,11 +106,11 @@ import { AlertsService } from 'angular-alert-module';
    */
   public hideSpinnerLoading()
       {
-        /***setTimeout(() => 
+          setTimeout(() => 
           {
             // spinner ends after 5 seconds 
             this.spinner.hide();
-          }, 6000);*/
+          }, 3000);
       }
   
     /**
@@ -115,9 +118,17 @@ import { AlertsService } from 'angular-alert-module';
    */
   public ShowSpinnerLoading()
     {
-      //this.spinner.show();//show loader 
+      this.spinner.show();//show loader 
     }
   
+
+  public ShowSpinner(){
+      this.spinner.show();//show loader 
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 3000);
+  }
   
   /**
    * function for hide loading

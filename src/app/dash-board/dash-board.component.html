@@ -279,7 +279,10 @@
 				<div class="page-content">
 
 				<!-- Children components add -->	
-				<router-outlet></router-outlet>
+				<router-outlet>
+					<ngx-spinner type="ball-clip-rotate-multiple" bdColor="rgba(51,51,51,0.8)"
+					size="medium" color="white"[fullScreen]="false"></ngx-spinner>
+				</router-outlet>
 				</div><!-- page-content -->			
 		
 			</div>

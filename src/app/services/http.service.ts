@@ -43,7 +43,7 @@ export class HttpService {
             this.utilityService.LogText(error);   
             if(errorCallBackFunction)
             {
-                errorCallBackFunction(error);
+                errorCallBackFunction(error.error);
             }      
             this.commonService.hideLoading();
       });

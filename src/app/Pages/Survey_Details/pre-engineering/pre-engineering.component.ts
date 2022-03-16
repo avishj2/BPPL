@@ -2,6 +2,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output, ViewChild } f
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ShowUploadedDocModel ,CategoryDataModel,AddDocuments} from '../Survey_Details.model';
+import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
+import { UrlService } from 'src/app/services/url.service';
+import { Router } from '@angular/router';
+import { UtilityService } from 'src/app/services/utility.service';
+import { CommonService} from 'src/app/services/common.service';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-pre-engineering',
@@ -15,6 +21,8 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
   dtTrigger: Subject<any> = new Subject();
   dtOptions: any = {};
   datatable: any;
+  _FilterControls: FilterControls;
+  _SearchCriteria: SearchCriteria;
 
   _ShowUploadedDocModel : ShowUploadedDocModel;
   _CategoryDataModel :CategoryDataModel;
@@ -28,11 +36,33 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
     { tab: 'Two', title: 'two' },
     { tab: 'Three', title: 'three' }
   ];
-  constructor(){
-    this._ShowUploadedDocModel = new ShowUploadedDocModel();
-    this._CategoryDataModel = new CategoryDataModel()
-    this._AddDocuments = new AddDocuments();
-   }
+  constructor(
+    public urlService: UrlService,
+    private router: Router,
+    public CommonService : CommonService,
+    public httpService : HttpService,
+    public Utility :UtilityService,)
+    {
+      this._ShowUploadedDocModel = new ShowUploadedDocModel();
+      this._CategoryDataModel = new CategoryDataModel()
+      this._AddDocuments = new AddDocuments();
+
+      this._SearchCriteria = new SearchCriteria();
+      this._FilterControls = new FilterControls();
+      this.SetFilterControls();
+    }
+
+   /**hide/show filter menu based on the component requirement */
+   SetFilterControls() 
+    {
+      this._FilterControls.ShowState = true;
+      this._FilterControls.ShowDistrict = true;
+      this._FilterControls.ShowTaluka = true;
+      this._FilterControls.ShowVillage = true;
+      this._FilterControls.ShowSurneyNos = false;
+      this._FilterControls.ShowChainageFrom = false;
+      this._FilterControls.ShowChainageTo = false;
+    }
 
   ngOnInit(): void {
     this._CategoryDataModel.ReadFromString()
@@ -54,6 +84,11 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
+
+  GetValuesFromFilters(event) 
+    {
+      this.Utility.LogText2("Pre-eng",event);
+    }
 
   /**After add chainage details refresh datatable  */
   rerenderDataTable(): void {
