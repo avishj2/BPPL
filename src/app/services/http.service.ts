@@ -44,7 +44,15 @@ export class HttpService {
             if(errorCallBackFunction)
             {
                 errorCallBackFunction(error.error);
+            }
+            else if(error.error.Message)
+            {
+               alert(error.error.Message)
             }      
+            else
+            {
+               alert("Something Went Wrong ! Please try again.");
+            }
             this.commonService.hideLoading();
       });
     }
