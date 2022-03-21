@@ -77,7 +77,16 @@ export class UrlService {
   GetProjectReports= this.url+'/api/SurveyDocuments/GetProjectReports';
   AddProjectReportAPI = this.url+'/api/SurveyDocuments/AddProjectReport';
   DownloadProjectReportAPI =  this.url+'/api/SurveyDocuments/DownloadProjectReport?documentId=';
-  DeleteProjectReportAPI = this.url+'/api/SurveyDocuments/DeleteProjectReport?documentId=';
-
+  DeleteProjectReportAPI = this.url +'/api/SurveyDocuments/DeleteProjectReport?documentId=';
+  //===2
+  GetAlignmentSheetsAPI = this.url +'/api/SurveyDocuments/GetAlignmentSheets';
+  AddAlignmentSheetAPI = this.url +'/api/SurveyDocuments/AddAlignmentSheet';
+  DownloadAlignmentSheetAPI = this.url +'/api/SurveyDocuments/DownloadAlignmentSheet?documentId=';
+  DeleteAlignmentSheetAPI = this.url +'/api/SurveyDocuments/DeleteAlignmentSheet?documentId=';
+  //===3
+  GetAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/GetAwardAndMutations?requestId=';
+  AddAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/AddAwardAndMutations';
+  DownloadAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DownloadAwardAndMutations?documentId=';
+  DeleteAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DeleteAwardAndMutations?documentId='
 }
 

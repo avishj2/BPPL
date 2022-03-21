@@ -57,6 +57,7 @@ export class SurveyDetailsComponent implements OnInit {
       this._FilterControls.ShowTaluka = true;
       this._FilterControls.ShowVillage = true;
       this._FilterControls.ShowSurneyNos = true;
+      this._FilterControls.ShowSearchBtn = true;
     }
 
   ngOnInit(): void 

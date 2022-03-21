@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
+import { Component,AfterViewInit, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { UrlService } from 'src/app/services/url.service';
@@ -16,7 +16,7 @@ import { CommonDropdownModel} from 'src/app/Model/Base.model';
   templateUrl: './owner-details.component.html',
   styleUrls: ['./owner-details.component.css']
 })
-export class OwnerDetailsComponent implements OnInit {
+export class OwnerDetailsComponent implements AfterViewInit, OnInit {
   _DisabledInputField: boolean = false;
   _AddNewOwner : boolean;
   /**popup message variables */
@@ -112,6 +112,7 @@ export class OwnerDetailsComponent implements OnInit {
               alert("Owner updated sucessfully!!");
               this._AllSurveyDetails.Result.SurveyOwners = RespDataModel.Result;
               this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
             }
           else
             {
@@ -121,6 +122,7 @@ export class OwnerDetailsComponent implements OnInit {
               console.log("ownerdropdown",this.AllSurveyDetails.Result.SurveyOwnersDrp)
               this._AddNewOwner = false;
               this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
             }   
         }
         this._AddNewOwner = false;
@@ -152,9 +154,36 @@ export class OwnerDetailsComponent implements OnInit {
               alert("Owner Details deleted successfully!");
               this._AllSurveyDetails.Result.SurveyOwners = response.Result;
               this.SetParentData();
+              this.rerenderDataTable();
             }
           },error => {
             this.Utility.LogText(error);
           });
     }
+
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+    }
+
+  /**refresh/reload data table 
+  *when data update/delete/add in the datatable  
+  **/
+  rerenderDataTable()
+  {
+    /**initialized datatable */
+    if (this.IsDtInitialized) 
+      {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+        {
+          dtInstance.destroy();//Destroy the table first
+          this.dtTrigger.next();//Call the dtTrigger to rerender again
+        });
+      }
+    else
+      {
+        this.IsDtInitialized = true;
+        this.dtTrigger.next();
+      }
+  }
 }

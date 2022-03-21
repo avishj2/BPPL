@@ -43,7 +43,7 @@ export class CommonDocDataModel{
                 formDataIn.append('RequestId', JSON.stringify(this.RequestId));
             }
             formDataIn.append('Document', this.Document);
-            formDataIn.append('LookupGroupId', this.LookupGroupId);
+            //formDataIn.append('LookupGroupId', this.LookupGroupId);
             formDataIn.append('Description', this.Description);
             formDataIn.append('FromChainage', this.FromChainage);
             formDataIn.append('ToChainage', this.ToChainage);

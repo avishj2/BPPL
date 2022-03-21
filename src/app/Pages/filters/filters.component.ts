@@ -137,6 +137,7 @@ export class FiltersComponent implements OnInit {
       let url = this.urlService.GetSurveyDetailsByVillageId + argVillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._SurveyDetails = response;
+        this.PassDataToParent();
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
         });

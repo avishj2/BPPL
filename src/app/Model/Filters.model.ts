@@ -74,6 +74,7 @@ export class SearchCriteria
      ShowSurneyNos : boolean;
      ShowCrossingTypes: boolean;
      ShowCrossingNumber: boolean;
+     ShowSearchBtn : boolean;
  }
 
  export class CrossingDropdownDataModel{
