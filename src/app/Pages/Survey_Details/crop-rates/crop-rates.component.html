@@ -1,1 +1,45 @@
-<p>crop-rates works!</p>
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+</app-filters>
+<br>
+<div>
+    <div class="AddEditBtn"> 
+        <button class="btn-primary" (click)="AddNewCropDetails()"data-toggle="modal" data-target="#CropModal">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Crop Rates
+        </button> 
+    </div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr>  
+                <th>Action</th>
+                <th>Crop Name</th>
+                <th>Crop Name(Local)</th>  
+                <th>Season Name</th>  
+                <th>Yield in Kg.(Per Ha.)</th>  
+                <th>MiN Price</th>  
+                <th>Max Price</th>       
+                <th>Average Price</th>   
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <!-- <td>
+                    <button type="button" class="btn-success"(click)="EditTreeDetails(data)" title="Edit" data-toggle="modal" data-target="#treeModal">
+                        <i class="fa fa-edit"></i>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteTreeDetails(data)" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>          
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.TreeNames, data.TreeName)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.TreeRanges, data.Range)}}</td>
+                <td>{{data.NumberOfTree}}</td>
+                <td>{{data.AgeYears}}</td>
+                <td>{{data.GirthCMS}}</td>
+                <td>{{data.HeightM}}</td>
+                <td>{{data.Remarks}}</td>  -->
+            </tr>
+        </tbody>
+    </table>
+</div>
