@@ -69,6 +69,7 @@ IsDtInitialized: boolean = false;
     this._FilterControls.ShowDistrict = true;
     this._FilterControls.ShowTaluka = true;
     this._FilterControls.ShowVillage = true;
+    this._FilterControls.ShowSearchBtn = true;
   }
 
   ngOnInit(): void {

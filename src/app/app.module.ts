@@ -39,6 +39,7 @@ import { RevenueFormComponent } from './Pages/Survey_Details/survey-details/reve
 import { RestorationDetailsComponent } from './Pages/Survey_Details/survey-details/restoration-details/restoration-details.component';
 import { GazetteNoticeDetailsComponent } from './Pages/Survey_Details/survey-details/gazette-notice-details/gazette-notice-details.component';
 import { LandDetailsComponent } from './Pages/Survey_Details/survey-details/land-details/land-details.component';
+import { CropRatesComponent } from './Pages/Survey_Details/crop-rates/crop-rates.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { LandDetailsComponent } from './Pages/Survey_Details/survey-details/land
     OwnerDetailsComponent,
     RevenueFormComponent,
     RestorationDetailsComponent,
-    GazetteNoticeDetailsComponent
+    GazetteNoticeDetailsComponent,
+    CropRatesComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [

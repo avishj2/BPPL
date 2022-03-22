@@ -60,6 +60,7 @@ _DisabledCrossingInputField : boolean = true;
       this._FilterControls.ShowVillage = true;
       this._FilterControls.ShowCrossingTypes = true;
       this._FilterControls.ShowCrossingNumber = true;
+      this._FilterControls.ShowSearchBtn = true;
     }
 
   ngOnInit(): void 

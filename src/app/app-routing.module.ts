@@ -13,6 +13,7 @@ import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payme
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
 import { TestLoginComponent } from './test-login/test-login.component';
 import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/survey-details.component';
+import { CropRatesComponent } from './Pages/Survey_Details/crop-rates/crop-rates.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
       {path: 'PreEngineering', component: PreEngineeringComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Pre-Engineering'}},
       {path: 'Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'}},
       {path: 'SurveyDetails', component: SurveyDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Survey Number'}},
+      {path: 'CropRates', component: CropRatesComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Crop Rates'}},
       /**View details section components */
       {path: 'VeiwVillageDetails', component: ViewVillageDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / Village Details'}},
 

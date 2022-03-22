@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild } from '@angular/core';
+import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ViewChildren } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { UrlService } from 'src/app/services/url.service';
@@ -17,7 +17,7 @@ import { CommonDropdownModel,BaseResponse} from 'src/app/Model/Base.model';
   styleUrls: ['./land-details.component.css']
 })
 
-export class LandDetailsComponent implements OnInit {
+export class LandDetailsComponent implements AfterViewInit, OnInit {
   _LandDataModel : LandDataModel;
   _AddNewLand : boolean = false;
   _PopupTitle : string;
@@ -30,7 +30,8 @@ export class LandDetailsComponent implements OnInit {
   @Output() Output:EventEmitter<any>= new EventEmitter(); 
   @ViewChild('closebutton') closebutton;
   /**data table properties  */
-  // @ViewChild(DataTableDirective, {static: false})
+  @ViewChild(DataTableDirective, {static: false})
+  //@ViewChildren(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -57,6 +58,31 @@ export class LandDetailsComponent implements OnInit {
     this._AllSurveyDetails.Result.LandDetails = this.AllSurveyDetails.Result.LandDetails;
     this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
     
+  }
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+    }
+
+  /**refresh/reload data table 
+  *when data update/delete/add in the datatable  
+  **/
+  rerenderDataTable()
+  {
+    /**initialized datatable */
+    if (this.IsDtInitialized) 
+      {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+        {
+          dtInstance.destroy();//Destroy the table first
+          this.dtTrigger.next();//Call the dtTrigger to rerender again
+        });
+      }
+    else
+      {
+        this.IsDtInitialized = true;
+        this.dtTrigger.next();
+      }
   }
 
   AddNewLandDetails()
@@ -102,6 +128,7 @@ export class LandDetailsComponent implements OnInit {
               this._AllSurveyDetails.Result.LandDetails = RespDataModel.Result;
               this.SetParentData();
               this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
             }
           else
             {
@@ -110,28 +137,18 @@ export class LandDetailsComponent implements OnInit {
               this._AddNewLand = false;
               this.SetParentData();
               this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
             }   
         }
         this._AddNewLand = false;
         
     }
 
-  ErrorLandCallBack(dtas)
-    {
-      if (dtas != null)
-        {
-          let RespDataModel : BaseResponse  = dtas;
-          if (RespDataModel.StatusCode != 200) 
-            {
-              alert(RespDataModel.Message);
-            }
-        }
-    }
 
-    SetParentData()
-      {
-        this.AllSurveyDetails.Result.LandDetails = this._AllSurveyDetails.Result.LandDetails
-      }
+  SetParentData()
+    {
+      this.AllSurveyDetails.Result.LandDetails = this._AllSurveyDetails.Result.LandDetails
+    }
 
   DeleteLandDetails(arg)
     {
@@ -146,6 +163,7 @@ export class LandDetailsComponent implements OnInit {
             alert("Land Details deleted successfully!");
             this._AllSurveyDetails.Result.LandDetails = response.Result;
             this.SetParentData();
+            this.rerenderDataTable();
           }
         },error => {
           this.Utility.LogText(error);

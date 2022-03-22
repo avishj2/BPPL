@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
+import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ import { CommonDropdownModel} from 'src/app/Model/Base.model';
   templateUrl: './crop-details.component.html',
   styleUrls: ['./crop-details.component.css']
 })
-export class CropDetailsComponent implements OnInit {
+export class CropDetailsComponent implements AfterViewInit, OnInit {
   @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
   @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
   @Input() SurveyNumber : any;
@@ -34,6 +34,7 @@ export class CropDetailsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
+
   _AddNewCropDetails : boolean;
   /**popup message variables */
   popoverTitle ="Delete Details";
@@ -74,6 +75,32 @@ export class CropDetailsComponent implements OnInit {
           }
     }
 
+/**refresh/reload data table 
+  *when data update/delete/add in the datatable  
+  **/
+  rerenderDataTable()
+  {
+    /**initialized datatable */
+    if (this.IsDtInitialized) 
+      {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+        {
+          dtInstance.destroy();//Destroy the table first
+          this.dtTrigger.next();//Call the dtTrigger to rerender again
+        });
+      }
+    else
+      {
+        this.IsDtInitialized = true;
+        this.dtTrigger.next();
+      }
+  }
+
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+    }
+
 
   EditCropDetails(arg)
     {
@@ -105,6 +132,7 @@ export class CropDetailsComponent implements OnInit {
               this._AllSurveyDetails.Result.Crops = RespDataModel.Result;
               this.SetParentData();
               this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
             }
           else
             {
@@ -113,6 +141,7 @@ export class CropDetailsComponent implements OnInit {
               this._AddNewCropDetails = false;
               this.SetParentData();
               this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
             }   
         }
         this._AddNewCropDetails = false;
@@ -137,6 +166,7 @@ export class CropDetailsComponent implements OnInit {
             alert("Crops Details deleted successfully!");
             this._AllSurveyDetails.Result.Crops = response.Result;
             this.SetParentData();
+            this.rerenderDataTable();
           }
         },error => {
           this.Utility.LogText(error);

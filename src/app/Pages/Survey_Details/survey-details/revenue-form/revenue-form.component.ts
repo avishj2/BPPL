@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
-import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
+import { Component,AfterViewInit, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -16,7 +15,7 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./revenue-form.component.css']
 })
 
-export class RevenueFormComponent implements OnInit {
+export class RevenueFormComponent implements AfterViewInit, OnInit {
   _AddNewDetails : boolean;
   /**popup message variables */
   popoverTitle ="Delete Details";
@@ -25,10 +24,12 @@ export class RevenueFormComponent implements OnInit {
   @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
   @Input() SurveyNumber : any;
   @Output() Output:EventEmitter<any>= new EventEmitter();
-  // @ViewChild(DataTableDirective, {static: false})
+  @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+  /**REFERSH DATATABLE  */
+  IsDtInitialized: boolean = false;
   _Revenuedoc : CommonDocDataModel;
   Documentfile: File = null; 
   _AllSurveyDetails : AllSurveyDetailsDataModel;
@@ -82,6 +83,7 @@ export class RevenueFormComponent implements OnInit {
         this._AllSurveyDetails.Result.SurveyDocuments = DocumentModelResp;
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
+        this.rerenderDataTable();
         this.SetParentData();
       },error => {
         this.Utility.LogText(error);
@@ -113,6 +115,7 @@ export class RevenueFormComponent implements OnInit {
       let index = this._AllSurveyDetails.Result.SurveyDocuments.indexOf(arg);
       this._AllSurveyDetails.Result.SurveyDocuments.splice(index,1);
       this.SetParentData();
+      this.rerenderDataTable();
       alert("Revenue document deleted !");  
       }, 
       error => {
@@ -129,4 +132,30 @@ export class RevenueFormComponent implements OnInit {
     }
     else { return lookUpid;}
   }
+
+  ngAfterViewInit(): void 
+  {
+    this.dtTrigger.next();
+  }
+
+/**refresh/reload data table 
+*when data update/delete/add in the datatable  
+**/
+rerenderDataTable()
+{
+  /**initialized datatable */
+  if (this.IsDtInitialized) 
+    {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+      {
+        dtInstance.destroy();//Destroy the table first
+        this.dtTrigger.next();//Call the dtTrigger to rerender again
+      });
+    }
+  else
+    {
+      this.IsDtInitialized = true;
+      this.dtTrigger.next();
+    }
+}
 }

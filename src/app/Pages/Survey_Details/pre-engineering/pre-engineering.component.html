@@ -8,58 +8,61 @@
 </div>
 <br>
 
-<div *ngIf ="_CategoryID == 1">
-    <div class="row">
-        <div class="col-lg-3">
-            <label class ="dropdownsLabel">Project Wise Report</label>
-            <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.ProjectWiseReportTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Projectdoc.Lookupid">
-            </ng-select>
-        </div>
-        <div class="col-lg-3">
-            <label class ="dropdownsLabel">Description</label>
-            <textarea class="form-control"[(ngModel)]="_Projectdoc.Description"[ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="1"></textarea>  
-        </div>
-        <div class="col-lg-3">
-            <div class="FileInputClass">
-                <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+<div class="card" *ngIf ="_CategoryID == 1">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Project Reports</div> 
+        </div><br>
+        <div class="row">
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">Project Wise Report</label>
+                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.ProjectWiseReportTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Projectdoc.Lookupid">
+                </ng-select>
             </div>
-            <!-- <div class="custom-file">
-                <label class="custom-file-label" for="customFile">Choose File</label>
-                <input type="file"class="custom-file-input" id="customFile"(change)="onChangeDocument($event)" title="Chooes File" #UploadFileInput>
-            </div>  -->
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">Description</label>
+                <textarea class="form-control"[(ngModel)]="_Projectdoc.Description"[ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="1"></textarea>  
+            </div>
+            <div class="col-lg-3">
+                <div class="FileInputClass">
+                    <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <button class="btn-primary"style="margin-top: 18%"(click)="UploadProjectReport()"> Upload </button>
+            </div>
         </div>
-        <div class="col-lg-2">
-            <button class="btn-primary"style="margin-top: 18%"(click)="UploadProjectReport()" > Upload </button>
+        <br>
+        <div>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="90%" >
+                <thead>
+                    <tr>
+                        <th class="tbstyle">S.No.</th>           
+                        <th>Report Type</th>
+                        <th>Document Name</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr *ngFor="let data of _ProjectReports; let i = index">    
+                        <td class="tbstyle">{{i+1}}</td>       
+                        <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.ProjectWiseReportTypes, data.Lookupid)}}</td>
+                        <td>{{data.FileName}}</td>
+                        <td>{{data.Description}}</td>
+                        <td>
+                            <button type="button" class="btn-success"title="download" (click)="DownloadDocument(data)">
+                                <i class="fa fa-download"></i>
+                            </button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger"title="Delete"(click)="DeleteProjectDocument(data)">
+                                <i class="fa fa-trash"></i>
+                            </button>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-    <br>
-    <div class="row">
-        <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="95%" >
-            <thead>
-                <tr>           
-                    <th>Report Type</th>
-                    <th>Document Name</th>
-                    <th>Description</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            
-            <tbody>
-                <tr *ngFor="let data of _ProjectReports; let i = index">           
-                    <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.ProjectWiseReportTypes, data.Lookupid)}}</td>
-                    <td>{{data.FileName}}</td>
-                    <td>{{data.Description}}</td>
-                    <td>
-                        <button type="button" class="btn-success"title="download" (click)="DownloadDocument(data)">
-                            <i class="fa fa-download"></i>
-                        </button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn-danger"title="Delete"(click)="DeleteProjectDocument(data)">
-                            <i class="fa fa-trash"></i>
-                        </button>    
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 
@@ -68,50 +71,63 @@
     <div class="innercard">
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Alignment Sheet Details</div> 
-        </div>
+        </div><br>
         <div class="row">
             <div class="col-lg-2">
-            <label class ="dropdownsLabel">Alignment Number </label>
-            <input (keypress)="NumberOnly($event)" type="text"class="form-control">
+                <label class ="dropdownsLabel">Alignment Sheets</label>
+                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.AlignmentSheetTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Aligntdoc.Lookupid">
+                </ng-select>
+            </div>
+            <div class="col-lg-2">
+                <label class ="dropdownsLabel">Alignment Number</label>
+                <input class="form-control"[(ngModel)]="_Aligntdoc.Description"[ngModelOptions]="{standalone: true}">
             </div>
             <div class="col-lg-2">
                 <label class ="dropdownsLabel">From Chainage </label>
-                <input class="form-control">
+                <input class="form-control"[(ngModel)]="_Aligntdoc.FromChainage"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
             </div>
             <div class="col-lg-2">
                 <label class ="dropdownsLabel">To Chainage </label>
-                <input class="form-control">
+                <input class="form-control"[(ngModel)]="_Aligntdoc.ToChainage"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
             </div>
-            <div class="col-lg-3">
-                <div class="custom-file">
-                    <label class="custom-file-label" for="customFile">Choose File</label>
-                    <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+            <div class="col-lg-2">
+                <div class="FileInputClass"style="margin-top: 16%">
+                    <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
                 </div> 
             </div>
             <div class="col-lg-2">
-                <button class="btn-primary"style="margin-top: 18%" (click)="UploadData()" >Upload</button>
+                <button class="btn-primary"style="margin-top: 16%" (click)="UploadAlignmentSheet()">
+                    Upload
+                </button>
             </div>
         </div><br>
         <div>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+            <table datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2" class="stripe table table-striped table-bordered" width="98%" >
                 <thead>
                     <tr> 
-                        <th>Alignment Number</th>
+                        <th class="tbstyle">S.No.</th>
+                        <th>Document</th>
                         <th>Chainage From</th> 
                         <th>Chainage To</th>
                         <th>FileName</th>    
-                        <th>Document Type</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr *ngFor="let data of  _AlignmentSheets; let i = index">
+                        <td class="tbstyle">{{i+1}}</td>  
+                        <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.AlignmentSheetTypes, data.Lookupid)}}</td>
+                        <td>{{data.FromChainage}}</td>
+                        <td>{{data.ToChainage}}</td>
+                        <td>{{data.FileName}}</td>
+                        <td>
+                            <button type="button" class="btn-success"title="download" (click)="DownloadAlignDoc(data)">
+                                <i class="fa fa-download"></i>
+                            </button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger"title="Delete"(click)="DeleteAlignmentDoc(data)">
+                                <i class="fa fa-trash"></i>
+                            </button>  
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -130,49 +146,44 @@
         <br>
         <div class="row">
             <div class="col-lg-3">
-            <label class ="dropdownsLabel">Select Document</label>
-            <!--  [items]="_AddDocuments.Documents " bindLabel="DocumentName" bindValue ="DocumentName" [(ngModel)]="_TransferFieldSubmitModel.UserFrom"-->
-            <ng-select [allowClear]="true"[items]="_AddDocuments.Documents"bindLabel="DocumentName" bindValue ="IsGazette"[(ngModel)]="_IsGazette"> </ng-select>
+                <label class ="dropdownsLabel">Select Document</label>
+                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.VillageLevelDocumentsTypes"bindLabel="Text" bindValue ="Value" [(ngModel)]="_Mutationdoc.Lookupid"> 
+                </ng-select>
             </div>
-
-            <div class="col-lg-3" *ngIf ="_IsGazette == true">
-                <label class ="dropdownsLabel">Gazette Notification No.</label>
-                <ng-select [allowClear]="true"> </ng-select>
-            </div>
-
-            <div class="col-lg-3" *ngIf ="_IsGazette != true">
-                <div class="custom-file">
-                    <label class="custom-file-label" for="customFile">Choose File</label>
-                    <input type="file"class="custom-file-input" id="customFile" title="Chooes File" #UploadFileInput>
+            <div class="col-lg-3">
+                <div class="FileInputClass">
+                    <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
                 </div> 
             </div>
-            <!-- <a (click)="openDocument()"target="_blank"> open pdf </a> -->
             <div class="col-lg-3">
-                <button class="btn-primary" style="margin-top: 12%">Upload</button>
+                <button class="btn-primary" style="margin-top: 12%"(click)="UploadAwardMutation()">Upload</button>
             </div>
         </div>
         <br>
-        <div class="tableDiv">
-            <table datatable [dtOptions]="dtOptions" class="stripe table table-striped table-bordered" width="98%" >
+        <div>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
                 <thead>
-                    <tr>           
-                    <th>Document Type</th>
-                    <th>Document Name</th>
-                    <th>Action</th>
+                    <tr>
+                        <th class="tbstyle">S.No.</th>           
+                        <th>Document</th>
+                        <th>FileName</th>    
+                        <th>Action</th>
                     </tr>
                 </thead>
                 
                 <tbody>
-                    <tr *ngFor="let item of _ShowUploadedDocModel.DisplayDocument">           
-                    <td>{{item.DocumentType}}</td>
-                    <td>{{item.DocumentName}}</td>
-                    <!-- <td></td> -->
-                    <td>
-                        <button type="button" class="btn-danger"title="Delete">
+                    <tr *ngFor="let data of  _AwardMutations;let i = index">           
+                        <td class="tbstyle">{{i+1}}</td>  
+                        <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.VillageLevelDocumentsTypes, data.Lookupid)}}</td>
+                        <td>{{data.FileName}}</td>
+                        <td>
+                            <button type="button" class="btn-success"title="download" (click)="DownloadAwardDoc(data)">
+                            <i class="fa fa-download"></i>
+                            </button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger"title="Delete"(click)="DeleteAwardDoc(data)">
                             <i class="fa fa-trash"></i>
-                        </button>    
-                    </td>
-                    <!-- (click)="DeleteAccessoryDetails(data)"  -->
+                            </button>  
+                        </td>
                     </tr>
                 </tbody>
             </table>
