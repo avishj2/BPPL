@@ -14,6 +14,8 @@ import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-d
 import { TestLoginComponent } from './test-login/test-login.component';
 import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/survey-details.component';
 import { CropRatesComponent } from './Pages/Survey_Details/crop-rates/crop-rates.component';
+import { LandRatesComponent } from './Pages/Survey_Details/land-rates/land-rates.component';
+import { ViewCrossingDetailsComponent } from './Pages/View_Details/view-crossing-details/view-crossing-details.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -35,8 +37,10 @@ const routes: Routes = [
       {path: 'Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'}},
       {path: 'SurveyDetails', component: SurveyDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Survey Number'}},
       {path: 'CropRates', component: CropRatesComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Crop Rates'}},
+      {path: 'LandRates', component: LandRatesComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Crop Rates'}},
       /**View details section components */
       {path: 'VeiwVillageDetails', component: ViewVillageDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / Village Details'}},
+      {path: 'ViewCrossingDetails', component: ViewCrossingDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Crossing Details'}},
 
     ]},
 ];

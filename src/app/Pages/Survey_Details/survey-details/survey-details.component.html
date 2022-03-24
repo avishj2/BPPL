@@ -258,51 +258,51 @@
             </ng-template>
           </ngb-tab>
 
-           <!-- Land details start -->
-           <ngb-tab title="Land Details" [id]="1">
+          <ngb-tab title="Owner Details" [id]="1">
             <ng-template ngbTabContent>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber != null">
-                    <app-land-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyNumber"></app-land-details>
+                <div class="m-t-15"*ngIf="_SearchCriteria.SurveyID != null">
+                    <app-owner-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-owner-details>
                 </div>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                    <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                </div>
+            </ng-template>
+          </ngb-tab>
+
+            <!-- Land details start -->
+            <ngb-tab title="Land Details" [id]="2">
+            <ng-template ngbTabContent>
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-land-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-land-details>
+                </div>
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                     <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
                 </div>
             </ng-template>
             </ngb-tab>
-           <!-- Land details End -->
-          
-          <ngb-tab title="Crop Details" [id]="2">
+            <!-- Land details End -->
+
+          <ngb-tab title="Tree Details" [id]="3">
             <ng-template ngbTabContent>
-              <div class="m-t-15"*ngIf="_SearchCriteria.SurveyNumber != null">
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-tree-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-tree-details>
+                </div>
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                    <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                </div>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Crop Details" [id]="4">
+            <ng-template ngbTabContent>
+              <div class="m-t-15"*ngIf="_SearchCriteria.SurveyID != null">
                 <!-- info card start -->
-                <app-crop-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyNumber"></app-crop-details>
+                <app-crop-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-crop-details>
                 <!-- info card end -->
               </div>
-              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
+              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                 <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
             </div>
-            </ng-template>
-          </ngb-tab>
-
-          <ngb-tab title="Owner Details" [id]="3">
-            <ng-template ngbTabContent>
-                <div class="m-t-15"*ngIf="_SearchCriteria.SurveyNumber != null">
-                    <app-owner-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyNumber"></app-owner-details>
-                </div>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
-                    <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
-                </div>
-            </ng-template>
-          </ngb-tab>
-
-          <ngb-tab title="Tree Details" [id]="4">
-            <ng-template ngbTabContent>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber != null">
-                    <app-tree-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyNumber"></app-tree-details>
-                </div>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
-                    <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
-                </div>
             </ng-template>
           </ngb-tab>
   
@@ -310,10 +310,10 @@
             <ng-template ngbTabContent>
               <div class="m-t-15">
                 <!-- info card start -->
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber != null">
-                   <app-restoration-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyNumber"></app-restoration-details>
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                   <app-restoration-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-restoration-details>
                 </div>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                     <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
                 </div>
                 <!-- info card end -->
@@ -323,12 +323,12 @@
   
           <ngb-tab title="Assign Panch"[id]="6">
             <ng-template ngbTabContent>
-              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber != null">
+              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
                 <!-- info card start -->
                 Assign Panch
                 <!-- info card end -->
               </div>
-              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
+              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                 <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
             </div>
             </ng-template>
@@ -336,10 +336,10 @@
 
           <ngb-tab title="Revenue Form" [id]="7">
             <ng-template ngbTabContent>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber != null">
-                    <app-revenue-form [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyNumber"></app-revenue-form>
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-revenue-form [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-revenue-form>
                 </div>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                     <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
                 </div>
             </ng-template>
@@ -347,10 +347,10 @@
   
           <ngb-tab title="Gazette And Notice" [id]="8">
             <ng-template ngbTabContent>
-                <div class="m-t-15"*ngIf="_SearchCriteria.SurveyNumber != null">
+                <div class="m-t-15"*ngIf="_SearchCriteria.SurveyID != null">
                     <app-gazette-notice-details></app-gazette-notice-details>
                 </div>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                 <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
                 </div>
             </ng-template>
@@ -358,10 +358,10 @@
   
           <ngb-tab title="Compensation" [id]="9">
             <ng-template ngbTabContent>
-              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber != null">
+              <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
                 Compensation
               </div>
-                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyNumber == null">
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                     <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
                 </div>
             </ng-template>

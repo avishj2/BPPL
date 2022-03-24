@@ -137,7 +137,7 @@ export class FiltersComponent implements OnInit {
       let url = this.urlService.GetSurveyDetailsByVillageId + argVillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._SurveyDetails = response;
-        this.PassDataToParent();
+        //this.PassDataToParent();
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
         });
@@ -215,19 +215,19 @@ export class FiltersComponent implements OnInit {
                 this._SearchCriteria.DistrictId = null;
                 this._SearchCriteria.TalukaId = null;
                 this._SearchCriteria.VillageId = null;
-                this._SearchCriteria.SurveyNumber = null;
+                this._SearchCriteria.SurveyID = null;
                 break;
               case DropDownChangeEnum.DistrictChanged:
                 this._SearchCriteria.TalukaId = null;
                 this._SearchCriteria.VillageId = null;
-                this._SearchCriteria.SurveyNumber = null;
+                this._SearchCriteria.SurveyID = null;
                 break;
               case DropDownChangeEnum.TalukaChanged:
                 this._SearchCriteria.VillageId = null;
-                this._SearchCriteria.SurveyNumber = null;
+                this._SearchCriteria.SurveyID = null;
                 break;
               case DropDownChangeEnum.VillageChanged:
-                this._SearchCriteria.SurveyNumber = null;
+                this._SearchCriteria.SurveyID = null;
                 break;
           }
         }

@@ -46,7 +46,7 @@ export class SurveyDetailsComponent implements OnInit {
       this._SurveyModel = new SurveyModel();
       this._SurveyDropDownsDataModel = new SurveyDropDownsDataModel();
       this.GetSurveyDropDowns();
-      //this._SurveyDropDownsDataModel.SurveyID = this._SearchCriteria.SurveyNumber;
+      //this._SurveyDropDownsDataModel.SurveyID = this._SearchCriteria.SurveyID;
     }
 
   /**hide/show filter menu based on the component requirement */
@@ -80,11 +80,11 @@ export class SurveyDetailsComponent implements OnInit {
         // this.CommonService.hideSpinnerLoading();
         alert("Please Select State, District, taluka or village!!");
       }
-      if(this._SearchCriteria.VillageId != null && this._SearchCriteria.SurveyNumber != null){
+      if(this._SearchCriteria.VillageId != null && this._SearchCriteria.SurveyID != null){
         this._ShowSurveyDetailsDiv = true;
         this._AddNewSurveyDetails = false;
         this._DisabledInputField = true;
-        this._SurveyModel.SurveyId = this._SearchCriteria.SurveyNumber;
+        this._SurveyModel.SurveyId = this._SearchCriteria.SurveyID;
         this.tabset.select(0);
         this.GetSurveyDetailsById();
       }
@@ -113,7 +113,7 @@ export class SurveyDetailsComponent implements OnInit {
         this._SurveyDropDownsDataModel.AwardTypes = response.AwardTypes;
         this._SurveyDropDownsDataModel.OwnerTypes = response.OwnerTypes;
         this.Utility.LogText(this._SurveyDropDownsDataModel);
-        this._SurveyDropDownsDataModel.SurveyID = this._SearchCriteria.SurveyNumber;
+        this._SurveyDropDownsDataModel.SurveyID = this._SearchCriteria.SurveyID;
       }, error => {
         this.Utility.LogText(error);
       });

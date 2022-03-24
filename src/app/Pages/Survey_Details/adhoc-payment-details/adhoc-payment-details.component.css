@@ -4,10 +4,16 @@
 .col-lg-6{
   margin-top: 7%;
 }
-.AddEditBtn{
-  margin-top: 7%;
-  margin-right: -8%;
+.ParentBtn{
+  margin-top: 3.5%;
+  margin-left: -35%;
 }
 .SaveBtnClass{
   margin-top: 11%;
+}
+.FileInputClass{
+  margin-top: 11%;
+}
+.UploadattchClass{
+  margin-top: 10%;
 }

@@ -75,7 +75,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
           }
     }
 
-/**refresh/reload data table 
+  /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
   rerenderDataTable()
