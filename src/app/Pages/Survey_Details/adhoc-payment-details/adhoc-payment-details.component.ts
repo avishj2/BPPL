@@ -6,6 +6,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { HttpService } from '../../../services/http.service';
+import { CommonDropdownModel, CommonDocDataModel} from 'src/app/Model/Base.model';
 
 @Component({
   selector: 'app-adhoc-payment-details',
@@ -14,11 +15,15 @@ import { HttpService } from '../../../services/http.service';
 })
 
 export class AdhocPaymentDetailsComponent implements OnInit {
-_AdhocPaymentDataModel : AdhocPaymentDataModel;
-DisableInputField : boolean = true;
-
-_FilterControls : FilterControls;
-_SearchCriteria : SearchCriteria;
+  _AdhocPaymentDataModel : AdhocPaymentDataModel;
+  DisableInputField : boolean = true;
+  _ShowPaymentDetailsDiv: boolean = false;
+  _FilterControls : FilterControls;
+  _SearchCriteria : SearchCriteria;
+  _AddNewPaymentDetails : boolean = false;
+/**popup message variables */
+popoverTitle ="Delete Details";
+popoverMessage = "Are you sure you want to delete it ?";
 
   constructor(
     public urlService: UrlService,
@@ -47,14 +52,22 @@ _SearchCriteria : SearchCriteria;
   }
 
   /**1. Get Values From Filters component and assign into SearchCriteria
-  *  2. C
+  *  2. 
   */
   GetValuesFromFilters(event)
     {
       this.Utility.LogText(event);
       this._SearchCriteria = event;
-      this.DisableInputField = true;
-
+      if(this._SearchCriteria.SurveyID != null)
+        {
+          // this.GetCrossingDatabyId();
+          this._ShowPaymentDetailsDiv = true;
+          this._AddNewPaymentDetails= false;
+          this.DisableInputField = true;
+        }
+      else{
+        alert("Please select Survey Number");
+      }
     }
 
     /**
@@ -63,6 +76,9 @@ _SearchCriteria : SearchCriteria;
   AddNewPaymentDetails()
     {
       this.DisableInputField = false;
+      this._AdhocPaymentDataModel = new AdhocPaymentDataModel();
+      this._AddNewPaymentDetails = true;
+      this._ShowPaymentDetailsDiv = false;
     }
     /**
      * 
@@ -70,9 +86,48 @@ _SearchCriteria : SearchCriteria;
   EditPaymentDetails()
     {
       this.DisableInputField = false;
+      this._AddNewPaymentDetails = false;
     }
 
-    SavePaymentDetails(){
+
+  SavePaymentDetails()
+    {
       
+    }
+
+  DeletePaymentDetails()
+    {
+
+    }
+  onChangeDocument(event)
+    {
+      //this.Crossingfile = event.target.files[0];
+    }
+
+  FileUpload(isDoc : boolean)
+    {
+
+    }
+
+  DownlaodDocument()
+    {
+
+    }
+
+  DeleteDocument()
+    {
+
+    }  
+
+  GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
+    {
+      let object = lookups.find(elm=>elm.Value == lookUpid );
+      if(object)
+      {
+        return object.Text;
+      }
+      else { 
+        return lookUpid;
+      }
     }
 }

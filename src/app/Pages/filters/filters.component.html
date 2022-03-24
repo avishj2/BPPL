@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowSurneyNos == true">
             <label class ="dropdownsLabel"> Survey Number  </label>
-            <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyNumber">
+            <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyID">
                 <option *ngFor="let data of _SurveyDetails"[value]="data.Value">{{data.Text}}</option>
             </select>
         </div>
@@ -51,7 +51,7 @@
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowSearchBtn == true">
-            <button class="btn-primary" (click)="PassDataToParent()" style="margin-top: 5%;">
+            <button class="btn-primary" (click)="PassDataToParent()" style="margin-top: 6%;">
                 <i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;
                    Search
             </button>

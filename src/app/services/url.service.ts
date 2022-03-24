@@ -87,6 +87,12 @@ export class UrlService {
   GetAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/GetAwardAndMutations?requestId=';
   AddAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/AddAwardAndMutations';
   DownloadAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DownloadAwardAndMutations?documentId=';
-  DeleteAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DeleteAwardAndMutations?documentId='
+  DeleteAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DeleteAwardAndMutations?documentId=';
+
+  //crop rates APIs
+  GetCropDropDownsAPI = this.url + '/api/LandCrop/GetCropDropDowns';
+  AddOrUpdateCropsRateAPI = this.url +'/api/LandCrop/AddOrUpdateCrops';
+  DeleteCropsAPI = this.url +'/api/LandCrop/DeleteCrops?cropId=';
+  GetAllCropsAPI = this.url +'/api/LandCrop/GetAllCrossings?villageId=';
 }
 

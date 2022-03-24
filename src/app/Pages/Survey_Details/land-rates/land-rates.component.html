@@ -1,21 +1,21 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
 </app-filters>
 <br>
-<div class="card" *ngIf="_ShowCropDetailsDiv == false">
+<div class="card" *ngIf="_ShowLandDetailsDiv == false">
     <h5 style="color: red;"><b>Please Select Village Name</b></h5>
 </div>
-<div *ngIf="_ShowCropDetailsDiv == true">
+<div *ngIf="_ShowLandDetailsDiv == true">
     <div class="AddEditBtn"> 
-        <button class="btn-primary" (click)="AddNewCropDetails()"data-toggle="modal" data-target="#CropRateModal">
+        <button class="btn-primary" (click)="AddNewLandDetails()"data-toggle="modal" data-target="#LandRateModal">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-            Add Crop Rates
+            Add Land Rates
         </button> 
     </div>
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
             <tr>  
                 <th>Action</th>
-                <th>Crop Name</th>
+                <th>Land Name</th>
                 <th>Season Name</th>  
                 <th>Yield in Kg.(PerHa. Min)</th> 
                 <th>Yield in Kg.(PerHa. Max)</th>   
@@ -27,20 +27,20 @@
         <tbody>
             <tr *ngFor="let data of _CropDetailsModel;let i = index">
                 <td>
-                    <button type="button" class="btn-success"(click)="EditCropRates(data)" title="Edit" data-toggle="modal" data-target="#CropRateModal">
+                    <button type="button" class="btn-success"(click)="EditLandRates()" title="Edit" data-toggle="modal" data-target="#LandRateModal">
                         <i class="fa fa-edit"></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteCropRates(data)" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates()" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>          
-                <td>{{GetLookupValue(_CropDropDownsModel.CropNames,data.CropLookupId)}}</td>
+                <!-- <td>{{GetLookupValue(_CropDropDownsModel.CropNames,data.CropLookupId)}}</td>
                 <td>{{GetLookupValue(_CropDropDownsModel.SeasonTypes, data.SeasonId)}}</td>
                 <td>{{data.YieldInQuintalMinPH}}</td>
                 <td>{{data.YieldInQuintalMaxPH}}</td>
                 <td>{{data.MinPrice}}</td>
                 <td>{{data.MaxPrice}}</td>
-                <td>{{data.AvgPrice}}</td>
+                <td>{{data.AvgPrice}}</td> -->
             </tr>
         </tbody>
     </table>
@@ -48,7 +48,7 @@
 
 <div class="container">
     <!-- Modal -->
-    <div class="modal" id="CropRateModal" role="dialog" *ngIf="_SearchCriteria.VillageId != null">
+    <div class="modal" id="LandRateModal" role="dialog" *ngIf="_SearchCriteria.VillageId != null">
       <div class="modal-dialog">
       
         <!-- Modal content-->
@@ -65,48 +65,48 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-lg-6">
-                        <label class="Label">Crop Name</label>
-                        <select class="form-control"[(ngModel)]="_CropsRateModel.CropLookupId">
+                        <label class="Label">Land Name</label>
+                        <!-- <select class="form-control"[(ngModel)]="_CropsRateModel.CropLookupId">
                             <option *ngFor="let data of _CropDropDownsModel.CropNames"[value]="data.Value">
                                 {{data.Text}}
                             </option>
-                        </select>
+                        </select> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Season Types</label>
-                        <select class="form-control"[(ngModel)]="_CropsRateModel.SeasonId">
+                        <!-- <select class="form-control"[(ngModel)]="_CropsRateModel.SeasonId">
                             <option *ngFor="let data of _CropDropDownsModel.SeasonTypes"[value]="data.Value">
                                 {{data.Text}}
                             </option>
-                        </select>
+                        </select> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Yield in Kg.(Per Ha.Min)</label>
-                        <input type="text" class="form-control" [(ngModel)]="_CropsRateModel.YieldInQuintalMinPH">
+                        <!-- <input type="text" class="form-control" [(ngModel)]="_CropsRateModel.YieldInQuintalMinPH"> -->
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Yield in Kg.(Per Ha.Max)</label>
-                        <input type="text" class="form-control" [(ngModel)]="_CropsRateModel.YieldInQuintalMaxPH">
+                        <!-- <input type="text" class="form-control" [(ngModel)]="_CropsRateModel.YieldInQuintalMaxPH"> -->
                     </div>
                     <div class="col-lg-4">
                         <label class="Label">Min Price</label>
-                       <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.MinPrice">
+                       <!-- <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.MinPrice"> -->
                     </div>
                     <div class="col-lg-4">
                         <label class="Label">Max Price</label>
-                       <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.MaxPrice">
+                       <!-- <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.MaxPrice"> -->
                     </div>
                     <div class="col-lg-4">
                         <label class="Label">Average Price</label>
-                       <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.AvgPrice">
+                       <!-- <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.AvgPrice"> -->
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
                         <div class="div-to-align">
                             <br>
-                        <button type="button" class="btn-primary" (click)="SaveDetails()">
-                                Save Crop Rates  
+                        <button type="button" class="btn-primary" (click)="SaveLandDetails()">
+                                Save Land Rates  
                         </button>
                         </div>
                     </div>

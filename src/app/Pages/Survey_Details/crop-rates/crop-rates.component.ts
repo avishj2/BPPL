@@ -7,22 +7,20 @@ import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { SurveyDropDownsDataModel,AllSurveyDetailsDataModel,CropDataModel,CropRespDataModel} from 'src/app/Model/Survey.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
+import { CropsRateModel,CropDropDownsModel,CropsRateRespDataModel }from 'src/app/Model/Crop&LandRates.model';
 
 @Component({
   selector: 'app-crop-rates',
   templateUrl: './crop-rates.component.html',
   styleUrls: ['./crop-rates.component.css']
 })
+
 export class CropRatesComponent implements OnInit {
   @ViewChild('closebutton') closebutton;
+  @ViewChild(DataTableDirective, {static: false})
   _PopupTitle : string;
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -30,8 +28,16 @@ export class CropRatesComponent implements OnInit {
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
 
+  _AddNewCropRates : boolean = false;
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
+  _CropsRateModel : CropsRateModel;
+  _CropDropDownsModel : CropDropDownsModel;
+  _CropDetailsModel :CropsRateModel[];
+  /**popup message variables */
+  popoverTitle ="Delete Details";
+  popoverMessage = "Are you sure you want to delete it ?";
+  _ShowCropDetailsDiv : boolean = false;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -42,6 +48,9 @@ export class CropRatesComponent implements OnInit {
         this._SearchCriteria = new SearchCriteria();
         this._FilterControls = new FilterControls();
         this.SetFilterControls();
+        this._CropsRateModel = new CropsRateModel();
+        this._CropDropDownsModel = new CropDropDownsModel();
+        this._CropDetailsModel = [];
      }
 
   /**hide/show filter menu based on the component requirement */
@@ -54,10 +63,161 @@ export class CropRatesComponent implements OnInit {
       this._FilterControls.ShowSurneyNos = false;
       this._FilterControls.ShowSearchBtn = true;
     }
-  ngOnInit(): void {
-  }
+
+  ngOnInit(): void 
+    {
+      this.GetCropDropdownData();
+    }
+
+  /**get selected dropdown value from child component */
+  GetValuesFromFilters(event)
+    {
+      this._SearchCriteria = event;
+      if(this._SearchCriteria.VillageId != null)
+        {
+          this._ShowCropDetailsDiv = true;
+          this.GetAllCrops();
+        }
+      else
+      {
+        alert("Please select Village!");
+        this._ShowCropDetailsDiv = false;
+      }
+    }
+
+  GetCropDropdownData()
+    {
+      let url = this.urlService.GetCropDropDownsAPI;
+      this.httpService.get(url,null).subscribe(response => {
+        this._CropDropDownsModel  = response;
+        },error => {
+          this.Utility.LogText(error);
+        });
+    }  
+
+  GetAllCrops()
+    {
+      let url = this.urlService.GetAllCropsAPI + this._SearchCriteria.VillageId;
+      this.httpService.get(url,null).subscribe(response => {
+        this._CropDetailsModel  = response;
+        this.rerenderDataTable();
+        },error => {
+          this.Utility.LogText(error);
+        });
+    }  
+
+
   AddNewCropDetails(){
-    
+    if(this._SearchCriteria.VillageId != null)
+    {
+      this. _AddNewCropRates = true;
+      this._PopupTitle = "Add Crop Rates";
+      this._CropsRateModel = new CropsRateModel();
+      this._CropsRateModel.CropId = 0;
+    }
+    else
+      {
+        alert("Please Select Village!!");
+      }
   }
 
+
+  EditCropRates(arg)
+    {
+      this._CropsRateModel = arg;
+      this._PopupTitle = "Edit Crop Rates";
+      this._AddNewCropRates = false;
+    }
+   
+  SaveDetails()
+    {
+      this.CommonService.ShowSpinner();
+      this._CropsRateModel.VillageId = this._SearchCriteria.VillageId;
+      this._CropsRateModel.CropLookupId = Number(this._CropsRateModel.CropLookupId);
+      this._CropsRateModel.SeasonId = Number(this._CropsRateModel.SeasonId);
+      let url = this.urlService.AddOrUpdateCropsRateAPI;     
+      this.httpService.HttpPostRequest(url,this._CropsRateModel, this.AddOrUpdateCropCallBack.bind(this),null);
+    }
+
+  AddOrUpdateCropCallBack(dtas)
+    {
+      if (dtas != null)
+        {
+          let RespDataModel : CropsRateRespDataModel = dtas;
+          if (RespDataModel.StatusCode != 200) 
+            {
+              alert(RespDataModel.Message);
+            }
+          if (this. _AddNewCropRates == false)
+            {
+              alert("Crop updated sucessfully!!");
+              this._CropDetailsModel = RespDataModel.Result;
+              this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
+            }
+          else
+            {
+              alert("Crop added sucessfully!!");
+              this._CropDetailsModel = RespDataModel.Result;
+              this. _AddNewCropRates = false;
+              this.closebutton.nativeElement.click();
+              this.rerenderDataTable();
+              
+            }   
+        }
+        this. _AddNewCropRates = false;
+    }
+
+  DeleteCropRates(arg)
+    {
+      this.CommonService.ShowSpinner();
+      let url = this.urlService.DeleteCropsAPI + arg.CropId + '&villageId='+ arg.VillageId;
+      this.httpService.get(url,null).subscribe(response => {
+        let CropDetails : any = response;
+        if (CropDetails.StatusCode != 200) 
+          {
+            alert(CropDetails.Message);
+          }
+          else {
+            alert("Crops Details deleted successfully!");
+            this._CropDetailsModel = response.Result;
+            this.rerenderDataTable();
+          }
+        },error => {
+          this.Utility.LogText(error);
+        });
+    } 
+
+
+  /**refresh/reload data table 
+  * when data update/delete/add in the datatable  
+  **/
+  rerenderDataTable()
+    {
+      /**initialized datatable */
+      if (this.IsDtInitialized) 
+        {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+          {
+            dtInstance.destroy();//Destroy the table first
+            this.dtTrigger.next();//Call the dtTrigger to rerender again
+          });
+        }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
+    }
+
+
+  GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
+    {
+      let object = lookups.find(elm=>elm.Value == lookUpid );
+      if(object)
+      {
+        return object.Text;
+      }
+      else { return lookUpid;}
+    }
 }

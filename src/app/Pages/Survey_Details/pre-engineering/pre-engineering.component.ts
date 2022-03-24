@@ -75,7 +75,7 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
       this._FilterControls.ShowSurneyNos = false;
       this._FilterControls.ShowChainageFrom = false;
       this._FilterControls.ShowChainageTo = false;
-      this._FilterControls.ShowSearchBtn = false;
+      this._FilterControls.ShowSearchBtn = true;
     }
 
   ngOnInit(): void {
@@ -296,7 +296,7 @@ UploadAlignmentSheet()
     {
       let url = this.urlService.GetAwardAndMutationsAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
-        this. _AwardMutations  = response;
+        this._AwardMutations  = response;
         this.rerenderDataTable();
         },error => {
           this.Utility.LogText(error);

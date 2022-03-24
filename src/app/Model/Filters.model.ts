@@ -44,7 +44,7 @@ export class SearchCriteria
         VillageId : any;
         ChainageFrom : any;
         ChainageTo : any;
-        SurveyNumber : any;
+        SurveyID : any;
         CrossingType : any;
         CrossingID : any;
     }

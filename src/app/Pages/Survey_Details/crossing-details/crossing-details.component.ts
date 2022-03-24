@@ -234,18 +234,18 @@ _DisabledCrossingInputField : boolean = true;
       });
   }
 
-    /**download crossing details document */
+  /**download crossing details document */
   DownlaodCrossingDocument(doc : CommonDocDataModel)
     {
-        let url = this.urlService.DownloadCrossingDocAPI + doc.DocumentId;
-        let link = document.createElement('a');
-        link.setAttribute('type', 'hidden');
-        link.setAttribute("target","_blank");
-        link.href = url;
-        link.download = "C:/Users/admin/Downloads/";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+      let url = this.urlService.DownloadCrossingDocAPI + doc.DocumentId;
+      let link = document.createElement('a');
+      link.setAttribute('type', 'hidden');
+      link.setAttribute("target","_blank");
+      link.href = url;
+      link.download = "C:/Users/admin/Downloads/";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
 
 
@@ -262,13 +262,16 @@ _DisabledCrossingInputField : boolean = true;
       });
     }
 
+    
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
     {
-        let object = lookups.find(elm=>elm.Value == lookUpid );
-        if(object)
-        {
-          return object.Text;
-        }
-        else { return lookUpid;}
+      let object = lookups.find(elm=>elm.Value == lookUpid );
+      if(object)
+      {
+        return object.Text;
+      }
+      else { 
+        return lookUpid;
+      }
     }
 }
