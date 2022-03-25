@@ -21,7 +21,7 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
   /**data table properties  */
-  //@ViewChild(DataTableDirective, {static: false})
+  @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();

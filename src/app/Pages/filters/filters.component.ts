@@ -31,18 +31,8 @@ export class FiltersComponent implements OnInit {
   _CrossingDetails :CrossingDropdownDataModel;
   _CrossingIds : CommonDropdownModel[];
   _SurveyDetails : CommonDropdownModel[];
-
-  DropdownData = [
-    { id : 27 , name  : "Ajmer" },
-    { id : 84 , name  : "Alwar" },
-    { id : 24 , name  : "Banswara" },
-    { id : 274 , name  : "Baran" },
-    { id : 14 , name  : "Barmer" },
-    { id : 34 , name  : "Bharatpur" },
-    { id : 28 , name  : "Bhilwara" },
-    { id : 29 , name  : "Bikaner" }
-  ];
-
+  _OwnerDetails : CommonDropdownModel[];
+  
   constructor(
     public urlService: UrlService,
     private router: Router,
@@ -159,6 +149,16 @@ export class FiltersComponent implements OnInit {
       let url = this.urlService.GetAllCrossingsAPI + argtypeOfCrossing;
       this.httpService.get(url,null).subscribe(response => {
         this._CrossingIds = response; 
+        },error => {
+          console.log("GetAllCrossingsAPI error",error); 
+        });
+    }
+
+  GetOwnerNamesForSurvey(argSurveyId)
+    {
+      let url = this.urlService.GetOwnerNamesForSurveyAPI + argSurveyId;
+      this.httpService.get(url,null).subscribe(response => {
+        this._OwnerDetails = response; 
         },error => {
           console.log("GetAllCrossingsAPI error",error); 
         });

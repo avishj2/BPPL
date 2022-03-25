@@ -19,6 +19,8 @@ export class UrlService {
   GetAllVillagesAPI = this.url +'/api/Filter/GetAllVillages';
   GetVillageByTalukaAPI = this.url +'/api/Filter/GetVillageByTaluka?talukaId=';
   GetSurveyDetailsByVillageId  = this.url +'/api/Survey/GetSurveyDetailsByVillageId?villageId=';
+  GetOwnerNamesForSurveyAPI  = this.url + '/api/Filter/GetOwnerNamesForSurvey?surveyId=';
+
 
   AddOrUpdateVillageAPI = this.url + '/api/Village/AddOrUpdateVillage';
   GetVillageByVillageIdAPI = this.url +'/api/Village/GetVillageByVillageId?villageId=';
@@ -93,6 +95,22 @@ export class UrlService {
   GetCropDropDownsAPI = this.url + '/api/LandCrop/GetCropDropDowns';
   AddOrUpdateCropsRateAPI = this.url +'/api/LandCrop/AddOrUpdateCrops';
   DeleteCropsAPI = this.url +'/api/LandCrop/DeleteCrops?cropId=';
-  GetAllCropsAPI = this.url +'/api/LandCrop/GetAllCrossings?villageId=';
+  GetAllCropsAPI = this.url +'/api/LandCrop/GetAllCrops?villageId=';
+
+  //land rates APIs
+  GetLandDropDownsAPI = this.url +'/api/LandCrop/GetLandDropDowns';
+  AddOrUpdateLandDetails = this.url + '/api/LandCrop/AddOrUpdateLandDetails';
+  DeleteLandDetailsAPI = this.url + '/api/LandCrop/DeleteLandDetails?landId=';
+  GetAllLandDetails= this.url + '/api/LandCrop/GetAllLandDetails?villageId=';
+
+  //Adhoc payment details
+  GetAdHocPaymentDropDownsAPI = this.url + '/api/AdHocPayment/GetAdHocPaymentDropDowns';
+  AddOrUpdateAdHocPaymentAPI = this.url +'/api/AdHocPayment/AddOrUpdateAdHocPayment';
+  DeleteAdHocPaymentAPI = this.url +'/api/AdHocPayment/DeleteAdHocPayments?adHocPaymentId=';
+  GetAllAdHocPaymentsAPI = this.url +'/api/AdHocPayment/GetAdHocPaymentDetails?surveyOwnerId=';
+  AddAdHocPaymentDocumentAPI = this.url +'/api/AdHocPayment/AddAdHocPaymentDocument';
+  DownloadPaymentAPI = this.url +'/api/AdHocPayment/Download?documentId=';
+  DeleteAdHocPaymentDocumentAPI = this.url +'/api/AdHocPayment/DeleteAdHocPaymentDocument?documentId=';
+  
 }
 

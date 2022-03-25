@@ -15,7 +15,7 @@ import { CommonDropdownModel} from 'src/app/Model/Base.model';
   templateUrl: './tree-details.component.html',
   styleUrls: ['./tree-details.component.css']
 })
-export class TreeDetailsComponent implements AfterViewInit, OnInit {
+export class TreeDetailsComponent implements OnInit {
   @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
   @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
   @Input() SurveyNumber : any;
@@ -25,12 +25,13 @@ export class TreeDetailsComponent implements AfterViewInit, OnInit {
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it?";
   /**data table properties  */
-  // @ViewChild(DataTableDirective, {static: false})
+  @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
+
   _AddNewTree : boolean;
   _PopupTitle : string;
 
@@ -50,9 +51,15 @@ export class TreeDetailsComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void 
     {
+      this.dtOptions = 
+      {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+      };
       this._TreeDataModel.SurveyId = this.SurveyNumber;
       this._AllSurveyDetails.Result.Trees = this.AllSurveyDetails.Result.Trees;
       this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
+      this.ReloadDatatable();
     }
 
     ngAfterViewInit(): void 
@@ -63,7 +70,7 @@ export class TreeDetailsComponent implements AfterViewInit, OnInit {
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
-  rerenderDataTable()
+  ReloadDatatable()
   {
     /**initialized datatable */
     if (this.IsDtInitialized) 
@@ -74,11 +81,11 @@ export class TreeDetailsComponent implements AfterViewInit, OnInit {
           this.dtTrigger.next();//Call the dtTrigger to rerender again
         });
       }
-    else
-      {
-        this.IsDtInitialized = true;
-        this.dtTrigger.next();
-      }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
   }
 
 
@@ -126,7 +133,7 @@ export class TreeDetailsComponent implements AfterViewInit, OnInit {
               this._AllSurveyDetails.Result.Trees = RespDataModel.Result;
               this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           else
             {
@@ -135,7 +142,7 @@ export class TreeDetailsComponent implements AfterViewInit, OnInit {
               this.SetParentData();
               this._AddNewTree = false;
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }   
         }
         this._AddNewTree = false;
@@ -160,7 +167,7 @@ export class TreeDetailsComponent implements AfterViewInit, OnInit {
               alert("Tree Details deleted successfully!");
               this._AllSurveyDetails.Result.Trees = response.Result;
               this.SetParentData();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           },error => {
             this.Utility.LogText(error);

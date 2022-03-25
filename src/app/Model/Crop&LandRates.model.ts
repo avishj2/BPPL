@@ -29,3 +29,25 @@ export class CropsRateModel{
     MaxPrice: Number;
     AvgPrice: Number;
 }
+
+//LAND RATES DATA MODELS
+export class LandRespModel extends BaseResponse {
+    Result : LandRatesModel[];
+
+    constructor(){      
+      super();
+      this.Result = [];
+    }
+}
+
+export class LandRatesModel{
+  LandId: Number;
+  VillageId: Number;
+  SurveyId: Number;
+  TypeOfLand: Number;
+  ReservePriceHa: Number;
+  SaleDeedPriceHa: Number;
+  CAPriceHa: Number;
+  MarketRateDate: any;
+  CARemarks: string;
+}
