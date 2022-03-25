@@ -47,6 +47,8 @@ export class SearchCriteria
         SurveyID : any;
         CrossingType : any;
         CrossingID : any;
+        OwnerID : any;
+        TypeOfLand : any;
     }
 /**
  * Defines the selection from the dropdown.
@@ -75,6 +77,7 @@ export class SearchCriteria
      ShowCrossingTypes: boolean;
      ShowCrossingNumber: boolean;
      ShowSearchBtn : boolean;
+     ShowOwnerName : boolean;
  }
 
  export class CrossingDropdownDataModel{

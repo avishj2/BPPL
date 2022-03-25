@@ -34,8 +34,16 @@
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowSurneyNos == true">
             <label class ="dropdownsLabel"> Survey Number  </label>
-            <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyID">
+            <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyID"(change)="GetOwnerNamesForSurvey(_SearchCriteria.SurveyID)">
                 <option *ngFor="let data of _SurveyDetails"[value]="data.Value">{{data.Text}}</option>
+            </select>
+        </div>
+        <div class="col-lg-3" *ngIf="filterControls.ShowOwnerName == true">
+            <label class ="dropdownsLabel"> Owner Name </label>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.OwnerID">
+                <option *ngFor="let data of _OwnerDetails" [value]="data.Value">
+                    {{data.Text}}
+                </option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowCrossingTypes == true">

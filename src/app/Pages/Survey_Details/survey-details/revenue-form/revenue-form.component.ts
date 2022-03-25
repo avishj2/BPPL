@@ -47,7 +47,8 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
   ngOnInit(): void 
   {
     console.log("FromParentData=>",this.SurveyDropDownsData.RevenueFormTypes);
-    this._AllSurveyDetails.Result.SurveyDocuments = this.AllSurveyDetails.Result.SurveyDocuments
+    this._AllSurveyDetails.Result.SurveyDocuments = this.AllSurveyDetails.Result.SurveyDocuments;
+    this.rerenderDataTable();
   }
 
   

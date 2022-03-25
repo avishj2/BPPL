@@ -15,32 +15,28 @@
         <thead>
             <tr>  
                 <th>Action</th>
-                <th>Land Name</th>
-                <th>Season Name</th>  
-                <th>Yield in Kg.(PerHa. Min)</th> 
-                <th>Yield in Kg.(PerHa. Max)</th>   
-                <th>MiN Price</th>  
-                <th>Max Price</th>       
-                <th>Average Price</th>   
+                <th>Reserve Price Ha</th> 
+                <th>Sale Deed Price Ha</th>   
+                <th>CA Price Ha</th>  
+                <th>Market Rate Date</th>       
+                <th>CA Remarks</th>   
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let data of _CropDetailsModel;let i = index">
+            <tr *ngFor="let data of _LandRateDetails;let i = index">
                 <td>
-                    <button type="button" class="btn-success"(click)="EditLandRates()" title="Edit" data-toggle="modal" data-target="#LandRateModal">
+                    <button type="button" class="btn-success"(click)="EditLandRates(data)" title="Edit" data-toggle="modal" data-target="#LandRateModal">
                         <i class="fa fa-edit"></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates()" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>          
-                <!-- <td>{{GetLookupValue(_CropDropDownsModel.CropNames,data.CropLookupId)}}</td>
-                <td>{{GetLookupValue(_CropDropDownsModel.SeasonTypes, data.SeasonId)}}</td>
-                <td>{{data.YieldInQuintalMinPH}}</td>
-                <td>{{data.YieldInQuintalMaxPH}}</td>
-                <td>{{data.MinPrice}}</td>
-                <td>{{data.MaxPrice}}</td>
-                <td>{{data.AvgPrice}}</td> -->
+                <td>{{data.ReservePriceHa}}</td>
+                <td>{{data.SaleDeedPriceHa}}</td>
+                <td>{{data.CAPriceHa }}</td>
+                <td>{{data.MarketRateDate | date:'mediumDate'}}</td>
+                <td>{{data.CARemarks}}</td>
             </tr>
         </tbody>
     </table>
@@ -50,7 +46,6 @@
     <!-- Modal -->
     <div class="modal" id="LandRateModal" role="dialog" *ngIf="_SearchCriteria.VillageId != null">
       <div class="modal-dialog">
-      
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -64,43 +59,36 @@
 
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-lg-6">
-                        <label class="Label">Land Name</label>
-                        <!-- <select class="form-control"[(ngModel)]="_CropsRateModel.CropLookupId">
+                    <!-- <div class="col-lg-6">
+                        <label class="Label">Land Types</label>
+                        <select class="form-control"[(ngModel)]="_LandRatesModel.CropLookupId">
                             <option *ngFor="let data of _CropDropDownsModel.CropNames"[value]="data.Value">
                                 {{data.Text}}
                             </option>
-                        </select> -->
+                        </select>
+                    </div> -->
+                    <div class="col-lg-6">
+                        <label class="Label">Reserve Price Ha</label>
+                        <input type="text" class="form-control" [(ngModel)]="_LandRatesModel.ReservePriceHa">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Season Types</label>
-                        <!-- <select class="form-control"[(ngModel)]="_CropsRateModel.SeasonId">
-                            <option *ngFor="let data of _CropDropDownsModel.SeasonTypes"[value]="data.Value">
-                                {{data.Text}}
-                            </option>
-                        </select> -->
+                        <label class="Label">Sale Deed Price Ha</label>
+                        <input type="text" class="form-control" [(ngModel)]="_LandRatesModel.SaleDeedPriceHa">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Yield in Kg.(Per Ha.Min)</label>
-                        <!-- <input type="text" class="form-control" [(ngModel)]="_CropsRateModel.YieldInQuintalMinPH"> -->
+                        <label class="Label">CA Price Ha</label>
+                       <input type="text" class="form-control"[(ngModel)]="_LandRatesModel.CAPriceHa">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Yield in Kg.(Per Ha.Max)</label>
-                        <!-- <input type="text" class="form-control" [(ngModel)]="_CropsRateModel.YieldInQuintalMaxPH"> -->
+                        <label class="Label">Market Rate Date</label>
+                        <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_LandRatesModel.MarketRateDate | date:'yyyy-MM-dd'" (input)="_LandRatesModel.MarketRateDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
                     </div>
-                    <div class="col-lg-4">
-                        <label class="Label">Min Price</label>
-                       <!-- <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.MinPrice"> -->
-                    </div>
-                    <div class="col-lg-4">
-                        <label class="Label">Max Price</label>
-                       <!-- <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.MaxPrice"> -->
-                    </div>
-                    <div class="col-lg-4">
-                        <label class="Label">Average Price</label>
-                       <!-- <input type="text" class="form-control"[(ngModel)]="_CropsRateModel.AvgPrice"> -->
+                    <div class="col-lg-6">
+                        <label class="Label">CA Remarks</label>
+                        <input type="text" class="form-control"[(ngModel)]="_LandRatesModel.CARemarks">
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
                         <div class="div-to-align">

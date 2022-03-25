@@ -57,6 +57,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
     this._LandDataModel.SurveyId = this.SurveyNumber;
     this._AllSurveyDetails.Result.LandDetails = this.AllSurveyDetails.Result.LandDetails;
     this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
+    this.ReloadDatatable();
     
   }
   ngAfterViewInit(): void 
@@ -67,7 +68,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
-  rerenderDataTable()
+  ReloadDatatable()
   {
     /**initialized datatable */
     if (this.IsDtInitialized) 
@@ -128,7 +129,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
               this._AllSurveyDetails.Result.LandDetails = RespDataModel.Result;
               this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           else
             {
@@ -137,7 +138,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
               this._AddNewLand = false;
               this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }   
         }
         this._AddNewLand = false;
@@ -163,7 +164,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
             alert("Land Details deleted successfully!");
             this._AllSurveyDetails.Result.LandDetails = response.Result;
             this.SetParentData();
-            this.rerenderDataTable();
+            this.ReloadDatatable();
           }
         },error => {
           this.Utility.LogText(error);

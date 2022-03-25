@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ViewChildren } from '@angular/core';
+import { Subject, from } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 import { CrossDetailsDataModel } from 'src/app/Pages/Survey_Details/Survey_Details.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import { HttpService } from '../../../services/http.service';
-import { DataTableDirective } from 'angular-datatables';
 import { HttpClient, HttpResponse, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { UtilityService } from 'src/app/services/utility.service';
 import { Router } from '@angular/router';
@@ -32,6 +33,14 @@ _DisabledCrossingInputField : boolean = true;
  _CrossingDropdowns :CrossingDropdownDataModel;
  _Crossingdoc : CommonDocDataModel ;
  Crossingfile: File = null; // Variable to store file
+
+   /**data table properties  */
+   @ViewChild(DataTableDirective, {static: false})
+   dtElement: DataTableDirective;
+   dtOptions: DataTables.Settings = {};
+   dtTrigger: Subject<any> = new Subject();
+   /**REFERSH DATATABLE  */
+   IsDtInitialized: boolean = false;
 
 
   constructor(public urlService: UrlService,
@@ -68,10 +77,35 @@ _DisabledCrossingInputField : boolean = true;
       this.PopulateCrossingDropdowns();
       
     }
+    ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+    }
+
+  /**refresh/reload data table 
+  *when data update/delete/add in the datatable  
+  **/
+  ReloadDatatable()
+    {
+      /**initialized datatable */
+      if (this.IsDtInitialized) 
+        {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+          {
+            dtInstance.destroy();//Destroy the table first
+            this.dtTrigger.next();//Call the dtTrigger to rerender again
+          });
+        }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
+    }
 
   GetValuesFromFilters(event) 
     {
-      this.Utility.LogText(event);
+      //this.Utility.LogText(event);
       this._SearchCriteria = event;
       if(this._SearchCriteria.CrossingID != null)
         {
@@ -106,6 +140,7 @@ _DisabledCrossingInputField : boolean = true;
       let url = this.urlService.GetCrossingByIdAPI + this._SearchCriteria.CrossingID;
       this.httpService.get(url, null).subscribe(response => {
         this._CrossingDataModel = response;
+        this.ReloadDatatable();
       }, error => {
         this.Utility.LogText(error);
       }); 
@@ -161,6 +196,7 @@ _DisabledCrossingInputField : boolean = true;
             {
               alert("Gazette updated sucessfully!!");
               this._DisabledCrossingInputField = true;
+              this.ReloadDatatable();
             }
           else
             {
@@ -168,6 +204,7 @@ _DisabledCrossingInputField : boolean = true;
               this._DisabledCrossingInputField = true;
               this._CrossingDataModel.CrossingId = GazetteRespDataModel.Result.CrossingId;
               this._AddNewCrosssing = false;
+              this.ReloadDatatable();
             }   
         }
         this._AddNewCrosssing = false;

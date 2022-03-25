@@ -64,7 +64,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
       //console.log("FromParentData AllSurveyDetails=>",this.AllSurveyDetails)
       this._SurveyOwnerModel.SurveyId = this.SurveyNumber;
       this._AllSurveyDetails.Result.SurveyOwners = this.AllSurveyDetails.Result.SurveyOwners;
-
+      this.ReloadDatatable();
     }
 
 
@@ -112,7 +112,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
               alert("Owner updated sucessfully!!");
               this._AllSurveyDetails.Result.SurveyOwners = RespDataModel.Result;
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           else
             {
@@ -122,7 +122,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
               console.log("ownerdropdown",this.AllSurveyDetails.Result.SurveyOwnersDrp)
               this._AddNewOwner = false;
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }   
         }
         this._AddNewOwner = false;
@@ -154,7 +154,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
               alert("Owner Details deleted successfully!");
               this._AllSurveyDetails.Result.SurveyOwners = response.Result;
               this.SetParentData();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           },error => {
             this.Utility.LogText(error);
@@ -169,7 +169,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
-  rerenderDataTable()
+  ReloadDatatable()
   {
     /**initialized datatable */
     if (this.IsDtInitialized) 

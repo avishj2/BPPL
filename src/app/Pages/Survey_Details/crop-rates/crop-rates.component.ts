@@ -7,7 +7,7 @@ import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import { CropsRateModel,CropDropDownsModel,CropsRateRespDataModel }from 'src/app/Model/Crop&LandRates.model';
@@ -20,14 +20,15 @@ import { CropsRateModel,CropDropDownsModel,CropsRateRespDataModel }from 'src/app
 
 export class CropRatesComponent implements OnInit {
   @ViewChild('closebutton') closebutton;
+  /**data table properties  */
   @ViewChild(DataTableDirective, {static: false})
-  _PopupTitle : string;
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
 
+  _PopupTitle : string;
   _AddNewCropRates : boolean = false;
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
@@ -66,8 +67,37 @@ export class CropRatesComponent implements OnInit {
 
   ngOnInit(): void 
     {
+      this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength: 5,
+        };
       this.GetCropDropdownData();
     }
+
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+    }
+  /**refresh/reload data table 
+   * when data update/delete/add in the datatable  
+   * */
+	ReloadDatatable(){
+    /**initialized datatable */
+    if (this.IsDtInitialized) 
+      {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+        {
+          dtInstance.destroy();//Destroy the table first
+          this.dtTrigger.next();//Call the dtTrigger to rerender again
+        });
+      }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
+  }  
 
   /**get selected dropdown value from child component */
   GetValuesFromFilters(event)
@@ -100,7 +130,7 @@ export class CropRatesComponent implements OnInit {
       let url = this.urlService.GetAllCropsAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._CropDetailsModel  = response;
-        this.rerenderDataTable();
+        this.ReloadDatatable();
         },error => {
           this.Utility.LogText(error);
         });
@@ -153,7 +183,7 @@ export class CropRatesComponent implements OnInit {
               alert("Crop updated sucessfully!!");
               this._CropDetailsModel = RespDataModel.Result;
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           else
             {
@@ -161,7 +191,7 @@ export class CropRatesComponent implements OnInit {
               this._CropDetailsModel = RespDataModel.Result;
               this. _AddNewCropRates = false;
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
               
             }   
         }
@@ -179,37 +209,14 @@ export class CropRatesComponent implements OnInit {
             alert(CropDetails.Message);
           }
           else {
-            alert("Crops Details deleted successfully!");
+            alert("Crops Rate deleted successfully!");
             this._CropDetailsModel = response.Result;
-            this.rerenderDataTable();
+            this.ReloadDatatable();
           }
         },error => {
           this.Utility.LogText(error);
         });
     } 
-
-
-  /**refresh/reload data table 
-  * when data update/delete/add in the datatable  
-  **/
-  rerenderDataTable()
-    {
-      /**initialized datatable */
-      if (this.IsDtInitialized) 
-        {
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-          {
-            dtInstance.destroy();//Destroy the table first
-            this.dtTrigger.next();//Call the dtTrigger to rerender again
-          });
-        }
-      else
-        {
-          this.IsDtInitialized = true;
-          this.dtTrigger.next();
-        }
-    }
-
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
     {

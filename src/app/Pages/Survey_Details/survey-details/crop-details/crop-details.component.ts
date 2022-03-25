@@ -25,9 +25,10 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
   @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
   @Input() SurveyNumber : any;
   @Output() Output:EventEmitter<any>= new EventEmitter(); 
-  /**data table properties  */
-  // @ViewChild(DataTableDirective, {static: false})
+ 
   @ViewChild('closebutton') closebutton;
+   /**data table properties  */
+  @ViewChild(DataTableDirective, {static: false})
   _PopupTitle : string;
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -58,6 +59,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
       console.log("FromParentData=>",this.SurveyDropDownsData);
       this._AllSurveyDetails.Result.Crops = this.AllSurveyDetails.Result.Crops;
       this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
+      this.ReloadDatatable();
     }
 
 
@@ -78,7 +80,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
-  rerenderDataTable()
+  ReloadDatatable()
   {
     /**initialized datatable */
     if (this.IsDtInitialized) 
@@ -132,7 +134,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
               this._AllSurveyDetails.Result.Crops = RespDataModel.Result;
               this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           else
             {
@@ -141,7 +143,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
               this._AddNewCropDetails = false;
               this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }   
         }
         this._AddNewCropDetails = false;
@@ -166,7 +168,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
             alert("Crops Details deleted successfully!");
             this._AllSurveyDetails.Result.Crops = response.Result;
             this.SetParentData();
-            this.rerenderDataTable();
+            this.ReloadDatatable();
           }
         },error => {
           this.Utility.LogText(error);
