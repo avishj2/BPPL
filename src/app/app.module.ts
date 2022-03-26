@@ -12,6 +12,7 @@ import { AlertsModule } from 'angular-alert-module';
 import { CommonModule } from '@angular/common';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxSpinnerModule } from "ngx-spinner";
+// import { HttpService } from 'src/app/services/http.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +24,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 import { TwoDigitDecimaNumberDirective } from './Pages/filters/two-digit-decima-number.directive';
 import { MasterDetailsComponent } from './Pages/master-details/master-details.component';
-import { PreEngineeringComponent } from './Pages/Survey_Details/pre-engineering/pre-engineering.component';
+import { SurveyDocumentsComponent } from './Pages/Survey_Details/survey-documents/survey-documents.component';
 import { GazetteDetailsComponent } from './Pages/Survey_Details/gazette-details/gazette-details.component';
 import { VillageDetailsComponent } from './Pages/Survey_Details/village-details/village-details.component';
 import { CrossingDetailsComponent } from './Pages/Survey_Details/crossing-details/crossing-details.component';
@@ -53,7 +54,7 @@ import { ViewCrossingDetailsComponent } from './Pages/View_Details/view-crossing
     TwoDigitDecimaNumberDirective,
     MasterDetailsComponent,
     LandDetailsComponent,
-    PreEngineeringComponent,
+    SurveyDocumentsComponent,
     GazetteDetailsComponent,
     VillageDetailsComponent,
     CrossingDetailsComponent,
