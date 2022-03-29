@@ -21,7 +21,7 @@ export class FiltersComponent implements OnInit {
   /** FilterControls for filter menu show/hide */
   @Input() filterControls : FilterControls;
   @Output() filterOutput:EventEmitter<SearchCriteria>= new EventEmitter(); 
- 
+ _TahsilLabel : string = "Tahsil";
   //api models
   _StateDataModel : StateDetails[];
   _DistrictDetails : DistrictDetails[];
@@ -86,6 +86,14 @@ export class FiltersComponent implements OnInit {
    /**Get all District list base on the selected state */
    PopulateDistrict(arg)
     {
+      if(this._SearchCriteria.StateId == 2)
+        {
+          this._TahsilLabel = "Taluka";
+        }
+      else
+        {
+          this._TahsilLabel = "Tahsil";
+        }
       this.ResetDropDowns(DropDownChangeEnum.StateChanged);
       let url = this.urlService.GetDistrictByStateAPI + arg;  
       this.httpService.get(url,null).subscribe(response => {
