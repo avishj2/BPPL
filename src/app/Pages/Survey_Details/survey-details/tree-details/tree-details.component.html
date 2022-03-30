@@ -14,7 +14,7 @@
                 <th>Range</th>  
                 <th>No. of Tree</th>  
                 <th>Age (Years)</th>  
-                <th>Girth (cms)</th>       
+                <th>Dia (m)</th>       
                 <th>Height (m)</th>   
                 <th>Remarks</th>  
             </tr>
@@ -31,10 +31,10 @@
                 </td>          
                 <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
                 <td>{{GetLookupValue(SurveyDropDownsData.TreeNames, data.TreeName)}}</td>
-                <td>{{GetLookupValue(SurveyDropDownsData.TreeRanges, data.Range)}}</td>
+                <td>{{data.Range}}</td>
                 <td>{{data.NumberOfTree}}</td>
                 <td>{{data.AgeYears}}</td>
-                <td>{{data.GirthCMS}}</td>
+                <td>{{data.Dia}}</td>
                 <td>{{data.HeightM}}</td>
                 <td>{{data.Remarks}}</td> 
             </tr>
@@ -68,6 +68,7 @@
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Range</label>
+                        <!-- <input class="form-control"[(ngModel)]="_TreeDataModel.Range"[ngModelOptions]="{standalone: true}"> -->
                         <select class="form-control"[(ngModel)]="_TreeDataModel.Range"[ngModelOptions]="{standalone: true}">
                             <option *ngFor="let data of SurveyDropDownsData.TreeRanges" [value]="data.Value">{{data.Text }}</option>
                         </select>
@@ -87,8 +88,8 @@
                        <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.AgeYears"[ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Girth (cms)</label>
-                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.GirthCMS"[ngModelOptions]="{standalone: true}">
+                        <label class="Label">Dia (m)</label>
+                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.Dia"[ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Height (m)</label>

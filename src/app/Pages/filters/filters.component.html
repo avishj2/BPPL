@@ -46,6 +46,14 @@
                 </option>
             </select>
         </div>
+        <div class="col-lg-3" *ngIf="filterControls.ShowLandTypes == true">
+            <label class ="dropdownsLabel"> Land Type </label>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.TypeOfLand">
+                <option *ngFor="let data of _LandTypeDetails" [value]="data.Value">
+                    {{data.Text}}
+                </option>
+            </select>
+        </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowCrossingTypes == true">
             <label class ="dropdownsLabel"> Crossing Type </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.CrossingType" (change)="GetAllCrossingsData($event.target.value)">

@@ -10,7 +10,7 @@ export class UrlService {
 
   url ="https://bppl.dgdatam.com"; //"https://localhost:44340"; 
 
-  /**bppl api url **/
+  /**bppl FILTER api url **/
   GetAllStatesAPI = this.url + '/api/Filter/GetAllStates';
   GetAllDistrictAPI = this.url + '/api/Filter/GetAllDistrict';
   GetDistrictByStateAPI = this.url + '/api/Filter/GetDistrictByState?stateId=';
@@ -20,6 +20,7 @@ export class UrlService {
   GetVillageByTalukaAPI = this.url +'/api/Filter/GetVillageByTaluka?talukaId=';
   GetSurveyDetailsByVillageId  = this.url +'/api/Survey/GetSurveyDetailsByVillageId?villageId=';
   GetOwnerNamesForSurveyAPI  = this.url + '/api/Filter/GetOwnerNamesForSurvey?surveyId=';
+  GetLandTypesByVillageAPI = this.url + '/api/Filter/GetLandTypesByVillage?villageId=';
 
 
   AddOrUpdateVillageAPI = this.url + '/api/Village/AddOrUpdateVillage';

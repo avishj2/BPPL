@@ -230,9 +230,7 @@ GetProjectReports()
         this._ProjectReports = DocumentModelResp;
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
-        setTimeout(()=>{
-          this.rerenderDataTable(); 
-      }, 100);
+        this.rerenderDataTable(); 
       },error => {
         this.Utility.LogText(error);
       });
@@ -255,7 +253,7 @@ GetProjectReports()
   DeleteProjectDocument(arg)
     {
       let APIurl = this.urlService.DeleteProjectReportAPI + arg.DocumentId;
-      let AllDocData =this._ProjectReports;
+      let AllDocData = this._ProjectReports;
       this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg);
       this.rerenderDataTable();
     }

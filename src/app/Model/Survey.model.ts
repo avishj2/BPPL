@@ -80,6 +80,7 @@ export class SurveyModel
     PanchnamaSqmt : any;
     IsMurabaNo :boolean;
     VillageId : any;
+    JamabandiOwner : string;
   
 }
 export class AllSurveyDetailsDataModel extends BaseResponse {
@@ -195,7 +196,7 @@ export class TreeModel{
     TreeName: any;
     NumberOfTree: any;
     AgeYears: any;
-    GirthCMS: any;
+    Dia: any;
     HeightM: any;
     Remarks: string
 }

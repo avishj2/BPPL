@@ -121,6 +121,13 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
+                            <label class="Label">Jamabandi Owner</label>
+                            <input *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyModel.JamabandiOwner" [ngModelOptions]="{standalone: true}" >
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.JamabandiOwner}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="form-group row" style="margin-top: 11%;">
                                 <div class="col-lg-8">
                                     <label class="Label" style="margin-left: 3px;">
