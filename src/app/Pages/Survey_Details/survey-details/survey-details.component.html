@@ -127,7 +127,8 @@
                                 {{this._SurveyModel.JamabandiOwner}}
                             </div>
                         </div>
-                        <div class="col-lg-3">
+
+                        <div class="col-lg-3" *ngIf="_DisabledInputField != true">
                             <div class="form-group row" style="margin-top: 11%;">
                                 <div class="col-lg-8">
                                     <label class="Label" style="margin-left: 3px;">
@@ -135,15 +136,12 @@
                                     </label>
                                 </div>
                                 <div class="col-lg-4">
-                                    <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox"
+                                    <input type="checkbox"class="form-controlCheckBox"
                                     [(ngModel)]="_SurveyModel.RevRecUpdated" [ngModelOptions]="{standalone: true}">
-                                    <div class="DisabledFieldLabel"style="margin-left:-25px;"  *ngIf="_DisabledInputField == true">
-                                        {{this._SurveyModel.RevRecUpdated}}
-                                    </div>
                                 </div>    
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-3" *ngIf="_DisabledInputField != true">
                             <div class="form-group row" style="margin-top: 11%;">
                                 <div class="col-lg-6">
                                     <label class="Label" style="margin-left:3px;">
@@ -151,14 +149,25 @@
                                     </label>
                                 </div>
                                 <div class="col-lg-6"> 
-                                    <input *ngIf="_DisabledInputField != true" type="checkbox"class="form-controlCheckBox" style="margin-left:-15px;"
+                                    <input type="checkbox"class="form-controlCheckBox" style="margin-left:-15px;"
                                     [(ngModel)]="_SurveyModel.InActive" [ngModelOptions]="{standalone: true}">
-                                    <div class="DisabledFieldLabel"style="margin-left:-55px;" *ngIf="_DisabledInputField == true">
-                                        {{this._SurveyModel.InActive}}
-                                    </div>
                                 </div>   
                             </div>
                         </div>
+
+                        <div class="col-lg-3"*ngIf="_DisabledInputField == true">
+                            <label class="Label">Rev. Rec. Updated</label>
+                            <div class="DisabledFieldLabel">
+                                {{this._SurveyModel.RevRecUpdated}}
+                            </div>
+                        </div>
+                        <div class="col-lg-3"*ngIf="_DisabledInputField == true">
+                            <label class="Label">Inactive</label>
+                            <div class="DisabledFieldLabel" >
+                                {{this._SurveyModel.InActive}}
+                            </div>
+                        </div>
+
                         <div class="col-lg-3">
                             <label class="Label">If Inactive give the reasons</label>
                             <input *ngIf="_DisabledInputField != true" type="text"class="form-control"
@@ -195,6 +204,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="_DisabledInputField == true" class="seperator"style="left: 30%;"></div>
                         <div class="col-lg-4">
                             <br>
                             <label class="Label" style="margin-left: -6%; margin-bottom: 2px;">Total Area</label>
@@ -222,6 +232,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="_DisabledInputField == true"class="seperator"style="left: 63%;"></div>
                         <div class="col-lg-4"><br>
                             <label class="Label" style="margin-left: -6%;margin-bottom: 2px;">Panchanama Area</label>
                             <div class="form-group row" style="margin-left: -6%;">
