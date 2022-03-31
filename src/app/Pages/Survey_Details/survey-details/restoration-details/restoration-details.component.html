@@ -9,7 +9,7 @@
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
             <tr> 
-                <th>Action</th> 
+                <th>Action  </th> 
                 <th>Owner Name</th> 
                 <th>Damage Name</th>   
                 <th>Damage Type</th>
@@ -29,8 +29,9 @@
                 <td>
                     <button type="button" class="btn-success"(click)="EditRestorationDetails(data)" title="Edit" data-toggle="modal" data-target="#RestorationModal">
                         <i class="fa fa-edit "></i>
-                    </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteRestorationDetails(data)" title="Delete">
+                    </button>&nbsp;&nbsp;
+                    <button type="button" class="btn-danger" (click)="DeleteRestorationDetails(data)" title="Delete">
+                        <!-- mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top" -->
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>    

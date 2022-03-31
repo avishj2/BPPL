@@ -61,6 +61,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
       this._FilterControls.ShowVillage = true;
       this._FilterControls.ShowSurneyNos = true;
       this._FilterControls.ShowSearchBtn = true;
+      this._FilterControls.ShowLandTypes = true;
     }
   
   ngOnInit(): void 

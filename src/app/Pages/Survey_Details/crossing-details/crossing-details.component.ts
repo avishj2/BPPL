@@ -77,7 +77,7 @@ _DisabledCrossingInputField : boolean = true;
       this.PopulateCrossingDropdowns();
       
     }
-    ngAfterViewInit(): void 
+  ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
     }
@@ -196,7 +196,6 @@ _DisabledCrossingInputField : boolean = true;
             {
               alert("Gazette updated sucessfully!!");
               this._DisabledCrossingInputField = true;
-              this.ReloadDatatable();
             }
           else
             {
@@ -204,8 +203,8 @@ _DisabledCrossingInputField : boolean = true;
               this._DisabledCrossingInputField = true;
               this._CrossingDataModel.CrossingId = GazetteRespDataModel.Result.CrossingId;
               this._AddNewCrosssing = false;
-              this.ReloadDatatable();
-            }   
+            }  
+            this.ReloadDatatable(); 
         }
         this._AddNewCrosssing = false;
         this._ShowCrossingDetailsDiv = true;
@@ -253,6 +252,8 @@ _DisabledCrossingInputField : boolean = true;
 
       this._Crossingdoc.RequestId = this._CrossingDataModel.CrossingId;
       this._Crossingdoc.Document = this.Crossingfile;
+      this._Crossingdoc.ToChainage = '';
+      this._Crossingdoc.FromChainage = '';
       this._Crossingdoc.DocumentId = 0;
       Doc = this._Crossingdoc;
 
@@ -264,6 +265,7 @@ _DisabledCrossingInputField : boolean = true;
         {       
           this._CrossingDataModel.Documents = crossingDocumentModelResp;
         }
+        this.ReloadDatatable();
         this.Utility.LogText(crossingDocumentModelResp);
         alert("Document updated sucessfully!!");
       },error => {
@@ -288,15 +290,10 @@ _DisabledCrossingInputField : boolean = true;
 
   DeleteCrossingDocument(doc : CommonDocDataModel)
     {
-      let url = this.urlService.DeleteCrossingDocumentAPI + doc.DocumentId;
-      this.httpService.get(url,null).subscribe(response => {
-      let index = this._CrossingDataModel.Documents.indexOf(doc);
-      this._CrossingDataModel.Documents.splice(index,1);
-      alert("Crossing document deleted !");  
-      }, 
-      error => {
-        this.Utility.LogText(error);
-      });
+      let APIurl = this.urlService.DeleteCrossingDocumentAPI + doc.DocumentId;
+      let AllDocData = this._CrossingDataModel.Documents;
+      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,doc);
+      this.ReloadDatatable();
     }
 
     

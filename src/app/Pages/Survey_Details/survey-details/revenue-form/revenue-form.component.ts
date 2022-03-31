@@ -8,6 +8,7 @@ import { SurveyDropDownsDataModel,RevenueRespDataModel,AllSurveyDetailsDataModel
 import {CommonDocDataModel,CommonDropdownModel}from 'src/app/Model/Base.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
 
 @Component({
   selector: 'app-revenue-form',
@@ -38,7 +39,8 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
-    public Utility :UtilityService,) 
+    public Utility :UtilityService,
+    public APIUtilityService: APIUtilityService,) 
     { 
       this._Revenuedoc = new CommonDocDataModel();
       this._AllSurveyDetails = new AllSurveyDetailsDataModel()
@@ -110,19 +112,13 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
     }
 
   DeleteDocument(arg)
-  {
-    let url = this.urlService.DeleteCrossingDocumentAPI + arg.DocumentId;
-      this.httpService.get(url,null).subscribe(response => {
-      let index = this._AllSurveyDetails.Result.SurveyDocuments.indexOf(arg);
-      this._AllSurveyDetails.Result.SurveyDocuments.splice(index,1);
+    {
+      let APIurl = this.urlService.DeleteCrossingDocumentAPI + arg.DocumentId;
+      let AllDocData =  this._AllSurveyDetails.Result.SurveyDocuments
+      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg)
       this.SetParentData();
       this.rerenderDataTable();
-      alert("Revenue document deleted !");  
-      }, 
-      error => {
-        this.Utility.LogText(error);
-      });
-  }
+    }
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
   {
@@ -135,9 +131,9 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void 
-  {
-    this.dtTrigger.next();
-  }
+    {
+      this.dtTrigger.next();
+    }
 
 /**refresh/reload data table 
 *when data update/delete/add in the datatable  

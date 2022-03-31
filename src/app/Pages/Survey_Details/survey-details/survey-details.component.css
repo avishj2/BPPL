@@ -37,3 +37,11 @@
     margin-left: 10%;
     margin-bottom: 2.5%;
 }
+.seperator {
+    border-right: 1px solid #3838bb;
+    width: 1px;
+    height: 37px;
+    bottom: 0;
+    position: absolute;
+    bottom: 92px;
+}

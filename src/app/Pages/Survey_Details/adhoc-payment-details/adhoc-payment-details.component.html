@@ -107,7 +107,7 @@
                     <label class="Label">Cheque Issued To </label>
                     <input type="text" *ngIf="DisableInputField != true" class="form-control"[(ngModel)]="_AdHocPaymentModel.ChequeIssuedTo" [ngModelOptions]="{standalone: true}" >
                     <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
-                        {{this._AdHocPaymentModel.ChequeIssuedTo}}
+                        {{this._AdHocPaymentModel.ChequeIssuedTo }}
                     </div>
                 </div>
                 <div class="col-lg-3">

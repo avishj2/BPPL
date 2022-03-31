@@ -8,7 +8,7 @@ export class TwoDigitDecimaNumberDirective {
   private regex: RegExp = new RegExp(/^\d*\.?\d{0,2}$/g);
   // Allow key codes for special events. Reflect :
   // Backspace, tab, end, home
-  private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight', 'Del', 'Delete'];//'-',
+  private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight', 'Del', 'Delete'];//'-',//'copy','paste','cut',
 
   constructor(private el: ElementRef) {
   }
@@ -26,4 +26,15 @@ export class TwoDigitDecimaNumberDirective {
       event.preventDefault();
     }
   }
+  // @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
+  //   e.preventDefault();
+  // }
+
+  // @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
+  //   e.preventDefault();
+  // }
+
+  // @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
+  //   e.preventDefault();
+  // }
 }

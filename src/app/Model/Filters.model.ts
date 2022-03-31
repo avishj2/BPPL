@@ -78,6 +78,7 @@ export class SearchCriteria
      ShowCrossingNumber: boolean;
      ShowSearchBtn : boolean;
      ShowOwnerName : boolean;
+     ShowLandTypes : boolean;
  }
 
  export class CrossingDropdownDataModel{

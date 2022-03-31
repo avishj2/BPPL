@@ -24,6 +24,8 @@ export class ViewCrossingDetailsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
+  _FilterControls :FilterControls;
+  _SearchCriteria : SearchCriteria;
 
 
   constructor(public urlService: UrlService,
@@ -32,10 +34,64 @@ export class ViewCrossingDetailsComponent implements OnInit {
     public httpService : HttpService,
     public Utility :UtilityService,) 
       { 
-        
+        this._FilterControls = new FilterControls();
+        this._SearchCriteria = new SearchCriteria();
+        this.SetFilterControls();
       }
+  /**hide/show filter menu based on the component requirement */
+  SetFilterControls() 
+    {
+      this._FilterControls.ShowState = true;
+      this._FilterControls.ShowDistrict = true;
+      this._FilterControls.ShowTaluka = true;
+      this._FilterControls.ShowChainageFrom = true;
+      this._FilterControls.ShowChainageTo = true;
+      this._FilterControls.ShowVillage = true;
+      this._FilterControls.ShowCrossingTypes = true;
+      this._FilterControls.ShowCrossingNumber = true;
+      this._FilterControls.ShowSearchBtn = true;
+    }
 
   ngOnInit(): void {
   }
+  
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+    }
 
+  /**refresh/reload data table 
+   * when data update/delete/add in the datatable  
+  **/
+  ReloadDatatable()
+    {
+      /**initialized datatable */
+      if (this.IsDtInitialized) 
+        {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+          {
+            dtInstance.destroy();//Destroy the table first
+            this.dtTrigger.next();//Call the dtTrigger to rerender again
+          });
+        }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
+    }
+
+  GetValuesFromFilters(event) 
+    {
+      this.Utility.LogText(event);
+      this._SearchCriteria = event;
+      if(this._SearchCriteria.CrossingID != null)
+        {
+          
+        }
+      else{
+        alert("Please select Crossing ID")
+      }
+      
+    }
 }

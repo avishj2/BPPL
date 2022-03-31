@@ -1,1 +1,31 @@
-<p>view-crossing-details works!</p>
+<!-- add filter component ,pass and get data from child -->
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+</app-filters>
+<br>
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
+        <thead>
+            <tr>
+                <th>Crossing Type</th>
+                <th>No. of Crossing</th>
+                <th>Demand Node</th>
+                <th>Execution of Agreement/Not Applicable</th>
+                <th>Reciept Of Final approval</th>
+                <th>Refundable Amount</th>
+                <th>Non-Refundable Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- *ngFor="let data of _CrossingDataModel.Documents;let i = index" -->
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

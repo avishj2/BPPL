@@ -103,13 +103,20 @@ export class HttpService {
            successCallBackFunction(data);
         }
       }, error => {
-        // this.commonService.presentToast(this.urlService.PleaseCheckInternetConnection);
-        //console.log(error);
-        this.utilityService.LogText(error);
+        this.utilityService.LogText(error);   
         if(errorCallBackFunction)
-         {
-            errorCallBackFunction(error);
-         }
+        {
+            errorCallBackFunction(error.error);
+        }
+        else if(error.error.Message)
+        {
+           alert(error.error.Message)
+        }      
+        else
+        {
+           alert("Something Went Wrong ! Please try again.");
+        }
+        this.commonService.hideLoading();
       });
     
    

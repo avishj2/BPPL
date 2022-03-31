@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output, ViewChild,ViewChildren,QueryList } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ShowUploadedDocModel ,CategoryDataModel,AddDocuments} from '../Survey_Details.model';
@@ -10,25 +10,29 @@ import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
 import {SurveyDocDropDownsDataModel,CommonReportsDataModel } from 'src/app/Model/SurveyDocument.model';
 import {BaseResponse, CommonDropdownModel,CommonDocDataModel} from 'src/app/Model/Base.model';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
 
 @Component({
-  selector: 'app-pre-engineering',
-  templateUrl: './pre-engineering.component.html',
-  styleUrls: ['./pre-engineering.component.css']
+  selector: 'app-survey-documents',
+  templateUrl: './survey-documents.component.html',
+  styleUrls: ['./survey-documents.component.css']
 })
 
-export class PreEngineeringComponent implements AfterViewInit, OnInit {
+export class SurveyDocumentsComponent implements OnInit {
   /**data table properties  */
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
+  // @ViewChild(DataTableDirective, {static: false})
+  // dtElement: DataTableDirective;
+  // dtOptions: DataTables.Settings = {};
+  // dtTrigger: Subject<any> = new Subject();
+
+  @ViewChildren(DataTableDirective)
+  dtElements: QueryList<DataTableDirective>;
+  dtOptions: DataTables.Settings[] = [];
+  dtTrigger1: Subject<any> = new Subject();
+  dtTrigger2: Subject<any> = new Subject();
+  dtTrigger3: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
-
-  //====alignement ====
-  dtOptions2: DataTables.Settings = {};
-  dtTrigger2: Subject<any> = new Subject();
 
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
@@ -50,7 +54,8 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
-    public Utility :UtilityService,)
+    public Utility :UtilityService,
+    public APIUtilityService: APIUtilityService,)
     {
       this._CategoryDataModel = new CategoryDataModel()
       this._SearchCriteria = new SearchCriteria();
@@ -58,8 +63,8 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
       this.SetFilterControls();
       this._SurveyDocDropDownsDataModel = new SurveyDocDropDownsDataModel();
       this._ProjectReports = [];
-      this.  _AlignmentSheets = [];
-      this. _AwardMutations = [];
+      this._AlignmentSheets = [];
+      this._AwardMutations = [];
       this._Projectdoc = new CommonDocDataModel();
       this._Aligntdoc = new CommonDocDataModel();
       this._Mutationdoc = new CommonDocDataModel();
@@ -80,12 +85,53 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this._CategoryDataModel.ReadFromString();
-    this.dtOptions = 
-      {
-        pagingType: 'full_numbers',
-        pageLength: 10,//onpage load loaded 5 rows, datatable bydefault shows 10 rows
-      };
+    this.dtOptions['new'] = {
+      pagingType: 'full_numbers',
+      destroy:true //Add to allow the datatable to destroy
+    };
     this.GetSurveyDocumentDropDowns();
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger1.unsubscribe();
+    this.dtTrigger2.unsubscribe();
+    this.dtTrigger3.unsubscribe();
+  }
+
+  /**refresh/reload data table 
+ * when data update/delete/add in the datatable  
+ * */
+   rerenderDataTable(){
+    /**initialized datatable */
+    if (this.IsDtInitialized) 
+      {
+        this.dtElements.forEach((dtElement: DataTableDirective) => {
+          if(dtElement.dtInstance)
+            dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+              dtInstance.destroy();          
+          });
+        });
+        this.dtTrigger1.next(); 
+        this.dtTrigger2.next(); 
+        this.dtTrigger3.next();
+        this.dtTrigger1.unsubscribe();
+        this.dtTrigger2.unsubscribe();
+        this.dtTrigger3.unsubscribe(); 
+      }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger1.next(); 
+          this.dtTrigger2.next(); 
+          this.dtTrigger3.next(); 
+          this.dtTrigger1.unsubscribe();
+          this.dtTrigger2.unsubscribe();
+          this.dtTrigger3.unsubscribe();
+        }
+
+   
+
   }
 
   /**get value from child component */
@@ -96,7 +142,10 @@ export class PreEngineeringComponent implements AfterViewInit, OnInit {
       if(this._SearchCriteria.VillageId != null)
         {
           this.GetAwardAndMutations();
-          this.rerenderDataTable(); 
+          setTimeout(()=>{
+            this.rerenderDataTable(); 
+       }, 100);
+          // this.rerenderDataTable(); 
         }
       else
         {
@@ -138,7 +187,9 @@ GetProjectReports()
     let url = this.urlService.GetProjectReports;
     this.httpService.get(url,null).subscribe(response => {
       this._ProjectReports  = response;
-      this.rerenderDataTable();
+      setTimeout(()=>{
+          this.rerenderDataTable(); 
+    }, 100);
       },error => {
         this.Utility.LogText(error);
       });
@@ -179,7 +230,7 @@ GetProjectReports()
         this._ProjectReports = DocumentModelResp;
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
-        this.rerenderDataTable();
+        this.rerenderDataTable(); 
       },error => {
         this.Utility.LogText(error);
       });
@@ -201,31 +252,20 @@ GetProjectReports()
     
   DeleteProjectDocument(arg)
     {
-      let url = this.urlService.DeleteProjectReportAPI + arg.DocumentId;
-      this.httpService.get(url,null).subscribe(response => {
-      let index = this._ProjectReports.indexOf(arg);
-      this._ProjectReports.splice(index,1);
-      alert("document deleted Sucessfully!");  
+      let APIurl = this.urlService.DeleteProjectReportAPI + arg.DocumentId;
+      let AllDocData = this._ProjectReports;
+      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg);
       this.rerenderDataTable();
-      }, 
-      error => {
-        this.Utility.LogText(error);
-      });
     }
 
-  ngAfterViewInit(): void 
-    {
-      this.dtTrigger.next();
-      this.dtTrigger2.next();
-    }
 
-// ========== alignment sheet functions =======
+// ==========2. alignment sheet functions =======
 GetAlignmentSheets()
   {
     let url = this.urlService.GetAlignmentSheetsAPI;
     this.httpService.get(url,null).subscribe(response => {
-      this.  _AlignmentSheets  = response;
-      this.rerenderDataTable2();
+      this._AlignmentSheets  = response;
+      this.rerenderDataTable();
       },error => {
         this.Utility.LogText(error);
       });
@@ -255,8 +295,8 @@ UploadAlignmentSheet()
     let url = this.urlService.AddAlignmentSheetAPI; 
     this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
       let DocumentModelResp: CommonDocDataModel[] = response.Result;         
-      this.  _AlignmentSheets = DocumentModelResp;
-      this.rerenderDataTable2();
+      this._AlignmentSheets = DocumentModelResp;
+      this.rerenderDataTable();
       alert("Document updated sucessfully!!");
     },error => {
       this.Utility.LogText(error);
@@ -278,16 +318,10 @@ UploadAlignmentSheet()
 
   DeleteAlignmentDoc(arg)
     {
-      let url = this.urlService.DeleteAlignmentSheetAPI + arg.DocumentId;
-        this.httpService.get(url,null).subscribe(response => {
-        let index = this._ProjectReports.indexOf(arg);
-        this._ProjectReports.splice(index,1);
-        alert("document deleted Sucessfully!");  
-        this.rerenderDataTable2();
-        }, 
-        error => {
-          this.Utility.LogText(error);
-        });
+      let APIurl = this.urlService.DeleteAlignmentSheetAPI + arg.DocumentId;
+      let AllDocData = this._AlignmentSheets;
+      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg);
+      this.rerenderDataTable();
     }
 
 
@@ -329,7 +363,7 @@ UploadAlignmentSheet()
       let url = this.urlService.AddAwardAndMutationsAPI; 
       this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
         let DocumentModelResp: CommonDocDataModel[] = response.Result;         
-        this. _AwardMutations = DocumentModelResp;
+        this._AwardMutations = DocumentModelResp;
         this.rerenderDataTable();
         alert("Document updated sucessfully!!");
       },error => {
@@ -352,16 +386,10 @@ UploadAlignmentSheet()
 
   DeleteAwardDoc(arg)
     {
-      let url = this.urlService.DeleteAwardAndMutationsAPI + arg.DocumentId;
-      this.httpService.get(url,null).subscribe(response => {
-      let index = this._ProjectReports.indexOf(arg);
-      this._ProjectReports.splice(index,1);
-      alert("document deleted Sucessfully!");
+      let APIurl = this.urlService.DeleteAwardAndMutationsAPI + arg.DocumentId;
+      let AllDocData = this._AwardMutations
+      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg);
       this.rerenderDataTable();  
-      }, 
-      error => {
-        this.Utility.LogText(error);
-      });
     }
 
 GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
@@ -374,42 +402,4 @@ GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
     else { return lookUpid;}
   }
 
-/**refresh/reload data table 
- * when data update/delete/add in the datatable  
- * */
-  rerenderDataTable(){
-    /**initialized datatable */
-  if (this.IsDtInitialized) 
-    {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-      {
-        dtInstance.destroy();//Destroy the table first
-        this.dtTrigger.next();//Call the dtTrigger to rerender again
-        this.dtTrigger2.next();
-      });
-    }
-    else
-      {
-        this.IsDtInitialized = true;
-        this.dtTrigger.next();
-        this.dtTrigger2.next();
-      }
-  }
-  
-
-rerenderDataTable2(){
-  if (this.IsDtInitialized) 
-    {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-      {
-        dtInstance.destroy();//Destroy the table first
-        this.dtTrigger2.next();
-      });
-    }
-    else
-      {
-        this.IsDtInitialized = true;
-        this.dtTrigger2.next();
-      }
-  }
 }

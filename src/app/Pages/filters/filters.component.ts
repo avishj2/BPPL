@@ -21,7 +21,7 @@ export class FiltersComponent implements OnInit {
   /** FilterControls for filter menu show/hide */
   @Input() filterControls : FilterControls;
   @Output() filterOutput:EventEmitter<SearchCriteria>= new EventEmitter(); 
- 
+ _TahsilLabel : string = "Tahsil";
   //api models
   _StateDataModel : StateDetails[];
   _DistrictDetails : DistrictDetails[];
@@ -32,6 +32,7 @@ export class FiltersComponent implements OnInit {
   _CrossingIds : CommonDropdownModel[];
   _SurveyDetails : CommonDropdownModel[];
   _OwnerDetails : CommonDropdownModel[];
+  _LandTypeDetails : CommonDropdownModel[];
   
   constructor(
     public urlService: UrlService,
@@ -86,6 +87,14 @@ export class FiltersComponent implements OnInit {
    /**Get all District list base on the selected state */
    PopulateDistrict(arg)
     {
+      if(this._SearchCriteria.StateId == 2)
+        {
+          this._TahsilLabel = "Taluka";
+        }
+      else
+        {
+          this._TahsilLabel = "Tahsil";
+        }
       this.ResetDropDowns(DropDownChangeEnum.StateChanged);
       let url = this.urlService.GetDistrictByStateAPI + arg;  
       this.httpService.get(url,null).subscribe(response => {
@@ -131,6 +140,7 @@ export class FiltersComponent implements OnInit {
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
         });
+        this.GetLandTypesByVillage(argVillageId);
     }
 
 
@@ -161,6 +171,16 @@ export class FiltersComponent implements OnInit {
         this._OwnerDetails = response; 
         },error => {
           console.log("GetAllCrossingsAPI error",error); 
+        });
+    }
+
+  GetLandTypesByVillage(argvillageId)
+    {
+      let url = this.urlService.GetLandTypesByVillageAPI + argvillageId;
+      this.httpService.get(url,null).subscribe(response => {
+        this._LandTypeDetails = response; 
+        },error => {
+          console.log("GetLandTypesByVillageAPI error",error); 
         });
     }
 

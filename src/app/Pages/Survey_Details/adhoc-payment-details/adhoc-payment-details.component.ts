@@ -9,6 +9,7 @@ import { CommonDropdownModel, CommonDocDataModel} from 'src/app/Model/Base.model
 import {AdHocPaymentDropDownsModel ,AdHocPaymentModel, AdHocPaymentRespDataModel} from 'src/app/Model/Adhoc.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
 
 @Component({
   selector: 'app-adhoc-payment-details',
@@ -43,7 +44,8 @@ export class AdhocPaymentDetailsComponent implements OnInit {
     public urlService: UrlService,
     private router: Router,
     private httpService: HttpService,
-    public Utility :UtilityService
+    public Utility :UtilityService,
+    public APIUtilityService: APIUtilityService,
   ) {
       this._FilterControls = new FilterControls();
       this.SetFilterControls();
@@ -124,16 +126,30 @@ export class AdhocPaymentDetailsComponent implements OnInit {
     }
 
 
-  GetAllAdHocPayments()
+    GetAllAdHocPayments()
     {
       let url = this.urlService.GetAllAdHocPaymentsAPI + this._SearchCriteria.OwnerID;
-      this.httpService.get(url,null).subscribe(response => {
-        this._AdHocPaymentModel = response;
-        this.ReloadDatatable();
-        },error => {
-          console.log("GetAllAdHocPaymentsAPI error",error);
-        });
+      // this.httpService.get(url,null).subscribe(response => {
+      //   this._AdHocPaymentModel = response;
+      //   this.ReloadDatatable();
+      //   },error => {
+      //     console.log("GetAllAdHocPaymentsAPI error",error);
+      //   });
+      this.httpService.HttpGetRequest(url,this.GetAllAdHocPaymentsCallBack.bind(this),null); 
     }
+    
+    GetAllAdHocPaymentsCallBack(dtas){
+      if (dtas != null)
+        {
+          this._AdHocPaymentModel = dtas;
+        }
+      else{
+        // this._AdHocPaymentModel = new AdHocPaymentModel();
+        // this._AdHocPaymentModel.Documents = [];
+        }
+      this.ReloadDatatable();
+    }
+
     /**
      * 
      */
@@ -185,7 +201,6 @@ export class AdhocPaymentDetailsComponent implements OnInit {
           {
             alert("Payment updated sucessfully!!");
             this.DisableInputField = true;
-            this.ReloadDatatable();
           }
         else
           {
@@ -193,8 +208,8 @@ export class AdhocPaymentDetailsComponent implements OnInit {
             this.DisableInputField = true;
             this._AdHocPaymentModel.AdHocPaymentId  = RespDataModel.Result.AdHocPaymentId;
             this._AddNewPaymentDetails = false;
-            this.ReloadDatatable();
-          }   
+          } 
+          this.ReloadDatatable();    
       }
       this._AddNewPaymentDetails = false;
       this._ShowPaymentDetailsDiv = true;
@@ -275,15 +290,10 @@ export class AdhocPaymentDetailsComponent implements OnInit {
 
   DeleteDocument(doc)
     {
-      let url = this.urlService.DeleteAdHocPaymentDocumentAPI + doc.DocumentId;
-      this.httpService.get(url,null).subscribe(response => {
-      let index = this._AdHocPaymentModel.Documents.indexOf(doc);
-      this._AdHocPaymentModel.Documents.splice(index,1);
-      alert("Adhoc Payment document deleted !");  
-      }, 
-      error => {
-        this.Utility.LogText(error);
-      });
+      let APIurl = this.urlService.DeleteAdHocPaymentDocumentAPI + doc.DocumentId;
+      let AllDocData =this._AdHocPaymentModel.Documents;
+      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,doc);
+      this.ReloadDatatable();
     }  
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any

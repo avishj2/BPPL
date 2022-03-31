@@ -34,7 +34,7 @@
         </div>
         <br>
         <div>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="90%" >
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger1" class="stripe table table-striped table-bordered" width="90%" >
                 <thead>
                     <tr>
                         <th class="tbstyle">S.No.</th>           
@@ -102,7 +102,7 @@
             </div>
         </div><br>
         <div>
-            <table datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2" class="stripe table table-striped table-bordered" width="98%" >
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="stripe table table-striped table-bordered" width="98%" >
                 <thead>
                     <tr> 
                         <th class="tbstyle">S.No.</th>
@@ -114,7 +114,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of  _AlignmentSheets; let i = index">
+                    <tr *ngFor="let data of _AlignmentSheets; let i = index">
                         <td class="tbstyle">{{i+1}}</td>  
                         <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.AlignmentSheetTypes, data.Lookupid)}}</td>
                         <td>{{data.FromChainage}}</td>
@@ -161,7 +161,7 @@
         </div>
         <br>
         <div>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger3" class="stripe table table-striped table-bordered" width="98%" >
                 <thead>
                     <tr>
                         <th class="tbstyle">S.No.</th>           
