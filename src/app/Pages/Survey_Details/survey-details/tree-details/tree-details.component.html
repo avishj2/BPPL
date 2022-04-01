@@ -59,7 +59,7 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-lg-6">
-                        <label class="Label">Owner Name</label>
+                        <label class="Label">Owner Name <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_TreeDataModel.SurveyOwnerId"[ngModelOptions]="{standalone: true}">
                             <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
                                 {{data.Text}}
@@ -74,7 +74,7 @@
                         </select>
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Tree Name</label>
+                        <label class="Label">Tree Name  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_TreeDataModel.TreeName"[ngModelOptions]="{standalone: true}">
                             <option *ngFor="let data of SurveyDropDownsData.TreeNames" [value]="data.Value">{{ data.Text }}</option>
                         </select>

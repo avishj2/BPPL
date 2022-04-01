@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <label class="Label">Cultivalted/Non-Cultivalted</label>
+                            <label class="Label">Cultivalted/Non-Cultivalted <b><h7 style="color: red;">*</h7></b></label>
                             <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.CultivatedType">
                                 <option *ngFor="let data of _SurveyDropDownsDataModel.CultivateLandTypes" [value]="data.Value">
                                     {{data.Text }}
@@ -204,7 +204,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="_DisabledInputField == true" class="seperator"style="left: 30%;"></div>
+                        <div class="seperator"style="left: 31%;"></div>
                         <div class="col-lg-4">
                             <br>
                             <label class="Label" style="margin-left: -6%; margin-bottom: 2px;">Total Area</label>
@@ -212,48 +212,48 @@
                                 <label class="col-sm-0.5 col-form-label">Ha</label>
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control"[(ngModel)]="_SurveyModel.TotalHa"*ngIf="_DisabledInputField != true">
-                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                    <div class="DisabledLabel1"*ngIf="_DisabledInputField == true">
                                         {{this._SurveyModel.TotalHa}}
                                     </div>
                                 </div>
                                 <label class="col-sm-0.5 col-form-label">Are</label>
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control" [(ngModel)]="_SurveyModel.TotalAre"*ngIf="_DisabledInputField != true">
-                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                    <div class="DisabledLabel1"*ngIf="_DisabledInputField == true">
                                         {{this._SurveyModel.TotalAre}}
                                     </div>
                                 </div>
                                 <label class="col-sm-0.5 col-form-label">Sqmt</label>
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control"[(ngModel)]="_SurveyModel.TotalSqmt"*ngIf="_DisabledInputField != true">
-                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                    <div class="DisabledLabel1"*ngIf="_DisabledInputField == true">
                                         {{this._SurveyModel.TotalSqmt}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="_DisabledInputField == true"class="seperator"style="left: 63%;"></div>
-                        <div class="col-lg-4"><br>
+                        <div class="seperator"style="left: 64%;"></div>
+                        <div class="col-lg-4"style="display:inline-block;"><br>
                             <label class="Label" style="margin-left: -6%;margin-bottom: 2px;">Panchanama Area</label>
                             <div class="form-group row" style="margin-left: -6%;">
                                 <label class="col-sm-0.5 col-form-label">Ha</label>
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control"[(ngModel)]="_SurveyModel.PanchnamaHa"*ngIf="_DisabledInputField != true">
-                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                    <div class="DisabledLabel1"*ngIf="_DisabledInputField == true">
                                         {{this._SurveyModel.PanchnamaHa}}
                                     </div>
                                 </div>
                                 <label class="col-sm-0.5 col-form-label">Are</label>
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control"[(ngModel)]="_SurveyModel.PanchnamaAre"*ngIf="_DisabledInputField != true">
-                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                    <div class="DisabledLabel1"*ngIf="_DisabledInputField == true">
                                         {{this._SurveyModel.PanchnamaAre}}
                                     </div>
                                 </div>
                                 <label class="col-sm-0.5 col-form-label">Sqmt</label>
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control"[(ngModel)]="_SurveyModel.PanchnamaSqmt"*ngIf="_DisabledInputField != true">
-                                    <div class="DisabledLabel" *ngIf="_DisabledInputField == true">
+                                    <div class="DisabledLabel1"*ngIf="_DisabledInputField == true">
                                         {{this._SurveyModel.PanchnamaSqmt}}
                                     </div>
                                 </div>

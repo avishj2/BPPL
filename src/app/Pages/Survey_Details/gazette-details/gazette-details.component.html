@@ -153,7 +153,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class ="Label">Gazzete document types</label>
+                                <label class ="Label">Gazzete document types  <b><h7 style="color: red;">*</h7></b></label>
                                 <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.GazzateDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_gazzettedoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
@@ -167,9 +167,9 @@
                                     <button class="btn-primary" (click)="FileUpload(true)">Upload Details</button>
                                 </div>
                             </div>
-                    
                         </div><br>
-                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
+                        <!-- [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" -->
+                        <table class="stripe table table-striped table-bordered" width="98%">
                             <thead>
                                 <tr>
                                     <th>FileName</th>
@@ -255,7 +255,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
-                                <label class ="Label">Gazette File Number</label>
+                                <label class ="Label">Gazette File Number <b><h7 style="color: red;">*</h7></b></label>
                                 <select class="form-control"[(ngModel)]="_NotificationModel.GazzateId" *ngIf="_DisabledNoticeInputField != true"[ngModelOptions]="{standalone: true}">
                                     <option *ngFor="let data of _GetAllGazetteDetails" [value]="data.Value">{{data.Text}}</option>
                                 </select>
@@ -321,7 +321,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class ="Label">Notification document types</label>
+                                <label class ="Label">Notification document types  <b><h7 style="color: red;">*</h7></b></label>
                                 <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.NotificationDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_notificationDoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
@@ -336,7 +336,8 @@
                                 </div>
                             </div>
                         </div><br>
-                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%">
+                        <!-- datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" -->
+                        <table class="stripe table table-striped table-bordered" width="98%">
                             <thead>
                                 <tr>
                                     <th>FileName</th>

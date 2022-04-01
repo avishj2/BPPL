@@ -30,12 +30,16 @@ export class APIUtilityService {
   DeleteDocument(argURL, argParams, argDoc)
     {
       this.httpservice.get(argURL,null).subscribe(response => {
-        let index = argParams.indexOf(argDoc);
-        argParams.splice(index,1);
-        alert("document deleted Sucessfully!");  
+        if(response.status == 200)
+          {
+            let index = argParams.indexOf(argDoc);
+            argParams.splice(index,1);
+            alert("document deleted Sucessfully!");  
+          }
       }, 
       error => {
         this.utilityService.LogText2("error",error);
+        alert(error.error.Message);
       });
     } 
 }

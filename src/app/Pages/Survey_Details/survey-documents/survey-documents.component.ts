@@ -129,9 +129,6 @@ export class SurveyDocumentsComponent implements OnInit {
           this.dtTrigger2.unsubscribe();
           this.dtTrigger3.unsubscribe();
         }
-
-   
-
   }
 
   /**get value from child component */
@@ -142,10 +139,7 @@ export class SurveyDocumentsComponent implements OnInit {
       if(this._SearchCriteria.VillageId != null)
         {
           this.GetAwardAndMutations();
-          setTimeout(()=>{
-            this.rerenderDataTable(); 
-       }, 100);
-          // this.rerenderDataTable(); 
+          this.rerenderDataTable(); 
         }
       else
         {
@@ -173,7 +167,6 @@ export class SurveyDocumentsComponent implements OnInit {
  /**Get Survey Document DropDowns values*/
  GetSurveyDocumentDropDowns()
   {
-    //this.CommonService.ShowSpinner();
     let url = this.urlService.GetSurveyDocumentDropDowns;
     this.httpService.get(url,null).subscribe(response => {
       this._SurveyDocDropDownsDataModel  = response;
@@ -253,8 +246,7 @@ GetProjectReports()
   DeleteProjectDocument(arg)
     {
       let APIurl = this.urlService.DeleteProjectReportAPI + arg.DocumentId;
-      let AllDocData = this._ProjectReports;
-      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg);
+      this.APIUtilityService.DeleteDocument(APIurl,this._ProjectReports,arg);
       this.rerenderDataTable();
     }
 
@@ -319,8 +311,7 @@ UploadAlignmentSheet()
   DeleteAlignmentDoc(arg)
     {
       let APIurl = this.urlService.DeleteAlignmentSheetAPI + arg.DocumentId;
-      let AllDocData = this._AlignmentSheets;
-      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg);
+      this.APIUtilityService.DeleteDocument(APIurl,this._AlignmentSheets,arg);
       this.rerenderDataTable();
     }
 
@@ -387,8 +378,7 @@ UploadAlignmentSheet()
   DeleteAwardDoc(arg)
     {
       let APIurl = this.urlService.DeleteAwardAndMutationsAPI + arg.DocumentId;
-      let AllDocData = this._AwardMutations
-      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg);
+      this.APIUtilityService.DeleteDocument(APIurl,this._AwardMutations,arg);
       this.rerenderDataTable();  
     }
 

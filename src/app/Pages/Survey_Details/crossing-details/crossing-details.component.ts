@@ -61,12 +61,12 @@ _DisabledCrossingInputField : boolean = true;
   /**hide/show filter menu based on the component requirement */
   SetFilterControls() 
     {
-      this._FilterControls.ShowState = true;
-      this._FilterControls.ShowDistrict = true;
-      this._FilterControls.ShowTaluka = true;
-      this._FilterControls.ShowChainageFrom = true;
-      this._FilterControls.ShowChainageTo = true;
-      this._FilterControls.ShowVillage = true;
+      this._FilterControls.ShowState = false;
+      this._FilterControls.ShowDistrict = false;
+      this._FilterControls.ShowTaluka = false;
+      this._FilterControls.ShowChainageFrom = false;
+      this._FilterControls.ShowChainageTo = false;
+      this._FilterControls.ShowVillage = false;
       this._FilterControls.ShowCrossingTypes = true;
       this._FilterControls.ShowCrossingNumber = true;
       this._FilterControls.ShowSearchBtn = true;
@@ -291,8 +291,7 @@ _DisabledCrossingInputField : boolean = true;
   DeleteCrossingDocument(doc : CommonDocDataModel)
     {
       let APIurl = this.urlService.DeleteCrossingDocumentAPI + doc.DocumentId;
-      let AllDocData = this._CrossingDataModel.Documents;
-      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,doc);
+      this.APIUtilityService.DeleteDocument(APIurl,this._CrossingDataModel.Documents,doc);
       this.ReloadDatatable();
     }
 

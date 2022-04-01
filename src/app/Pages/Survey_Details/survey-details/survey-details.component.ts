@@ -129,6 +129,7 @@ export class SurveyDetailsComponent implements OnInit {
         if (this._AllSurveyDetails.StatusCode != 200) 
           {
             alert(this._AllSurveyDetails.Message);
+            // this.CommonService.hideSpinnerLoading();
           }
           else {
             this._SurveyModel = this._AllSurveyDetails.Result.Survey;

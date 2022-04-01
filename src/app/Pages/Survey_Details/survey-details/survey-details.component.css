@@ -14,7 +14,6 @@
     width: 100%;
     height: calc(0.7em + 0.5rem + 1px);
     /* padding: 0.375rem 0.75rem; */
-    
     /* margin-top : 10%; */
     margin-left: -28%;
     margin-top: 5%;
@@ -40,8 +39,14 @@
 .seperator {
     border-right: 1px solid #3838bb;
     width: 1px;
-    height: 37px;
+    height: 40px;
     bottom: 0;
     position: absolute;
-    bottom: 92px;
+    bottom: 90px;
+}
+.DisabledLabel1{
+    font-weight: 550;
+    font-size: 14px;
+    margin-bottom: 2.5%;
+    margin-top:7.4px;
 }

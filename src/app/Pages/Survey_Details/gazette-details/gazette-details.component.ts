@@ -1,4 +1,4 @@
-import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ViewChildren } from '@angular/core';
+import { Component,AfterViewInit,QueryList, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ViewChildren } from '@angular/core';
 import { HttpService } from '../../../services/http.service';
 import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
@@ -17,7 +17,7 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./gazette-details.component.css']
 })
 export class GazetteDetailsComponent implements OnInit {
-  @ViewChild('multiSelect') multiSelect;
+  // @ViewChild('multiSelect') multiSelect;
   /**enable/disable input fields variables*/
   _DisabledGazetteInputField: boolean = true;
   /**add new gazette/notification details */
@@ -52,6 +52,7 @@ export class GazetteDetailsComponent implements OnInit {
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+  dtTrigger2: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
 
@@ -86,13 +87,19 @@ export class GazetteDetailsComponent implements OnInit {
 
   ngOnInit(): void 
     {
+      this.dtOptions = 
+      {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+      };
       this.GetGazzateDropDowns();//gazette tab api
       this.GetAllNotificationNos();//Notification Tab API
     }
 
-    ngAfterViewInit(): void 
+  ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
+      //console.log('ngAfterViewInit');
     }
 
   /**refresh/reload data table 
@@ -107,15 +114,17 @@ export class GazetteDetailsComponent implements OnInit {
           {
             dtInstance.destroy();//Destroy the table first
             this.dtTrigger.next();//Call the dtTrigger to rerender again
+            this.dtTrigger2.next();
           });
         }
       else
         {
           this.IsDtInitialized = true;
           this.dtTrigger.next();
+          this.dtTrigger2.next();
         }
     }
-  
+    
   /**
    * Get type of notification list
    */
@@ -135,10 +144,10 @@ export class GazetteDetailsComponent implements OnInit {
    */
   GetGazzatesByTypeOfNotification()
     {
-      let url = this.urlService.GetAllGazzatesAPI + this._TypeOfNotification;
+      let url = this.urlService.GetAllGazzatesbasedOntypeOfNoAPI + this._TypeOfNotification;
       this.httpService.get(url, null).subscribe(response => {
         this._GetGazetteByTypeNotification = response;
-        this.ReloadDatatable();
+        // this.ReloadDatatable();
       }, error => {
         this.Utility.LogText(error);
       });
@@ -170,7 +179,7 @@ export class GazetteDetailsComponent implements OnInit {
       let url = this.urlService.GetGazzateByIdAPI + this._GazetteModel.Gazzateid;
       this.httpService.get(url, null).subscribe(response => {
         this._GazetteModel = response;
-        this.ReloadDatatable();
+        // this.ReloadDatatable();
         this.Utility.LogText(this._GazetteModel);
       }, error => {
         this.Utility.LogText(error);
@@ -258,7 +267,7 @@ export class GazetteDetailsComponent implements OnInit {
           }
           this.Utility.LogText(gazzetteDocumentModelResp);
           alert("Document updated sucessfully!!");
-          this.ReloadDatatable();
+          // this.ReloadDatatable();
         },error => {
           this.Utility.LogText(error);
         });
@@ -310,7 +319,7 @@ export class GazetteDetailsComponent implements OnInit {
             {
               alert("Gazette updated sucessfully!!");
               this._DisabledGazetteInputField = true;
-              this.ReloadDatatable();
+              // this.ReloadDatatable();
             }
           else
             {
@@ -318,7 +327,7 @@ export class GazetteDetailsComponent implements OnInit {
               this._DisabledGazetteInputField = true;
               this._GazetteModel.Gazzateid = GazetteRespDataModel.Result.Gazzateid;
               this._AddNewGazette = false;
-              this.ReloadDatatable();
+              // this.ReloadDatatable();
             }   
         }
         this._AddNewGazette = false;
@@ -360,7 +369,7 @@ export class GazetteDetailsComponent implements OnInit {
             let index = this._NotificationModel.Documents.indexOf(doc);
             this._NotificationModel.Documents.splice(index,1);
           }
-          this.ReloadDatatable();
+          // this.ReloadDatatable();
         }, error => {
           this.Utility.LogText(error);
         });
@@ -375,7 +384,7 @@ export class GazetteDetailsComponent implements OnInit {
       let url = this.urlService.GetAllNotificationNosAPI;
       this.httpService.get(url, null).subscribe(response => {
         this._NotificationDetails = response;
-        this.ReloadDatatable();
+        // this.ReloadDatatable();
         this.Utility.LogText(this._NotificationDetails);
       }, error => {
         this.Utility.LogText(error);
@@ -400,7 +409,7 @@ export class GazetteDetailsComponent implements OnInit {
       let url = this.urlService.GetNotificationByIdAPI + this._NotificationValue;
       this.httpService.get(url, null).subscribe(response => {
         this._NotificationModel = response;
-        this.ReloadDatatable();
+        // this.ReloadDatatable();
         this.Utility.LogText(this._NotificationModel);
       }, error => {
         this.Utility.LogText(error);
@@ -473,7 +482,7 @@ export class GazetteDetailsComponent implements OnInit {
               this._AddNewNotification = false;
               this.GetAllNotificationNos();//Notification Tab API
             }  
-            this.ReloadDatatable(); 
+            // this.ReloadDatatable(); 
         }
     }
 

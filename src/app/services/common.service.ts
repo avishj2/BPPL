@@ -106,11 +106,12 @@ import { NgxSpinnerService } from "ngx-spinner";
    */
   public hideSpinnerLoading()
       {
-          setTimeout(() => 
-          {
-            // spinner ends after 5 seconds 
-            this.spinner.hide();
-          }, 3000);
+        this.spinner.hide();
+          // setTimeout(() => 
+          // {
+          //   // spinner ends after 5 seconds 
+          //   this.spinner.hide();
+          // }, 100);
       }
   
     /**
@@ -127,7 +128,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       setTimeout(() => {
         /** spinner ends after 5 seconds */
         this.spinner.hide();
-      }, 3000);
+      }, 1000);
   }
   
   /**
