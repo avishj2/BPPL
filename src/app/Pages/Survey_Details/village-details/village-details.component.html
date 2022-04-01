@@ -26,7 +26,7 @@
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class="Label">Village Number <b><h7 style="color: red;">*</h7></b> </label>
-                    <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNumber" formControlName="VillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNumber" formControlName="VillageNumber"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNumber}}
                     </div>
@@ -34,21 +34,21 @@
 
                 <div class="col-lg-3">                
                     <label class="Label">Revenue Village Number</label>
-                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.RevenueVillageNumber"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.RevenueVillageNumber"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.RevenueVillageNumber}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Number of Population </label>
-                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.NoOfPopulation"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control"[(ngModel)]="_VillageModel.NoOfPopulation"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.NoOfPopulation}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Village Name (English) <b><h7 style="color: red;">*</h7></b></label>
-                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNameEng" formControlName="VillageNameEng"[ngModelOptions]="{standalone: true}" [disabled]="_DisabledInputField">
+                    <input *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_VillageModel.VillageNameEng" formControlName="VillageNameEng"[ngModelOptions]="{standalone: true}" >
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameEng}}
                     </div>
@@ -58,14 +58,14 @@
             <div class="form-group row">
                 <div class="col-lg-3">                
                     <label class="Label">Village Name (Hindi) <b><h7 style="color: red;">*</h7></b> </label>
-                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameHindi" formControlName="VillageNameHindi"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameHindi" formControlName="VillageNameHindi"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameHindi}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Village Name (Local) <b><h7 style="color: red;">*</h7></b>  </label>
-                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" formControlName ="VillageNameLocal"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField">
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_VillageModel.VillageNameLocal" formControlName ="VillageNameLocal"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._VillageModel.VillageNameLocal}}
                     </div>

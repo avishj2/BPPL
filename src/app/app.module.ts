@@ -78,7 +78,7 @@ import { ViewCrossingDetailsComponent } from './Pages/View_Details/view-crossing
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     ModalModule,
     NgbModule,
     DataTablesModule,
