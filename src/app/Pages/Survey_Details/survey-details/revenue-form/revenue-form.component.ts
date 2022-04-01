@@ -114,8 +114,7 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
   DeleteDocument(arg)
     {
       let APIurl = this.urlService.DeleteCrossingDocumentAPI + arg.DocumentId;
-      let AllDocData =  this._AllSurveyDetails.Result.SurveyDocuments
-      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,arg)
+      this.APIUtilityService.DeleteDocument(APIurl,this._AllSurveyDetails.Result.SurveyDocuments,arg)
       this.SetParentData();
       this.rerenderDataTable();
     }

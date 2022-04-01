@@ -34,11 +34,11 @@ export class HttpService {
       this.http.post(argURL, argParams)
       .subscribe((data) => {
         let dtas  = data;
-        this.commonService.hideLoading();
         if(successCallBackFunction)
         {
            successCallBackFunction(data);
         }
+        this.commonService.hideSpinnerLoading();
       }, error => {
             this.utilityService.LogText(error);   
             if(errorCallBackFunction)
@@ -75,7 +75,7 @@ export class HttpService {
         {
             successCallBackFunction(data);
         }
-        //this.commonService.hideLoading();
+        this.commonService.hideSpinnerLoading();
         return dtas;
       },  error => {
     
@@ -102,6 +102,7 @@ export class HttpService {
         {
            successCallBackFunction(data);
         }
+        this.commonService.hideSpinnerLoading();
       }, error => {
         this.utilityService.LogText(error);   
         if(errorCallBackFunction)

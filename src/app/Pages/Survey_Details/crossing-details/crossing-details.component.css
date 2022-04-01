@@ -1,12 +1,13 @@
 .ParentBtn{
-    margin-top: 3%;
-    margin-left: -33%;
-   
+    margin-top: 2.5%;
+    margin-left: 2%;
+    display:inline-block;
 }
 .SaveDataClass,.UploattchClass{
     margin-top: 11%;
     width: 50%;
 }
-.FileInputClass{
-    margin-top: 11%;
-}
+.FileInputClass
+    {
+        margin-top: 11%;
+    }

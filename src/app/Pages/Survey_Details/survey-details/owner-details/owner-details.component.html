@@ -28,10 +28,9 @@
                     <button type="button" class="btn-success"(click)="EditOwnerDetails(data)" title="Edit" data-toggle="modal" data-target="#OwnerModal">
                         <i class="fa fa-edit "></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" (click)="DeleteOwnerDetails(data)" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteOwnerDetails(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
-                    <!-- mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right" -->
                 </td>      
                 <td>{{data.OwnerName}}</td>
                 <td>{{data.OwnerNamehindi}}</td>
@@ -81,7 +80,7 @@
                          [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerNameLocal">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Owner Type</label>
+                        <label class="Label">Owner Type <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"
                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerType">
                             <option *ngFor="let data of SurveyDropDownsData.OwnerTypes"[value]="data.Value">

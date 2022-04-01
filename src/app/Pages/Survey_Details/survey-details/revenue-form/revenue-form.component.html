@@ -1,7 +1,7 @@
 
 <div class="form-group row">
     <div class="col-lg-3">
-        <label class="Label">Select Form</label>
+        <label class="Label">Select Form  <b><h7 style="color: red;">*</h7></b></label>
         <select class="form-control"[(ngModel)]="_Revenuedoc.Lookupid">
             <option *ngFor="let data of SurveyDropDownsData.RevenueFormTypes" [value]="data.Value">
                 {{data.Text }}

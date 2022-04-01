@@ -3,15 +3,15 @@
     <div class="ParentBtn"> 
         <button class="btn-primary" (click)="AddNewCrossingDetails()">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-            Add Crossing Details
+            Add Crossing
         </button>&nbsp;&nbsp;  
         <button *ngIf="_ShowCrossingDetailsDiv == true" class="btn-primary"(click)="EditCrossingDetails()">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
-            Edit Crossing Details
+            Edit Crossing
         </button>&nbsp;&nbsp;  
         <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteCrossingDetails()" *ngIf="_ShowCrossingDetailsDiv == true" ngbTooltip ="Delete Crossing Information from Database">
             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
-            Delete Crossing Details
+            Delete Crossing
         </button>
     </div>
 </app-filters>

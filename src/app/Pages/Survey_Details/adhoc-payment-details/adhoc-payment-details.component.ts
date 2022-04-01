@@ -291,8 +291,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
   DeleteDocument(doc)
     {
       let APIurl = this.urlService.DeleteAdHocPaymentDocumentAPI + doc.DocumentId;
-      let AllDocData =this._AdHocPaymentModel.Documents;
-      this.APIUtilityService.DeleteDocument(APIurl,AllDocData,doc);
+      this.APIUtilityService.DeleteDocument(APIurl,this._AdHocPaymentModel.Documents,doc);
       this.ReloadDatatable();
     }  
 

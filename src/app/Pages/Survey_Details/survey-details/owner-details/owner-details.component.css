@@ -19,4 +19,11 @@
 .col-sm-2, .col-sm-4{
     font-weight: 550;
     margin-top: 13px;
+    color: #3838bb;
+}
+table {
+    position: relative;
+    /* overflow: auto; */
+    /* overflow: hidden; */
+    width: 100%;
 }

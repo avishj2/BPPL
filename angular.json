@@ -44,6 +44,7 @@
               {
                 "input": "src/assets/Dashboard/Style.min.css"
               }
+              
             ],
             "scripts": [
               "src/assets/Dashboard/Newjquery-2.1.4.min.js",

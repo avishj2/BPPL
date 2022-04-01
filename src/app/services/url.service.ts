@@ -33,7 +33,8 @@ export class UrlService {
   GetTypeOfNotificationsAPI = this.url + '/api/Gazzate/GetTypeOfNotifications';
   GetGazzateDropDownsAPI = this.url + '/api/Gazzate/GetGazzateDropDowns';
   GetAllNotificationNosAPI = this.url + '/api/Gazzate/GetAllNotificationNos';
-  GetAllGazzatesAPI =  this.url +'/api/Gazzate/GetAllGazzates?typeOfNotification=';
+  GetAllGazzatesbasedOntypeOfNoAPI =  this.url +'/api/Gazzate/GetAllGazzates?typeOfNotification=';
+  GetAllGazzatesAPI =  this.url +'/api/Gazzate/GetAllGazzates';
   GetGazzateByIdAPI = this.url +'/api/Gazzate/GetGazzateById?gazzateId=';
   AddOrUpdateGazzateAPI = this.url + '/api/Gazzate/AddOrUpdateGazzate';
   DeleteGazzateAPI = this.url + '/api/Gazzate/DeleteGazzate?gazzateId=';
