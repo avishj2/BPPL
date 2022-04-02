@@ -3,9 +3,9 @@
 <br>
 <div class="row" >
     <div class="col-lg-12">
-      <!-- <div class="md-tabs">*ngIf="_showTabs == true" -->
+      <!-- <div class="md-tabs">*ngIf="_showTabs == true"{{ this._SearchCriteria.VillageName}} -->
         <ngb-tabset (tabChange)="ActiveTab($event)" #tabset="ngbTabset">
-          <ngb-tab title="Survey No. Details" [id]="0">
+          <ngb-tab title="Survey" [id]="0">
             <ng-template ngbTabContent>
               <div class="m-t-15">
                 <!-- info card start -->

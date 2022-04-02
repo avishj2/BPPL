@@ -28,7 +28,7 @@ export class SurveyDetailsComponent implements OnInit {
   _SurveyModel : SurveyModel;
   _SurveyDropDownsDataModel : SurveyDropDownsDataModel;
   _AllSurveyDetails : AllSurveyDetailsDataModel
-
+  _ActivetabTitle : string = "Survey- ";
 
   @ViewChild('tabset')
   tabset: any;
@@ -73,6 +73,7 @@ export class SurveyDetailsComponent implements OnInit {
   */
   GetValuesFromFilters(event) 
     {
+      this._ActivetabTitle = "Survey- " + this._SearchCriteria.VillageName;
       this.Utility.LogText(event);
       this._SearchCriteria = event;
       if (Object.keys(this._SearchCriteria).length === 0) 

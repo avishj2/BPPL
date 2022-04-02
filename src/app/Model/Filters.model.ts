@@ -49,6 +49,8 @@ export class SearchCriteria
         CrossingID : any;
         OwnerID : any;
         TypeOfLand : any;
+        VillageName : string;
+        CrossingTypeName : string;
     }
 /**
  * Defines the selection from the dropdown.

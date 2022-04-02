@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Noticewebsite": {
+    "BPPLWebsite": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Noticewebsite",
+            "outputPath": "dist/BPPLWebsite",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -89,11 +89,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Noticewebsite:build"
+            "browserTarget": "BPPLWebsite:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Noticewebsite:build:production",
+              "browserTarget": "BPPLWebsite:build:production",
               "optimization": true,
               "outputHashing": "all"
             }
@@ -102,7 +102,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Noticewebsite:build"
+            "browserTarget": "BPPLWebsite:build"
           }
         },
         "test": {
@@ -137,18 +137,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Noticewebsite:serve"
+            "devServerTarget": "BPPLWebsite:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Noticewebsite:serve:production"
+              "devServerTarget": "BPPLWebsite:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "Noticewebsite",
+  "defaultProject": "BPPLWebsite",
   "cli": {
     "analytics": false
   }

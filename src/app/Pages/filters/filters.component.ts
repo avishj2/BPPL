@@ -126,7 +126,7 @@ export class FiltersComponent implements OnInit {
         this._VillageDetails = response;
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
-        });
+        }); 
     }
   
     /**get all Survey details base on the selected village */
@@ -140,9 +140,23 @@ export class FiltersComponent implements OnInit {
         },error => {
           console.log("GetVillageByTalukaAPI error",error);
         });
-        this.GetLandTypesByVillage(argVillageId);
+
+      this.GetLandTypesByVillage(argVillageId);
+      this._SearchCriteria.VillageName = this.GetLookupVillage(this._VillageDetails,argVillageId);
     }
 
+    /** Village*/
+    GetLookupVillage(lookups : VillageDetails[], lookUpid: number) : any
+      {
+        let object = lookups.find(elm=>elm.VillageId == lookUpid );
+        if(object)
+        {
+          return " - " + object.VillageNameEng;
+        }
+        else { 
+          return lookUpid;
+        }
+      }
 
   PopulateCrossingType()
     {
@@ -162,6 +176,8 @@ export class FiltersComponent implements OnInit {
         },error => {
           console.log("GetAllCrossingsAPI error",error); 
         });
+      this._SearchCriteria.CrossingID = null;
+      this._SearchCriteria.CrossingTypeName = this.GetLookupValue(this._CrossingDetails.CrossingTypes,this._SearchCriteria.CrossingType);
     }
 
   GetOwnerNamesForSurvey(argSurveyId)
@@ -183,6 +199,18 @@ export class FiltersComponent implements OnInit {
           console.log("GetLandTypesByVillageAPI error",error); 
         });
     }
+
+    GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
+      {
+        let object = lookups.find(elm=>elm.Value == lookUpid );
+        if(object)
+        {
+          return object.Text;
+        }
+        else { 
+          return lookUpid;
+        }
+      }
 
     /**
     * pass data child(filter) component to parent component 

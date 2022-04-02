@@ -105,7 +105,7 @@ _DisabledCrossingInputField : boolean = true;
 
   GetValuesFromFilters(event) 
     {
-      //this.Utility.LogText(event);
+      this.Utility.LogText(event);
       this._SearchCriteria = event;
       if(this._SearchCriteria.CrossingID != null)
         {
@@ -149,12 +149,17 @@ _DisabledCrossingInputField : boolean = true;
   /**add new crossing details */
   AddNewCrossingDetails()
     {
-      this._DisabledCrossingInputField = false;
-      this._AddNewCrosssing = true;
-      this._CrossingDataModel = new CrossingModel();
-      this._ShowCrossingDetailsDiv = false;
-      this._CrossingDataModel.TypeOfCrossing = this._SearchCriteria.CrossingType;
-      this._CrossingDataModel.CrossingId = this._SearchCriteria.CrossingID;
+      if(this._SearchCriteria.CrossingType != null)
+      {
+        this._DisabledCrossingInputField = false;
+        this._AddNewCrosssing = true;
+        this._CrossingDataModel = new CrossingModel();
+        this._ShowCrossingDetailsDiv = false;
+        this._CrossingDataModel.TypeOfCrossing = this._SearchCriteria.CrossingType; 
+      }
+      else{
+        alert("Please Select Crossing Type!!")
+      }         
     }
 
   /**EDIT new crossing details */
@@ -167,9 +172,9 @@ _DisabledCrossingInputField : boolean = true;
     /**save deatils to the api */
   SaveCrossingDetails()
     {
-      if(!this._SearchCriteria.CrossingID && this._CrossingDataModel.CrossingApproval != null)
+      if(!this._SearchCriteria.CrossingType)
       {
-        alert("Please select CrossingType and CrossingID!!");
+        alert("Please select CrossingType !!");
         return;
       }
       if (!this._CrossingDataModel.hasOwnProperty('CrossingApproval')) {
@@ -187,21 +192,21 @@ _DisabledCrossingInputField : boolean = true;
     {
       if (dtas != null)
         {
-          let GazetteRespDataModel : CrossingDetailsDataModel = dtas;
-          if (GazetteRespDataModel.StatusCode != 200) 
+          let RespDataModel : CrossingDetailsDataModel = dtas;
+          if (RespDataModel.StatusCode != 200) 
             {
-              alert(GazetteRespDataModel.Message);
+              alert(RespDataModel.Message);
             }
           if (this._AddNewCrosssing == false)
             {
-              alert("Gazette updated sucessfully!!");
+              alert("Crossing updated sucessfully!!");
               this._DisabledCrossingInputField = true;
             }
           else
             {
-              alert("Gazette added sucessfully!!");
+              alert("Crossing added sucessfully!!");
               this._DisabledCrossingInputField = true;
-              this._CrossingDataModel.CrossingId = GazetteRespDataModel.Result.CrossingId;
+              this._CrossingDataModel.CrossingId = RespDataModel.Result.CrossingId;
               this._AddNewCrosssing = false;
             }  
             this.ReloadDatatable(); 
