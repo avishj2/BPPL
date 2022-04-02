@@ -34,7 +34,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
    IsDtInitialized: boolean = false;
   /**popup message variables */
   popoverTitle ="Delete Details";
-  popoverMessage = "Are you sure you want to delete it ?";
+  popoverMessage = "Are you sure you want to delete it?";
   _AdHocPaymentDropDownsModel : AdHocPaymentDropDownsModel;
   _AdHocPaymentModel : AdHocPaymentModel;
   _Paymentdoc : CommonDocDataModel ;
@@ -129,12 +129,6 @@ export class AdhocPaymentDetailsComponent implements OnInit {
     GetAllAdHocPayments()
     {
       let url = this.urlService.GetAllAdHocPaymentsAPI + this._SearchCriteria.OwnerID;
-      // this.httpService.get(url,null).subscribe(response => {
-      //   this._AdHocPaymentModel = response;
-      //   this.ReloadDatatable();
-      //   },error => {
-      //     console.log("GetAllAdHocPaymentsAPI error",error);
-      //   });
       this.httpService.HttpGetRequest(url,this.GetAllAdHocPaymentsCallBack.bind(this),null); 
     }
     
@@ -238,15 +232,15 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       this.Paymentfile = event.target.files[0];
     }
 
-  FileUpload(isDoc : boolean)
+  FileUpload(fileInput)
     {
       let Doc : CommonDocDataModel;
-      if(!this.Paymentfile && isDoc)
+      if(!this.Paymentfile)
       {
         alert("Please select file!!");
         return;
       }
-      if(!this._Paymentdoc.Lookupid && isDoc)
+      if(!this._Paymentdoc.Lookupid)
         {
           alert("Please select crossing doc type !");
           return;
@@ -263,18 +257,23 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       /**api call */
       let url = this.urlService.AddAdHocPaymentDocumentAPI; 
       this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
-        let DocumentModelResp: CommonDocDataModel[] = response.Result;   
-        if(isDoc)
-        {       
-          this._AdHocPaymentModel.Documents = DocumentModelResp;
-        }
+        let DocumentModelResp: CommonDocDataModel[] = response.Result;        
+        this._AdHocPaymentModel.Documents = DocumentModelResp;
+        this.ReloadDatatable();
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
       },error => {
         this.Utility.LogText(error);
       });
+      this.FileUploadreset(fileInput)// file object clear
     }
-
+  
+  FileUploadreset(element) 
+    {
+      element.value = "";
+      this.Paymentfile = null;
+    }
+    
   DownlaodDocument(doc)
     {
       let url = this.urlService.DownloadPaymentAPI + doc.DocumentId;

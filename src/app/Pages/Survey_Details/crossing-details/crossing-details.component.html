@@ -9,7 +9,7 @@
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
             Edit Crossing
         </button>&nbsp;&nbsp;  
-        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteCrossingDetails()" *ngIf="_ShowCrossingDetailsDiv == true" ngbTooltip ="Delete Crossing Information from Database">
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteCrossingDetails()" *ngIf="_ShowCrossingDetailsDiv == true" ngbTooltip ="Delete Crossing Information">
             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
             Delete Crossing
         </button>
@@ -164,7 +164,7 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="UploattchClass">
-                        <button class="btn-primary" (click)="FileUpload(true)">Upload Details</button>
+                        <button class="btn-primary" (click)="FileUpload(true,fileInput)">Upload Details</button>
                     </div>
                 </div>
         
@@ -188,7 +188,7 @@
                                 <i class="fa fa-download"></i>
                             </button>
                             &nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn-danger"(click)="DeleteCrossingDocument(data)" title="Delete">
+                            <button type="button" class="btn-danger"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteCrossingDocument(data)" title="Delete">
                                 <i class="fa fa-trash"></i>
                             </button>   
                         </td>

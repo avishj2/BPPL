@@ -8,7 +8,7 @@
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
             Edit Payment
         </button>&nbsp;&nbsp;  
-        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeletePaymentDetails()" *ngIf="_ShowPaymentDetailsDiv == true" ngbTooltip ="Delete Payment Information from Database">
+        <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeletePaymentDetails()" *ngIf="_ShowPaymentDetailsDiv == true" ngbTooltip ="Delete Payment Information">
             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
             Delete Payment
         </button> 
@@ -139,7 +139,7 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="UploadattchClass">
-                        <button class="btn-primary" (click)="FileUpload(true)">Upload Details</button>
+                        <button class="btn-primary" (click)="FileUpload(fileInput)">Upload Details</button>
                     </div>
                 </div>
         
@@ -163,7 +163,7 @@
                                 <i class="fa fa-download"></i>
                             </button>
                             &nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn-danger"(click)="DeleteDocument(data)" title="Delete">
+                            <button type="button" class="btn-danger"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteDocument(data)" title="Delete">
                                 <i class="fa fa-trash"></i>
                             </button>   
                         </td>
