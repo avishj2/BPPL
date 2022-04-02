@@ -36,7 +36,7 @@
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                             Edit Gazette Details
                         </button>&nbsp;&nbsp;
-                        <button class="btn-danger" *ngIf="_ShowGazetteDetailsDiv == true" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteGazetteDetails()" ngbTooltip ="Delete Gazette Information from Database">
+                        <button class="btn-danger" *ngIf="_ShowGazetteDetailsDiv == true" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteGazetteDetails()" ngbTooltip ="Delete Gazette Information">
                             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                             Delete Gazette Details
                         </button>
@@ -164,7 +164,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="UploattchClass">
-                                    <button class="btn-primary" (click)="FileUpload(true)">Upload Details</button>
+                                    <button class="btn-primary" (click)="FileUpload(true,fileInput)">Upload Details</button>
                                 </div>
                             </div>
                         </div><br>
@@ -185,7 +185,7 @@
                                         <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument(data)">
                                             <i class="fa fa-download"></i>
                                         </button>&nbsp;&nbsp;&nbsp;
-                                        <button type="button" class="btn-danger"(click)="DeleteGazetteDocument(data,true)" title="Delete">
+                                        <button type="button" class="btn-danger"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteGazetteDocument(data,true)" title="Delete">
                                             <i class="fa fa-trash"></i>
                                         </button>   
                                     </td>
@@ -239,7 +239,7 @@
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
                             Edit Notification Details
                         </button>&nbsp;&nbsp;
-                        <button class="btn-danger" *ngIf="_AddNewNotification == false && _ShowNotificationDetailsDiv == true" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteNotificationDetails()" ngbTooltip ="Delete Gazette Notification Information from Database">
+                        <button class="btn-danger" *ngIf="_AddNewNotification == false && _ShowNotificationDetailsDiv == true" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteNotificationDetails()" ngbTooltip ="Delete Gazette Notification Information">
                             <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                             Delete Notification Details
                         </button>
@@ -327,12 +327,12 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="FileInputClass">
-                                    <input #Notificationfile (change)="NotificationDocUpload($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                                    <input #fileInput (change)="NotificationDocUpload($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="UploattchClass">
-                                    <button class="btn-primary" (click)="FileUpload(false)">Upload Details</button>
+                                    <button class="btn-primary" (click)="FileUpload(false,fileInput)">Upload Details</button>
                                 </div>
                             </div>
                         </div><br>

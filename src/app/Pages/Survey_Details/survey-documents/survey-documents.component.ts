@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output, ViewChild,ViewChildren,QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output,ViewChildren,QueryList } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ShowUploadedDocModel ,CategoryDataModel,AddDocuments} from '../Survey_Details.model';
@@ -33,6 +33,7 @@ export class SurveyDocumentsComponent implements OnInit {
   dtTrigger3: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
+  _dtElements
 
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
@@ -48,6 +49,9 @@ export class SurveyDocumentsComponent implements OnInit {
 
   _CategoryDataModel :CategoryDataModel;
   _CategoryID : any;
+  /**popup message variables */
+  popoverTitle ="Delete Details";
+  popoverMessage = "Are you sure you want to delete it ?";
 
   constructor(
     public urlService: UrlService,
@@ -85,18 +89,19 @@ export class SurveyDocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this._CategoryDataModel.ReadFromString();
-    this.dtOptions['new'] = {
+    this.dtOptions[1] = {
       pagingType: 'full_numbers',
       destroy:true //Add to allow the datatable to destroy
     };
+    this.dtOptions[2] = {
+      pagingType: 'full_numbers',
+      destroy:true 
+    };
+    this.dtOptions[3] = {
+      pagingType: 'full_numbers',
+      destroy:true 
+    };
     this.GetSurveyDocumentDropDowns();
-  }
-
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger1.unsubscribe();
-    this.dtTrigger2.unsubscribe();
-    this.dtTrigger3.unsubscribe();
   }
 
   /**refresh/reload data table 
@@ -106,18 +111,20 @@ export class SurveyDocumentsComponent implements OnInit {
     /**initialized datatable */
     if (this.IsDtInitialized) 
       {
-        this.dtElements.forEach((dtElement: DataTableDirective) => {
+        this._dtElements.forEach((dtElement: DataTableDirective,index: number) => {
           if(dtElement.dtInstance)
-            dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-              dtInstance.destroy();          
+            // dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+              dtElement.dtInstance.then((dtInstance: any) => {
+              dtInstance.destroy(); 
+              console.log(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
           });
         });
         this.dtTrigger1.next(); 
         this.dtTrigger2.next(); 
         this.dtTrigger3.next();
-        this.dtTrigger1.unsubscribe();
-        this.dtTrigger2.unsubscribe();
-        this.dtTrigger3.unsubscribe(); 
+        // this.dtTrigger1.unsubscribe();
+        // this.dtTrigger2.unsubscribe();
+        // this.dtTrigger3.unsubscribe(); 
       }
       else
         {
@@ -125,10 +132,29 @@ export class SurveyDocumentsComponent implements OnInit {
           this.dtTrigger1.next(); 
           this.dtTrigger2.next(); 
           this.dtTrigger3.next(); 
-          this.dtTrigger1.unsubscribe();
-          this.dtTrigger2.unsubscribe();
-          this.dtTrigger3.unsubscribe();
+          // this.dtTrigger1.unsubscribe();
+          // this.dtTrigger2.unsubscribe();
+          // this.dtTrigger3.unsubscribe();
         }
+  }
+
+  ngAfterViewInit() {
+    this.dtTrigger1.next();
+    this.dtTrigger2.next();
+    this.dtTrigger3.next();
+ }
+
+ ViewInit() {
+  this.dtTrigger1.next();
+  this.dtTrigger2.next();
+  this.dtTrigger3.next();
+}
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger1.unsubscribe();
+    this.dtTrigger2.unsubscribe();
+    this.dtTrigger3.unsubscribe();
   }
 
   /**get value from child component */
@@ -162,6 +188,11 @@ export class SurveyDocumentsComponent implements OnInit {
         {
           
         }
+        this.ViewInit()
+        console.log("this.dtElements",this.dtElements)
+        this._dtElements = this.dtElements
+        console.log("new _dtElements==>",this._dtElements)
+        // this.ngOnDestroy()
     }
 
  /**Get Survey Document DropDowns values*/
@@ -180,9 +211,7 @@ GetProjectReports()
     let url = this.urlService.GetProjectReports;
     this.httpService.get(url,null).subscribe(response => {
       this._ProjectReports  = response;
-      setTimeout(()=>{
-          this.rerenderDataTable(); 
-    }, 100);
+      this.rerenderDataTable(); 
       },error => {
         this.Utility.LogText(error);
       });
@@ -193,7 +222,7 @@ GetProjectReports()
       this.Documentfile = event.target.files[0];
     }
 
-  UploadProjectReport()
+  UploadProjectReport(fileInput)
     {
       let Doc : CommonDocDataModel;
       if(!this.Documentfile)
@@ -227,6 +256,8 @@ GetProjectReports()
       },error => {
         this.Utility.LogText(error);
       });
+      this.CommonService.hideSpinnerLoading();
+      this.FileUploadreset(fileInput);
     }
 
   DownloadDocument(arg)
@@ -251,6 +282,13 @@ GetProjectReports()
     }
 
 
+    FileUploadreset(element) 
+      {
+        element.value = "";
+        this.Documentfile = null;  
+      }
+
+
 // ==========2. alignment sheet functions =======
 GetAlignmentSheets()
   {
@@ -263,7 +301,7 @@ GetAlignmentSheets()
       });
   }
 
-UploadAlignmentSheet()
+UploadAlignmentSheet(fileInput)
   {
     let Doc : CommonDocDataModel;
     if(!this.Documentfile)
@@ -293,6 +331,7 @@ UploadAlignmentSheet()
     },error => {
       this.Utility.LogText(error);
     });
+    this.FileUploadreset(fileInput);
   }
 
   DownloadAlignDoc(arg)
@@ -328,38 +367,45 @@ UploadAlignmentSheet()
         });
     }
 
-  UploadAwardMutation()
+  UploadAwardMutation(fileInput)
     {
-      let Doc : CommonDocDataModel;
-      if(!this.Documentfile)
+      if(this._SearchCriteria.VillageId != null)
       {
-        alert("Please select file!!");
-        return;
-      }
-      if(!this._Mutationdoc.Lookupid)
+        let Doc : CommonDocDataModel;
+        if(!this.Documentfile)
         {
-          alert("Please select Form doc type !");
+          alert("Please select file!!");
           return;
         }
+        if(!this._Mutationdoc.Lookupid)
+          {
+            alert("Please select Form doc type !");
+            return;
+          }
 
-      this._Mutationdoc.RequestId = Number(this._SearchCriteria.VillageId);
-      this._Mutationdoc.Document = this.Documentfile;
-      this._Mutationdoc.DocumentId = 0;
-      this._Mutationdoc.ToChainage = '';
-      this._Mutationdoc.FromChainage = '';
-      Doc = this._Mutationdoc;
+        this._Mutationdoc.RequestId = Number(this._SearchCriteria.VillageId);
+        this._Mutationdoc.Document = this.Documentfile;
+        this._Mutationdoc.DocumentId = 0;
+        this._Mutationdoc.ToChainage = '';
+        this._Mutationdoc.FromChainage = '';
+        Doc = this._Mutationdoc;
 
-      /**api call */
-      this.CommonService.ShowSpinner();
-      let url = this.urlService.AddAwardAndMutationsAPI; 
-      this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
-        let DocumentModelResp: CommonDocDataModel[] = response.Result;         
-        this._AwardMutations = DocumentModelResp;
-        this.rerenderDataTable();
-        alert("Document updated sucessfully!!");
-      },error => {
-        this.Utility.LogText(error);
-      });
+        /**api call */
+        this.CommonService.ShowSpinner();
+        let url = this.urlService.AddAwardAndMutationsAPI; 
+        this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
+          let DocumentModelResp: CommonDocDataModel[] = response.Result;         
+          this._AwardMutations = DocumentModelResp;
+          this.rerenderDataTable();
+          alert("Document updated sucessfully!!");
+        },error => {
+          this.Utility.LogText(error);
+        });
+        this.FileUploadreset(fileInput)
+      }
+      else{
+        alert("Please select Village!!")
+      }
     }
 
   DownloadAwardDoc(arg)

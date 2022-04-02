@@ -214,7 +214,7 @@ export class GazetteDetailsComponent implements OnInit {
   /**
   * Document upload in gazette details tab
   */
-   FileUpload(isGazzette : boolean) 
+   FileUpload(isGazzette : boolean,fileInput) 
     {
         let gDoc : GazzetteDocuments;
         if(!this.file && isGazzette)
@@ -271,7 +271,17 @@ export class GazetteDetailsComponent implements OnInit {
         },error => {
           this.Utility.LogText(error);
         });
+        this.FileUploadreset(fileInput)
     }
+
+    
+    FileUploadreset(element) 
+        {
+            element.value = "";
+            this.file = null;
+            this.notificationFile = null;
+        }
+
 
     downloadFile(documentId : number): any 
     {

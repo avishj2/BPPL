@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <label class ="dropdownsLabel">Project Wise Report</label>
-                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.ProjectWiseReportTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Projectdoc.Lookupid">
+                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.ProjectWiseReportTypes"bindLabel="Text" bindValue ="Value" [(ngModel)]="_Projectdoc.Lookupid">
                 </ng-select>
             </div>
             <div class="col-lg-3">
@@ -29,12 +29,12 @@
                 </div>
             </div>
             <div class="col-lg-2">
-                <button class="btn-primary"style="margin-top: 18%"(click)="UploadProjectReport()"> Upload </button>
+                <button class="btn-primary"style="margin-top: 18%"(click)="UploadProjectReport(fileInput)"> Upload </button>
             </div>
         </div>
         <br>
         <div>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger1" class="stripe table table-striped table-bordered" width="90%" >
+            <table datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger1" class="stripe table table-striped table-bordered" width="90%" >
                 <thead>
                     <tr>
                         <th class="tbstyle">S.No.</th>           
@@ -55,7 +55,7 @@
                             <button type="button" class="btn-success"title="download" (click)="DownloadDocument(data)">
                                 <i class="fa fa-download"></i>
                             </button>&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn-danger"title="Delete"(click)="DeleteProjectDocument(data)">
+                            <button type="button" class="btn-danger"title="Delete"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteProjectDocument(data)">
                                 <i class="fa fa-trash"></i>
                             </button>    
                         </td>
@@ -96,13 +96,13 @@
                 </div> 
             </div>
             <div class="col-lg-2">
-                <button class="btn-primary"style="margin-top: 16%" (click)="UploadAlignmentSheet()">
+                <button class="btn-primary"style="margin-top: 16%" (click)="UploadAlignmentSheet(fileInput)">
                     Upload
                 </button>
             </div>
         </div><br>
         <div>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2" class="stripe table table-striped table-bordered" width="98%" >
+            <table datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger2" class="stripe table table-striped table-bordered" width="98%" >
                 <thead>
                     <tr> 
                         <th class="tbstyle">S.No.</th>
@@ -124,7 +124,7 @@
                             <button type="button" class="btn-success"title="download" (click)="DownloadAlignDoc(data)">
                                 <i class="fa fa-download"></i>
                             </button>&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn-danger"title="Delete"(click)="DeleteAlignmentDoc(data)">
+                            <button type="button" class="btn-danger"title="Delete"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteAlignmentDoc(data)">
                                 <i class="fa fa-trash"></i>
                             </button>  
                         </td>
@@ -156,12 +156,12 @@
                 </div> 
             </div>
             <div class="col-lg-3">
-                <button class="btn-primary" style="margin-top: 12%"(click)="UploadAwardMutation()">Upload</button>
+                <button class="btn-primary" style="margin-top: 12%"(click)="UploadAwardMutation(fileInput)">Upload</button>
             </div>
         </div>
         <br>
         <div>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger3" class="stripe table table-striped table-bordered" width="98%" >
+            <table datatable [dtOptions]="dtOptions[3]" [dtTrigger]="dtTrigger3" class="stripe table table-striped table-bordered" width="98%" >
                 <thead>
                     <tr>
                         <th class="tbstyle">S.No.</th>           
@@ -180,7 +180,7 @@
                             <button type="button" class="btn-success"title="download" (click)="DownloadAwardDoc(data)">
                             <i class="fa fa-download"></i>
                             </button>&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn-danger"title="Delete"(click)="DeleteAwardDoc(data)">
+                            <button type="button" class="btn-danger"title="Delete"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteAwardDoc(data)">
                             <i class="fa fa-trash"></i>
                             </button>  
                         </td>

@@ -41,7 +41,7 @@ _DisabledCrossingInputField : boolean = true;
    dtTrigger: Subject<any> = new Subject();
    /**REFERSH DATATABLE  */
    IsDtInitialized: boolean = false;
-
+  
 
   constructor(public urlService: UrlService,
     public APIUtilityService: APIUtilityService,
@@ -236,7 +236,7 @@ _DisabledCrossingInputField : boolean = true;
       this.Crossingfile = event.target.files[0];
     }
 
-  FileUpload(isDoc : boolean)
+  FileUpload(isDoc : boolean, fileinput)
     {
       let Doc : CommonDocDataModel;
       if(!this.Crossingfile && isDoc)
@@ -271,7 +271,14 @@ _DisabledCrossingInputField : boolean = true;
       },error => {
         this.Utility.LogText(error);
       });
+      this.FileUploadreset(fileinput)// file object clear
   }
+
+    FileUploadreset(element) 
+      {
+          element.value = "";
+          this.Crossingfile = null;
+      }
 
   /**download crossing details document */
   DownlaodCrossingDocument(doc : CommonDocDataModel)

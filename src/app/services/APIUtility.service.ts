@@ -30,7 +30,7 @@ export class APIUtilityService {
   DeleteDocument(argURL, argParams, argDoc)
     {
       this.httpservice.get(argURL,null).subscribe(response => {
-        if(response.status == 200)
+        if(response.StatusCode == 200)
           {
             let index = argParams.indexOf(argDoc);
             argParams.splice(index,1);

@@ -59,7 +59,7 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
     this.Documentfile = event.target.files[0];
   }
 
-  FileUpload()
+  FileUpload(fileInput)
     {
       let Doc : CommonDocDataModel;
       if(!this.Documentfile)
@@ -77,6 +77,8 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
       this._Revenuedoc.Document = this.Documentfile;
       this._Revenuedoc.DocumentId = 0;
       this._Revenuedoc.LookupGroupId = 0;
+      this._Revenuedoc.ToChainage ='';
+      this._Revenuedoc.FromChainage ='';
       Doc = this._Revenuedoc;
 
       /**api call */
@@ -92,6 +94,12 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
         this.Utility.LogText(error);
       });
     }
+
+    FileUploadreset(element) 
+      {
+        element.value = "";
+        this.Documentfile = null;  
+      }
 
   DownloadDocument(arg)
   {
@@ -113,7 +121,7 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
 
   DeleteDocument(arg)
     {
-      let APIurl = this.urlService.DeleteCrossingDocumentAPI + arg.DocumentId;
+      let APIurl = this.urlService.DeleteSurveyDocumentAPI + arg.DocumentId;
       this.APIUtilityService.DeleteDocument(APIurl,this._AllSurveyDetails.Result.SurveyDocuments,arg)
       this.SetParentData();
       this.rerenderDataTable();
