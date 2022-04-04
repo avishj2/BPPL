@@ -1,7 +1,6 @@
 import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ViewChildren } from '@angular/core';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import { CrossDetailsDataModel } from 'src/app/Pages/Survey_Details/Survey_Details.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import { HttpService } from '../../../services/http.service';
 import { HttpClient, HttpResponse, HttpClientModule, HttpHeaders } from '@angular/common/http';

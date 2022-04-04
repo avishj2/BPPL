@@ -2,7 +2,10 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
 </app-filters>
 <br>
-<div>
+<app-child-view-crossing *ngIf="_ShowChildViewpage == true"[filterdata]="_SearchCriteria">
+</app-child-view-crossing>
+
+<div *ngIf="_ShowChildViewpage != true">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
         <thead>
             <tr>

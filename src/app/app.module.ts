@@ -43,6 +43,10 @@ import { LandDetailsComponent } from './Pages/Survey_Details/survey-details/land
 import { CropRatesComponent } from './Pages/Survey_Details/crop-rates/crop-rates.component';
 import { LandRatesComponent } from './Pages/Survey_Details/land-rates/land-rates.component';
 import { ViewCrossingDetailsComponent } from './Pages/View_Details/view-crossing-details/view-crossing-details.component';
+import { ChildViewCrossingComponent } from './Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component';
+import { ViewAlignmentReportsComponent } from './Pages/View_Details/view-alignment-reports/view-alignment-reports.component';
+import { ViewProjectReportsComponent } from './Pages/View_Details/view-project-reports/view-project-reports.component';
+import { ViewAwardReportsComponent } from './Pages/View_Details/view-award-reports/view-award-reports.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +75,11 @@ import { ViewCrossingDetailsComponent } from './Pages/View_Details/view-crossing
     GazetteNoticeDetailsComponent,
     CropRatesComponent,
     LandRatesComponent,
-    ViewCrossingDetailsComponent
+    ViewCrossingDetailsComponent,
+    ChildViewCrossingComponent,
+    ViewAlignmentReportsComponent,
+    ViewProjectReportsComponent,
+    ViewAwardReportsComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [

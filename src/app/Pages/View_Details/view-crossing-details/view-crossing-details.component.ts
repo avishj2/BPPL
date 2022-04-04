@@ -10,6 +10,7 @@ import { DataTableDirective } from 'angular-datatables';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
+import {CrossingModel } from 'src/app/Model/Crossing.model';
 
 @Component({
   selector: 'app-view-crossing-details',
@@ -26,7 +27,8 @@ export class ViewCrossingDetailsComponent implements OnInit {
   IsDtInitialized: boolean = false;
   _FilterControls :FilterControls;
   _SearchCriteria : SearchCriteria;
-
+  _CrossingDataModel : CrossingModel;
+  _ShowChildViewpage : boolean = false;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -37,6 +39,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
         this._FilterControls = new FilterControls();
         this._SearchCriteria = new SearchCriteria();
         this.SetFilterControls();
+        this._CrossingDataModel = new CrossingModel();
       }
   /**hide/show filter menu based on the component requirement */
   SetFilterControls() 
@@ -53,6 +56,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
   }
   
   ngAfterViewInit(): void 
@@ -81,17 +85,22 @@ export class ViewCrossingDetailsComponent implements OnInit {
         }
     }
 
+    /**get value from filter component */
   GetValuesFromFilters(event) 
     {
       this.Utility.LogText(event);
       this._SearchCriteria = event;
       if(this._SearchCriteria.CrossingID != null)
         {
-          
+          this._ShowChildViewpage = true;
         }
-      else{
-        alert("Please select Crossing ID")
-      }
-      
+        if(this._SearchCriteria.CrossingType != null && this._SearchCriteria.CrossingID == null) 
+        {
+          this._ShowChildViewpage = false;
+        }
+        if(this._SearchCriteria.CrossingType == null)
+        {
+          alert("Please select Crossing details!!")
+        }
     }
 }

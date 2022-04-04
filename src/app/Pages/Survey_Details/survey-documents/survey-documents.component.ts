@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit,Input,Output,ViewChildren,QueryList } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
-import { ShowUploadedDocModel ,CategoryDataModel,AddDocuments} from '../Survey_Details.model';
+import { CategoryDataModel} from '../Survey_Details.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
@@ -361,7 +361,6 @@ UploadAlignmentSheet(fileInput)
       let url = this.urlService.GetAwardAndMutationsAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._AwardMutations  = response;
-        this.rerenderDataTable();
         },error => {
           this.Utility.LogText(error);
         });
