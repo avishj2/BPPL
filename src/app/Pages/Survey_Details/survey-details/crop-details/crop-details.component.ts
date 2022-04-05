@@ -7,11 +7,6 @@ import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { SurveyDropDownsDataModel,AllSurveyDetailsDataModel,CropDataModel,CropRespDataModel} from 'src/app/Model/Survey.model';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 
@@ -21,15 +16,16 @@ import { CommonDropdownModel} from 'src/app/Model/Base.model';
   styleUrls: ['./crop-details.component.css']
 })
 export class CropDetailsComponent implements AfterViewInit, OnInit {
+  popoverTitle ="Delete Details";
+  popoverMessage = "Are you sure you want to delete it?";
   @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
   @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
   @Input() SurveyNumber : any;
   @Output() Output:EventEmitter<any>= new EventEmitter(); 
- 
   @ViewChild('closebutton') closebutton;
+  _PopupTitle : string;
    /**data table properties  */
   @ViewChild(DataTableDirective, {static: false})
-  _PopupTitle : string;
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -37,9 +33,6 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
   IsDtInitialized: boolean = false;
 
   _AddNewCropDetails : boolean;
-  /**popup message variables */
-  popoverTitle ="Delete Details";
-  popoverMessage = "Are you sure you want to delete it ?";
   _CropDataModel :CropDataModel
   _AllSurveyDetails : AllSurveyDetailsDataModel;
 
@@ -48,7 +41,6 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
     public CommonService : CommonService,
     public httpService : HttpService,
     public Utility :UtilityService,
-    private fb: FormBuilder,
     )
       { 
         this._CropDataModel = new CropDataModel();
@@ -56,27 +48,21 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
       }
 
   ngOnInit(): void {
+      this.dtOptions = 
+      {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+      };
       console.log("FromParentData=>",this.SurveyDropDownsData);
       this._AllSurveyDetails.Result.Crops = this.AllSurveyDetails.Result.Crops;
       this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
       this.ReloadDatatable();
     }
 
-
-  AddNewCropDetails()
-    {
-      if(this.SurveyNumber != null)
-        {
-          this._AddNewCropDetails = true;
-          this._PopupTitle = "Add Crop Details";
-          this._CropDataModel = new CropDataModel();
-        }
-        else
-          {
-            alert("Please Select Survey Number!!");
-          }
-    }
-
+    ngAfterViewInit(): void 
+      {
+        this.dtTrigger.next();
+      }
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
@@ -98,12 +84,19 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
       }
   }
 
-  ngAfterViewInit(): void 
+  AddNewCropDetails()
     {
-      this.dtTrigger.next();
+      if(this.SurveyNumber != null)
+        {
+          this._AddNewCropDetails = true;
+          this._PopupTitle = "Add Crop Details";
+          this._CropDataModel = new CropDataModel();
+        }
+        else
+          {
+            alert("Please Select Survey Number!!");
+          }
     }
-
-
   EditCropDetails(arg)
     {
       this._CropDataModel = arg;
@@ -132,19 +125,17 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
             {
               alert("Crop updated sucessfully!!");
               this._AllSurveyDetails.Result.Crops = RespDataModel.Result;
-              this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.ReloadDatatable();
             }
           else
             {
               alert("Crop added sucessfully!!");
               this._AllSurveyDetails.Result.Crops = RespDataModel.Result;
               this._AddNewCropDetails = false;
-              this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.ReloadDatatable();
-            }   
+            }  
+          this.SetParentData();  
+          this.ReloadDatatable();   
         }
         this._AddNewCropDetails = false;
     }

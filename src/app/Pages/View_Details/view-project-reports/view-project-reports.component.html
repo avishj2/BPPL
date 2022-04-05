@@ -1,20 +1,33 @@
-<div style="margin-top: 3px;" >
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="90%" >
-        <thead>
-            <tr>
-                <th class="tbstyle">S.No.</th>           
-                <th>Report Type</th>
-                <th>Document Name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of _ProjectReports; let i = index">    
-                <td class="tbstyle">{{i+1}}</td>       
-                <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.ProjectWiseReportTypes, data.Lookupid)}}</td>
-                <td>{{data.FileName}}</td>
-                <td>{{data.Description}}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Project Reports</div> 
+        </div><br>
+        <div style="margin-top: 3px;" >
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="90%" >
+                <thead>
+                    <tr>
+                        <th class="tbstyle">S.No.</th>           
+                        <th>Report Type</th>
+                        <th>Document Name</th>
+                        <th>Description</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _ProjectReports; let i = index">    
+                        <td class="tbstyle">{{i+1}}</td>       
+                        <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.ProjectWiseReportTypes, data.Lookupid)}}</td>
+                        <td>{{data.FileName}}</td>
+                        <td>{{data.Description}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-success"(click)="DownloadDocument(data)" title="Download">
+                                    <i class="fa fa-download "></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>  
 </div>

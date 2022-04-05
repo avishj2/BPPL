@@ -11,6 +11,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import {CrossingModel } from 'src/app/Model/Crossing.model';
+import { ChildViewCrossingComponent} from '../view-crossing-details/child-view-crossing/child-view-crossing.component';
+
 
 @Component({
   selector: 'app-view-crossing-details',
@@ -29,6 +31,8 @@ export class ViewCrossingDetailsComponent implements OnInit {
   _SearchCriteria : SearchCriteria;
   _CrossingDataModel : CrossingModel;
   _ShowChildViewpage : boolean = false;
+  @ViewChild(ChildViewCrossingComponent) child: ChildViewCrossingComponent;
+  _FirstLoad : boolean = false;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -93,6 +97,10 @@ export class ViewCrossingDetailsComponent implements OnInit {
       if(this._SearchCriteria.CrossingID != null)
         {
           this._ShowChildViewpage = true;
+          if(this._FirstLoad == true)
+          {
+            this.child.reRender();
+          }
         }
         if(this._SearchCriteria.CrossingType != null && this._SearchCriteria.CrossingID == null) 
         {
@@ -102,5 +110,6 @@ export class ViewCrossingDetailsComponent implements OnInit {
         {
           alert("Please select Crossing details!!")
         }
+        this._FirstLoad = true;
     }
 }

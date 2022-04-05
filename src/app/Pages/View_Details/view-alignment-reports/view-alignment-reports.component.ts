@@ -41,10 +41,15 @@ export class ViewAlignmentReportsComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength:10,
+          destroy: true,
+        };
     this.GetSurveyDocumentDropDowns();
     this.GetAlignmentSheets();
   }
-
 
    /**Get Survey Document DropDowns values*/
  GetSurveyDocumentDropDowns()
@@ -62,37 +67,24 @@ export class ViewAlignmentReportsComponent implements OnInit {
       let url = this.urlService.GetAlignmentSheetsAPI;
       this.httpService.get(url,null).subscribe(response => {
         this._AlignmentSheets  = response;
-        // this.ReloadDatatable();
+        /**initialized datatable */
+        if (this.IsDtInitialized) 
+          {
+            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+            {
+              dtInstance.destroy();//Destroy the table first
+              this.dtTrigger.next();//Call the dtTrigger to rerender again
+            });
+          }
+        else
+          {
+            this.IsDtInitialized = true;
+            this.dtTrigger.next();
+          }
         },error => {
           this.Utility.LogText(error);
         });
     }  
-
-  ngAfterViewInit(): void 
-    {
-      this.dtTrigger.next();
-    }
-
-  /**refresh/reload data table 
-  *when data update/delete/add in the datatable  
-  **/
-  ReloadDatatable()
-    {
-      /**initialized datatable */
-      if (this.IsDtInitialized) 
-        {
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-          {
-            dtInstance.destroy();//Destroy the table first
-            this.dtTrigger.next();//Call the dtTrigger to rerender again
-          });
-        }
-      else
-        {
-          this.IsDtInitialized = true;
-          this.dtTrigger.next();
-        }
-    }
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
     {
@@ -102,5 +94,18 @@ export class ViewAlignmentReportsComponent implements OnInit {
         return object.Text;
       }
       else { return lookUpid;}
+    }
+
+  DownloadDocument(arg)
+    {
+      let url = this.urlService.DownloadAlignmentSheetAPI + arg.DocumentId;
+      let link = document.createElement('a');
+      link.setAttribute('type', 'hidden');
+      link.setAttribute("target","_blank");
+      link.href = url;
+      link.download = "C:/Users/admin/Downloads/";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
 }

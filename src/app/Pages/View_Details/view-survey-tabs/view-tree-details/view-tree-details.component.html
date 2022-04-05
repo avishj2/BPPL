@@ -1,0 +1,30 @@
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr>  
+                <th>S.No.</th>
+                <th>Owner Name</th>
+                <th>Tree Name</th>  
+                <th>Range</th>  
+                <th>No. of Tree</th>  
+                <th>Age (Years)</th>  
+                <th>Dia (m)</th>       
+                <th>Height (m)</th>   
+                <th>Remarks</th>  
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.Trees;let i = index">
+                <td>{{i+1}}</td>          
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.TreeNames, data.TreeName)}}</td>
+                <td>{{data.Range}}</td>
+                <td>{{data.NumberOfTree}}</td>
+                <td>{{data.AgeYears}}</td>
+                <td>{{data.Dia}}</td>
+                <td>{{data.HeightM}}</td>
+                <td>{{data.Remarks}}</td> 
+            </tr>
+        </tbody>
+    </table>
+</div>

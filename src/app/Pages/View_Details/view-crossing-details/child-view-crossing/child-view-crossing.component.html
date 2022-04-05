@@ -92,3 +92,34 @@
         <br>
     </div> 
 </div>
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Documents</div> 
+        </div>
+        <div>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="95%">
+                    <thead>
+                        <tr>
+                            <th>FileName</th>
+                            <th>Document Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of _CrossingDataModel.Documents;let i = index">
+                            <td>{{data.FileName}}</td>
+                            <td>
+                            {{GetLookupValue(_CrossingDropdowns.CrossingDocumentTypes,data.Lookupid)}}
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn-info" title="Download" (click)="DownlaodCrossingDocument(data)">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>    

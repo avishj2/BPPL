@@ -1,0 +1,36 @@
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+    <thead>
+        <tr>
+            <th class="SerialClass">S.No.</th>
+            <th>Owner Name</th> 
+            <th>Damage Name</th>   
+            <th>Damage Type</th>
+            <th>Length(m)</th>
+            <th>Approximate Value(Rs.)</th>
+            <th>Diameter(inch)</th>
+            <th>Width</th>
+            <th>Depth(m)</th>
+            <th>Height(m)</th>
+            <th>Description</th>
+            <th>Remarks</th>
+            <th>Remarks(Local)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of _AllSurveyDetails.Result.RestorationDetails;let i = index">     
+            <td class="SerialClass">{{i+1}}</td>
+            <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
+            <td>{{GetLookupValue(SurveyDropDownsData.DamageTypes,data.DamageType)}}</td>
+            <td>{{GetLookupValue(SurveyDropDownsData.DamageNames,data.DamageName)}}</td>
+            <td>{{data.LengthM}}</td>
+            <td>{{data.ApproxValue}}</td>
+            <td>{{data.DiameterInch}}</td>
+            <td>{{data.WidthM}}</td>
+            <td>{{data.DepthM}}</td>
+            <td>{{data.HeightM}}</td>
+            <td>{{data.Description}}</td>
+            <td>{{data.Remarks}}</td>
+            <td>{{data.RemarksLocal}}</td>
+        </tr>
+    </tbody>
+</table>

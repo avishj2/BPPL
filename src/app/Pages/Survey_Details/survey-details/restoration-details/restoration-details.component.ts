@@ -17,6 +17,12 @@ import { CommonDropdownModel} from 'src/app/Model/Base.model';
 })
 export class RestorationDetailsComponent implements AfterViewInit, OnInit {
   _AddNewDetails : boolean;
+  @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
+  @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
+  @Input() SurveyNumber : any;
+  @Output() Output:EventEmitter<any>= new EventEmitter();
+  _PopupTitle : string;
+  @ViewChild('closebutton') closebutton;
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
@@ -27,12 +33,6 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
-  @Input() SurveyDropDownsData : SurveyDropDownsDataModel;
-  @Input() AllSurveyDetails : AllSurveyDetailsDataModel;
-  @Input() SurveyNumber : any;
-  @Output() Output:EventEmitter<any>= new EventEmitter();
-  @ViewChild('closebutton') closebutton;
-  _PopupTitle : string;
   _RestorationDataModel : RestorationDataModel;
   _AllSurveyDetails : AllSurveyDetailsDataModel;
 
@@ -57,6 +57,7 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
       this._RestorationDataModel.SurveyId = this.SurveyNumber;
       this._AllSurveyDetails.Result.RestorationDetails = this.AllSurveyDetails.Result.RestorationDetails;
       this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
+      this.ReloadDatatable()
     }
 
   AddNewRestorationDetails()
@@ -72,6 +73,8 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
             alert("Please Select Survey Number!!");
           }
     } 
+
+
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
@@ -80,23 +83,23 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
-  rerenderDataTable()
-  {
-    /**initialized datatable */
-    if (this.IsDtInitialized) 
-      {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+  ReloadDatatable()
+    {
+      /**initialized datatable */
+      if (this.IsDtInitialized) 
         {
-          dtInstance.destroy();//Destroy the table first
-          this.dtTrigger.next();//Call the dtTrigger to rerender again
-        });
-      }
-    else
-      {
-        this.IsDtInitialized = true;
-        this.dtTrigger.next();
-      }
-  }
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+          {
+            dtInstance.destroy();//Destroy the table first
+            this.dtTrigger.next();//Call the dtTrigger to rerender again
+          });
+        }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
+    }
 
   EditRestorationDetails(arg)
     {
@@ -129,7 +132,6 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
               this._AllSurveyDetails.Result.RestorationDetails = RespDataModel.Result;
               this.SetParentData();
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
             }
           else
             {
@@ -138,8 +140,8 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
               this.SetParentData();
               this._AddNewDetails = false;
               this.closebutton.nativeElement.click();
-              this.rerenderDataTable();
-            }   
+            }  
+           this.ReloadDatatable();   
         }
         this._AddNewDetails = false;
     }
@@ -163,7 +165,7 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
               alert("Restoration Details deleted successfully!");
               this._AllSurveyDetails.Result.RestorationDetails = response.Result;
               this.SetParentData();
-              this.rerenderDataTable();
+              this.ReloadDatatable();
             }
           },error => {
             this.Utility.LogText(error);

@@ -1,22 +1,35 @@
-<div style="margin-top: 3px;">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
-        <thead>
-            <tr> 
-                <th class="tbstyle">S.No.</th>
-                <th>Document</th>
-                <th>Chainage From</th> 
-                <th>Chainage To</th>
-                <th>FileName</th>    
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of _AlignmentSheets; let i = index">
-                <td class="tbstyle">{{i+1}}</td>  
-                <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.AlignmentSheetTypes, data.Lookupid)}}</td>
-                <td>{{data.FromChainage}}</td>
-                <td>{{data.ToChainage}}</td>
-                <td>{{data.FileName}}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Alignment Sheets</div> 
+        </div><br>
+        <div style="margin-top: 3px;">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="100%" >
+                <thead>
+                    <tr> 
+                        <th class="tbstyle">S.No.</th>
+                        <th>Alignment Sheet</th>
+                        <th>Chainage From</th> 
+                        <th>Chainage To</th>
+                        <th>FileName</th> 
+                        <th>Download</th>   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _AlignmentSheets; let i = index">
+                        <td class="tbstyle">{{i+1}}</td>  
+                        <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.AlignmentSheetTypes, data.Lookupid)}}</td>
+                        <td>{{data.FromChainage}}</td>
+                        <td>{{data.ToChainage}}</td>
+                        <td>{{data.FileName}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-success"(click)="DownloadDocument(data)" title="Download">
+                                    <i class="fa fa-download "></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

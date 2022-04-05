@@ -1,0 +1,34 @@
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr>
+                <th class="SerialClass">S.No.</th>
+                <th>Owner Name (English)</th>
+                <th>Owner Name (Hindi)</th>  
+                <th>Owner Name (Hindi)</th>  
+                <th>Owner Type</th>  
+                <th>Address (English)</th>  
+                <th>Address (Hindi)</th>       
+                <th>Address (Local)</th>   
+                <th>Owner Code</th>
+                <th>InActive</th>
+                <th>Minor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.SurveyOwners;let i = index">  
+                <td class="SerialClass">{{i+1}}</td>  
+                <td>{{data.OwnerName}}</td>
+                <td>{{data.OwnerNamehindi}}</td>
+                <td>{{data.OwnerNameLocal}}</td>
+                <td>{{data.OwnerType}}</td>
+                <td>{{data.Address}}</td>
+                <td>{{data.AddressHindi}}</td>
+                <td>{{data.AddressLocal}}</td>
+                <td>{{data.OwnerCode}}</td>
+                <td>{{data.InActive}}</td>
+                <td>{{data.MinorOwner}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

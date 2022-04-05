@@ -47,6 +47,14 @@ import { ChildViewCrossingComponent } from './Pages/View_Details/view-crossing-d
 import { ViewAlignmentReportsComponent } from './Pages/View_Details/view-alignment-reports/view-alignment-reports.component';
 import { ViewProjectReportsComponent } from './Pages/View_Details/view-project-reports/view-project-reports.component';
 import { ViewAwardReportsComponent } from './Pages/View_Details/view-award-reports/view-award-reports.component';
+import { ViewSurveyTabsComponent } from './Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
+import { ViewLandDetailsComponent } from './Pages/View_Details/view-survey-tabs/view-land-details/view-land-details.component';
+import { ViewTreeDetailsComponent } from './Pages/View_Details/view-survey-tabs/view-tree-details/view-tree-details.component';
+import { ViewCropDetailsComponent } from './Pages/View_Details/view-survey-tabs/view-crop-details/view-crop-details.component';
+import { ViewOwnerDetailsComponent } from './Pages/View_Details/view-survey-tabs/view-owner-details/view-owner-details.component';
+import { ViewCompensationDetailsComponent } from './Pages/View_Details/view-survey-tabs/view-compensation-details/view-compensation-details.component';
+import { ViewRevenueFormsComponent } from './Pages/View_Details/view-survey-tabs/view-revenue-forms/view-revenue-forms.component';
+import { ViewRestorationComponent } from './Pages/View_Details/view-survey-tabs/view-restoration/view-restoration.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +87,15 @@ import { ViewAwardReportsComponent } from './Pages/View_Details/view-award-repor
     ChildViewCrossingComponent,
     ViewAlignmentReportsComponent,
     ViewProjectReportsComponent,
-    ViewAwardReportsComponent
+    ViewAwardReportsComponent,
+    ViewSurveyTabsComponent,
+    ViewLandDetailsComponent,
+    ViewTreeDetailsComponent,
+    ViewCropDetailsComponent,
+    ViewOwnerDetailsComponent,
+    ViewCompensationDetailsComponent,
+    ViewRevenueFormsComponent,
+    ViewRestorationComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [

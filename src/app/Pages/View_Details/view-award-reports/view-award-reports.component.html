@@ -1,23 +1,38 @@
 <app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)">
-</app-filters>
-<br>
-<div>
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
-        <thead>
-            <tr>
-                <th class="tbstyle">S.No.</th>           
-                <th>Document</th>
-                <th>FileName</th>    
-               
-            </tr>
-        </thead>
-        
-        <tbody>
-            <tr *ngFor="let data of  _AwardMutations;let i = index">           
-                <td class="tbstyle">{{i+1}}</td>  
-                <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.VillageLevelDocumentsTypes, data.Lookupid)}}</td>
-                <td>{{data.FileName}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+</app-filters><br>
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Award & Mutations</div> 
+        </div><br>
+        <div *ngIf="_ShowTable">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+                <thead>
+                    <tr>
+                        <th class="tbstyle">S.No.</th>           
+                        <th>Document</th>
+                        <th>FileName</th>    
+                    <th>Download</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr *ngFor="let data of  _AwardMutations;let i = index">           
+                        <td class="tbstyle">{{i+1}}</td>  
+                        <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.VillageLevelDocumentsTypes, data.Lookupid)}}</td>
+                        <td>{{data.FileName}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-success"(click)="DownloadAwardDoc(data)" title="Download">
+                                    <i class="fa fa-download "></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="!_ShowTable">
+            <h5 style="color: red;"><b>Please Select Village !!</b></h5>
+        </div>
+    </div>
+</div>    
+

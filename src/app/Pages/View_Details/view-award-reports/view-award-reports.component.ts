@@ -16,7 +16,7 @@ import { APIUtilityService } from 'src/app/services/APIUtility.service';
   templateUrl: './view-award-reports.component.html',
   styleUrls: ['./view-award-reports.component.css']
 })
-export class ViewAwardReportsComponent implements OnInit {
+export class ViewAwardReportsComponent implements AfterViewInit, OnInit {
  /**data table properties  */
  @ViewChild(DataTableDirective, {static: false})
  dtElement: DataTableDirective;
@@ -28,7 +28,7 @@ export class ViewAwardReportsComponent implements OnInit {
  _FilterControls: FilterControls;
  _SearchCriteria: SearchCriteria;
  _SurveyDocDropDownsDataModel : SurveyDocDropDownsDataModel;
-
+  _ShowTable : boolean = false;
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
@@ -40,6 +40,7 @@ export class ViewAwardReportsComponent implements OnInit {
         this._SearchCriteria = new SearchCriteria();
         this._FilterControls = new FilterControls();
         this.SetFilterControls();
+        this._SurveyDocDropDownsDataModel = new SurveyDocDropDownsDataModel();
       }
   /**hide/show filter menu based on the component requirement */
   SetFilterControls() 
@@ -57,35 +58,7 @@ export class ViewAwardReportsComponent implements OnInit {
     {
       this.GetSurveyDocumentDropDowns();
     }
-
-  /**get value from child component */
-  GetValuesFromFilters(event) 
-    {
-      this.Utility.LogText2("view-award-reports",event);
-      this._SearchCriteria = event;
-      if(this._SearchCriteria.VillageId != null)
-        {
-          this.GetAwardAndMutations();
-          this.ReloadDatatable(); 
-        }
-      else
-        {
-          alert("Please select village!!")
-        }
-    }
-
-  /**Get Survey Document DropDowns values*/
-  GetSurveyDocumentDropDowns()
-  {
-    let url = this.urlService.GetSurveyDocumentDropDowns;
-    this.httpService.get(url,null).subscribe(response => {
-      this._SurveyDocDropDownsDataModel  = response;
-      },error => {
-        this.Utility.LogText(error);
-      });
-  }
-
-
+    
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
@@ -112,11 +85,40 @@ export class ViewAwardReportsComponent implements OnInit {
       }
   }
 
+  /**get value from child component */
+  GetValuesFromFilters(event) 
+    {
+      this.Utility.LogText2("view-award-reports",event);
+      this._SearchCriteria = event;
+      if(this._SearchCriteria.VillageId != null)
+        {
+          this.GetAwardAndMutations();
+          this._ShowTable = true;
+        }
+      else
+        {
+          alert("Please select village!!")
+        }
+    }
+
+
+  /**Get Survey Document DropDowns values*/
+  GetSurveyDocumentDropDowns()
+  {
+    let url = this.urlService.GetSurveyDocumentDropDowns;
+    this.httpService.get(url,null).subscribe(response => {
+      this._SurveyDocDropDownsDataModel  = response;
+      },error => {
+        this.Utility.LogText(error);
+      });
+  }
+
   GetAwardAndMutations()
     {
       let url = this.urlService.GetAwardAndMutationsAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._AwardMutations  = response;
+        this.ReloadDatatable();
         },error => {
           this.Utility.LogText(error);
         });
@@ -132,4 +134,16 @@ export class ViewAwardReportsComponent implements OnInit {
         else { return lookUpid;}
       }
 
+  DownloadAwardDoc(arg)
+    {
+      let url = this.urlService.DownloadAwardAndMutationsAPI + arg.DocumentId;
+      let link = document.createElement('a');
+      link.setAttribute('type', 'hidden');
+      link.setAttribute("target","_blank");
+      link.href = url;
+      link.download = "C:/Users/admin/Downloads/";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
 }

@@ -1,0 +1,30 @@
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr>
+                <th class="SerialClass">S. No.</th>
+                <th>Owner Name</th>    
+                <th>Award</th>
+                <th>Season Name</th>
+                <th>Crop Name</th>
+                <th>Ha.</th>
+                <th>Are.</th>
+                <th>Sqmt.</th>
+                <th>Crop Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.Crops;let i = index">     
+                <td class="SerialClass">{{i+1}}</td>
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>  
+                <td>{{GetLookupValue(SurveyDropDownsData.AwardTypes ,data.AwardType)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.SeasonNameTypes ,data.SeasonType)}}</td>
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.Crops,data.CropName)}}</td>
+                <td>{{data.Ha}}</td>
+                <td>{{data.Are}}</td>
+                <td>{{data.Sqmt}}</td>
+                <td>{{data.CropStatus}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -192,6 +192,7 @@ export class FiltersComponent implements OnInit {
         },error => {
           console.log("GetAllCrossingsAPI error",error); 
         });
+      this._SearchCriteria.SurveyName = this.GetLookupValue(this._SurveyDetails, argSurveyId)
     }
 
   GetLandTypesByVillage(argvillageId)
