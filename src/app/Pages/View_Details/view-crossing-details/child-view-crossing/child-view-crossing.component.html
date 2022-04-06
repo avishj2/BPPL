@@ -1,0 +1,125 @@
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Crossing Details - {{this.filterdata.CrossingTypeName}}</div> 
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label class ="Label">Crossing Number</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.CrossingNo}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Crossing Name</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.CrossingName}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Crossing Chainage(Km)</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.CrossingChainage}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Crossing B/W IP-TP From</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.CrossingIpTpStart}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Crossing B/W IP-TP To</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.CrossingIpTpEnd}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">One Time Rent</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.OneTimeRent}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Refundable</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.Refundable}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Non Refundable</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.NonRefundable}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Date Of Application</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.DateOfApplication | date:'mediumDate'}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Crossing Authority Name</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.AuthorityName}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Crossing Authority Address</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.AuthorityAddress}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Description</label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.Description}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Date Of Permission/Aggrement </label>
+                <div class="DisabledFieldLabel">
+                    {{this._CrossingDataModel.DateofPermission | date:'mediumDate'}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label">Approved </label>
+                <div class="DisabledFieldLabel">
+                    {{GetLookupValue(_CrossingDropdowns.CrossingApprovalTypes, _CrossingDataModel.CrossingApproval)}}
+                </div>
+            </div>
+        </div>
+        <br>
+    </div> 
+</div>
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Documents</div> 
+        </div>
+        <div>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="95%">
+                    <thead>
+                        <tr>
+                            <th>FileName</th>
+                            <th>Document Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of _CrossingDataModel.Documents;let i = index">
+                            <td>{{data.FileName}}</td>
+                            <td>
+                            {{GetLookupValue(_CrossingDropdowns.CrossingDocumentTypes,data.Lookupid)}}
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn-info" title="Download" (click)="DownlaodCrossingDocument(data)">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>    

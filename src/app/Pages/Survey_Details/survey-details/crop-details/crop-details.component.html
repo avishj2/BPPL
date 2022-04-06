@@ -6,7 +6,7 @@
         </button>
     </div>
 
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+    <table datatable [dtOptions]="dtOptions"[dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
             <tr>  
                 <th>Action</th>
@@ -26,7 +26,7 @@
                     <button type="button" class="btn-success"(click)="EditCropDetails(data)" title="Edit" data-toggle="modal" data-target="#CropModal">
                         <i class="fa fa-edit "></i>
                     </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="left"(confirm)="DeleteCropDetails(data)" title="Delete">
+                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteCropDetails(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>      
@@ -42,7 +42,6 @@
         </tbody>
     </table>
     <br>
-
 </div>
 
 

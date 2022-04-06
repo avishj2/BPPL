@@ -111,6 +111,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
             {
               alert("Owner updated sucessfully!!");
               this._AllSurveyDetails.Result.SurveyOwners = RespDataModel.Result;
+              
               this.closebutton.nativeElement.click();
               this.ReloadDatatable();
             }
@@ -118,12 +119,12 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
             {
               alert("Owner added sucessfully!!");
               this._AllSurveyDetails.Result.SurveyOwners = RespDataModel.Result;
-              this.SetParentData();
               console.log("ownerdropdown",this.AllSurveyDetails.Result.SurveyOwnersDrp)
               this._AddNewOwner = false;
               this.closebutton.nativeElement.click();
               this.ReloadDatatable();
-            }   
+            }
+            this.SetParentData();   
         }
         this._AddNewOwner = false;
         

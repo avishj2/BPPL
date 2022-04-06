@@ -51,6 +51,7 @@ export class SearchCriteria
         TypeOfLand : any;
         VillageName : string;
         CrossingTypeName : string;
+        SurveyName : string;
     }
 /**
  * Defines the selection from the dropdown.

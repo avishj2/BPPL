@@ -16,6 +16,10 @@ import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/su
 import { CropRatesComponent } from './Pages/Survey_Details/crop-rates/crop-rates.component';
 import { LandRatesComponent } from './Pages/Survey_Details/land-rates/land-rates.component';
 import { ViewCrossingDetailsComponent } from './Pages/View_Details/view-crossing-details/view-crossing-details.component';
+import { ViewAlignmentReportsComponent } from './Pages/View_Details/view-alignment-reports/view-alignment-reports.component';
+import { ViewProjectReportsComponent } from './Pages/View_Details/view-project-reports/view-project-reports.component';
+import { ViewAwardReportsComponent } from './Pages/View_Details/view-award-reports/view-award-reports.component';
+import { ViewSurveyTabsComponent } from './Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -41,6 +45,10 @@ const routes: Routes = [
       /**View details section components */
       {path: 'VeiwVillageDetails', component: ViewVillageDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / Village Details'}},
       {path: 'ViewCrossingDetails', component: ViewCrossingDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Crossing Details'}},
+      {path: 'ViewAlignmentReports', component: ViewAlignmentReportsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Alignment Reports'}},
+      {path: 'ViewProjectReports', component: ViewProjectReportsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Project Reports'}},
+      {path: 'ViewAwardReports', component: ViewAwardReportsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Award Reports'}},
+      {path: 'ViewSurveyTabs', component: ViewSurveyTabsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /View Survey Details'}},
 
     ]},
 ];

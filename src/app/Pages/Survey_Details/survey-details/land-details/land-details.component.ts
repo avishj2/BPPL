@@ -53,7 +53,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     console.log("tdtgrg=>", this.SurveyDropDownsData);
-    console.log("vxcbcb AllSurveyDetails=>",this.AllSurveyDetails)
+    console.log("land AllSurveyDetails=>",this.AllSurveyDetails)
     this._LandDataModel.SurveyId = this.SurveyNumber;
     this._AllSurveyDetails.Result.LandDetails = this.AllSurveyDetails.Result.LandDetails;
     this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;

@@ -133,15 +133,19 @@ export class FiltersComponent implements OnInit {
   GetAllSurveyDetails(argVillageId)
     {
       this.ResetDropDowns(DropDownChangeEnum.VillageChanged)
-      let url = this.urlService.GetSurveyDetailsByVillageId + argVillageId;
-      this.httpService.get(url,null).subscribe(response => {
-        this._SurveyDetails = response;
-        //this.PassDataToParent();
-        },error => {
-          console.log("GetVillageByTalukaAPI error",error);
-        });
-
-      this.GetLandTypesByVillage(argVillageId);
+      if(this.filterControls.ShowSurneyNos== true)
+        {
+          let url = this.urlService.GetSurveyDetailsByVillageId + argVillageId;
+          this.httpService.get(url,null).subscribe(response => {
+            this._SurveyDetails = response;
+            },error => {
+              console.log("GetVillageByTalukaAPI error",error);
+            });
+        }
+      if(this.filterControls.ShowLandTypes == true)
+        {
+          this.GetLandTypesByVillage(argVillageId);
+        }
       this._SearchCriteria.VillageName = this.GetLookupVillage(this._VillageDetails,argVillageId);
     }
 
@@ -188,6 +192,7 @@ export class FiltersComponent implements OnInit {
         },error => {
           console.log("GetAllCrossingsAPI error",error); 
         });
+      this._SearchCriteria.SurveyName = this.GetLookupValue(this._SurveyDetails, argSurveyId)
     }
 
   GetLandTypesByVillage(argvillageId)

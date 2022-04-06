@@ -1,0 +1,290 @@
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+</app-filters>
+<br>
+<div class="row" >
+    <div class="col-lg-12">
+        <ngb-tabset (tabChange)="ActiveTab($event)" #tabset="ngbTabset">
+            <ngb-tab title="Survey- {{this._SearchCriteria.SurveyName}}" [id]="0">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label class="Label">Survey No (English)</label>
+                                <div class="DisabledFieldLabel">
+                                    {{this._SurveyModel.SurveyNo}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Survey No  (Hindi) </label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.SurveyNoHindi }}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">                
+                                <label class="Label">Survey No (Local)</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.SurveyNoLocal}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Electric Poles</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.ElectricPoles}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">                
+                                <label class="Label">LandType</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{GetLookupValue(_SurveyDropDownsDataModel.SurveyLandTypes,_SurveyModel.LandType)}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Panchanama Date</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{ this._SurveyModel.PanchnamaDate | date:'mediumDate'}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">NOC Date</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{ this._SurveyModel.NOCDate | date:'mediumDate' }}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">                
+                                <label class="Label">Telephonic Poles </label>
+                                <div class="DisabledFieldLabel" >
+                                    {{ this._SurveyModel.TelephonePoles }}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Corridor Width</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{ this._SurveyModel.CorridorWidth }}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Cultivalted/Non-Cultivalted </label>
+                                <div class="DisabledFieldLabel" >
+                                    {{GetLookupValue(_SurveyDropDownsDataModel.CultivateLandTypes,_SurveyModel.CultivatedType)}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Mortgage Details</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.MortgageDetails}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Khata Number</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.KhataNo}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Jamabandi Owner</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.JamabandiOwner}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Rev. Rec. Updated</label>
+                                <div class="DisabledFieldLabel">
+                                    {{this._SurveyModel.RevRecUpdated}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="Label">Inactive</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.InActive}}
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-3">
+                                <label class="Label">If Inactive give the reasons</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._SurveyModel.InactiveReason}}
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <br>
+                                <label class="Label"style="margin-bottom: 2px">ROU Area</label>
+                                <div class="form-group row" style="margin-left: 1.2%;">
+                                    <label class="col-sm-0.5 col-form-label">Ha</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel" >
+                                            {{this._SurveyModel.ROUHa}}
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Are</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel" >
+                                            {{this._SurveyModel.ROUAre}}
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel" >
+                                            {{this._SurveyModel.ROUSqmt}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="seperator"style="left: 30%;"></div>
+                            <div class="col-lg-4">
+                                <br>
+                                <label class="Label" style="margin-left: -6%; margin-bottom: 2px;">Total Area</label>
+                                <div class="form-group row" style="margin-left: -6%;">
+                                    <label class="col-sm-0.5 col-form-label">Ha</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel1">
+                                            {{this._SurveyModel.TotalHa}}
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Are</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel1">
+                                            {{this._SurveyModel.TotalAre}}
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel1">
+                                            {{this._SurveyModel.TotalSqmt}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="seperator"style="left: 64%;"></div>
+                            <div class="col-lg-4"style="display:inline-block;"><br>
+                                <label class="Label" style="margin-left: -6%;margin-bottom: 2px;">Panchanama Area</label>
+                                <div class="form-group row" style="margin-left: -6%;">
+                                    <label class="col-sm-0.5 col-form-label">Ha</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel1">
+                                            {{this._SurveyModel.PanchnamaHa}}
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Are</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel1">
+                                            {{this._SurveyModel.PanchnamaAre}}
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-0.5 col-form-label">Sqmt</label>
+                                    <div class="col-lg-3">
+                                        <div class="DisabledLabel1">
+                                            {{this._SurveyModel.PanchnamaSqmt}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Owner Details" [id]="1">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-view-owner-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-owner-details>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Land Details" [id]="2">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-view-land-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-land-details>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+            
+            <ngb-tab title="Tree Details" [id]="3">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-view-tree-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-tree-details>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab> 
+
+            <ngb-tab title="Crop Details" [id]="4">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-view-crop-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-crop-details>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab> 
+
+            <ngb-tab title="Restoration Details" [id]="5">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-view-restoration [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-restoration>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab> 
+
+            <ngb-tab title="Assign Panch" [id]="6">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab> 
+
+            <ngb-tab title="Revenue Form" [id]="7">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-view-revenue-forms [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-revenue-forms>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Gazette And Notice" [id]="8">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Compensation" [id]="9">
+                <ng-template ngbTabContent>
+                  <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    Compensation
+                  </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+              </ngb-tab>
+        </ngb-tabset>
+    </div> 
+</div>   

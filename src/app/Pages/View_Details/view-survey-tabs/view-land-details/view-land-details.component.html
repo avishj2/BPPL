@@ -1,0 +1,23 @@
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr> 
+                <th class="SerialClass">S.No.</th>
+                <th>Owner Name</th>    
+                <th>LandType</th>
+                <th>Ha.</th>
+                <th>Are.</th>
+                <th>Sqmt.</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of _AllSurveyDetails.Result.LandDetails;let i = index">
+                <td class="SerialClass">{{i+1}}</td>
+                <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.SurveyOwnerId)}}</td>
+                <td>{{GetLookupValue(SurveyDropDownsData.LandClassifications, data.LandType)}}</td>
+                <td>{{data.Ha}}</td>
+                <td>{{data.Are}}</td>
+                <td>{{data.Sqmt}}</td>
+        </tbody>
+    </table> 
+</div>

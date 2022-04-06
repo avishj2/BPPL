@@ -1,0 +1,22 @@
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+    <thead>
+        <tr> 
+            <th class="SerialClass">S.No.</th> 
+            <th>FileName</th>    
+            <th>Document Type</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of _AllSurveyDetails.Result.SurveyDocuments; let i = index">
+            <td class="SerialClass">{{i+1}}</td>
+            <td>{{data.FileName}}</td>
+            <td>{{GetLookupValue(SurveyDropDownsData.RevenueFormTypes, data.Lookupid)}}</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn-success"(click)="DownloadDocument(data)" title="Download">
+                        <i class="fa fa-download "></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

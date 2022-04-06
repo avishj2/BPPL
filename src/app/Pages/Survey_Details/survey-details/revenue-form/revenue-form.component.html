@@ -32,7 +32,7 @@
         <tbody>
             <tr *ngFor="let data of _AllSurveyDetails.Result.SurveyDocuments; let i = index">
                 <td>
-                    <button type="button" class="btn-success"(click)="DownloadDocument(data)" title="Edit" data-toggle="modal" data-target="#LandModal">
+                    <button type="button" class="btn-success"(click)="DownloadDocument(data)" title="Download" data-toggle="modal" data-target="#LandModal">
                         <i class="fa fa-download "></i>
                     </button>&nbsp;&nbsp;&nbsp;
                     <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteDocument(data)" title="Delete">
