@@ -10,6 +10,8 @@ import { GazzateDropDownsDataModel,GazetteDetailsDataModel ,GazetteModel,Notific
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
+import { CommonService} from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-gazette-details',
@@ -70,7 +72,9 @@ export class GazetteDetailsComponent implements OnInit {
     private httpService: HttpService,
     public Utility: UtilityService,
     private downloadService: DownloadService,
-    private http: HttpClient
+    private http: HttpClient,
+    public APIUtilityService: APIUtilityService,
+    public CommonService : CommonService
     ) 
     { 
       this._GazetteModel = new GazetteModel();
@@ -158,7 +162,7 @@ export class GazetteDetailsComponent implements OnInit {
    */
   SearchGazetteDetails()
     {
-      console.log(this._GazetteModel.Gazzateid);
+      this.Utility.LogText(this._GazetteModel.Gazzateid);
       if(this._GazetteModel.Gazzateid != null)
       {
         this.GetGazzateByGazzateID();
@@ -176,13 +180,16 @@ export class GazetteDetailsComponent implements OnInit {
    */
   GetGazzateByGazzateID()
     {
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetGazzateByIdAPI + this._GazetteModel.Gazzateid;
       this.httpService.get(url, null).subscribe(response => {
         this._GazetteModel = response;
         // this.ReloadDatatable();
         this.Utility.LogText(this._GazetteModel);
+        this.CommonService.hideSpinnerLoading();
       }, error => {
         this.Utility.LogText(error);
+        this.CommonService.hideSpinnerLoading();
       }); 
     }  
 
@@ -303,6 +310,7 @@ export class GazetteDetailsComponent implements OnInit {
    */
   SaveGazzateDetails()
     {
+      this.CommonService.ShowSpinnerLoading();
       if(!this._TypeOfNotification)
       {
          alert("Please select type of notification !");
@@ -416,13 +424,15 @@ export class GazetteDetailsComponent implements OnInit {
   /**get Notification By Notification Id*/
   GetNotificationById()
     {
+      this.CommonService.ShowSpinnerLoading()
       let url = this.urlService.GetNotificationByIdAPI + this._NotificationValue;
       this.httpService.get(url, null).subscribe(response => {
         this._NotificationModel = response;
-        // this.ReloadDatatable();
         this.Utility.LogText(this._NotificationModel);
+        this.CommonService.hideSpinnerLoading();
       }, error => {
         this.Utility.LogText(error);
+        this.CommonService.hideSpinnerLoading();
       });
     } 
 
@@ -431,7 +441,6 @@ export class GazetteDetailsComponent implements OnInit {
       let url = this.urlService.GetAllGazzatesAPI; //null;
       this.httpService.get(url, null).subscribe(response => {
         this._GetAllGazetteDetails = response;
-        // this.Utility.LogText(this._GetAllGazetteDetails);
       }, error => {
         this.Utility.LogText(error);
       });
@@ -462,6 +471,7 @@ export class GazetteDetailsComponent implements OnInit {
    */
   SaveNotificationDetails()
     {
+      this.CommonService.ShowSpinnerLoading();
       this._NotificationModel.NotificationNo = this._NotificationValue;
       let url = this.urlService.AddOrUpdateNotificationAPI;    
       this.httpService.HttpPostRequest(url,this._NotificationModel,this.AddOrUpdateNotificationCallBack.bind(this),null);
@@ -529,14 +539,7 @@ export class GazetteDetailsComponent implements OnInit {
   DownlaodDocument(doc : GazzetteDocuments)
     {
       let url = this.urlService.DownloadGazzete + doc.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 
     GetLookupValue(lookups : CommonDropdownModel[],lookUpid: number) : any

@@ -9,6 +9,7 @@ import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { SurveyDropDownsDataModel,AllSurveyDetailsDataModel,TreeModel} from 'src/app/Model/Survey.model';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
 
 @Component({
   selector: 'app-view-revenue-forms',
@@ -29,12 +30,12 @@ export class ViewRevenueFormsComponent implements AfterViewInit, OnInit {
   _TreeDataModel :TreeModel
   _AllSurveyDetails : AllSurveyDetailsDataModel;
 
-
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
-    public Utility :UtilityService,) 
+    public Utility :UtilityService,
+    public APIUtilityService: APIUtilityService,) 
       {
         this._TreeDataModel = new TreeModel();
         this._AllSurveyDetails = new AllSurveyDetailsDataModel();
@@ -92,14 +93,7 @@ export class ViewRevenueFormsComponent implements AfterViewInit, OnInit {
   DownloadDocument(arg)
     {
       let url = this.urlService.DownloadRevDocAPI + arg.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 
 

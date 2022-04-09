@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { CommonDropdownModel,CommonDocDataModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls,CrossingDropdownDataModel } from 'src/app/Model/Filters.model';
 import {CrossingModel } from 'src/app/Model/Crossing.model';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
 
 @Component({
   selector: 'app-child-view-crossing',
@@ -35,7 +36,8 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
     public CommonService : CommonService,
     public httpService : HttpService,
     public Utility :UtilityService,
-    private cd: ChangeDetectorRef) 
+    private cd: ChangeDetectorRef,
+    public APIUtilityService: APIUtilityService,) 
       {
         this._CrossingDataModel = new CrossingModel();
         this._CrossingDropdowns = new CrossingDropdownDataModel();
@@ -138,13 +140,6 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
   DownlaodCrossingDocument(doc : CommonDocDataModel)
     {
       let url = this.urlService.DownloadCrossingDocAPI + doc.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 }

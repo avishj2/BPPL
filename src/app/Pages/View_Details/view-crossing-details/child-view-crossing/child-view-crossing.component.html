@@ -101,6 +101,7 @@
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="95%">
                     <thead>
                         <tr>
+                            <th class="tbstyle">S.No.</th>  
                             <th>FileName</th>
                             <th>Document Type</th>
                             <th>Action</th>
@@ -108,6 +109,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of _CrossingDataModel.Documents;let i = index">
+                            <td class="tbstyle">{{i+1}}</td>
                             <td>{{data.FileName}}</td>
                             <td>
                             {{GetLookupValue(_CrossingDropdowns.CrossingDocumentTypes,data.Lookupid)}}

@@ -40,7 +40,7 @@
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowOwnerName == true">
             <label class ="dropdownsLabel"> Owner Name </label>
-            <select class="form-control"[(ngModel)]="_SearchCriteria.OwnerID">
+            <select class="form-control"[(ngModel)]="_SearchCriteria.OwnerID"(change)="OwnerNameChange(_SearchCriteria.OwnerID)">
                 <option *ngFor="let data of _OwnerDetails" [value]="data.Value">
                     {{data.Text}}
                 </option>

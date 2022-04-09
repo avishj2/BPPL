@@ -1,5 +1,6 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"> 
     <div class="ParentBtn"> 
+        <!-- *ngIf="_AddNewPaymentDetails == false && _ShowPaymentDetailsDiv == true" -->
         <button class="btn-primary" (click)="AddNewPaymentDetails()">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
             Add Payment
@@ -20,12 +21,12 @@
     <div class="card">
         <div class="innercard"> 
             <div class="d-flex justify-content-between">
-                <div class="CardTitle">Adhoc Payment Details </div> 
+                <div class="CardTitle">Adhoc Payment Details - {{this._SearchCriteria.OwnerName}} </div> 
             </div>
             <div class="form-group row">
                 <div class="col-lg-3">
                     <label class="Label">Payment Amount(Rs.)</label>
-                    <input type="text" *ngIf="DisableInputField != true"class="form-control" [(ngModel)]="_AdHocPaymentModel.PaymentAmountRs"[ngModelOptions]="{standalone: true}">
+                    <input type="text" *ngIf="DisableInputField != true"class="form-control" [(ngModel)]="_AdHocPaymentModel.PaymentAmountRs"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
                     <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
                         {{this._AdHocPaymentModel.PaymentAmountRs}}
                     </div>

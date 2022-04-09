@@ -119,7 +119,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
             {
               alert("Owner added sucessfully!!");
               this._AllSurveyDetails.Result.SurveyOwners = RespDataModel.Result;
-              console.log("ownerdropdown",this.AllSurveyDetails.Result.SurveyOwnersDrp)
+              this.Utility.LogText2("ownerdropdown",this.AllSurveyDetails.Result.SurveyOwnersDrp)
               this._AddNewOwner = false;
               this.closebutton.nativeElement.click();
               this.ReloadDatatable();

@@ -20,6 +20,7 @@ import { ViewAlignmentReportsComponent } from './Pages/View_Details/view-alignme
 import { ViewProjectReportsComponent } from './Pages/View_Details/view-project-reports/view-project-reports.component';
 import { ViewAwardReportsComponent } from './Pages/View_Details/view-award-reports/view-award-reports.component';
 import { ViewSurveyTabsComponent } from './Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
+import { LAQPermanentComponent } from './Pages/View_Details/laqpermanent/laqpermanent.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -49,6 +50,7 @@ const routes: Routes = [
       {path: 'ViewProjectReports', component: ViewProjectReportsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Project Reports'}},
       {path: 'ViewAwardReports', component: ViewAwardReportsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Award Reports'}},
       {path: 'ViewSurveyTabs', component: ViewSurveyTabsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /View Survey Details'}},
+      {path: 'LAQPermanent', component: LAQPermanentComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /LAQPermanent Details'}},
 
     ]},
 ];

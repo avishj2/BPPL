@@ -12,6 +12,7 @@ import { CommonDropdownModel, CommonDocDataModel} from 'src/app/Model/Base.model
 import { CrossingDetailsDataModel,CrossingModel } from 'src/app/Model/Crossing.model';
 import { CrossingDropdownDataModel } from 'src/app/Model/Filters.model';
 import { TwoDigitDecimaNumberDirective } from 'src/app/Pages/filters/two-digit-decima-number.directive';
+import { CommonService} from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-crossing-details',
@@ -47,7 +48,8 @@ _DisabledCrossingInputField : boolean = true;
     public APIUtilityService: APIUtilityService,
     private router: Router,
     private httpService: HttpService,
-    public Utility: UtilityService,) 
+    public Utility: UtilityService,
+    public CommonService : CommonService,) 
       { 
         this._CrossingDataModel = new CrossingModel();
         this._FilterControls = new FilterControls();
@@ -76,6 +78,7 @@ _DisabledCrossingInputField : boolean = true;
     {
       this.PopulateCrossingDropdowns();      
     }
+
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
@@ -114,6 +117,7 @@ _DisabledCrossingInputField : boolean = true;
         alert("Please select Crossing ID")
       }           
     }
+    
     SearchFilterChanged(event)
     {
        let newSearchCriteria : SearchCriteria = event;
@@ -147,6 +151,7 @@ _DisabledCrossingInputField : boolean = true;
    */
   GetCrossingDatabyId()
     {
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetCrossingByIdAPI + this._SearchCriteria.CrossingID;
       this.httpService.get(url, null).subscribe(response => {
         this._CrossingDataModel = response;        
@@ -155,8 +160,10 @@ _DisabledCrossingInputField : boolean = true;
         this._DisabledCrossingInputField = true;
         this._CrossingTypeName = this._SearchCriteria.CrossingTypeName; 
         this.ReloadDatatable();
+        this.CommonService.hideSpinnerLoading();
       }, error => {
         this.Utility.LogText(error);
+        this.CommonService.hideSpinnerLoading();
       }); 
     } 
 
@@ -187,6 +194,7 @@ _DisabledCrossingInputField : boolean = true;
     /**save deatils to the api */
   SaveCrossingDetails()
     {
+      this.CommonService.ShowSpinnerLoading();
       if(!this._SearchCriteria.CrossingType)
       {
         alert("Please select CrossingType !!");
@@ -303,14 +311,7 @@ _DisabledCrossingInputField : boolean = true;
   DownlaodCrossingDocument(doc : CommonDocDataModel)
     {
       let url = this.urlService.DownloadCrossingDocAPI + doc.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 
 

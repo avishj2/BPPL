@@ -101,28 +101,28 @@
                             </div>
                             <div class="col-lg-3">
                                 <label class ="Label">English From Page</label>
-                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.EnglishFromPage"[ngModelOptions]="{standalone: true}">
+                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.EnglishFromPage"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
                                     {{this._GazetteModel.EnglishFromPage}}
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <label class ="Label">English To Page</label>
-                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.EnglishToPage"[ngModelOptions]="{standalone: true}">
+                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.EnglishToPage"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
                                     {{this._GazetteModel.EnglishToPage}}
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <label class ="Label">Hindi From Page</label>
-                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.HindiFromPage"[ngModelOptions]="{standalone: true}">
+                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.HindiFromPage"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
                                     {{this._GazetteModel.HindiFromPage}}
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <label class ="Label">Hindi To Page</label>
-                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.HindiToPage"[ngModelOptions]="{standalone: true}">
+                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.HindiToPage"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
                                     {{this._GazetteModel.HindiToPage}}
                                 </div>

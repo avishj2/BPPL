@@ -137,17 +137,21 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
 
   GetAllLandRates()
     {
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetAllLandDetails + this._SearchCriteria.VillageId + '&surveyId='+ this._SearchCriteria.SurveyID;
       this.httpService.get(url,null).subscribe(response => {
         this._LandRateDetails  = response;
         this.ReloadDatatable();
+        this.CommonService.hideSpinnerLoading();
         },error => {
           this.Utility.LogText(error);
+          this.CommonService.hideSpinnerLoading();
         });
     }
     
   SaveLandDetails()
     {
+      this.CommonService.ShowSpinnerLoading();
       if(this._SearchCriteria.SurveyID == null)
         {
           this._SearchCriteria.SurveyID = 0;
@@ -187,11 +191,11 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
             }   
         }
         this. _AddNewLandDetails = false;
+        this.CommonService.hideSpinnerLoading();
     }
 
   DeleteLandRates(arg)
     {
-      this.CommonService.ShowSpinner();
       let url = this.urlService.DeleteLandDetailsAPI + arg.LandId + '&villageId='+ arg.VillageId +'&surveyId='+ arg.SurveyId;
       this.httpService.get(url,null).subscribe(response => {
         let CropDetails : any = response;
