@@ -1,5 +1,5 @@
 <!-- add filter component ,pass and get data from child -->
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)" (CrossingChanged)="SearchFilterChanged($event)">
     <div class="ParentBtn"> 
         <button class="btn-primary" (click)="AddNewCrossingDetails()">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
@@ -21,7 +21,7 @@
     <div class="card">
         <div class="innercard"> 
             <div class="d-flex justify-content-between">
-                <div class="CardTitle">Crossing Details - {{this._SearchCriteria.CrossingTypeName}}</div> 
+                <div class="CardTitle"> Crossing Details - {{this._CrossingTypeName}}</div> 
             </div>
             <div class="row">
                 <div class="col-lg-3">

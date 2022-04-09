@@ -32,6 +32,7 @@ _DisabledCrossingInputField : boolean = true;
  _CrossingDropdowns :CrossingDropdownDataModel;
  _Crossingdoc : CommonDocDataModel ;
  Crossingfile: File = null; // Variable to store file
+ _CrossingTypeName : string = "";
 
    /**data table properties  */
    @ViewChild(DataTableDirective, {static: false})
@@ -73,8 +74,7 @@ _DisabledCrossingInputField : boolean = true;
 
   ngOnInit(): void 
     {
-      this.PopulateCrossingDropdowns();
-      
+      this.PopulateCrossingDropdowns();      
     }
   ngAfterViewInit(): void 
     {
@@ -109,14 +109,25 @@ _DisabledCrossingInputField : boolean = true;
       if(this._SearchCriteria.CrossingID != null)
         {
           this.GetCrossingDatabyId();
-          this._ShowCrossingDetailsDiv = true;
-          this._AddNewCrosssing = false;
-          this._DisabledCrossingInputField = true;
         }
       else{
         alert("Please select Crossing ID")
-      }
-      
+      }           
+    }
+    SearchFilterChanged(event)
+    {
+       let newSearchCriteria : SearchCriteria = event;
+       if(!this._ShowCrossingDetailsDiv && !this._AddNewCrosssing && this._DisabledCrossingInputField)
+       {
+          this._SearchCriteria = newSearchCriteria;
+          this._CrossingTypeName = this._SearchCriteria.CrossingTypeName; 
+       }
+       else if(this._AddNewCrosssing)
+       {
+          this._SearchCriteria = newSearchCriteria;
+          this._CrossingDataModel.TypeOfCrossing = this._SearchCriteria.CrossingType; 
+          this._CrossingTypeName = this._SearchCriteria.CrossingTypeName; 
+       }
     }
 
   /** get Crossing Dropdown values*/
@@ -132,13 +143,17 @@ _DisabledCrossingInputField : boolean = true;
     }
 
   /***
-   * Get CROSSING details By ID 
+   * Get CROSSING details By ID - Called only on Search click !
    */
   GetCrossingDatabyId()
     {
       let url = this.urlService.GetCrossingByIdAPI + this._SearchCriteria.CrossingID;
       this.httpService.get(url, null).subscribe(response => {
-        this._CrossingDataModel = response;
+        this._CrossingDataModel = response;        
+        this._ShowCrossingDetailsDiv = true;
+        this._AddNewCrosssing = false;
+        this._DisabledCrossingInputField = true;
+        this._CrossingTypeName = this._SearchCriteria.CrossingTypeName; 
         this.ReloadDatatable();
       }, error => {
         this.Utility.LogText(error);
@@ -155,6 +170,7 @@ _DisabledCrossingInputField : boolean = true;
         this._CrossingDataModel = new CrossingModel();
         this._ShowCrossingDetailsDiv = false;
         this._CrossingDataModel.TypeOfCrossing = this._SearchCriteria.CrossingType; 
+        this._CrossingTypeName = this._SearchCriteria.CrossingTypeName;
       }
       else{
         alert("Please Select Crossing Type!!")
@@ -207,17 +223,17 @@ _DisabledCrossingInputField : boolean = true;
               this._DisabledCrossingInputField = true;
               this._CrossingDataModel.CrossingId = RespDataModel.Result.CrossingId;
               this._AddNewCrosssing = false;
-            }  
-            this.ReloadDatatable(); 
+            }           
         }
         this._AddNewCrosssing = false;
         this._ShowCrossingDetailsDiv = true;
+        this.ReloadDatatable(); 
     }
 
     /**delete crossing details */
   DeleteCrossingDetails()
     {
-      let url = this.urlService.DeleteCrossingAPI + this._SearchCriteria.CrossingID ;
+      let url = this.urlService.DeleteCrossingAPI + this._CrossingDataModel.CrossingId ;
       this.httpService.get(url,null).subscribe(response => {
         let CrossingDetails : any = response;
         if (CrossingDetails.StatusCode != 200) 
@@ -226,8 +242,7 @@ _DisabledCrossingInputField : boolean = true;
           }
           else {
             alert("Crossing deleted successfully !");
-            this._CrossingDataModel = new CrossingModel();
-            this.GetCrossingDatabyId();
+            this.ResetFlags();
           }
         },error => {
           this.Utility.LogText(error);
@@ -317,5 +332,12 @@ _DisabledCrossingInputField : boolean = true;
       else { 
         return lookUpid;
       }
+    }
+
+    ResetFlags()
+    {
+      this._ShowCrossingDetailsDiv = false;
+      this._AddNewCrosssing = false;
+      this._DisabledCrossingInputField  = true;
     }
 }

@@ -21,6 +21,8 @@ export class FiltersComponent implements OnInit {
   /** FilterControls for filter menu show/hide */
   @Input() filterControls : FilterControls;
   @Output() filterOutput:EventEmitter<SearchCriteria>= new EventEmitter(); 
+  @Output() VillageChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
+  @Output() CrossingChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
  _TahsilLabel : string = "Tahsil";
   //api models
   _StateDataModel : StateDetails[];
@@ -58,10 +60,6 @@ export class FiltersComponent implements OnInit {
   PopulateState()
     {
       let url = this.urlService.GetAllStatesAPI; 
-      //=====method 1 ===      
-      // this.APIUtilityService.CallBack = this.CallBackStateDetails.bind(this);
-      // this.APIUtilityService.HttpGetRequest(url,null);  
-
       //===== method 2(without callback function)=====
       this.httpService.get(url,null).subscribe(res => {
         console.log('data response', res);
@@ -70,19 +68,6 @@ export class FiltersComponent implements OnInit {
           console.log("error",error);
         });
     }
-
-    /**@abstract
-     * =====method 1 ===      
-     */
-  // CallBackStateDetails(dtas : HttpResponse<StateDetails>)
-  //   {
-  //     if (dtas != null) 
-  //     {
-  //       let data;
-  //       data = dtas; 
-  //       this._StateDataModel = data;    
-  //     }
-  //   }
 
    /**Get all District list base on the selected state */
    PopulateDistrict(arg)
@@ -182,6 +167,7 @@ export class FiltersComponent implements OnInit {
         });
       this._SearchCriteria.CrossingID = null;
       this._SearchCriteria.CrossingTypeName = this.GetLookupValue(this._CrossingDetails.CrossingTypes,this._SearchCriteria.CrossingType);
+      this.CrossingChanged.emit(this._SearchCriteria); 
     }
 
   GetOwnerNamesForSurvey(argSurveyId)
