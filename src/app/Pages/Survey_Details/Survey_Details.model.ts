@@ -1,25 +1,3 @@
-export class ShowUploadedDocModel{
-    DisplayDocument : DisplayDocument[];
-    constructor() 
-    {
-        this.DisplayDocument = [];
-    }
-}
-/**pre engineering datatable model */
-export class DisplayDocument{
-    DocumentName : string;
-    DocumentType : any;
-}
-
-/**upload document  */
-export class UploadDocument {
-    ID : any;
-    Doctype : string;
-    DocumentName : string;
-    FileNo : any;
-    NoficationNumber : any;
-    
- }
 /**pre-Engineering category datamodel */
 export class CategoryDataModel{
     Categories :CategoryColl[];

@@ -220,9 +220,9 @@ export class SurveyDetailsComponent implements OnInit {
       this._ShowSurveyDetailsDiv = true;
   }
 
-  ActiveTab(evt){
-      //console.log('evte',evt);
-      console.log('ActiveTab ID=>', evt.nextId)
+  ActiveTab(evt)
+    {
+      this.Utility.LogText2('ActiveTab ID=>', evt.nextId)
     }
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any

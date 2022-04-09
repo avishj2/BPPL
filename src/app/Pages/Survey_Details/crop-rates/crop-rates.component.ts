@@ -127,12 +127,15 @@ export class CropRatesComponent implements OnInit {
 
   GetAllCrops()
     {
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetAllCropsAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._CropDetailsModel  = response;
         this.ReloadDatatable();
+        this.CommonService.hideSpinnerLoading();
         },error => {
           this.Utility.LogText(error);
+          this.CommonService.hideSpinnerLoading();
         });
     }  
 
@@ -161,7 +164,7 @@ export class CropRatesComponent implements OnInit {
    
   SaveDetails()
     {
-      this.CommonService.ShowSpinner();
+      this.CommonService.ShowSpinnerLoading();
       this._CropsRateModel.VillageId = this._SearchCriteria.VillageId;
       this._CropsRateModel.CropLookupId = Number(this._CropsRateModel.CropLookupId);
       this._CropsRateModel.SeasonId = Number(this._CropsRateModel.SeasonId);
@@ -195,12 +198,12 @@ export class CropRatesComponent implements OnInit {
               
             }   
         }
+        this.CommonService.hideSpinnerLoading();
         this. _AddNewCropRates = false;
     }
 
   DeleteCropRates(arg)
     {
-      this.CommonService.ShowSpinner();
       let url = this.urlService.DeleteCropsAPI + arg.CropId + '&villageId='+ arg.VillageId;
       this.httpService.get(url,null).subscribe(response => {
         let CropDetails : any = response;

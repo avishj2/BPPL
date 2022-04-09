@@ -41,6 +41,24 @@ export class APIUtilityService {
         this.utilityService.LogText2("error",error);
         alert(error.error.Message);
       });
-    } 
+    }
+
+    
+  /**
+   * @param argURL  URL for the API
+   * @param argParams alldocument collection
+   * @param argDoc single doc
+   * */    
+  DownloadDocument(argURL)
+    {
+      let link = document.createElement('a');
+      link.setAttribute('type', 'hidden');
+      link.setAttribute("target","_blank");
+      link.href = argURL;
+      link.download = "C:/Users/admin/Downloads/";
+      document.body.appendChild(link);
+      link.click();
+      link.remove(); 
+    }
 }
 

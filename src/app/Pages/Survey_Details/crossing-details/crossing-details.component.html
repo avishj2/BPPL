@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-lg-3">
                     <label class ="Label">Crossing Chainage(Km)</label>
-                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.CrossingChainage" [ngModelOptions]="{standalone: true}">
+                    <input type="text"*ngIf="_DisabledCrossingInputField != true" class="form-control"[(ngModel)]="_CrossingDataModel.CrossingChainage" [ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
                     <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
                         {{this._CrossingDataModel.CrossingChainage}}
                     </div>

@@ -5,7 +5,7 @@
 <app-child-view-crossing *ngIf="_ShowChildViewpage == true"[filterdata]="_SearchCriteria">
 </app-child-view-crossing>
 
-<div *ngIf="_ShowChildViewpage != true">
+<div *ngIf="_ShowChildViewpage == false">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
         <thead>
             <tr>

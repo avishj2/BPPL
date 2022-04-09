@@ -1,26 +1,39 @@
-<!-- <app-filters></app-filters> -->
-<br>
-datatable
-<!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="stripe table table-striped table-bordered" width="98%">
-    <thead>
-            <tr>           
-            </tr>
-    </thead>
-    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length != 0">
-        <tr *ngFor="let item of _VillageDetailsDataModel.VillageChainage">           
-            <td *ngFor="let data of GetVillageData()">{{item[data]}}</td>
-        </tr>
-    </tbody>
-    <tbody *ngIf="_VillageDetailsDataModel.VillageChainage?.length == 0">
-        <tr>
-            <td colspan="3" class="no-data-available">No data!</td>
-        </tr>
-    </tbody>
-</table> -->
-<p>
-    <button type="button" class="btn waves-effect waves-light blue" (click)="displayToConsole()">
-      Display the DataTable instances in the console
-    </button>
-    </p>
-    <table id="first-table" datatable [dtOptions]="dtOptions[0]" class="row-border hover"></table>
-    <table id="second-table" datatable [dtOptions]="dtOptions[1]" class="row-border hover"></table>
+<div>  
+      <table class="table" id="pdfTable" #pdfTable>  
+          <tr>  
+            <th>Column1</th>  
+            <th>Column2</th>  
+            <th>Column3</th>  
+          </tr>  
+          <tr>  
+            <td style="color:red">Row 1</td>  
+            <td>Row 1</td>  
+            <td>Row 1</td>  
+          </tr>  
+          <tr>  
+            <td>Row 2</td>  
+            <td>Row 2</td>  
+            <td>Row 2</td>  
+          </tr>  
+          <tr>  
+            <td>Row 3</td>  
+            <td>Row 3</td>  
+            <td>Row 3</td>  
+          </tr>  
+          <tr>  
+            <td>Row 4</td>  
+            <td>Row 4</td>  
+            <td>Row 4</td>  
+          </tr>  
+          <tr>  
+            <td>Row 5</td>  
+            <td>Row 5</td>  
+            <td>Row 5</td>  
+          </tr>  
+          <tr>  
+            <td>Row 6</td>  
+            <td>Row 6</td>  
+            <td>Row 6</td>  
+          </tr>  
+        </table>  
+  </div>  

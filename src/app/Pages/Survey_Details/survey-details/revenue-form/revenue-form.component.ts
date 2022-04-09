@@ -48,7 +48,7 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void 
   {
-    console.log("FromParentData=>",this.SurveyDropDownsData.RevenueFormTypes);
+    this.Utility.LogText2("FromParentData=>",this.SurveyDropDownsData.RevenueFormTypes);
     this._AllSurveyDetails.Result.SurveyDocuments = this.AllSurveyDetails.Result.SurveyDocuments;
     this.rerenderDataTable();
   }
@@ -104,14 +104,7 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
   DownloadDocument(arg)
   {
     let url = this.urlService.DownloadRevDocAPI + arg.DocumentId;
-    let link = document.createElement('a');
-    link.setAttribute('type', 'hidden');
-    link.setAttribute("target","_blank");
-    link.href = url;
-    link.download = "C:/Users/admin/Downloads/";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    this.APIUtilityService.DownloadDocument(url);
   }
 
   SetParentData()

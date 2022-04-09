@@ -417,12 +417,10 @@ export class MasterDetailsComponent implements AfterViewInit,OnDestroy, OnInit {
 
   ngAfterViewInit(): void {
     this.dtTrigger.next();
-    console.log('ngAfterViewInit');
   }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    console.log('ngOnDestroy');
     this.dtTrigger.unsubscribe();
   }
 
@@ -444,7 +442,6 @@ export class MasterDetailsComponent implements AfterViewInit,OnDestroy, OnInit {
      * otherwise hide it
    */
     GetChildData(data){  
-      console.log("GetChildData", data);
       if(data != null && data != undefined) {
         this._showTabs = true;
       }  

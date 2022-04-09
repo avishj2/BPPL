@@ -10,6 +10,7 @@ import {AdHocPaymentDropDownsModel ,AdHocPaymentModel, AdHocPaymentRespDataModel
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
+import { CommonService} from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-adhoc-payment-details',
@@ -46,6 +47,8 @@ export class AdhocPaymentDetailsComponent implements OnInit {
     private httpService: HttpService,
     public Utility :UtilityService,
     public APIUtilityService: APIUtilityService,
+    public CommonService : CommonService,
+    
   ) {
       this._FilterControls = new FilterControls();
       this.SetFilterControls();
@@ -103,15 +106,12 @@ export class AdhocPaymentDetailsComponent implements OnInit {
     {
       //this.Utility.LogText(event);
       this._SearchCriteria = event;
-      if(this._SearchCriteria.SurveyID != null)
+      if(this._SearchCriteria.OwnerID != null)
         {
-          this._ShowPaymentDetailsDiv = true;
-          this._AddNewPaymentDetails= false;
-          this.DisableInputField = true;
           this.GetAllAdHocPayments();
         }
       else{
-        alert("Please select Survey Number");
+        alert("Please select Owner Name");
       }
     }
 
@@ -121,25 +121,25 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       this.httpService.get(url,null).subscribe(response => {
         this._AdHocPaymentDropDownsModel = response;
         },error => {
-          console.log("GetAdHocPaymentDropDownsAPI error",error);
+          this.Utility.LogText2("GetAdHocPaymentDropDownsAPI error",error);
         });
     }
 
 
     GetAllAdHocPayments()
-    {
-      let url = this.urlService.GetAllAdHocPaymentsAPI + this._SearchCriteria.OwnerID;
-      this.httpService.HttpGetRequest(url,this.GetAllAdHocPaymentsCallBack.bind(this),null); 
-    }
+      {
+        this.CommonService.ShowSpinnerLoading();
+        let url = this.urlService.GetAllAdHocPaymentsAPI + this._SearchCriteria.OwnerID;
+        this.httpService.HttpGetRequest(url,this.GetAllAdHocPaymentsCallBack.bind(this),null); 
+      }
     
     GetAllAdHocPaymentsCallBack(dtas){
       if (dtas != null)
         {
           this._AdHocPaymentModel = dtas;
-        }
-      else{
-        // this._AdHocPaymentModel = new AdHocPaymentModel();
-        // this._AdHocPaymentModel.Documents = [];
+          this._ShowPaymentDetailsDiv = true;
+          this._AddNewPaymentDetails = false;
+          this.DisableInputField = true;
         }
       this.ReloadDatatable();
     }
@@ -149,17 +149,18 @@ export class AdhocPaymentDetailsComponent implements OnInit {
      */
   AddNewPaymentDetails()
     {
-      if(!this._SearchCriteria.hasOwnProperty('OwnerID'))
+      if (!(this._SearchCriteria && this._SearchCriteria.OwnerID)) 
       {
-        alert("Please select Owner name!!");
-      }else
-      {
-        this.DisableInputField = false;
-        this._AdHocPaymentModel = new AdHocPaymentModel();
-        this._AddNewPaymentDetails = true;
-        this._ShowPaymentDetailsDiv = false;
+        alert("Please Select Survey Owner !");
+        return;
       }
-      
+      else
+        {
+          this.DisableInputField = false;
+          this._AdHocPaymentModel = new AdHocPaymentModel();
+          this._AddNewPaymentDetails = true;
+          this._ShowPaymentDetailsDiv = false;  
+        }
     }
     /**
     * 
@@ -173,6 +174,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
 
   SavePaymentDetails()
     {
+      this.CommonService.ShowSpinnerLoading();
       this._AdHocPaymentModel.SurveyId = this._SearchCriteria.SurveyID;
       this._AdHocPaymentModel.SurveyOwnerId = this._SearchCriteria.OwnerID;
       let url = this.urlService.AddOrUpdateAdHocPaymentAPI;     
@@ -183,35 +185,35 @@ export class AdhocPaymentDetailsComponent implements OnInit {
   * @param dtas 
   */
   AddOrUpdatePaymentCallBack(dtas)
-  {
-    if (dtas != null)
-      {
-        let RespDataModel : AdHocPaymentRespDataModel = dtas;
-        if (RespDataModel.StatusCode != 200) 
-          {
-            alert(RespDataModel.Message);
-          }
-        if (this._AddNewPaymentDetails == false)
-          {
-            alert("Payment updated sucessfully!!");
-            this.DisableInputField = true;
-          }
-        else
-          {
-            alert("Payment added sucessfully!!");
-            this.DisableInputField = true;
-            this._AdHocPaymentModel.AdHocPaymentId  = RespDataModel.Result.AdHocPaymentId;
-            this._AddNewPaymentDetails = false;
-          } 
-          this.ReloadDatatable();    
-      }
-      this._AddNewPaymentDetails = false;
-      this._ShowPaymentDetailsDiv = true;
-  }
+    {
+      if (dtas != null)
+        {
+          let RespDataModel : AdHocPaymentRespDataModel = dtas;
+          if (RespDataModel.StatusCode != 200) 
+            {
+              alert(RespDataModel.Message);
+            }
+          if (this._AddNewPaymentDetails == false)
+            {
+              alert("Payment updated sucessfully!!");
+              this.DisableInputField = true;
+            }
+          else
+            {
+              alert("Payment added sucessfully!!");
+              this.DisableInputField = true;
+              this._AdHocPaymentModel.AdHocPaymentId  = RespDataModel.Result.AdHocPaymentId;
+              this._AddNewPaymentDetails = false;
+            }   
+        }
+        this._AddNewPaymentDetails = false;
+        this._ShowPaymentDetailsDiv = true;
+        this.ReloadDatatable();  
+    }
 
   DeletePaymentDetails()
     {
-      let url = this.urlService.DeleteAdHocPaymentAPI + this._AdHocPaymentModel.AdHocPaymentId + '&surveyOwnerId='+ this._SearchCriteria.OwnerID;
+      let url = this.urlService.DeleteAdHocPaymentAPI + this._AdHocPaymentModel.AdHocPaymentId + '&surveyOwnerId='+ this._AdHocPaymentModel.SurveyOwnerId;
       this.httpService.get(url,null).subscribe(response => {
         let PaymentDetails : any = response;
         if (PaymentDetails.StatusCode != 200) 
@@ -277,14 +279,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
   DownlaodDocument(doc)
     {
       let url = this.urlService.DownloadPaymentAPI + doc.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 
   DeleteDocument(doc)

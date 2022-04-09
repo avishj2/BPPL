@@ -116,7 +116,7 @@ export class SurveyDocumentsComponent implements OnInit {
             // dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
               dtElement.dtInstance.then((dtInstance: any) => {
               dtInstance.destroy(); 
-              console.log(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
+              this.Utility.LogText(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
           });
         });
         this.dtTrigger1.next(); 
@@ -189,9 +189,8 @@ export class SurveyDocumentsComponent implements OnInit {
           
         }
         this.ViewInit()
-        console.log("this.dtElements",this.dtElements)
+        this.Utility.LogText2("this.dtElements",this.dtElements)
         this._dtElements = this.dtElements
-        console.log("new _dtElements==>",this._dtElements)
         // this.ngOnDestroy()
     }
 
@@ -263,14 +262,7 @@ GetProjectReports()
   DownloadDocument(arg)
     {
       let url = this.urlService.DownloadProjectReportAPI + arg.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 
     
@@ -337,14 +329,7 @@ UploadAlignmentSheet(fileInput)
   DownloadAlignDoc(arg)
     {
       let url = this.urlService.DownloadAlignmentSheetAPI + arg.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 
   DeleteAlignmentDoc(arg)
@@ -410,14 +395,7 @@ UploadAlignmentSheet(fileInput)
   DownloadAwardDoc(arg)
     {
       let url = this.urlService.DownloadAwardAndMutationsAPI + arg.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 
   DeleteAwardDoc(arg)

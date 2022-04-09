@@ -146,16 +146,17 @@ IsDtInitialized: boolean = false;
   }
 
   /**get village details based on the selected filter values */
-  GetVillageByVillageId() {
-    let url = this.urlService.GetVillageByVillageIdAPI + this._SearchCriteria.VillageId;
-    this.httpService.get(url, null).subscribe(response => {
-      this._VillageModel = response;
-      this.ReloadDatatable();
-      this.Utility.LogText(this._VillageModel);
-    }, error => {
-      this.Utility.LogText(error);
-    });
-  }
+  GetVillageByVillageId() 
+    {
+      let url = this.urlService.GetVillageByVillageIdAPI + this._SearchCriteria.VillageId;
+      this.httpService.get(url, null).subscribe(response => {
+        this._VillageModel = response;
+        this.ReloadDatatable();
+        this.Utility.LogText(this._VillageModel);
+      }, error => {
+        this.Utility.LogText(error);
+      });
+    }
 
   /**add NEW village details in database 
   *  show Add details button 
@@ -177,15 +178,17 @@ IsDtInitialized: boolean = false;
   }
 
   /**chainage details edit separate */
-  EditOnlyChaingeDetails(arg: VillageChainageModel) {
-    // this.CalculateGreaterValue(arg);
-    arg.IsEdit = true;
-  }
+  EditOnlyChaingeDetails(arg: VillageChainageModel) 
+    {
+      // this.CalculateGreaterValue(arg);
+      arg.IsEdit = true;
+    }
 
   /**1. when add new village or updated village information call AddOrUpdateVillage API
     *2. At the time of editing chainage details save separately
   */
-  SaveVillageDetails() {
+  SaveVillageDetails() 
+  {
     this._IsFirstLoad = true; //for time validation
       if (!this.myFormGroup.valid)
         {
@@ -224,23 +227,26 @@ IsDtInitialized: boolean = false;
   /**1.ChangeTo value will be more than chaniageFrom 
    * 2. Auto calculate lengthinkm, it will be difference b/w chaniageFrom and ChangeTo
   */
-  CalculateGreaterValue(arg: VillageChainageModel) {
-    if (arg.ChainageFrom && arg.ChainageTo) {
-      /**auto calculate value of the LengthInKm*/
-      arg.LengthInKm = arg.ChainageTo - arg.ChainageFrom;
+  CalculateGreaterValue(arg: VillageChainageModel) 
+    {
+      if (arg.ChainageFrom && arg.ChainageTo) {
+        /**auto calculate value of the LengthInKm*/
+        arg.LengthInKm = arg.ChainageTo - arg.ChainageFrom;
+      }
     }
-  }
 
   /**delete village details base on the selected villageID */
   DeleteVillageDetails() 
   {
-    let url = this.urlService.DeleteVillageAPI + this._SearchCriteria.VillageId;
+    let url = this.urlService.DeleteVillageAPI + this._VillageModel.VillageId;
     this.httpService.get(url, null).subscribe(response => {
       let villageDeleteResponse: any = response;
-      if (villageDeleteResponse.StatusCode != 200) {
+      if (villageDeleteResponse.StatusCode != 200) 
+      {
         alert(villageDeleteResponse.Message);
       }
-      else {
+      else 
+      {
         alert("Villge deleted successfully !");
       }
       this.Utility.LogText("DeleteVillage success:" + villageDeleteResponse);
@@ -292,9 +298,10 @@ IsDtInitialized: boolean = false;
     }
   }
 
-  CancelChainageReq(data: VillageChainageModel) {
-    data.IsEdit = false;
-  }
+  CancelChainageReq(data: VillageChainageModel) 
+    {
+      data.IsEdit = false;
+    }
 
 
   /**At the time of chainage details editing delete single(row) 

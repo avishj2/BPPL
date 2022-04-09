@@ -48,6 +48,7 @@ export class SearchCriteria
         CrossingType : any;
         CrossingID : any;
         OwnerID : any;
+        OwnerName : string;
         TypeOfLand : any;
         VillageName : string;
         CrossingTypeName : string;

@@ -34,11 +34,11 @@ export class HttpService {
       this.http.post(argURL, argParams)
       .subscribe((data) => {
         let dtas  = data;
+        this.commonService.hideSpinnerLoading();
         if(successCallBackFunction)
         {
            successCallBackFunction(data);
         }
-        this.commonService.hideSpinnerLoading();
       }, error => {
             this.utilityService.LogText(error);   
             if(errorCallBackFunction)
@@ -71,11 +71,11 @@ export class HttpService {
       let response = await this.http.post(argURL, argParams)
       .toPromise().then(data => {
         let dtas: any = data;
+        this.commonService.hideSpinnerLoading();
         if(successCallBackFunction)
         {
             successCallBackFunction(data);
-        }
-        this.commonService.hideSpinnerLoading();
+        }        
         return dtas;
       },  error => {
     
@@ -98,11 +98,11 @@ export class HttpService {
       this.http.get(argURL, argOptions)
       .subscribe(data => {
         let dtas: any = data;
+        this.commonService.hideSpinnerLoading();
         if(successCallBackFunction)
         {
            successCallBackFunction(data);
         }
-        this.commonService.hideSpinnerLoading();
       }, error => {
         this.utilityService.LogText(error);   
         if(errorCallBackFunction)
@@ -117,7 +117,7 @@ export class HttpService {
         {
            alert("Something Went Wrong ! Please try again.");
         }
-        this.commonService.hideLoading();
+        this.commonService.hideSpinnerLoading();
       });
     
    

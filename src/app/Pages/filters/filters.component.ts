@@ -62,10 +62,10 @@ export class FiltersComponent implements OnInit {
       let url = this.urlService.GetAllStatesAPI; 
       //===== method 2(without callback function)=====
       this.httpService.get(url,null).subscribe(res => {
-        console.log('data response', res);
+        this.Utility.LogText2('data response', res);
         this._StateDataModel = res;
         },error => {
-          console.log("error",error);
+          this.Utility.LogText2("error",error);
         });
     }
 
@@ -83,10 +83,10 @@ export class FiltersComponent implements OnInit {
       this.ResetDropDowns(DropDownChangeEnum.StateChanged);
       let url = this.urlService.GetDistrictByStateAPI + arg;  
       this.httpService.get(url,null).subscribe(response => {
-        console.log('data response', response);
+        this.Utility.LogText2('data response', response);
         this._DistrictDetails = response;
         },error => {
-          console.log("error",error);
+          this.Utility.LogText2("error",error);
         });
     }
 
@@ -98,7 +98,7 @@ export class FiltersComponent implements OnInit {
       this.httpService.get(url,null).subscribe(response => {
         this._TalukaDetails = response;
         },error => {
-          console.log("GetTalukaByDistrictAPI error",error);
+          this.Utility.LogText2("GetTalukaByDistrictAPI error",error);
         });
     }
 
@@ -110,7 +110,7 @@ export class FiltersComponent implements OnInit {
       this.httpService.get(url,null).subscribe(response => {
         this._VillageDetails = response;
         },error => {
-          console.log("GetVillageByTalukaAPI error",error);
+          this.Utility.LogText2("GetVillageByTalukaAPI error",error);
         }); 
     }
   
@@ -124,7 +124,7 @@ export class FiltersComponent implements OnInit {
           this.httpService.get(url,null).subscribe(response => {
             this._SurveyDetails = response;
             },error => {
-              console.log("GetVillageByTalukaAPI error",error);
+              this.Utility.LogText2("GetVillageByTalukaAPI error",error);
             });
         }
       if(this.filterControls.ShowLandTypes == true)
@@ -153,7 +153,7 @@ export class FiltersComponent implements OnInit {
       this.httpService.get(url,null).subscribe(response => {
         this._CrossingDetails = response;
         },error => {
-          console.log("GetCrossingDropDownsAPI error",error);
+          this.Utility.LogText2("GetCrossingDropDownsAPI error",error);
         });
     }
 
@@ -163,7 +163,7 @@ export class FiltersComponent implements OnInit {
       this.httpService.get(url,null).subscribe(response => {
         this._CrossingIds = response; 
         },error => {
-          console.log("GetAllCrossingsAPI error",error); 
+          this.Utility.LogText2("GetAllCrossingsAPI error",error); 
         });
       this._SearchCriteria.CrossingID = null;
       this._SearchCriteria.CrossingTypeName = this.GetLookupValue(this._CrossingDetails.CrossingTypes,this._SearchCriteria.CrossingType);
@@ -176,7 +176,7 @@ export class FiltersComponent implements OnInit {
       this.httpService.get(url,null).subscribe(response => {
         this._OwnerDetails = response; 
         },error => {
-          console.log("GetAllCrossingsAPI error",error); 
+          this.Utility.LogText2("GetAllCrossingsAPI error",error); 
         });
       this._SearchCriteria.SurveyName = this.GetLookupValue(this._SurveyDetails, argSurveyId)
     }
@@ -187,7 +187,7 @@ export class FiltersComponent implements OnInit {
       this.httpService.get(url,null).subscribe(response => {
         this._LandTypeDetails = response; 
         },error => {
-          console.log("GetLandTypesByVillageAPI error",error); 
+          this.Utility.LogText2("GetLandTypesByVillageAPI error",error); 
         });
     }
 
@@ -203,6 +203,10 @@ export class FiltersComponent implements OnInit {
         }
       }
 
+    OwnerNameChange(event)
+      {
+        this._SearchCriteria.OwnerName = this.GetLookupValue(this._OwnerDetails, event);
+      }
     /**
     * pass data child(filter) component to parent component 
     **/

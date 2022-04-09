@@ -99,13 +99,6 @@ export class ViewAlignmentReportsComponent implements OnInit {
   DownloadDocument(arg)
     {
       let url = this.urlService.DownloadAlignmentSheetAPI + arg.DocumentId;
-      let link = document.createElement('a');
-      link.setAttribute('type', 'hidden');
-      link.setAttribute("target","_blank");
-      link.href = url;
-      link.download = "C:/Users/admin/Downloads/";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      this.APIUtilityService.DownloadDocument(url);
     }
 }

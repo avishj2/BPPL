@@ -55,6 +55,7 @@ import { ViewOwnerDetailsComponent } from './Pages/View_Details/view-survey-tabs
 import { ViewCompensationDetailsComponent } from './Pages/View_Details/view-survey-tabs/view-compensation-details/view-compensation-details.component';
 import { ViewRevenueFormsComponent } from './Pages/View_Details/view-survey-tabs/view-revenue-forms/view-revenue-forms.component';
 import { ViewRestorationComponent } from './Pages/View_Details/view-survey-tabs/view-restoration/view-restoration.component';
+import { LAQPermanentComponent } from './Pages/View_Details/laqpermanent/laqpermanent.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { ViewRestorationComponent } from './Pages/View_Details/view-survey-tabs/
     ViewOwnerDetailsComponent,
     ViewCompensationDetailsComponent,
     ViewRevenueFormsComponent,
-    ViewRestorationComponent
+    ViewRestorationComponent,
+    LAQPermanentComponent
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [
