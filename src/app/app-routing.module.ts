@@ -10,6 +10,7 @@ import { VillageDetailsComponent } from './Pages/Survey_Details/village-details/
 import { CrossingDetailsComponent } from './Pages/Survey_Details/crossing-details/crossing-details.component';
 import { TerminalsDetailsComponent } from './Pages/Survey_Details/terminals-details/terminals-details.component';
 import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/adhoc-payment-details.component';
+import { AddAdhocdetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/add-adhocdetails/add-adhocdetails.component';
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
 import { TestLoginComponent } from './test-login/test-login.component';
 import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/survey-details.component';
@@ -39,10 +40,21 @@ const routes: Routes = [
       {path: 'CrossingDetails', component: CrossingDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Crossing Details'}},
       {path: 'AGI_Terminals', component: TerminalsDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / AGI/Terminals Details'}},
       {path: 'SurveyDocuments', component: SurveyDocumentsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Survey-Documents'}},
-      {path: 'Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'}},
+
+      //first method
+      // {path: 'View_Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'},
+      // children: [
+      //   {path: 'Add_Adhoc_Details', component: AddAdhocdetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'}}
+      // ]},
+
+      //second method
+      {path: 'View_Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'}},
+      {path: 'Add_Adhoc_Details', component: AddAdhocdetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'}},
+
       {path: 'SurveyDetails', component: SurveyDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Survey Number'}},
       {path: 'CropRates', component: CropRatesComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Crop Rates'}},
       {path: 'LandRates', component: LandRatesComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Crop Rates'}},
+      
       /**View details section components */
       {path: 'VeiwVillageDetails', component: ViewVillageDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / Village Details'}},
       {path: 'ViewCrossingDetails', component: ViewCrossingDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Crossing Details'}},
@@ -56,7 +68,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: "ignore",
+    useHash: true,
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

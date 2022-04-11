@@ -230,21 +230,25 @@ export class FiltersComponent implements OnInit {
             this._TalukaDetails = [];
             this._VillageDetails = [];
             this._SurveyDetails =[];
+            this._OwnerDetails = [];
             this.ResetSelectedValue(argSelection);
             break;
           case DropDownChangeEnum.DistrictChanged: 
             this._TalukaDetails = [];
             this._VillageDetails = [];
             this._SurveyDetails =[];
+            this._OwnerDetails = [];
             this.ResetSelectedValue(argSelection);
             break;
           case DropDownChangeEnum.TalukaChanged: 
             this._VillageDetails = [];
             this._SurveyDetails =[];
+            this._OwnerDetails = [];
             this.ResetSelectedValue(argSelection);
             break;
           case DropDownChangeEnum.VillageChanged: 
             this._SurveyDetails =[];
+            this._OwnerDetails = [];
             this.ResetSelectedValue(argSelection);
             break;
         }
@@ -259,18 +263,26 @@ export class FiltersComponent implements OnInit {
                 this._SearchCriteria.TalukaId = null;
                 this._SearchCriteria.VillageId = null;
                 this._SearchCriteria.SurveyID = null;
+                this._SearchCriteria.OwnerID = null;
+                this._SearchCriteria.OwnerName = null;
                 break;
               case DropDownChangeEnum.DistrictChanged:
                 this._SearchCriteria.TalukaId = null;
                 this._SearchCriteria.VillageId = null;
                 this._SearchCriteria.SurveyID = null;
+                this._SearchCriteria.OwnerID = null;
+                this._SearchCriteria.OwnerName = null;
                 break;
               case DropDownChangeEnum.TalukaChanged:
                 this._SearchCriteria.VillageId = null;
                 this._SearchCriteria.SurveyID = null;
+                this._SearchCriteria.OwnerID = null;
+                this._SearchCriteria.OwnerName = null;
                 break;
               case DropDownChangeEnum.VillageChanged:
                 this._SearchCriteria.SurveyID = null;
+                this._SearchCriteria.OwnerID = null;
+                this._SearchCriteria.OwnerName = null;
                 break;
           }
         }

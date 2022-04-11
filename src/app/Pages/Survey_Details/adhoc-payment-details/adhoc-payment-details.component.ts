@@ -1,16 +1,18 @@
-import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ViewChildren } from '@angular/core';
+import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ChangeDetectorRef } from '@angular/core';
 import { SearchCriteria, FilterControls} from 'src/app/Model/Filters.model';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { UtilityService } from 'src/app/services/utility.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { HttpService } from '../../../services/http.service';
-import { CommonDropdownModel, CommonDocDataModel} from 'src/app/Model/Base.model';
-import {AdHocPaymentDropDownsModel ,AdHocPaymentModel, AdHocPaymentRespDataModel} from 'src/app/Model/Adhoc.model';
+import { CommonDropdownModel} from 'src/app/Model/Base.model';
+import {AdHocPaymentDropDownsModel ,AdHocPaymentModel} from 'src/app/Model/Adhoc.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { CommonService} from 'src/app/services/common.service';
+import {CommonDtoService} from 'src/app/services/common.dto.service';
+
 
 @Component({
   selector: 'app-adhoc-payment-details',
@@ -19,15 +21,11 @@ import { CommonService} from 'src/app/services/common.service';
 })
 
 export class AdhocPaymentDetailsComponent implements OnInit {
-  DisableInputField : boolean = true;
   _ShowPaymentDetailsDiv: boolean = false;
   _FilterControls : FilterControls;
   _SearchCriteria : SearchCriteria;
-  _AddNewPaymentDetails : boolean = false;
-
    /**data table properties  */
    @ViewChild(DataTableDirective, {static: false})
-   //@ViewChildren(DataTableDirective, {static: false})
    dtElement: DataTableDirective;
    dtOptions: DataTables.Settings = {};
    dtTrigger: Subject<any> = new Subject();
@@ -37,24 +35,27 @@ export class AdhocPaymentDetailsComponent implements OnInit {
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it?";
   _AdHocPaymentDropDownsModel : AdHocPaymentDropDownsModel;
-  _AdHocPaymentModel : AdHocPaymentModel;
-  _Paymentdoc : CommonDocDataModel ;
-  Paymentfile: File = null; // Variable to store file
+  _AdHocPaymentDetails : AdHocPaymentModel[];
+
 
   constructor(
     public urlService: UrlService,
     private router: Router,
+    private route: ActivatedRoute,
     private httpService: HttpService,
     public Utility :UtilityService,
     public APIUtilityService: APIUtilityService,
     public CommonService : CommonService,
+    private cd: ChangeDetectorRef,
+    public CommonDtoService : CommonDtoService,
     
   ) {
       this._FilterControls = new FilterControls();
+      this._SearchCriteria = new SearchCriteria();
       this.SetFilterControls();
       this._AdHocPaymentDropDownsModel = new AdHocPaymentDropDownsModel();
-      this._AdHocPaymentModel = new AdHocPaymentModel();
-      this._Paymentdoc = new CommonDocDataModel();
+      this._AdHocPaymentDetails = [];
+
     }
 
   /**hide/show filter menu based on the component requirement */
@@ -69,14 +70,17 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       this._FilterControls.ShowOwnerName = true;
     }
 
-  ngOnInit(): void {
-    this.GetAdHocPaymentDropDowns();
-  }
+  ngOnInit(): void 
+    {
+      this.GetAdHocPaymentDropDowns();
+      this.Utility.LogText("view payment page")
+    }
 
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
     }
+    
 
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
@@ -124,24 +128,24 @@ export class AdhocPaymentDetailsComponent implements OnInit {
           this.Utility.LogText2("GetAdHocPaymentDropDownsAPI error",error);
         });
     }
-
-
+    
     GetAllAdHocPayments()
       {
         this.CommonService.ShowSpinnerLoading();
         let url = this.urlService.GetAllAdHocPaymentsAPI + this._SearchCriteria.OwnerID;
         this.httpService.HttpGetRequest(url,this.GetAllAdHocPaymentsCallBack.bind(this),null); 
       }
-    
+
+    /** @abstract
+     * 
+     */
     GetAllAdHocPaymentsCallBack(dtas){
       if (dtas != null)
         {
-          this._AdHocPaymentModel = dtas;
+          this._AdHocPaymentDetails = dtas;
           this._ShowPaymentDetailsDiv = true;
-          this._AddNewPaymentDetails = false;
-          this.DisableInputField = true;
         }
-      this.ReloadDatatable();
+        this.ReloadDatatable();
     }
 
     /**
@@ -156,64 +160,40 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       }
       else
         {
-          this.DisableInputField = false;
-          this._AdHocPaymentModel = new AdHocPaymentModel();
-          this._AddNewPaymentDetails = true;
+          this._SearchCriteria.AddPaymentDoc = false;
+          this._SearchCriteria.AddNewPayment = true;
+          this.CommonDtoService._SearchCriteriaDTO = this._SearchCriteria;
           this._ShowPaymentDetailsDiv = false;  
         }
+    }
+
+
+  setData(argdata)
+    {
+      this._SearchCriteria.AddNewPayment = false;
+      this.CommonDtoService._SearchCriteriaDTO = this._SearchCriteria;
+      this.CommonDtoService._AdHocPaymentDataDTO = argdata;
     }
     /**
     * 
    */
-  EditPaymentDetails()
+    ViewPaymentDetails(argdata)
     {
-      this.DisableInputField = false;
-      this._AddNewPaymentDetails = false;
+      this._SearchCriteria.AddPaymentDoc = false;
+      this.setData(argdata);
     }
 
 
-  SavePaymentDetails()
+    UploadDocuments(argdata)
     {
-      this.CommonService.ShowSpinnerLoading();
-      this._AdHocPaymentModel.SurveyId = this._SearchCriteria.SurveyID;
-      this._AdHocPaymentModel.SurveyOwnerId = this._SearchCriteria.OwnerID;
-      let url = this.urlService.AddOrUpdateAdHocPaymentAPI;     
-      this.httpService.HttpPostRequest(url,this._AdHocPaymentModel,this.AddOrUpdatePaymentCallBack.bind(this),null);
+      this._SearchCriteria.AddPaymentDoc = true;
+      this.setData(argdata);
     }
 
-    /**
-  * @param dtas 
-  */
-  AddOrUpdatePaymentCallBack(dtas)
-    {
-      if (dtas != null)
-        {
-          let RespDataModel : AdHocPaymentRespDataModel = dtas;
-          if (RespDataModel.StatusCode != 200) 
-            {
-              alert(RespDataModel.Message);
-            }
-          if (this._AddNewPaymentDetails == false)
-            {
-              alert("Payment updated sucessfully!!");
-              this.DisableInputField = true;
-            }
-          else
-            {
-              alert("Payment added sucessfully!!");
-              this.DisableInputField = true;
-              this._AdHocPaymentModel.AdHocPaymentId  = RespDataModel.Result.AdHocPaymentId;
-              this._AddNewPaymentDetails = false;
-            }   
-        }
-        this._AddNewPaymentDetails = false;
-        this._ShowPaymentDetailsDiv = true;
-        this.ReloadDatatable();  
-    }
 
-  DeletePaymentDetails()
+  DeletePaymentDetails(argdata)
     {
-      let url = this.urlService.DeleteAdHocPaymentAPI + this._AdHocPaymentModel.AdHocPaymentId + '&surveyOwnerId='+ this._AdHocPaymentModel.SurveyOwnerId;
+      let url = this.urlService.DeleteAdHocPaymentAPI + argdata.AdHocPaymentId + '&surveyOwnerId='+ argdata.SurveyOwnerId;
       this.httpService.get(url,null).subscribe(response => {
         let PaymentDetails : any = response;
         if (PaymentDetails.StatusCode != 200) 
@@ -226,68 +206,9 @@ export class AdhocPaymentDetailsComponent implements OnInit {
           }
         },error => {
           this.Utility.LogText(error);
-        });  
+        });
+        this.ReloadDatatable();  
     }
-
-  onChangeDocument(event)
-    {
-      this.Paymentfile = event.target.files[0];
-    }
-
-  FileUpload(fileInput)
-    {
-      let Doc : CommonDocDataModel;
-      if(!this.Paymentfile)
-      {
-        alert("Please select file!!");
-        return;
-      }
-      if(!this._Paymentdoc.Lookupid)
-        {
-          alert("Please select crossing doc type !");
-          return;
-        }
-
-      this._Paymentdoc.RequestId = Number(this._SearchCriteria.OwnerID);
-      this._Paymentdoc.Document = this.Paymentfile;
-      this._Paymentdoc.DocumentId = 0;
-      this._Paymentdoc.ToChainage = '';
-      this._Paymentdoc.FromChainage = '';
-      this._Paymentdoc.Description = '';
-      Doc = this._Paymentdoc;
-
-      /**api call */
-      let url = this.urlService.AddAdHocPaymentDocumentAPI; 
-      this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
-        let DocumentModelResp: CommonDocDataModel[] = response.Result;        
-        this._AdHocPaymentModel.Documents = DocumentModelResp;
-        this.ReloadDatatable();
-        this.Utility.LogText(DocumentModelResp);
-        alert("Document updated sucessfully!!");
-      },error => {
-        this.Utility.LogText(error);
-      });
-      this.FileUploadreset(fileInput)// file object clear
-    }
-  
-  FileUploadreset(element) 
-    {
-      element.value = "";
-      this.Paymentfile = null;
-    }
-    
-  DownlaodDocument(doc)
-    {
-      let url = this.urlService.DownloadPaymentAPI + doc.DocumentId;
-      this.APIUtilityService.DownloadDocument(url);
-    }
-
-  DeleteDocument(doc)
-    {
-      let APIurl = this.urlService.DeleteAdHocPaymentDocumentAPI + doc.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._AdHocPaymentModel.Documents,doc);
-      this.ReloadDatatable();
-    }  
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
     {

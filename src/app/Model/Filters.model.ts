@@ -53,6 +53,8 @@ export class SearchCriteria
         VillageName : string;
         CrossingTypeName : string;
         SurveyName : string;
+        AddNewPayment : boolean;
+        AddPaymentDoc : boolean;
     }
 /**
  * Defines the selection from the dropdown.
