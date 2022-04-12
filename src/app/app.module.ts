@@ -56,6 +56,10 @@ import { ViewCompensationDetailsComponent } from './Pages/View_Details/view-surv
 import { ViewRevenueFormsComponent } from './Pages/View_Details/view-survey-tabs/view-revenue-forms/view-revenue-forms.component';
 import { ViewRestorationComponent } from './Pages/View_Details/view-survey-tabs/view-restoration/view-restoration.component';
 import { LAQPermanentComponent } from './Pages/View_Details/laqpermanent/laqpermanent.component';
+import { AddAdhocdetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/add-adhocdetails/add-adhocdetails.component';
+import { ProjectPageComponent } from './Pages/ProjectManagement/project-page/project-page.component';
+import { CAInfoComponent } from './Pages/ProjectManagement/cainfo/cainfo.component';
+import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details/region-details.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +101,12 @@ import { LAQPermanentComponent } from './Pages/View_Details/laqpermanent/laqperm
     ViewCompensationDetailsComponent,
     ViewRevenueFormsComponent,
     ViewRestorationComponent,
-    LAQPermanentComponent
+    LAQPermanentComponent,
+    AddAdhocdetailsComponent,
+    ProjectPageComponent,
+    CAInfoComponent,
+    RegionDetailsComponent,
+    
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [

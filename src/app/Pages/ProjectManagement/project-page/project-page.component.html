@@ -1,0 +1,173 @@
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Project Details </div> 
+        </div>
+        <div><br>
+            <div class="row"> 
+                <button class="btn-primary" (click)="AddDetails()" data-toggle="modal" data-target="#Modal">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                    Add Project Details
+                </button>
+                <button class="btn-primary" (click)="EditDetails()" data-toggle="modal" data-target="#Modal">
+                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                    Edit Project Details
+                </button>
+                <button class="btn-danger" (click)="DeleteProjectDetails()">
+                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                    Delete Project Details
+                </button>
+            </div><hr>
+            <div class="form-group row">
+                <div class="col-lg-3">
+                    <label class="Label">Project Code</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Start</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">End</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Start Chainage</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">End Chainage</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Length</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Start Date</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">End Date</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Pipeline Code</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Product</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Description</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div> 
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal" id="Modal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <b><i class='fa fa-edit'style='font-size:24px'></i> 
+                    {{_PopupTitle}}
+                    </b>
+                </h5> 
+                <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label class="Label">Project Code</label>
+                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Start</label>
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">End</label>
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Start Chainage</label>
+                        <input   type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">End Chainage</label>
+                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Length</label>
+                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Start Date</label>
+                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">End Date</label>
+                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Pipeline Code</label>
+                        <input type="text"class="form-control" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Product</label>
+                        <input type="text"class="form-control" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Description</label>
+                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary"(click)="SaveProjectDetails()">
+                                Save CA Details  
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+      </div>
+    </div>
+  </div>

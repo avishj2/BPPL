@@ -20,7 +20,6 @@ import { CommonService} from 'src/app/services/common.service';
   styleUrls: ['./crossing-details.component.css']
 })
 export class CrossingDetailsComponent implements OnInit {
-
 _CrossingDataModel : CrossingModel;
 _FilterControls: FilterControls;
 _ShowCrossingDetailsDiv: boolean = false;

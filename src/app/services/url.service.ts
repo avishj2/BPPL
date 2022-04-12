@@ -113,6 +113,10 @@ export class UrlService {
   AddAdHocPaymentDocumentAPI = this.url +'/api/AdHocPayment/AddAdHocPaymentDocument';
   DownloadPaymentAPI = this.url +'/api/AdHocPayment/Download?documentId=';
   DeleteAdHocPaymentDocumentAPI = this.url +'/api/AdHocPayment/DeleteAdHocPaymentDocument?documentId=';
+
+
+
+  NavigateAddEditAdhocDetails ="../Add_Adhoc_Details";
   
 }
 

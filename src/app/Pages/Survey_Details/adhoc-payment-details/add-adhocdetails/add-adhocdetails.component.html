@@ -1,0 +1,180 @@
+<button class="btn-primary" ngbTooltip="Go Back To Payment List"(click)="GoBackToPaymentList()"><i class="fa fa-arrow-left" aria-hidden="true"></i>    Go Back</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button *ngIf="_AddNewPaymentDetails == false"class="btn-primary"title="Edit Details" (click)="EditPaymentDetails()">
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    Edit Payment Details
+</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button *ngIf="_AddNewPaymentDetails == false"class="btn-danger"title="Delete Details" (confirm)="DeletePaymentDetails()"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right">
+    <i class="fa fa-trash" aria-hidden="true"></i>
+    Delete Payment Details
+</button>
+<br><br>
+<form>
+    <div class="card">
+        <div class="innercard"> 
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Adhoc Payment Details - {{this._SearchCriteria.OwnerName}} </div> 
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-3">
+                    <label class="Label">Payment Amount(Rs.)</label>
+                    <input type="text" *ngIf="DisableInputField != true"class="form-control" [(ngModel)]="_AdHocPaymentModel.PaymentAmountRs"[ngModelOptions]="{standalone: true}"appTwoDigitDecimaNumber>
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.PaymentAmountRs}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Cheque Date</label>
+                    <input type="date" *ngIf="DisableInputField != true" class="form-control"[value]="_AdHocPaymentModel.ChequeDate | date:'yyyy-MM-dd'" (input)="_AdHocPaymentModel.ChequeDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.ChequeDate | date:'mediumDate'}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Amount In Words</label>
+                    <input type="text"  *ngIf="DisableInputField != true" class="form-control" [(ngModel)]="_AdHocPaymentModel.AmountInWords"[ngModelOptions]="{standalone: true}">
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.AmountInWords}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group row" style="margin-top: 0%;">
+                        <div class="col-lg-2">
+                            <label class="Label" style="margin-left: 1px;">
+                                Paid
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6"style="margin-top: -6%; margin-left: -6%;">
+                    <input *ngIf="DisableInputField != true"type="checkbox"class="form-controlCheckBox"   [(ngModel)]="_AdHocPaymentModel.Paid" [ngModelOptions]="{standalone: true}">
+
+                        <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                            {{this._AdHocPaymentModel.Paid}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Payment Mode </label>
+                    <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.PaymentMode" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let data of _AdHocPaymentDropDownsModel.PaymentModes" [value]="data.Value">
+                                {{data.Text}}
+                            </option>
+                    </select>
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                            {{GetLookupValue(_AdHocPaymentDropDownsModel.PaymentModes,_AdHocPaymentModel.PaymentMode)}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label"> Payment Date </label>
+                    <input type="date"  *ngIf="DisableInputField != true"class="form-control"[value]="_AdHocPaymentModel.Paymentdate | date:'yyyy-MM-dd'" (input)="_AdHocPaymentModel.Paymentdate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.Paymentdate | date:'mediumDate'}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Bank Name</label>
+                    <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.BankId" [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let data of _AdHocPaymentDropDownsModel.Banks" [value]="data.Value">
+                            {{data.Text}}
+                        </option>
+                    </select>
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{GetLookupValue(_AdHocPaymentDropDownsModel.Banks, _AdHocPaymentModel.BankId)}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Amount In Words Local </label>
+                    <input type="text"  *ngIf="DisableInputField != true" class="form-control"[(ngModel)]="_AdHocPaymentModel.AmountInLocalWords" [ngModelOptions]="{standalone: true}" >
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.AmountInLocalWords}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Cheque No. </label>
+                   <input type="text"  *ngIf="DisableInputField != true"class="form-control" [(ngModel)]="_AdHocPaymentModel.ChequeNo" [ngModelOptions]="{standalone: true}" >
+                   <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.ChequeNo}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Cheque Issued To </label>
+                    <input type="text" *ngIf="DisableInputField != true" class="form-control"[(ngModel)]="_AdHocPaymentModel.ChequeIssuedTo" [ngModelOptions]="{standalone: true}" >
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.ChequeIssuedTo }}
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="SaveBtnClass">
+                        <button class="btn-primary"*ngIf="DisableInputField == false && _AddNewPaymentDetails == false"(click)="SavePaymentDetails()">
+                            Save Payment Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <div class="card" *ngIf="_AddNewPaymentDetails == false">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Documents Details</div> 
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class ="Label">Document types</label>
+                    <ng-select [allowClear]="true"[(ngModel)]="_Paymentdoc.Lookupid"[items]="_AdHocPaymentDropDownsModel.AdhocPaymentDocumentTypes" bindLabel="Text" bindValue ="Value"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                    </ng-select>
+                </div>
+                <div class="col-lg-3">
+                    <div class="FileInputClass">
+                        <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="UploadattchClass">
+                        <button class="btn-primary" (click)="FileUpload(fileInput)">Upload Details</button>
+                    </div>
+                </div>
+            </div><br>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
+                <thead>
+                    <tr>
+                        <th>FileName</th>
+                        <th>Document Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _AdHocPaymentModel.Documents;let i = index">
+                        <td>{{data.FileName}}</td>
+                        <td>
+                            {{GetLookupValue(_AdHocPaymentDropDownsModel.AdhocPaymentDocumentTypes, data.Lookupid)}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument(data)">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteDocument(data)" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>   
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div> 
+
+
+    <div class="row">
+        <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+            <div class="div-to-align"*ngIf="DisableInputField == false && _AddNewPaymentDetails == true">
+                <br>
+                <button type="button" class="btn-primary" (click)="SavePaymentDetails()">
+                   Add Payment Details
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
