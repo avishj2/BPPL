@@ -66,31 +66,24 @@ export class AddAdhocdetailsComponent implements OnInit {
     GetDataFromParent()
       {
         /**add new payment details */
-        if (this._SearchCriteria.AddNewPayment == true)
+        if (!(this.CommonDtoService._AdHocPaymentDataDTO&&this.CommonDtoService._AdHocPaymentDataDTO.AdHocPaymentId))
           {
             this._AdHocPaymentModel = new AdHocPaymentModel();
             this._AddNewPaymentDetails = true;
             this.DisableInputField = false;
           } 
         /**edit/delete doc */
-        if(this._SearchCriteria.AddNewPayment == false && this._SearchCriteria.AddPaymentDoc == false)
+        if ((this.CommonDtoService._AdHocPaymentDataDTO.AdHocPaymentId !=null))  
           {
-           this.EditPaymentDetails();
-          }
-        if(this._SearchCriteria.AddPaymentDoc == true)
-          {
+            this._AdHocPaymentModel = this.CommonDtoService._AdHocPaymentDataDTO;
             this.DisableInputField = true;
             this._AddNewPaymentDetails = false;
-            this._ShowPaymentDetailsDiv = true;
-            this._AdHocPaymentModel = this.CommonDtoService._AdHocPaymentDataDTO;
           }
       }
 
   EditPaymentDetails()
     {
-      this._ShowPaymentDetailsDiv = true;
       this._AddNewPaymentDetails = false;
-      this._AdHocPaymentModel = this.CommonDtoService._AdHocPaymentDataDTO;
       this.DisableInputField = false;
     }
   /**refresh/reload data table 
@@ -172,7 +165,6 @@ export class AddAdhocdetailsComponent implements OnInit {
             }   
         }
         this._AddNewPaymentDetails = false;
-        this._ShowPaymentDetailsDiv = true;
         this.ReloadDatatable();  
     }
 

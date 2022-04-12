@@ -1,11 +1,11 @@
 <button class="btn-primary" ngbTooltip="Go Back To Payment List"(click)="GoBackToPaymentList()"><i class="fa fa-arrow-left" aria-hidden="true"></i>    Go Back</button>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<button *ngIf="_ShowPaymentDetailsDiv == true && _AddNewPaymentDetails == false"class="btn-primary"title="Edit Details" (click)="EditPaymentDetails()">
+<button *ngIf="_AddNewPaymentDetails == false"class="btn-primary"title="Edit Details" (click)="EditPaymentDetails()">
     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     Edit Payment Details
 </button>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<button *ngIf="_ShowPaymentDetailsDiv == true && _AddNewPaymentDetails == false"class="btn-danger"title="Delete Details" (confirm)="DeletePaymentDetails()"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right">
+<button *ngIf="_AddNewPaymentDetails == false"class="btn-danger"title="Delete Details" (confirm)="DeletePaymentDetails()"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right">
     <i class="fa fa-trash" aria-hidden="true"></i>
     Delete Payment Details
 </button>
@@ -115,7 +115,7 @@
         </div> 
     </div>
 
-    <div class="card" *ngIf="_ShowPaymentDetailsDiv == true && _AddNewPaymentDetails == false">
+    <div class="card" *ngIf="_AddNewPaymentDetails == false">
         <div class="innercard">
             <div class="d-flex justify-content-between">
                 <div class="CardTitle">Documents Details</div> 
@@ -136,7 +136,6 @@
                         <button class="btn-primary" (click)="FileUpload(fileInput)">Upload Details</button>
                     </div>
                 </div>
-        
             </div><br>
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
                 <thead>
@@ -147,7 +146,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr  *ngFor="let data of _AdHocPaymentModel.Documents;let i = index">
+                    <tr *ngFor="let data of _AdHocPaymentModel.Documents;let i = index">
                         <td>{{data.FileName}}</td>
                         <td>
                             {{GetLookupValue(_AdHocPaymentDropDownsModel.AdhocPaymentDocumentTypes, data.Lookupid)}}

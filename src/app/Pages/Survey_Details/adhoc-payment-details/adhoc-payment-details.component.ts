@@ -160,36 +160,19 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       }
       else
         {
-          this._SearchCriteria.AddPaymentDoc = false;
-          this._SearchCriteria.AddNewPayment = true;
           this.CommonDtoService._SearchCriteriaDTO = this._SearchCriteria;
+          this.CommonDtoService._AdHocPaymentDataDTO = new AdHocPaymentModel();
           this._ShowPaymentDetailsDiv = false;  
         }
-    }
-
-
-  setData(argdata)
-    {
-      this._SearchCriteria.AddNewPayment = false;
-      this.CommonDtoService._SearchCriteriaDTO = this._SearchCriteria;
-      this.CommonDtoService._AdHocPaymentDataDTO = argdata;
     }
     /**
     * 
    */
     ViewPaymentDetails(argdata)
-    {
-      this._SearchCriteria.AddPaymentDoc = false;
-      this.setData(argdata);
-    }
-
-
-    UploadDocuments(argdata)
-    {
-      this._SearchCriteria.AddPaymentDoc = true;
-      this.setData(argdata);
-    }
-
+      {
+        this.CommonDtoService._SearchCriteriaDTO = this._SearchCriteria;
+        this.CommonDtoService._AdHocPaymentDataDTO = argdata;
+      }
 
   DeletePaymentDetails(argdata)
     {
