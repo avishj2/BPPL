@@ -1,0 +1,224 @@
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">CA Details </div> 
+        </div>
+        <div><br>
+            <div class="row">
+                <label style="margin-left: 5px;" class="col-sm-1 col-form-label">Select CA</label>
+                <div class="col-lg-3">
+                    <select class="form-control">
+                        <option>hfgjhgfjd</option>
+                    </select>
+                </div>   
+                <button class="btn-primary" (click)="AddCADetails()" data-toggle="modal" data-target="#CAModal">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                    Add CA Details
+                </button>
+                <button class="btn-primary" (click)="EditCADetails()" data-toggle="modal" data-target="#CAModal">
+                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                    Edit CA Details
+                </button>
+                <button class="btn-danger" (click)="DeleteCADetails()">
+                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                    Delete CA Details
+                </button>
+            </div><hr><br>
+
+            <div class="form-group row">
+                <div class="col-lg-3">
+                    <label class="Label">Name (English)</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Name (Hindi)</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Name (Local)</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Address (English)</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Address (Hindi)</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Address (Local)</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Pin Code</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Start Date</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">End Date</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Notification No</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Notification Date</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Gazette No</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">Gazette Date</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="Label">CA Application Date</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <label class="Label">InActive Status</label>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    </div>
+                </div>
+                
+            </div>  
+        </div>
+    </div>
+</div> 
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal" id="CAModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <b><i class='fa fa-edit'style='font-size:24px'></i> 
+                    {{_PopupTitle}}
+                    </b>
+                </h5> 
+                <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label class="Label">Name (English)</label>
+                        <input type="text"class="form-control"
+                        [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Name (Hindi)</label>
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Name (Local)</label>
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Address (English)</label>
+                        <input   type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Address (Hindi)</label>
+                        <input type="text"class="form-control"
+                         [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Address (Local)</label>
+                        <input type="text"class="form-control" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Pin Code</label>
+                        <input type="text"class="form-control" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Start Date</label>
+                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">End Date</label>
+                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Notification No</label>
+                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Notification Date</label>
+                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Gazette No</label>
+                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Gazette Date</label>
+                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">CA Application Date</label>
+                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <label class="col-sm-4 col-form-label">InActive Status</label>
+                    <div class="col-lg-2">
+                        <input type="checkbox" class="form-controlCheckBox"
+                    [ngModelOptions]="{standalone: true}">
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary"(click)="SaveCADetails()">
+                                Save CA Details  
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+      </div>
+    </div>
+  </div>

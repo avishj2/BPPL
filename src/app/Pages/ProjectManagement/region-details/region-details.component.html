@@ -1,0 +1,136 @@
+<div width="100%">
+    <ngb-tabset (tabChange)="ActiveTab($event)" #tabset="ngbTabset">
+        <ngb-tab title="State" [id]="0">
+            <ng-template ngbTabContent>
+                <div class="row"> 
+                    <button class="btn-primary" (click)="AddStateDetails()" data-toggle="modal" data-target="#Modal">
+                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                        Add State
+                    </button>
+                    <button class="btn-primary" (click)="EditStateDetails()" data-toggle="modal" data-target="#Modal">
+                        <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                        Edit State
+                    </button>
+                    <button class="btn-danger" (click)="DeleteState()">
+                        <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                        Delete State
+                    </button>
+                </div><hr>
+                <div class="form-group row">
+                    <div class="col-lg-4">
+                        <label class="Label">State Name(English)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="Label">State Name(Hindi)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="Label">State Name(Local)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn-primary" style="margin-top: 15px;">Save Details</button>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="District" [id]="1"class="myClass">
+            <ng-template ngbTabContent>
+                <div class="row"> 
+                    <button class="btn-primary" (click)="AddDistrictDetails()" data-toggle="modal" data-target="#Modal">
+                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                        Add District
+                    </button>
+                    <button class="btn-primary" (click)="EditDistrictDetails()" data-toggle="modal" data-target="#Modal">
+                        <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                        Edit District
+                    </button>
+                    <button class="btn-danger" (click)="DeleteDistrict()">
+                        <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                        Delete District
+                    </button>
+                </div><hr>
+                <div class="form-group row">
+                    <div class="col-lg-4">
+                        <label class="Label">District Name(English)</label>
+                        <input type="text"class="form-control" *ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="Label">District Name(Hindi)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="Label">District Name(Local)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn-primary"style="margin-top: 15px;">Save Details</button>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Tahsil" [id]="2">
+            <ng-template ngbTabContent>
+                <div class="row"> 
+                    <button class="btn-primary" (click)="AddTahsilDetails()" data-toggle="modal" data-target="#Modal">
+                        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                        Add Tahsil
+                    </button>
+                    <button class="btn-primary" (click)="EditTahsilDetails()" data-toggle="modal" data-target="#Modal">
+                        <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                        Edit Tahsil
+                    </button>
+                    <button class="btn-danger" (click)="DeleteTahsil()">
+                        <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                        Delete Tahsil
+                    </button>
+                </div><hr>
+                <div class="form-group row">
+                    <div class="col-lg-4">
+                        <label class="Label">Tahsil Name(English)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="Label">Tahsil Name(Hindi)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="Label">Tahsil Name(Local)</label>
+                        <input type="text"class="form-control"*ngIf="_DisabledInputField != true"[ngModelOptions]="{standalone: true}">
+                        <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn-primary" style="margin-top: 15px;">Save Details</button>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>
