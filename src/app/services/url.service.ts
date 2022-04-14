@@ -114,6 +114,9 @@ export class UrlService {
   DownloadPaymentAPI = this.url +'/api/AdHocPayment/Download?documentId=';
   DeleteAdHocPaymentDocumentAPI = this.url +'/api/AdHocPayment/DeleteAdHocPaymentDocument?documentId=';
 
+  //LAQ
+  GetSurveyDetailsForLAQAPI = this.url +'/api/Survey/GetSurveyDetailsForLAQ?villageId=';
+
 
 
   NavigateAddEditAdhocDetails ="../Add_Adhoc_Details";

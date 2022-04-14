@@ -7,7 +7,7 @@ import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { DocxTemplateService } from 'src/app/services/Docxtemplate.service';
-
+import { LAQDataModel } from 'src/app/Model/Survey.model';
 
 @Component({
   selector: 'app-laqpermanent',
@@ -17,7 +17,8 @@ import { DocxTemplateService } from 'src/app/services/Docxtemplate.service';
 export class LAQPermanentComponent implements OnInit {
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
-  _tablearray : datamodel[]
+  _tablearray;
+  _LAQDataModel : LAQDataModel;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -85,8 +86,6 @@ export class LAQPermanentComponent implements OnInit {
     console.log("this._tablearray",this._tablearray)
   }
 
-
-
   GetValuesFromFilters(event) 
     {
       this.Utility.LogText2("view-award-reports",event);
@@ -94,6 +93,7 @@ export class LAQPermanentComponent implements OnInit {
       if(this._SearchCriteria.VillageId != null)
         {
           console.log(this._SearchCriteria.VillageName)
+          this.GetLAQDetails();
         }
       else
         {
@@ -101,22 +101,38 @@ export class LAQPermanentComponent implements OnInit {
         }
     }
 
+    GetLAQDetails()
+    {
+      let url = this.urlService.GetSurveyDetailsForLAQAPI + this._SearchCriteria.VillageId;     
+      this.httpService.HttpGetRequest(url,this.GetLAQCallBack.bind(this),null);
+    }
+
+  /**callback */  
+  GetLAQCallBack(dtas)
+    {
+      if (dtas != null)
+      {
+        this._LAQDataModel = dtas;
+        this.Utility.LogText2("this._LAQDataModel",this._LAQDataModel);
+        if (this._LAQDataModel.StatusCode != 200) 
+          {
+            alert(this._LAQDataModel.Message);
+          }
+      }
+    }
+
     /** */
     CreatedDocFile()
       {
-        let fileURL = "https://bppl.dgdatam.com/api/Crossing/Download?documentId=106";//103
-        this.docxTemplateService.GenerateDocument(fileURL,this._tablearray, "Output_doc")
+        if(this._SearchCriteria.VillageId !=null)
+        {
+          let fileURL = "https://bppl.dgdatam.com/api/Crossing/Download?documentId=131";//103
+          console.log(this._LAQDataModel.Result[0])
+          this.docxTemplateService.GenerateDocument(fileURL,this._LAQDataModel.Result[0], "Output_doc")
+        }else{
+          alert("Please Select Village!!");
+        }
+        
       }
 
   }
-
-export class datamodel {  
-  SNo: any;
-  SurveyNo : any;
-  Ha : any;
-  Are: any;
-  Sqmt: any;
-  Landowner: string;
-  Kabjedar: string;
-  Remarks: string;
-}  
