@@ -30,6 +30,8 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
+  _FirstLoad : boolean = false;
+  @Output() ChildLoadInfo:EventEmitter<boolean>= new EventEmitter(); 
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -53,9 +55,10 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
     {
       this.Utility.LogText2("2nd child",this.filterdata);
       this.GetCrossingDetails();
+      this.ChildLoadInfo.emit(true); 
     }
 
-    public reRender() 
+    public reRenderChild() 
       {
         this.cd.detectChanges();
         this.Utility.LogText2("again call",this.filterdata);
@@ -73,11 +76,7 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
           }
       }
 
-    // ngAfterViewInit(): void 
-    //   {
-    //     this.dtTrigger.next();
-    //     this.Utility.LogText2("ngAfterViewInit 2nd child",this.filterdata);
-    //   }
+  
  /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/

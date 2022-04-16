@@ -53,7 +53,7 @@ export class HttpService {
             {
                alert("Something Went Wrong ! Please try again.");
             }
-            this.commonService.hideLoading();
+            this.commonService.hideSpinnerLoading();
       });
     }
 

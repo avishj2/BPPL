@@ -10,7 +10,7 @@ import { DataTableDirective } from 'angular-datatables';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
-import {CrossingModel } from 'src/app/Model/Crossing.model';
+import {CrossingModel,CrossingsSummaryRespModel,CrossingSummaryReqModel } from 'src/app/Model/Crossing.model';
 import { ChildViewCrossingComponent} from '../view-crossing-details/child-view-crossing/child-view-crossing.component';
 
 
@@ -21,7 +21,6 @@ import { ChildViewCrossingComponent} from '../view-crossing-details/child-view-c
 })
 export class ViewCrossingDetailsComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
-  _PopupTitle : string;
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -32,7 +31,9 @@ export class ViewCrossingDetailsComponent implements OnInit {
   _CrossingDataModel : CrossingModel;
   _ShowChildViewpage : boolean = false;
   @ViewChild(ChildViewCrossingComponent) child: ChildViewCrossingComponent;
-  _FirstLoad : boolean = false;
+  _CrossingSummaryReqModel : CrossingSummaryReqModel;
+  _CrossingsModel :CrossingsSummaryRespModel;
+  _ChildPageLoad : boolean = false;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -44,6 +45,9 @@ export class ViewCrossingDetailsComponent implements OnInit {
         this._SearchCriteria = new SearchCriteria();
         this.SetFilterControls();
         this._CrossingDataModel = new CrossingModel();
+        this._CrossingSummaryReqModel = new CrossingSummaryReqModel();
+        this._CrossingsModel = new CrossingsSummaryRespModel();
+
       }
   /**hide/show filter menu based on the component requirement */
   SetFilterControls() 
@@ -51,8 +55,8 @@ export class ViewCrossingDetailsComponent implements OnInit {
       this._FilterControls.ShowState = false;
       this._FilterControls.ShowDistrict = false;
       this._FilterControls.ShowTaluka = false;
-      this._FilterControls.ShowChainageFrom = false;
-      this._FilterControls.ShowChainageTo = false;
+      this._FilterControls.ShowChainageFrom = true;
+      this._FilterControls.ShowChainageTo = true;
       this._FilterControls.ShowVillage = false;
       this._FilterControls.ShowCrossingTypes = true;
       this._FilterControls.ShowCrossingNumber = true;
@@ -60,7 +64,11 @@ export class ViewCrossingDetailsComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
+    this.dtOptions = 
+      {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+      };
   }
   
   ngAfterViewInit(): void 
@@ -97,19 +105,45 @@ export class ViewCrossingDetailsComponent implements OnInit {
       if(this._SearchCriteria.CrossingID != null)
         {
           this._ShowChildViewpage = true;
-          if(this._FirstLoad == true)
+          
+          if(this._ChildPageLoad == true)
           {
-            this.child.reRender();
+            this.child.reRenderChild();
           }
         }
         if(this._SearchCriteria.CrossingType != null && this._SearchCriteria.CrossingID == null) 
         {
           this._ShowChildViewpage = false;
+          this.IsDtInitialized = true;
+          this.GetCrossingSummary();
         }
         if(this._SearchCriteria.CrossingType == null)
         {
           alert("Please select Crossing details!!")
         }
-        this._FirstLoad = true;
     }
+
+    LoadInfo(event)
+      {
+        this._ChildPageLoad = event;
+      }
+
+    /**Getcrossing deatils  */
+    GetCrossingSummary()
+      {
+        let url = this.urlService.GetCrossingSummaryAPI;
+        this._CrossingSummaryReqModel.CrossingType = Number(this._SearchCriteria.CrossingType);
+        this._CrossingSummaryReqModel.StartChainage = this._SearchCriteria.ChainageFrom;
+        this._CrossingSummaryReqModel.StartChainage = this._SearchCriteria.ChainageTo;
+        this.httpService.HttpPostRequest(url,this._CrossingSummaryReqModel,this.CrossingSummaryCallBack.bind(this),null);
+      }
+
+    CrossingSummaryCallBack(dtas)
+      {
+        if(dtas!=null)
+        {
+          this._CrossingsModel = dtas;
+        }
+        this.ReloadDatatable();
+      }
 }

@@ -117,7 +117,8 @@ export class UrlService {
   //LAQ
   GetSurveyDetailsForLAQAPI = this.url +'/api/Survey/GetSurveyDetailsForLAQ?villageId=';
 
-
+  //viewcrossing
+  GetCrossingSummaryAPI =this.url+ '/api/Crossing/GetCrossingSummary';  
 
   NavigateAddEditAdhocDetails ="../Add_Adhoc_Details";
   

@@ -91,7 +91,6 @@ IsDtInitialized: boolean = false;
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
-      console.log('ngAfterViewInit');
     }
   
   /**validation error control required*/  
