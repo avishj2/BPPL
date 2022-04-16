@@ -119,6 +119,7 @@ export class UrlService {
 
   //viewcrossing
   GetCrossingSummaryAPI =this.url+ '/api/Crossing/GetCrossingSummary';  
+  GetVillageSummaryAPI = this.url+ '/api/Survey/GetVillageSummary';
 
   NavigateAddEditAdhocDetails ="../Add_Adhoc_Details";
   

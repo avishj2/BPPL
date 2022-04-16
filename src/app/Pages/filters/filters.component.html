@@ -2,19 +2,19 @@
     <div class="row">
         <div class="col-lg-3" *ngIf="filterControls.ShowState == true">
             <label class ="dropdownsLabel"> State </label>
-            <select class="form-control" [(ngModel)]="_SearchCriteria.StateId"(change)="PopulateDistrict($event.target.value)">
+            <select class="form-control" [(ngModel)]="_SearchCriteria.StateId"(change)="PopulateDistrict($event.target.value)"required>
                 <option *ngFor="let data of _StateDataModel" [value]="data.StateId">{{data.Name}}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowDistrict == true">
             <label class ="dropdownsLabel"> District  </label>
-            <select class="form-control"[(ngModel)]="_SearchCriteria.DistrictId"(change)="PopulateTaluka($event.target.value)">
+            <select class="form-control"placeholder="District"[(ngModel)]="_SearchCriteria.DistrictId"(change)="PopulateTaluka($event.target.value)">
                 <option *ngFor="let data of _DistrictDetails"[value]="data.DistrictId">{{data.DistrictName }}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowTaluka == true">
             <label class ="dropdownsLabel"> {{_TahsilLabel}}  </label>
-            <select class="form-control"[(ngModel)]="_SearchCriteria.TalukaId"(change)="GetAllVillageDetails($event.target.value)">
+            <select class="form-control"placeholder="{{_TahsilLabel}}"[(ngModel)]="_SearchCriteria.TalukaId"(change)="GetAllVillageDetails($event.target.value)">
                 <option *ngFor="let data of _TalukaDetails"[value]="data.TalukaId">{{data.TalukaName}}</option>
             </select>
         </div>
