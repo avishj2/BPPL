@@ -43,6 +43,15 @@ import {BaseResponse, CommonDropdownModel,CommonDocDataModel} from './Base.model
     }
   }
 
+  export class LAQDataModel extends BaseResponse{
+    Result : SurveyResult[]
+    constructor(){      
+      super();
+      this.Result = [];
+    }
+  }
+
+
 export class SurveyResponeDataModel extends BaseResponse {
     Result : SurveyModel;
     constructor(){      
@@ -156,6 +165,7 @@ export class SurveyOwnerModel{
     Ha: any;
     Are: any;
     Sqmt: any;
+    SurveyOwnerName : any;
 }
 
 export class CropRespDataModel extends BaseResponse {

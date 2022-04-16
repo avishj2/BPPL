@@ -44,3 +44,30 @@ export class VillageChainageModel{
           this.Result = [];
         }
   }
+
+/***VIEW Village details data models */
+export class VillageSummaryReqModel
+  {
+    StartChainage : Number;
+    EndChainage :Number;
+    TalukaId : number;
+  }
+
+
+export class VillagesModel{
+  Villages : Villages[];
+  constructor()
+    {
+      this.Villages = [];
+    }
+}
+
+export class Villages
+  {
+    VillageName: string;
+    ChainageFromTo: string;
+    LengthInKms: Number;
+    TotalSurveyNos: Number;
+    TotalPanchnamaOwners: Number;
+    TotalCompensationPaid: Number
+  }

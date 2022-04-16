@@ -2,32 +2,33 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
 </app-filters>
 <br>
-<app-child-view-crossing *ngIf="_ShowChildViewpage == true"[filterdata]="_SearchCriteria">
+<app-child-view-crossing *ngIf="_ShowChildViewpage == true"[filterdata]="_SearchCriteria"(ChildLoadInfo)="LoadInfo($event)">
 </app-child-view-crossing>
 
 <div *ngIf="_ShowChildViewpage == false">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
         <thead>
             <tr>
+                <th>S.No.</th>
                 <th>Crossing Type</th>
                 <th>No. of Crossing</th>
                 <th>Demand Node</th>
-                <th>Execution of Agreement/Not Applicable</th>
-                <th>Reciept Of Final approval</th>
+                <th>Proposal Received</th>
+                <th>Permission Received</th>
                 <th>Refundable Amount</th>
                 <th>Non-Refundable Amount</th>
             </tr>
         </thead>
         <tbody>
-            <!-- *ngFor="let data of _CrossingDataModel.Documents;let i = index" -->
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let data of _CrossingsModel.Crossings;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.CrossingType}}</td>
+                <td>{{data.NoOfCrossing}}</td>
+                <td>{{data.DemandNoteReceived}}</td>
+                <td>{{data.ProposalReceived}}</td>
+                <td>{{data.PermissionReceived}}</td>
+                <td>{{data.RefundableAmount}}</td>
+                <td>{{data.NonRefundableAmount}}</td>
             </tr>
         </tbody>
     </table>

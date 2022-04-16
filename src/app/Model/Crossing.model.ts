@@ -32,3 +32,32 @@ export class CrossingModel{
         this.Documents = [];
     }
 }
+
+/***view crossing data models */
+export class CrossingSummaryReqModel
+    {
+        StartChainage : any;
+        EndChainage : any;
+        CrossingId : Number;
+        CrossingType : Number;
+    }
+
+export class CrossingsSummaryRespModel{
+    Crossings : CrossingsColModel[];
+    constructor()
+    {
+        this.Crossings = [];
+    }
+}
+
+
+export class CrossingsColModel
+    {
+        CrossingType: string;
+        NoOfCrossing: Number;
+        DemandNoteReceived: Number;
+        ProposalReceived: Number;
+        PermissionReceived: Number;
+        RefundableAmount: Number;
+        NonRefundableAmount: Number;
+    }
