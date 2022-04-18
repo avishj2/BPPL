@@ -73,6 +73,7 @@
                     <div class="col-lg-6">
                         <label class="Label">Owner Name  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_RestorationDataModel.SurveyOwnerId">
+                            <option class="disabled"[ngValue]="undefined" [disabled]="true">Owner Name </option>
                             <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
                                 {{data.Text}}
                             </option>
@@ -81,12 +82,15 @@
                     <div class="col-lg-6">
                         <label class="Label">Damage Type  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_RestorationDataModel.DamageType">
+                            <option class="disabled"[ngValue]="undefined" [disabled]="true">Damage Type </option>
                             <option *ngFor="let data of SurveyDropDownsData.DamageTypes" [value]="data.Value">{{data.Text }}</option>
                         </select>
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Damage Name  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_RestorationDataModel.DamageName">
+                            <option class="disabled"[ngValue]="undefined" [disabled]="true">Damage Name 
+                                </option>
                             <option *ngFor="let data of SurveyDropDownsData.DamageNames" [value]="data.Value">{{data.Text }}</option>
                         </select>
                     </div>
