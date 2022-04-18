@@ -1,39 +1,37 @@
-<div>  
-      <table class="table" id="pdfTable" #pdfTable>  
-          <tr>  
-            <th>Column1</th>  
-            <th>Column2</th>  
-            <th>Column3</th>  
-          </tr>  
-          <tr>  
-            <td style="color:red">Row 1</td>  
-            <td>Row 1</td>  
-            <td>Row 1</td>  
-          </tr>  
-          <tr>  
-            <td>Row 2</td>  
-            <td>Row 2</td>  
-            <td>Row 2</td>  
-          </tr>  
-          <tr>  
-            <td>Row 3</td>  
-            <td>Row 3</td>  
-            <td>Row 3</td>  
-          </tr>  
-          <tr>  
-            <td>Row 4</td>  
-            <td>Row 4</td>  
-            <td>Row 4</td>  
-          </tr>  
-          <tr>  
-            <td>Row 5</td>  
-            <td>Row 5</td>  
-            <td>Row 5</td>  
-          </tr>  
-          <tr>  
-            <td>Row 6</td>  
-            <td>Row 6</td>  
-            <td>Row 6</td>  
-          </tr>  
-        </table>  
-  </div>  
+<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)">
+</app-filters>
+<br>
+<div class="card"*ngIf="_ShowDetailsDiv == true">  
+  <div class="innercard"> 
+    <div class="d-flex justify-content-between">
+        <div class="CardTitle">Villages Details</div> 
+    </div><br>
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">  
+        <thead>
+          <tr>
+            <th style="width: 28px;">S.No.</th>  
+            <th>Village Name</th>  
+            <th>ChainageFromTo</th>  
+            <th>Length In Kms</th>  
+            <th>Total Survey Nos</th>
+            <th>Total Panchnama Owners</th>
+            <th>Total Compensation Paid</th>
+            </tr>  
+          </thead>  
+          <tbody>
+            <tr *ngFor="let data of _ViewVillageModel.Villages; let i=index">  
+              <td style="width: 28px;">{{i+1}}</td>
+              <td>{{data.VillageName}}</td>  
+              <td>{{data.ChainageFromTo}}</td>  
+              <td>{{data.LengthInKms}}</td>  
+              <td>{{data.TotalSurveyNos}}</td>  
+              <td>{{data.TotalPanchnamaOwners}}</td>  
+              <td>{{data.TotalCompensationPaid}}</td>  
+            </tr>  
+          </tbody>  
+      </table>  
+  </div>
+</div> 
+<div class="card" *ngIf="_ShowDetailsDiv == false">
+  <h5 style="color: red;"><b>Please Select Tahsil!!</b></h5>
+</div>

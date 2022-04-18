@@ -104,8 +104,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
       this._SearchCriteria = event;
       if(this._SearchCriteria.CrossingID != null)
         {
-          this._ShowChildViewpage = true;
-          
+          this._ShowChildViewpage = true;          
           if(this._ChildPageLoad == true)
           {
             this.child.reRenderChild();

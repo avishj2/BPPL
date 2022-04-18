@@ -54,7 +54,7 @@ export class VillageSummaryReqModel
   }
 
 
-export class VillagesModel{
+export class ViewVillageModel{
   Villages : Villages[];
   constructor()
     {

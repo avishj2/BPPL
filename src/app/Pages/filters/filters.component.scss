@@ -3,3 +3,15 @@
     margin-top: 12%;
     margin-left: 6%;
 }
+select:invalid { color: gray; }
+
+option[value=""][disabled] {
+    // display: none;
+    color: gray;
+  }
+  option {
+    color: black;
+  }
+  select option[data-default] {
+    color: #888;
+  }
