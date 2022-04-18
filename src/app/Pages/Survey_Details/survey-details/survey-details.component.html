@@ -56,6 +56,7 @@
                         <div class="col-lg-3">                
                             <label class="Label">LandType</label>
                             <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.LandType">
+                                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Land Type --</option>
                                 <option *ngFor="let data of _SurveyDropDownsDataModel.SurveyLandTypes" [value]="data.Value">{{data.Text }}</option>
                             </select>
                             <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
@@ -95,7 +96,7 @@
                             <label class="Label">Cultivalted/Non-Cultivalted <b><h7 style="color: red;">*</h7></b></label>
                             <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.CultivatedType">
                                 <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                                    Cultivalted Type
+                                   -- Select Cultivalted Type --
                                 </option>
                                 <option *ngFor="let data of _SurveyDropDownsDataModel.CultivateLandTypes" [value]="data.Value">
                                     {{data.Text }}

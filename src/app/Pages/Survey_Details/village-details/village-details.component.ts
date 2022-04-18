@@ -266,7 +266,8 @@ IsDtInitialized: boolean = false;
       }
       return;
     }
-    if (Number(data.ChainageFrom) > 0 && Number(data.ChainageTo) > 0 && data.SurveyAgency && Number(data.ChainageTo) > Number(data.ChainageFrom)) {
+    if (Number(data.ChainageFrom) > 0 && Number(data.ChainageTo) > 0 && data.SurveyAgency 
+        && Number(data.ChainageTo) > Number(data.ChainageFrom)) {
       // Add chainage in existing village(edit mode)
       if (addReq) {
         data.VillageId = this._SearchCriteria.VillageId;
@@ -294,6 +295,10 @@ IsDtInitialized: boolean = false;
       }, error => {
         this.Utility.LogText("AddOrUpdateVillageChainageAPI error :" + error);
       });
+    }
+    else
+    {
+       alert("Please fill correct chainge infrormation");
     }
   }
 

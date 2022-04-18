@@ -67,7 +67,7 @@
                         <label class="Label">Owner Name <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_CropDataModel.SurveyOwnerId">
                             <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                                Owner Name </option>
+                                -- Select Owner --</option>
                             <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
                                 {{data.Text}}
                             </option>
@@ -77,7 +77,7 @@
                         <label class="Label">Award  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_CropDataModel.AwardType">
                             <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                                Award </option>
+                               -- Select Award --</option>
                             <option *ngFor="let data of SurveyDropDownsData.AwardTypes"[value]="data.Value">
                                 {{data.Text}}
                             </option>
@@ -87,7 +87,7 @@
                         <label class="Label">Season Name  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_CropDataModel.SeasonType">
                             <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                                Season Name </option>
+                                -- Select Season --</option>
                             <option *ngFor="let data of SurveyDropDownsData.SeasonNameTypes" [value]="data.Value">
                                 {{data.Text }}
                             </option>
@@ -97,7 +97,7 @@
                         <label class="Label">Crop Name  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control" [(ngModel)]="_CropDataModel.CropName">
                             <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                                Crop Name </option>
+                                -- Select Crop --</option>
                             <option *ngFor="let data of SurveyDropDownsData.CropNames" [value]="data.Value">
                                 {{data.Text }}
                             </option>
