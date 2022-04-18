@@ -13,3 +13,13 @@
 .tbstyle{
     width: 8%;
 }
+
+.hide
+{
+    display: none;
+}
+
+.show
+{
+    display: block;
+}

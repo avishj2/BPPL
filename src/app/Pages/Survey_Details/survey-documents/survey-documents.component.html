@@ -8,7 +8,7 @@
 </div>
 <br>
 
-<div class="card" *ngIf ="_CategoryID == 1">
+<div class="card" [ngClass]="_CategoryID == 1 ? 'show' : 'hide'">
     <div class="innercard">
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Project Reports</div> 
@@ -33,7 +33,7 @@
             </div>
         </div>
         <br>
-        <div>
+        <div>{{_ProjectReports}}
             <table datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger1" class="stripe table table-striped table-bordered" width="90%" >
                 <thead>
                     <tr>
@@ -67,7 +67,7 @@
 </div>
 
 
-<div class="card"*ngIf ="_CategoryID == 2">
+<div class="card" [ngClass]="_CategoryID == 2 ? 'show' : 'hide'">
     <div class="innercard">
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Alignment Sheet Details</div> 
@@ -136,7 +136,7 @@
 </div>    
 
 
-<div class="card" *ngIf ="_CategoryID == 3">
+<div class="card" [ngClass]="_CategoryID == 3 ? 'show' : 'hide'">
     <div class="innercard">
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Award and Mutation Details</div> 
