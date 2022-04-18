@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
     // this.utilityHttp.doLogin(this._login);
     //this.storage.set('loginDetails',{}); 
     localStorage.setItem('loginDetails', JSON.stringify({}));
-    this.router.navigate(['/dashboard']); 
+   //this.router.navigate(['/dashboard']); 
+    location.replace("/dashboard");
+    // Call api get authenticated .. store token in cokies and then refresh dashboard
   }
 }
