@@ -77,8 +77,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    onSameUrlNavigation: "ignore",
-    useHash: true,
+    onSameUrlNavigation: "ignore"
+    //useHash: true,
   })],
   exports: [RouterModule]
 })
