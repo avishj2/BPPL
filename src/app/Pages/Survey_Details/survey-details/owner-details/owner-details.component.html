@@ -83,6 +83,8 @@
                         <label class="Label">Owner Type <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"
                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerType">
+                            <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                            Owner Type </option>
                             <option *ngFor="let data of SurveyDropDownsData.OwnerTypes"[value]="data.Value">
                                 {{data.Text }}
                             </option>

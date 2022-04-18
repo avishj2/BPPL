@@ -8,7 +8,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { DocxTemplateService } from 'src/app/services/Docxtemplate.service';
 import { LAQDataModel } from 'src/app/Model/Survey.model';
-import jsPDF from 'jspdf';
+import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';  
 
 @Component({
@@ -105,20 +105,15 @@ export class LAQPermanentComponent implements OnInit {
       }
 
       
-    makePdf() 
+    async makePdf() 
       { 
-        let doc = new jsPDF('p', 'mm', 'a4');// A4 size page of PDF  
+        let doc = new jsPDF('l', 'pt', 'a4');// A4 size page of PDF  
         const Table = this.pdfTable.nativeElement;
-        const PDFoptions = {width :190,filename:"file"}
-        doc.html(Table.innerHTML,PDFoptions);
+        const PDFoptions = {width :0.1,filename:"file",y:5, x:5,margin:1}
+        await doc.html(Table,PDFoptions);
+        //doc.text("Hello world!", 10, 10);
         doc.save("output.pdf");
-      //   let data = document.getElementById('pdfTable');  
-      //   html2canvas(data).then(canvas => {  
-      //   let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
-      //   let position = 0;  
-      //   pdf.save('MYPdf.pdf'); // Generated PDF   
-      // }); 
-        
+        //doc.output('dataurlnewwindow'); // just open it
       }
 
   }

@@ -1,9 +1,8 @@
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)">
 </app-filters>
 <br>
 <div class="row" >
     <div class="col-lg-12">
-      <!-- <div class="md-tabs">*ngIf="_showTabs == true"{{ this._SearchCriteria.VillageName}} -->
         <ngb-tabset (tabChange)="ActiveTab($event)" #tabset="ngbTabset">
           <ngb-tab title="Survey" [id]="0">
             <ng-template ngbTabContent>
@@ -95,6 +94,9 @@
                         <div class="col-lg-3">
                             <label class="Label">Cultivalted/Non-Cultivalted <b><h7 style="color: red;">*</h7></b></label>
                             <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.CultivatedType">
+                                <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                                    Cultivalted Type
+                                </option>
                                 <option *ngFor="let data of _SurveyDropDownsDataModel.CultivateLandTypes" [value]="data.Value">
                                     {{data.Text }}
                                 </option>

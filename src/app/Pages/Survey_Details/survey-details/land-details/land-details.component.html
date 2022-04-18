@@ -55,6 +55,8 @@
                 <div class="col-lg-6">
                     <label class="Label">Owner Name  <b><h7 style="color: red;">*</h7></b></label>
                     <select class="form-control"[(ngModel)]="_LandDataModel.SurveyOwnerId">
+                        <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                            Owner Name </option>
                         <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
                             {{data.Text}}
                         </option>
@@ -63,6 +65,8 @@
                 <div class="col-lg-6">
                     <label class="Label">Type Of Land  <b><h7 style="color: red;">*</h7></b></label>
                     <select class="form-control"[(ngModel)]="_LandDataModel.LandType" >
+                        <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                            Owner Name </option>
                         <option *ngFor="let data of SurveyDropDownsData.LandClassifications" [value]="data.Value">{{data.Text}}</option>
                     </select>
                 </div>

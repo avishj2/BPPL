@@ -23,6 +23,8 @@ export class FiltersComponent implements OnInit {
   @Output() filterOutput:EventEmitter<SearchCriteria>= new EventEmitter(); 
   @Output() VillageChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
   @Output() CrossingChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
+  @Output() ChangedVillage :EventEmitter<SearchCriteria>= new EventEmitter(); 
+
  _TahsilLabel : string = "Tahsil";
   //api models
   _StateDataModel : StateDetails[];
@@ -132,6 +134,7 @@ export class FiltersComponent implements OnInit {
           this.GetLandTypesByVillage(argVillageId);
         }
       this._SearchCriteria.VillageName = this.GetLookupVillage(this._VillageDetails,argVillageId);
+      this.ChangedVillage.emit(this._SearchCriteria); 
     }
 
     /** Village*/
@@ -140,7 +143,7 @@ export class FiltersComponent implements OnInit {
         let object = lookups.find(elm=>elm.VillageId == lookUpid );
         if(object)
         {
-          return " - " + object.VillageNameEng;
+          return object.VillageNameEng;// " - " +
         }
         else { 
           return lookUpid;
@@ -213,7 +216,7 @@ export class FiltersComponent implements OnInit {
     PassDataToParent()
       {
         this.filterOutput.emit(this._SearchCriteria);  
-        // this.Utility.LogText(this._SearchCriteria);
+        this.Utility.LogText(this._SearchCriteria);
       }
 
     /**

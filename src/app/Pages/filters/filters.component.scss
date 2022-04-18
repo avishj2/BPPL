@@ -3,7 +3,6 @@
     margin-top: 12%;
     margin-left: 6%;
 }
-select:invalid { color: gray; }
 
 option[value=""][disabled] {
     // display: none;
@@ -12,6 +11,6 @@ option[value=""][disabled] {
   option {
     color: black;
   }
-  select option[data-default] {
+  .disabled {
     color: #888;
   }
