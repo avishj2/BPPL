@@ -5,9 +5,7 @@
                 <div class="col-lg-3">
                     <label class ="Label">Type of Notification</label>
                     <select class="form-control"[(ngModel)]="_TypeOfNotification"(change)="GetGazzatesByTypeOfNotification()">
-                        <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                            Type of Notification
-                        </option>
+                        <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Notification Type --</option>
                         <option *ngFor="let data of _GazzateDropDownsDataModel.TypeOfNotifications"[value]="data.Value">
                             {{data.Text}}
                         </option>
@@ -17,7 +15,7 @@
                     <label class ="Label">Gazette </label>
                     <select class="form-control"[(ngModel)]="_GazetteModel.Gazzateid">
                         <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                            Gazette
+                            -- Select Gazzate Number --
                         </option>
                         <option *ngFor="let data of _GetGazetteByTypeNotification"[value]="data.Value">
                             {{data.Text}}
@@ -165,7 +163,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class ="Label">Gazzete document types  <b><h7 style="color: red;">*</h7></b></label>
-                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.GazzateDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_gazzettedoc.Lookupid"placeholder="Documents" [multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.GazzateDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_gazzettedoc.Lookupid"placeholder="-- Select Documet Type --" [multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">
@@ -228,7 +226,7 @@
                 <div class="col-lg-3">
                     <label class ="Label">Notification Number</label>
                     <select class="form-control"[(ngModel)]="_NotificationValue">
-                        <option class="disabled"[ngValue]="undefined" [disabled]="true">Notification Number </option>
+                        <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Notification --</option>
                         <option *ngFor="let data of _NotificationDetails" [value]="data.Value">
                             {{data.Text}}
                         </option>
@@ -271,7 +269,7 @@
                             <div class="col-lg-3">
                                 <label class ="Label">Gazette File Number <b><h7 style="color: red;">*</h7></b></label>
                                 <select class="form-control"[(ngModel)]="_NotificationModel.GazzateId" *ngIf="_DisabledNoticeInputField != true"[ngModelOptions]="{standalone: true}">
-                                    <option class="disabled"[ngValue]="undefined" [disabled]="true">File Number </option>
+                                    <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Gazzate --</option>
                                     <option *ngFor="let data of _GetAllGazetteDetails" [value]="data.Value">{{data.Text}}</option>
                                 </select>
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledNoticeInputField == true">
@@ -337,7 +335,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class ="Label">Notification document types  <b><h7 style="color: red;">*</h7></b></label>
-                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.NotificationDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_notificationDoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <ng-select placeholder="-- Select Document Type --" [allowClear]="true" [items]="_GazzateDropDownsDataModel.NotificationDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_notificationDoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">

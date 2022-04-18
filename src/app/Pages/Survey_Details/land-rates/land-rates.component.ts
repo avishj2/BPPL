@@ -108,7 +108,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
            this._ShowLandDetailsDiv = true;
          }
        else{
-         alert("Please select Survey Number");
+         alert("Please select Village");
        }
      }
   

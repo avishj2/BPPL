@@ -3,28 +3,28 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowState == true">
             <label class ="dropdownsLabel"> State </label>
             <select class="form-control" [(ngModel)]="_SearchCriteria.StateId"(change)="PopulateDistrict($event.target.value)"required [ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">State </option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select State --</option>
                 <option *ngFor="let data of _StateDataModel" [value]="data.StateId">{{data.Name}}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowDistrict == true">
             <label class ="dropdownsLabel"> District  </label>
             <select class="form-control"placeholder="District"[(ngModel)]="_SearchCriteria.DistrictId"(change)="PopulateTaluka($event.target.value)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">District </option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select District --</option>
                 <option *ngFor="let data of _DistrictDetails"[value]="data.DistrictId">{{data.DistrictName }}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowTaluka == true">
             <label class ="dropdownsLabel"> {{_TahsilLabel}}  </label>
             <select class="form-control"placeholder="{{_TahsilLabel}}"[(ngModel)]="_SearchCriteria.TalukaId"(change)="GetAllVillageDetails($event.target.value)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">{{_TahsilLabel}} </option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select {{_TahsilLabel}} --</option>
                 <option *ngFor="let data of _TalukaDetails"[value]="data.TalukaId">{{data.TalukaName}}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowVillage == true">
             <label class="dropdownsLabel"> Village  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.VillageId" (change)="GetAllSurveyDetails($event.target.value)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">Village </option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Village --</option>
                 <option *ngFor="let data of _VillageDetails" [value]="data.VillageId">{{data.VillageNameEng}}</option>
             </select>
         </div>
@@ -39,14 +39,14 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowSurneyNos == true">
             <label class ="dropdownsLabel"> Survey Number  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyID"(change)="GetOwnerNamesForSurvey(_SearchCriteria.SurveyID)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">Survey Number  </option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Survey --</option>
                 <option *ngFor="let data of _SurveyDetails"[value]="data.Value">{{data.Text}}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowOwnerName == true">
             <label class ="dropdownsLabel"> Owner Name </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.OwnerID"(change)="OwnerNameChange(_SearchCriteria.OwnerID)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">Owner Name </option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Owner --</option>
                 <option *ngFor="let data of _OwnerDetails" [value]="data.Value">
                     {{data.Text}}
                 </option>
@@ -55,7 +55,7 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowLandTypes == true">
             <label class ="dropdownsLabel"> Land Type </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.TypeOfLand"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">Land Type</option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Land --</option>
                 <option *ngFor="let data of _LandTypeDetails" [value]="data.Value">
                     {{data.Text}}
                 </option>
@@ -64,14 +64,14 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowCrossingTypes == true">
             <label class ="dropdownsLabel"> Crossing Type </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.CrossingType" (change)="GetAllCrossingsData($event.target.value)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">Crossing Type</option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Crossing Type --</option>
                 <option *ngFor="let data of _CrossingDetails.CrossingTypes" [value]="data.Value">{{data.Text}}</option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowCrossingNumber == true">
             <label class ="dropdownsLabel">Crossing Number  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.CrossingID"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">Crossing Number</option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Crossing --</option>
                 <option *ngFor="let data of _CrossingIds"[value]="data.Value">{{data.Text}}</option>
             </select>
         </div>

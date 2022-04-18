@@ -168,7 +168,7 @@ export class FiltersComponent implements OnInit {
         },error => {
           this.Utility.LogText2("GetAllCrossingsAPI error",error); 
         });
-      this._SearchCriteria.CrossingID = null;
+      this._SearchCriteria.CrossingID = undefined;
       this._SearchCriteria.CrossingTypeName = this.GetLookupValue(this._CrossingDetails.CrossingTypes,this._SearchCriteria.CrossingType);
       this.CrossingChanged.emit(this._SearchCriteria); 
     }
@@ -262,30 +262,30 @@ export class FiltersComponent implements OnInit {
           switch(argSelection)
           {
               case DropDownChangeEnum.StateChanged:
-                this._SearchCriteria.DistrictId = null;
-                this._SearchCriteria.TalukaId = null;
-                this._SearchCriteria.VillageId = null;
-                this._SearchCriteria.SurveyID = null;
-                this._SearchCriteria.OwnerID = null;
-                this._SearchCriteria.OwnerName = null;
+                this._SearchCriteria.DistrictId = undefined;
+                this._SearchCriteria.TalukaId = undefined;
+                this._SearchCriteria.VillageId = undefined;
+                this._SearchCriteria.SurveyID = undefined;
+                this._SearchCriteria.OwnerID = undefined;
+                this._SearchCriteria.OwnerName = undefined;
                 break;
               case DropDownChangeEnum.DistrictChanged:
-                this._SearchCriteria.TalukaId = null;
-                this._SearchCriteria.VillageId = null;
-                this._SearchCriteria.SurveyID = null;
-                this._SearchCriteria.OwnerID = null;
-                this._SearchCriteria.OwnerName = null;
+                this._SearchCriteria.TalukaId = undefined;
+                this._SearchCriteria.VillageId = undefined;
+                this._SearchCriteria.SurveyID = undefined;
+                this._SearchCriteria.OwnerID = undefined;
+                this._SearchCriteria.OwnerName = undefined;
                 break;
               case DropDownChangeEnum.TalukaChanged:
-                this._SearchCriteria.VillageId = null;
-                this._SearchCriteria.SurveyID = null;
-                this._SearchCriteria.OwnerID = null;
-                this._SearchCriteria.OwnerName = null;
+                this._SearchCriteria.VillageId = undefined;
+                this._SearchCriteria.SurveyID = undefined;
+                this._SearchCriteria.OwnerID = undefined;
+                this._SearchCriteria.OwnerName = undefined;
                 break;
               case DropDownChangeEnum.VillageChanged:
-                this._SearchCriteria.SurveyID = null;
-                this._SearchCriteria.OwnerID = null;
-                this._SearchCriteria.OwnerName = null;
+                this._SearchCriteria.SurveyID = undefined;
+                this._SearchCriteria.OwnerID = undefined;
+                this._SearchCriteria.OwnerName = undefined;
                 break;
           }
         }

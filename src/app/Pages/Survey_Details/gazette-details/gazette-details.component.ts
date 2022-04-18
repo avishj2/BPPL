@@ -471,6 +471,11 @@ export class GazetteDetailsComponent implements OnInit {
    */
   SaveNotificationDetails()
     {
+      if(!this._NotificationModel.GazzateId)
+      {
+         alert("Please select Gazzete number !");
+         return;
+      }
       this.CommonService.ShowSpinnerLoading();
       this._NotificationModel.NotificationNo = this._NotificationValue;
       let url = this.urlService.AddOrUpdateNotificationAPI;    

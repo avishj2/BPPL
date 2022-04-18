@@ -2,6 +2,7 @@
     <div class="col-lg-4">
     <label class ="dropdownsLabel">Category</label>
     <select class="form-control"[(ngModel)]="_CategoryID"(change)="CategoryChange()">
+        <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Document Category --</option>
         <option *ngFor="let data of _CategoryDataModel.Categories"[value]="data.CategoryID">{{data.CategoryName}}</option>
     </select>
     </div>
@@ -16,7 +17,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <label class ="dropdownsLabel">Project Wise Report</label>
-                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.ProjectWiseReportTypes"bindLabel="Text" bindValue ="Value" [(ngModel)]="_Projectdoc.Lookupid">
+                <ng-select placeholder="-- Select Document Type --" [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.ProjectWiseReportTypes"bindLabel="Text" bindValue ="Value" [(ngModel)]="_Projectdoc.Lookupid">
                 </ng-select>
             </div>
             <div class="col-lg-3">
@@ -75,7 +76,7 @@
         <div class="row">
             <div class="col-lg-2">
                 <label class ="dropdownsLabel">Alignment Sheets</label>
-                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.AlignmentSheetTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Aligntdoc.Lookupid">
+                <ng-select placeholder="-- Select Document Type --" [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.AlignmentSheetTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Aligntdoc.Lookupid">
                 </ng-select>
             </div>
             <div class="col-lg-2">
@@ -147,7 +148,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <label class ="dropdownsLabel">Select Document</label>
-                <ng-select [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.VillageLevelDocumentsTypes"bindLabel="Text" bindValue ="Value" [(ngModel)]="_Mutationdoc.Lookupid"> 
+                <ng-select placeholder="-- Select Document Type --" [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.VillageLevelDocumentsTypes"bindLabel="Text" bindValue ="Value" [(ngModel)]="_Mutationdoc.Lookupid"> 
                 </ng-select>
             </div>
             <div class="col-lg-3">
