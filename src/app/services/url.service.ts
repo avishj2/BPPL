@@ -104,6 +104,7 @@ export class UrlService {
   AddOrUpdateLandDetails = this.url + '/api/LandCrop/AddOrUpdateLandDetails';
   DeleteLandDetailsAPI = this.url + '/api/LandCrop/DeleteLandDetails?landId=';
   GetAllLandDetails= this.url + '/api/LandCrop/GetAllLandDetails?villageId=';
+  
 
   //Adhoc payment details
   GetAdHocPaymentDropDownsAPI = this.url + '/api/AdHocPayment/GetAdHocPaymentDropDowns';

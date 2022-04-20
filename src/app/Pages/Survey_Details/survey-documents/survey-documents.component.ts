@@ -19,12 +19,6 @@ import { APIUtilityService } from 'src/app/services/APIUtility.service';
 })
 
 export class SurveyDocumentsComponent implements OnInit {
-  /**data table properties  */
-  // @ViewChild(DataTableDirective, {static: false})
-  // dtElement: DataTableDirective;
-  // dtOptions: DataTables.Settings = {};
-  // dtTrigger: Subject<any> = new Subject();
-
   @ViewChildren(DataTableDirective)
   dtElements: QueryList<DataTableDirective>;
   dtOptions: DataTables.Settings[] = [];
@@ -121,10 +115,7 @@ export class SurveyDocumentsComponent implements OnInit {
         });
         this.dtTrigger1.next(); 
         this.dtTrigger2.next(); 
-        this.dtTrigger3.next();
-        // this.dtTrigger1.unsubscribe();
-        // this.dtTrigger2.unsubscribe();
-        // this.dtTrigger3.unsubscribe(); 
+        this.dtTrigger3.next();       
       }
       else
         {
@@ -132,9 +123,6 @@ export class SurveyDocumentsComponent implements OnInit {
           this.dtTrigger1.next(); 
           this.dtTrigger2.next(); 
           this.dtTrigger3.next(); 
-          // this.dtTrigger1.unsubscribe();
-          // this.dtTrigger2.unsubscribe();
-          // this.dtTrigger3.unsubscribe();
         }
   }
 
@@ -170,6 +158,18 @@ export class SurveyDocumentsComponent implements OnInit {
       else
         {
           alert("Please select village!!")
+        }
+    }
+
+    SearchFilterChanged(event)
+    {
+      let newSearchCriteria : SearchCriteria = event;
+        if(newSearchCriteria.VillageId !=null)
+        {
+          this._SearchCriteria = newSearchCriteria;
+          this.Utility.LogText(this._SearchCriteria);
+          this.GetAwardAndMutations();
+          this.rerenderDataTable(); 
         }
     }
 

@@ -1,4 +1,4 @@
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)">
 </app-filters>
 <br>
 <div class="card" *ngIf="_ShowCropDetailsDiv == false">
@@ -68,7 +68,7 @@
                         <label class="Label">Crop Name</label>
                         <select class="form-control"[(ngModel)]="_CropsRateModel.CropLookupId">
                             <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                                Crop Name
+                                -- Select Crop Name --
                             </option>
                             <option *ngFor="let data of _CropDropDownsModel.CropNames"[value]="data.Value">
                                 {{data.Text}}
@@ -79,7 +79,7 @@
                         <label class="Label">Season Types</label>
                         <select class="form-control"[(ngModel)]="_CropsRateModel.SeasonId">
                             <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                                Season Types
+                                -- Select Season Types -- 
                             </option>
                             <option *ngFor="let data of _CropDropDownsModel.SeasonTypes"[value]="data.Value">
                                 {{data.Text}}

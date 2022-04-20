@@ -9,6 +9,18 @@ export class CropDropDownsModel{
         this.SeasonTypes = [];
     }
 }
+export class LandDropDownsModel{
+  CropNames : CommonDropdownModel[];
+  SeasonTypes : CommonDropdownModel[];
+  MeasureUnits : CommonDropdownModel[];
+
+  constructor(){
+      this.CropNames = [];
+      this.SeasonTypes = [];
+      this.MeasureUnits = [];
+  }
+}
+
 export class CropsRateRespDataModel extends BaseResponse {
     Result : CropsRateModel[];
     constructor(){      
@@ -50,4 +62,5 @@ export class LandRatesModel{
   CAPriceHa: Number;
   MarketRateDate: any;
   CARemarks: string;
+  MeasureUnit : any;
 }

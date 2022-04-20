@@ -1,20 +1,21 @@
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)">
 </app-filters>
 <br>
 <div class="card" *ngIf="_ShowLandDetailsDiv == false">
-    <h5 style="color: red;"><b>Please Select Village Name</b></h5>
+    <h5 style="color: red;"><b>Please Select Village and Type of Land!! </b></h5>
+</div>
+<div class="AddEditBtn"*ngIf="_ShowLandDetailsDiv == true"> 
+    <button class="btn-primary" (click)="AddNewLandDetails()"data-toggle="modal" data-target="#LandRateModal">
+        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+        Add Land Rates
+    </button> 
 </div>
 <div *ngIf="_ShowLandDetailsDiv == true">
-    <div class="AddEditBtn"> 
-        <button class="btn-primary" (click)="AddNewLandDetails()"data-toggle="modal" data-target="#LandRateModal">
-            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-            Add Land Rates
-        </button> 
-    </div>
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
         <thead>
             <tr>  
                 <th>Action</th>
+                <th>MeasureUnit</th>
                 <th>Reserve Price Ha</th> 
                 <th>Sale Deed Price Ha</th>   
                 <th>CA Price Ha</th>  
@@ -31,7 +32,8 @@
                     <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates(data)" title="Delete">
                         <i class="fa fa-trash"></i>
                     </button>
-                </td>          
+                </td>   
+                <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>       
                 <td>{{data.ReservePriceHa}}</td>
                 <td>{{data.SaleDeedPriceHa}}</td>
                 <td>{{data.CAPriceHa }}</td>
@@ -68,15 +70,23 @@
                         </select>
                     </div> -->
                     <div class="col-lg-6">
-                        <label class="Label">Reserve Price Ha</label>
+                        <label class="Label">Measure Unit</label>
+                        <select class="form-control"[(ngModel)]="_LandRatesModel.MeasureUnit">
+                            <option *ngFor="let data of _LandDropDownsModel.MeasureUnits"[value]="data.Value">
+                                {{data.Text}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Reserve Price</label>
                         <input type="text" class="form-control" [(ngModel)]="_LandRatesModel.ReservePriceHa">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Sale Deed Price Ha</label>
+                        <label class="Label">Sale Deed Price </label>
                         <input type="text" class="form-control" [(ngModel)]="_LandRatesModel.SaleDeedPriceHa">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">CA Price Ha</label>
+                        <label class="Label">CA Price</label>
                        <input type="text" class="form-control"[(ngModel)]="_LandRatesModel.CAPriceHa">
                     </div>
                     <div class="col-lg-6">

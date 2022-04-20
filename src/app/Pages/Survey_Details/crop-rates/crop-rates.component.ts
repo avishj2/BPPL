@@ -115,6 +115,17 @@ export class CropRatesComponent implements OnInit {
       }
     }
 
+  SearchFilterChanged(event)
+    {
+      let newSearchCriteria : SearchCriteria = event;
+        if(!this._ShowCropDetailsDiv && !this._AddNewCropRates)
+        {
+          this._SearchCriteria = newSearchCriteria;
+          this.Utility.LogText(this._SearchCriteria);
+          this._ShowCropDetailsDiv = true;
+          this.GetAllCrops();
+        }
+    }
   GetCropDropdownData()
     {
       let url = this.urlService.GetCropDropDownsAPI;

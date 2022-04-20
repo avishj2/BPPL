@@ -10,7 +10,7 @@ import { DataTableDirective } from 'angular-datatables';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
-import { LandRatesModel, LandRespModel }from 'src/app/Model/Crop&LandRates.model';
+import { LandRatesModel, LandRespModel,LandDropDownsModel }from 'src/app/Model/Crop&LandRates.model';
 @Component({
   selector: 'app-land-rates',
   templateUrl: './land-rates.component.html',
@@ -35,6 +35,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
 
   _LandRatesModel : LandRatesModel;
   _LandRateDetails : LandRatesModel[];
+  _LandDropDownsModel :LandDropDownsModel;
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
@@ -50,6 +51,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
         this.SetFilterControls();
         this._LandRatesModel = new LandRatesModel();
         this._LandRateDetails = [];
+        this._LandDropDownsModel = new LandDropDownsModel();
     }
 
   /**hide/show filter menu based on the component requirement */
@@ -71,6 +73,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
           pagingType: 'full_numbers',
           pageLength: 5,
         };
+      this.GetLandDropdownData();
     }
     ngAfterViewInit(): void 
     {
@@ -111,13 +114,33 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
          alert("Please select Village");
        }
      }
-  
+
+    SearchFilterChanged(event)
+     {
+       let newSearchCriteria : SearchCriteria = event;
+         if(newSearchCriteria.VillageId != null)
+         {
+           this._AddNewLandDetails = true;
+           this._SearchCriteria = newSearchCriteria;
+           this.Utility.LogText(this._SearchCriteria);           
+         }
+     }
+
+  GetLandDropdownData()
+     {
+       let url = this.urlService.GetLandDropDownsAPI;
+       this.httpService.get(url,null).subscribe(response => {
+         this._LandDropDownsModel  = response;
+         },error => {
+           this.Utility.LogText(error);
+         });
+     }  
 
   AddNewLandDetails()
     {
       if(this._SearchCriteria.VillageId != null)
       {
-        this. _AddNewLandDetails = true;
+        this._AddNewLandDetails = true;
         this._PopupTitle = "Add Land Rates";
         this._LandRatesModel = new LandRatesModel();
         this._LandRatesModel.LandId = 0;
@@ -126,7 +149,6 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
         {
           alert("Please Select Village!!");
         }
-
     }
 
   EditLandRates(arg)
@@ -157,9 +179,10 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
           this._SearchCriteria.SurveyID = 0;
         }
       this.CommonService.ShowSpinner();
-      this._LandRatesModel.TypeOfLand = 1061 //remove it
+      this._LandRatesModel.TypeOfLand = Number(this._SearchCriteria.TypeOfLand);
       this._LandRatesModel.VillageId = Number(this._SearchCriteria.VillageId);
       this._LandRatesModel.SurveyId = Number(this._SearchCriteria.SurveyID);
+      this._LandRatesModel.MeasureUnit = Number(this._LandRatesModel.MeasureUnit);
       let url = this.urlService.AddOrUpdateLandDetails;     
       this.httpService.HttpPostRequest(url,this._LandRatesModel, this.AddOrUpdateLandCallBack.bind(this),null);
     }
@@ -186,8 +209,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
               this._LandRateDetails = RespDataModel.Result;
               this. _AddNewLandDetails = false;
               this.closebutton.nativeElement.click();
-              this.ReloadDatatable();
-              
+              this.ReloadDatatable();              
             }   
         }
         this. _AddNewLandDetails = false;

@@ -283,11 +283,11 @@ export class GazetteDetailsComponent implements OnInit {
 
     
     FileUploadreset(element) 
-        {
-            element.value = "";
-            this.file = null;
-            this.notificationFile = null;
-        }
+      {
+        element.value = "";
+        this.file = null;
+        this.notificationFile = null;
+      }
 
 
     downloadFile(documentId : number): any 
