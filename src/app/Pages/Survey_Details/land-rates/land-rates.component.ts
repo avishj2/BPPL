@@ -138,7 +138,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   GetAllLandRates()
     {
       this.CommonService.ShowSpinnerLoading();
-      let url = this.urlService.GetAllLandDetails + this._SearchCriteria.VillageId + '&surveyId='+ this._SearchCriteria.SurveyID;
+      let url = this.urlService.GetAllLandDetails + this._SearchCriteria.VillageId + (this._SearchCriteria.SurveyID ? '&surveyId=' + this._SearchCriteria.SurveyID:"" );
       this.httpService.get(url,null).subscribe(response => {
         this._LandRateDetails  = response;
         this.ReloadDatatable();
