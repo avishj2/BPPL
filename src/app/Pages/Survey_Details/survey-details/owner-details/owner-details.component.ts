@@ -187,4 +187,16 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
         this.dtTrigger.next();
       }
   }
+
+  GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
+    {
+      let object = lookups.find(elm=>elm.Value == lookUpid );
+      if(object)
+      {
+        return object.Text;
+      }
+      else { 
+        return lookUpid;
+      }
+    }
 }
