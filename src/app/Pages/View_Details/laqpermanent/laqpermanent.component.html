@@ -1,12 +1,17 @@
-<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)">
+<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)">
     <div class="exportedbtn">
         <button (click)="makePdf()"class="btn-success">
             <i class="fa fa-download"></i>    
             Generate Document
         </button>&nbsp;&nbsp;&nbsp;
+        <button (click)="printpdf()"class="btn-success">
+            <i class="fa fa-download"></i>    
+            Generate PDF
+        </button>
     </div>
 </app-filters>
 
+<br>
 <div class="card1">
     <div class="pdfclass" id="pdfTable" #pdfTable *ngIf="_ShowTable">
         <div class="Headingdiv">
@@ -15,16 +20,16 @@
         </div>
         <div class="villagedetailsdiv">
             <div style="margin-bottom: 2px;">
-                <div style="float: left">Village : {{this._SearchCriteria.VillageName}}</div>
-                <div style="float: right">Chainage : From 68 KM To 70.78 KM</div>
-                <div style="margin: 0 auto; width: 200px;">State : Gujrat</div>
+                <div style="float: left;width: 400px;">Village : {{this._SearchCriteria.VillageName}}</div>
+                <div style="float: right;width: 270px;margin-right: -50px;">Chainage : From 68 KM To 70.78 KM</div>                
+                <div style="margin: 0 auto; width: 250px;">State : Gujrat</div>
             </div>    
             <div>
-                <div style="float: left">Taluka : Visnagr</div>
-                <div style="float: right">Width of ROU 30 mtr.</div>
-                <div style="margin: 0 auto; width: 200px;">District : Mahsma</div>
+                <div style="float: left;width: 400px;">Taluka : Visnagr</div>
+                <div style="float: right;width:230px;margin-right: -30px;">Width of ROU 30 mtr.</div>
+                <div style="margin: 0 auto; width: 250px;">District : Mahsma</div>
             </div>
-        </div>
+        </div><br>
         <table class="table table-bordered" width="90%">
             <tr>  
                 <th rowspan="2"width="6%">S.No.</th>  

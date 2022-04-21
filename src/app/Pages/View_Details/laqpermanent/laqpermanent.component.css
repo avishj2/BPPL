@@ -5,10 +5,11 @@ table, th, td {
 
 .villagedetailsdiv{
     font-weight: 550;
+    width: 100%;
 }
 .Headingdiv{
     margin: 0 auto; 
-    width: 400px;
+    width: 500px;
     text-align: center;
     font-size: 14px;
     font-weight: 600;
@@ -23,5 +24,6 @@ table, th, td {
     margin-left: 5%;
 }
 .pdfclass{
-    width: 90%;
+    width: 95%;
 }
+* { box-sizing: border-box; }
