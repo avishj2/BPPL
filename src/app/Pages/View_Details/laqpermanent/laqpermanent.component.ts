@@ -8,10 +8,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { DocxTemplateService } from 'src/app/services/Docxtemplate.service';
 import { LAQDataModel } from 'src/app/Model/Survey.model';
-import { jsPDF } from "jspdf";
-import html2canvas from 'html2canvas';  
 import printJS from 'print-js';
-
 
 @Component({
   selector: 'app-laqpermanent',
@@ -113,19 +110,7 @@ export class LAQPermanentComponent implements OnInit {
           this.docxTemplateService.GenerateDocument(fileURL,this._LAQDataModel.Result[0], "Output_doc")
         }else{
           alert("Please Select Village!!");
-        }
-        
-      }
-
-      
-    async makePdf() 
-      { 
-        let doc = new jsPDF('l', 'pt', 'a4');// A4 size page of PDF  
-        const Table = this.pdfTable.nativeElement;
-        const PDFoptions = {width :0.1,filename:"file",y:5, x:5,margin:1}
-        await doc.html(Table,PDFoptions);  
-        doc.save("output.pdf");
-        //doc.output('dataurlnewwindow'); // just open it
+        }        
       }
 
     printpdf()

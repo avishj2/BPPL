@@ -1,0 +1,25 @@
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+</app-filters>
+<br>
+
+<div *ngIf="_ShowTableDiv">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr>
+                <th>Document Type</th>
+                <th>File Name</th>
+                <th>Action</th>
+            </tr>  
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>    
+    </table>
+</div>
+<div *ngIf="_ShowTableDiv== false">
+    <h5 style="color: red;"><b>Please Select Vilaage Name</b></h5>
+</div>

@@ -39,8 +39,11 @@ export class VillageDetails
 export class SearchCriteria
     {
         StateId : any;
+        StateName : string;
         DistrictId :any;
+        DistrictName : string;
         TalukaId : any;
+        TalukaName: string;
         VillageId : any;
         ChainageFrom : any;
         ChainageTo : any;
@@ -53,6 +56,7 @@ export class SearchCriteria
         VillageName : string;
         CrossingTypeName : string;
         SurveyName : string;
+        TypeOfNotification : any;
     }
 /**
  * Defines the selection from the dropdown.
@@ -83,6 +87,7 @@ export class SearchCriteria
      ShowSearchBtn : boolean;
      ShowOwnerName : boolean;
      ShowLandTypes : boolean;
+     ShowNotificationDD : boolean;
  }
 
  export class CrossingDropdownDataModel{
