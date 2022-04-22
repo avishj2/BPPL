@@ -43,7 +43,6 @@
     "html2canvas": "^1.4.1",
     "jquery": "^3.5.1",
     "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.5.23",
     "ng-multiselect-dropdown": "^0.3.8",
     "ngb-modal": "^2.0.3",
     "ngx-select-dropdown": "^1.4.4",
@@ -52,6 +51,7 @@
     "pizzip": "^3.1.1",
     "primeicons": "^4.1.0",
     "primeng": "^11.0.0",
+    "print-js": "^1.6.0",
     "rxjs": "~6.5.5",
     "rxjs-compat": "^6.6.3"
   },
