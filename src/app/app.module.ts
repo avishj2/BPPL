@@ -60,6 +60,8 @@ import { AddAdhocdetailsComponent } from './Pages/Survey_Details/adhoc-payment-d
 import { ProjectPageComponent } from './Pages/ProjectManagement/project-page/project-page.component';
 import { CAInfoComponent } from './Pages/ProjectManagement/cainfo/cainfo.component';
 import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details/region-details.component';
+import { ViewNotificationComponent } from './Pages/View_Details/view-notification/view-notification.component';
+import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeatils/view-noticedeatils.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +108,8 @@ import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details
     ProjectPageComponent,
     CAInfoComponent,
     RegionDetailsComponent,
+    ViewNotificationComponent,
+    ViewNoticedeatilsComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

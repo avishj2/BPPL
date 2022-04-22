@@ -10,6 +10,7 @@ import { HttpService } from 'src/app/services/http.service';
 import {from} from 'rxjs';
 import { TwoDigitDecimaNumberDirective } from './two-digit-decima-number.directive';
 import {CommonDropdownModel} from 'src/app/Model/Base.model';
+import { GazzateDropDownsDataModel} from 'src/app/Model/Gazette.model';
 
 @Component({
   selector: 'app-filters',
@@ -24,6 +25,7 @@ export class FiltersComponent implements OnInit {
   @Output() VillageChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
   @Output() CrossingChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
   @Output() ChangedVillage :EventEmitter<SearchCriteria>= new EventEmitter(); 
+  _DropDownsDataModel : GazzateDropDownsDataModel;
 
  _TahsilLabel : string = "Tahsil";
   //api models
@@ -48,6 +50,7 @@ export class FiltersComponent implements OnInit {
     {
       this._SearchCriteria = new SearchCriteria();
       this._CrossingDetails = new CrossingDropdownDataModel();
+      this._DropDownsDataModel = new GazzateDropDownsDataModel();
     }
 
   ngOnInit() 
@@ -56,6 +59,7 @@ export class FiltersComponent implements OnInit {
       /**get data From parent component */
       this.Utility.LogText(this.filterControls);
       this.PopulateCrossingType();
+      this.GetGazzateDropDowns();
     }
 
   /**API CALL FOR state details */
@@ -90,31 +94,76 @@ export class FiltersComponent implements OnInit {
         },error => {
           this.Utility.LogText2("error",error);
         });
+        this._SearchCriteria.StateName = this.GetLookupState(this._StateDataModel , this._SearchCriteria.StateId)
     }
+
+         /** taluka name*/
+    GetLookupState(lookups : StateDetails[], lookUpid: number) : any
+      {
+        let object = lookups.find(elm=>elm.StateId == lookUpid );
+        if(object)
+        {
+          return object.Name;
+        }
+        else { 
+          return lookUpid;
+        }
+      }
 
   /**get all Taluka details base on the selected DistrictId */
   PopulateTaluka(argDistrictID)
     {
-      this.ResetDropDowns(DropDownChangeEnum.DistrictChanged)
+      this.ResetDropDowns(DropDownChangeEnum.DistrictChanged);      
       let url = this.urlService.GetTalukaByDistrictAPI+ argDistrictID;
       this.httpService.get(url,null).subscribe(response => {
-        this._TalukaDetails = response;
+      this._TalukaDetails = response;
         },error => {
           this.Utility.LogText2("GetTalukaByDistrictAPI error",error);
         });
+      this._SearchCriteria.DistrictName = this.GetLookupDistrict(this._DistrictDetails, this._SearchCriteria.DistrictId)     
     }
+
+     /** taluka name*/
+    GetLookupDistrict(lookups : DistrictDetails[], lookUpid: number) : any
+     {
+       let object = lookups.find(elm=>elm.DistrictId == lookUpid );
+       if(object)
+       {
+         return object.DistrictName;
+       }
+       else { 
+         return lookUpid;
+       }
+     }
 
     /**get all village details base on the selected Taluka */
   GetAllVillageDetails(argTalukaId)
     {
       this.ResetDropDowns(DropDownChangeEnum.TalukaChanged)
-      let url = this.urlService.GetVillageByTalukaAPI + argTalukaId;
-      this.httpService.get(url,null).subscribe(response => {
-        this._VillageDetails = response;
-        },error => {
-          this.Utility.LogText2("GetVillageByTalukaAPI error",error);
-        }); 
+      if(this.filterControls.ShowVillage == true)
+        {
+        let url = this.urlService.GetVillageByTalukaAPI + argTalukaId;
+        this.httpService.get(url,null).subscribe(response => {
+          this._VillageDetails = response;
+          },error => {
+            this.Utility.LogText2("GetVillageByTalukaAPI error",error);
+          }); 
+        this._SearchCriteria.TalukaName = this.GetLookupTaluka(this._TalukaDetails, this._SearchCriteria.TalukaId)
+      }
     }
+
+    /** taluka name*/
+    GetLookupTaluka(lookups : TalukaDetails[], lookUpid: number) : any
+      {
+        let object = lookups.find(elm=>elm.TalukaId == lookUpid );
+        if(object)
+        {
+          return object.TalukaName;
+        }
+        else { 
+          return lookUpid;
+        }
+      }
   
     /**get all Survey details base on the selected village */
   GetAllSurveyDetails(argVillageId)
@@ -210,6 +259,21 @@ export class FiltersComponent implements OnInit {
       {
         this._SearchCriteria.OwnerName = this.GetLookupValue(this._OwnerDetails, event);
       }
+
+    /**
+    * Get type of notification list
+    */
+    GetGazzateDropDowns()
+    {
+      let url = this.urlService.GetGazzateDropDownsAPI;
+      this.httpService.get(url, null).subscribe(response => {
+        this._DropDownsDataModel = response;
+        this.Utility.LogText(this._DropDownsDataModel);
+      }, error => {
+        this.Utility.LogText(error);
+      });
+    }
+
     /**
     * pass data child(filter) component to parent component 
     **/

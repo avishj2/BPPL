@@ -17,15 +17,23 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowTaluka == true">
             <label class ="dropdownsLabel"> {{_TahsilLabel}}  </label>
             <select class="form-control"placeholder="{{_TahsilLabel}}"[(ngModel)]="_SearchCriteria.TalukaId"(change)="GetAllVillageDetails($event.target.value)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select {{_TahsilLabel}} --</option>
-                <option *ngFor="let data of _TalukaDetails"[value]="data.TalukaId">{{data.TalukaName}}</option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                    -- Select {{_TahsilLabel}} --
+                </option>
+                <option *ngFor="let data of _TalukaDetails"[value]="data.TalukaId">
+                    {{data.TalukaName}}
+                </option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowVillage == true">
             <label class="dropdownsLabel"> Village  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.VillageId" (change)="GetAllSurveyDetails($event.target.value)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Village --</option>
-                <option *ngFor="let data of _VillageDetails" [value]="data.VillageId">{{data.VillageNameEng}}</option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                    -- Select Village --
+                </option>
+                <option *ngFor="let data of _VillageDetails" [value]="data.VillageId">
+                    {{data.VillageNameEng}}
+                </option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowChainageFrom == true">
@@ -39,8 +47,12 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowSurneyNos == true">
             <label class ="dropdownsLabel"> Survey Number  </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.SurveyID"(change)="GetOwnerNamesForSurvey(_SearchCriteria.SurveyID)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Survey --</option>
-                <option *ngFor="let data of _SurveyDetails"[value]="data.Value">{{data.Text}}</option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                    -- Select Survey --
+                </option>
+                <option *ngFor="let data of _SurveyDetails"[value]="data.Value">
+                    {{data.Text}}
+                </option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowOwnerName == true">
@@ -64,7 +76,9 @@
         <div class="col-lg-3" *ngIf="filterControls.ShowCrossingTypes == true">
             <label class ="dropdownsLabel"> Crossing Type </label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.CrossingType" (change)="GetAllCrossingsData($event.target.value)"[ngModelOptions]="{standalone: true}">
-                <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Crossing Type --</option>
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                    -- Select Crossing Type --
+                </option>
                 <option *ngFor="let data of _CrossingDetails.CrossingTypes" [value]="data.Value">{{data.Text}}</option>
             </select>
         </div>
@@ -73,6 +87,17 @@
             <select class="form-control"[(ngModel)]="_SearchCriteria.CrossingID"[ngModelOptions]="{standalone: true}">
                 <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Crossing --</option>
                 <option *ngFor="let data of _CrossingIds"[value]="data.Value">{{data.Text}}</option>
+            </select>
+        </div>
+        <div class="col-lg-3" *ngIf="filterControls.ShowNotificationDD == true">
+            <label class ="Label">Type of Notification</label>
+            <select class="form-control"[(ngModel)]="_SearchCriteria.TypeOfNotification">
+                <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                    -- Select Notification Type --
+                </option>
+                <option *ngFor="let data of _DropDownsDataModel.TypeOfNotifications"[value]="data.Value">
+                    {{data.Text}}
+                </option>
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowSearchBtn == true">

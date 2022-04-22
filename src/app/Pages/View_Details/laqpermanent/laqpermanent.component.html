@@ -1,9 +1,5 @@
 <app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)">
     <div class="exportedbtn">
-        <button (click)="makePdf()"class="btn-success">
-            <i class="fa fa-download"></i>    
-            Generate Document
-        </button>&nbsp;&nbsp;&nbsp;
         <button (click)="printpdf()"class="btn-success">
             <i class="fa fa-download"></i>    
             Generate PDF
@@ -39,7 +35,6 @@
                 <th rowspan="2">Name Of Jamabandi Owner</th>
                 <th rowspan="2">Remarks</th>
             </tr> 
-            <!-- class="table-active" -->
             <tr>
                 <th>Ha</th>
                 <th>Are</th>

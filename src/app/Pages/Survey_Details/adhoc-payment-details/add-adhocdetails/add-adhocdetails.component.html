@@ -58,7 +58,7 @@
                     <label class="Label">Payment Mode </label>
                     <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.PaymentMode" [ngModelOptions]="{standalone: true}">
                         <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                            Payment Mode
+                            --Select Payment Mode --
                         </option>
                         <option *ngFor="let data of _AdHocPaymentDropDownsModel.PaymentModes" [value]="data.Value">
                             {{data.Text}}
@@ -79,7 +79,7 @@
                     <label class="Label">Bank Name</label>
                     <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.BankId" [ngModelOptions]="{standalone: true}">
                         <option class="disabled"[ngValue]="undefined" [disabled]="true">
-                            Bank Name
+                            --Select  Bank Name --
                         </option>
                         <option *ngFor="let data of _AdHocPaymentDropDownsModel.Banks" [value]="data.Value">
                             {{data.Text}}
@@ -129,7 +129,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <label class ="Label">Document types</label>
-                    <ng-select [allowClear]="true"[(ngModel)]="_Paymentdoc.Lookupid"[items]="_AdHocPaymentDropDownsModel.AdhocPaymentDocumentTypes" bindLabel="Text" bindValue ="Value"[multiple]="false"placeholder="Documents"[ngModelOptions]="{standalone: true}"> 
+                    <ng-select [allowClear]="true"[(ngModel)]="_Paymentdoc.Lookupid"[items]="_AdHocPaymentDropDownsModel.AdhocPaymentDocumentTypes" bindLabel="Text" bindValue ="Value"[multiple]="false"placeholder="-- Select Document Type --" [ngModelOptions]="{standalone: true}"> 
                     </ng-select>
                 </div>
                 <div class="col-lg-3">
