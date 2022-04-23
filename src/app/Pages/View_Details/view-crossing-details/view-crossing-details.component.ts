@@ -1,4 +1,4 @@
-import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
+import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild,SimpleChanges,OnChanges } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
@@ -68,9 +68,8 @@ export class ViewCrossingDetailsComponent implements OnInit {
       {
         pagingType: 'full_numbers',
         pageLength: 10,
-      };
+      };    
   }
-  
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
@@ -99,7 +98,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
 
     /**get value from filter component */
   GetValuesFromFilters(event) 
-    {
+    {      
       this.Utility.LogText(event);
       this._SearchCriteria = event;
       if(this._SearchCriteria.CrossingID != null)
@@ -116,12 +115,15 @@ export class ViewCrossingDetailsComponent implements OnInit {
           this.IsDtInitialized = true;
           this.GetCrossingSummary();
         }
-        if(this._SearchCriteria.CrossingType == null)
+        if(Object.keys(this._SearchCriteria).length === 0) 
         {
-          alert("Please select Crossing details!!")
+          this._ShowChildViewpage = false;
+          this.IsDtInitialized = true;
+          this.GetCrossingSummary();
         }
     }
 
+    /**once the child page has been loaded or not info */
     LoadInfo(event)
       {
         this._ChildPageLoad = event;
@@ -130,6 +132,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
     /**Getcrossing deatils  */
     GetCrossingSummary()
       {
+        this.CommonService.ShowSpinnerLoading();
         let url = this.urlService.GetCrossingSummaryAPI;
         this._CrossingSummaryReqModel.CrossingType = Number(this._SearchCriteria.CrossingType);
         this._CrossingSummaryReqModel.StartChainage = this._SearchCriteria.ChainageFrom;
