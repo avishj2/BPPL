@@ -25,9 +25,6 @@ export class SurveyDocumentsComponent implements OnInit {
   dtTrigger1: Subject<any> = new Subject();
   dtTrigger2: Subject<any> = new Subject();
   dtTrigger3: Subject<any> = new Subject();
-  /**REFERSH DATATABLE  */
-  IsDtInitialized: boolean = false;
-  _dtElements
 
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
@@ -46,6 +43,7 @@ export class SurveyDocumentsComponent implements OnInit {
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
+  _VillageName : string;
 
   constructor(
     public urlService: UrlService,
@@ -101,49 +99,26 @@ export class SurveyDocumentsComponent implements OnInit {
   /**refresh/reload data table 
  * when data update/delete/add in the datatable  
  * */
-   rerenderDataTable(){
-    /**initialized datatable */
-    if (this.IsDtInitialized) 
-      {
-        this._dtElements.forEach((dtElement: DataTableDirective,index: number) => {
-          if(dtElement.dtInstance)
-            // dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-              dtElement.dtInstance.then((dtInstance: any) => {
-              dtInstance.destroy(); 
-              this.Utility.LogText(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
-          });
+   rerenderDataTable()
+    {
+      this.dtElements.forEach((dtElement: DataTableDirective,index: number) => {
+        if(dtElement.dtInstance)
+          // dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtElement.dtInstance.then((dtInstance: any) => {
+            dtInstance.destroy(); 
+            this.Utility.LogText(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
         });
-        this.dtTrigger1.next(); 
-        this.dtTrigger2.next(); 
-        this.dtTrigger3.next();       
-      }
-      else
-        {
-          this.IsDtInitialized = true;
-          this.dtTrigger1.next(); 
-          this.dtTrigger2.next(); 
-          this.dtTrigger3.next(); 
-        }
-  }
+      });
+      this.dtTrigger1.next(); 
+      this.dtTrigger2.next(); 
+      this.dtTrigger3.next();   
+    }
 
   ngAfterViewInit() {
     this.dtTrigger1.next();
     this.dtTrigger2.next();
     this.dtTrigger3.next();
  }
-
- ViewInit() {
-  this.dtTrigger1.next();
-  this.dtTrigger2.next();
-  this.dtTrigger3.next();
-}
-
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger1.unsubscribe();
-    this.dtTrigger2.unsubscribe();
-    this.dtTrigger3.unsubscribe();
-  }
 
   /**get value from child component */
   GetValuesFromFilters(event) 
@@ -154,22 +129,11 @@ export class SurveyDocumentsComponent implements OnInit {
         {
           this.GetAwardAndMutations();
           this.rerenderDataTable(); 
+          this._VillageName = "- " + this._SearchCriteria.VillageName;
         }
       else
         {
           alert("Please select village!!")
-        }
-    }
-
-    SearchFilterChanged(event)
-    {
-      let newSearchCriteria : SearchCriteria = event;
-        if(newSearchCriteria.VillageId !=null)
-        {
-          this._SearchCriteria = newSearchCriteria;
-          this.Utility.LogText(this._SearchCriteria);
-          this.GetAwardAndMutations();
-          this.rerenderDataTable(); 
         }
     }
 
@@ -187,11 +151,7 @@ export class SurveyDocumentsComponent implements OnInit {
       if(this._CategoryID == 3)
         {
           
-        }
-        this.ViewInit()
-        this.Utility.LogText2("this.dtElements",this.dtElements)
-        this._dtElements = this.dtElements
-        // this.ngOnDestroy()
+        }       
     }
 
  /**Get Survey Document DropDowns values*/

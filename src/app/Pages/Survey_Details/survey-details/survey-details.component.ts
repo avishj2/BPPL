@@ -29,6 +29,7 @@ export class SurveyDetailsComponent implements OnInit {
   _SurveyDropDownsDataModel : SurveyDropDownsDataModel;
   _AllSurveyDetails : AllSurveyDetailsDataModel
   _ActivetabTitle : string = "Survey- ";
+  _VillageName : string;
 
   @ViewChild('tabset')
   tabset: any;
@@ -99,8 +100,15 @@ export class SurveyDetailsComponent implements OnInit {
         let newSearchCriteria : SearchCriteria = event;
         if(!this._ShowSurveyDetailsDiv && !this._AddNewSurveyDetails && this._DisabledInputField)
         {
-            this._SearchCriteria = newSearchCriteria;
-            this.Utility.LogText(this._SearchCriteria);
+          this._SearchCriteria = newSearchCriteria;
+          this.Utility.LogText(this._SearchCriteria);
+          this._VillageName = "- " + this._SearchCriteria.VillageName;
+        }
+        else if(this._AddNewSurveyDetails)
+        {
+          this._SearchCriteria = newSearchCriteria;
+          this._SurveyModel.VillageId = this._SearchCriteria.VillageId;
+          this._VillageName = "- " + this._SearchCriteria.VillageName;
         }
       }
 
@@ -151,7 +159,8 @@ export class SurveyDetailsComponent implements OnInit {
 
   AddNewSurveyDetails()
     {
-      if(this._SearchCriteria.VillageId != null){
+      if(this._SearchCriteria.VillageId != null)
+      {
         this._AddNewSurveyDetails = true;
         this._DisabledInputField = false;
         this._ShowSurveyDetailsDiv = false;
@@ -159,13 +168,13 @@ export class SurveyDetailsComponent implements OnInit {
       }
       else{
         alert("Please Select Village!!")
-      }
-      
+      }      
     }
 
   EditSurveyDetails()
     {
-      if(this._SurveyModel.SurveyId != null){
+      if(this._SurveyModel.SurveyId != null)
+      {
         this._AddNewSurveyDetails = false;
         this._DisabledInputField = false;
       }
@@ -195,7 +204,7 @@ export class SurveyDetailsComponent implements OnInit {
 
   SaveSurveyDetails()
     {
-      this._SurveyModel.VillageId = this._SearchCriteria.VillageId;
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.AddOrUpdateSurveyAPI;     
       this.httpService.HttpPostRequest(url,this._SurveyModel,this.AddOrUpdateSurveyCallBack.bind(this),null);
     }

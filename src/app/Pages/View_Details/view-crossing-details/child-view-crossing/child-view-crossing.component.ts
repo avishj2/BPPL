@@ -32,6 +32,7 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
   IsDtInitialized: boolean = false;
   _FirstLoad : boolean = false;
   @Output() ChildLoadInfo:EventEmitter<boolean>= new EventEmitter(); 
+  _CrossingTypeName : string;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -54,6 +55,7 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
   ngOnChanges(changes: SimpleChanges)
     {
       this.Utility.LogText2("2nd child",this.filterdata);
+      this._CrossingTypeName = this.filterdata.CrossingTypeName
       this.GetCrossingDetails();
       this.ChildLoadInfo.emit(true); 
     }
@@ -62,6 +64,7 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
       {
         this.cd.detectChanges();
         this.Utility.LogText2("again call",this.filterdata);
+        this._CrossingTypeName = this.filterdata.CrossingTypeName
         this.GetCrossingDetails();
         this.ReloadDatatable();
       }
