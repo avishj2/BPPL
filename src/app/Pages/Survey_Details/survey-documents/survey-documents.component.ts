@@ -128,7 +128,6 @@ export class SurveyDocumentsComponent implements OnInit {
       if(this._SearchCriteria.VillageId != null)
         {
           this.GetAwardAndMutations();
-          this.rerenderDataTable(); 
           this._VillageName = "- " + this._SearchCriteria.VillageName;
         }
       else
@@ -306,6 +305,7 @@ UploadAlignmentSheet(fileInput)
       let url = this.urlService.GetAwardAndMutationsAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._AwardMutations  = response;
+        this.rerenderDataTable(); 
         },error => {
           this.Utility.LogText(error);
         });
