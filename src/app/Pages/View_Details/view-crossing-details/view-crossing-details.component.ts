@@ -109,14 +109,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
             this.child.reRenderChild();
           }
         }
-        if(this._SearchCriteria.CrossingType != null && this._SearchCriteria.CrossingID == null) 
-        {
-          this._ShowChildViewpage = false;
-          this.IsDtInitialized = true;
-          this.GetCrossingSummary();
-        }
-        if(Object.keys(this._SearchCriteria).length === 0) 
-        {
+        else{
           this._ShowChildViewpage = false;
           this.IsDtInitialized = true;
           this.GetCrossingSummary();
@@ -136,7 +129,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
         let url = this.urlService.GetCrossingSummaryAPI;
         this._CrossingSummaryReqModel.CrossingType = Number(this._SearchCriteria.CrossingType);
         this._CrossingSummaryReqModel.StartChainage = this._SearchCriteria.ChainageFrom;
-        this._CrossingSummaryReqModel.StartChainage = this._SearchCriteria.ChainageTo;
+        this._CrossingSummaryReqModel.EndChainage = this._SearchCriteria.ChainageTo;
         this.httpService.HttpPostRequest(url,this._CrossingSummaryReqModel,this.CrossingSummaryCallBack.bind(this),null);
       }
 
