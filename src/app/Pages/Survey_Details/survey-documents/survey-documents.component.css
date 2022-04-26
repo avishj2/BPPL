@@ -10,10 +10,16 @@
 .FileInputClass{
     margin-top: 11%;
 }
-.tbstyle{
-    width: 8%;
-}
 
+.tbstyle{
+    width: 50px;
+}
+.tbstyle2{
+    width: 50px;
+}
+.tbstyle3{
+    width: 50px;
+}
 .hide
 {
     display: none;

@@ -211,6 +211,7 @@ export class FiltersComponent implements OnInit {
 
   GetAllCrossingsData(argtypeOfCrossing)
     {
+      this.ResetDropDowns(DropDownChangeEnum.CrossingChanged)
       let url = this.urlService.GetAllCrossingsAPI + argtypeOfCrossing;
       this.httpService.get(url,null).subscribe(response => {
         this._CrossingIds = response; 
@@ -283,6 +284,12 @@ export class FiltersComponent implements OnInit {
         this.Utility.LogText(this._SearchCriteria);
       }
 
+      /**This function clear all selected fields */
+    resetSelectedField()
+      {
+        this.ResetDropDowns(DropDownChangeEnum.AllClear);
+      }
+
     /**
      * This fucntion empty the colelction which binds the dropdown for state/district/tehsil/vilage respectivly based onthe
      * argument.
@@ -292,6 +299,15 @@ export class FiltersComponent implements OnInit {
       {
         switch(argSelection)
         {
+          case DropDownChangeEnum.AllClear: 
+            this._DistrictDetails = [];
+            this._TalukaDetails = [];
+            this._VillageDetails = [];
+            this._SurveyDetails =[];
+            this._OwnerDetails = [];
+            this._CrossingIds =[];
+            this.ResetSelectedValue(argSelection);
+            break;
           case DropDownChangeEnum.StateChanged: 
             this._DistrictDetails = [];
             this._TalukaDetails = [];
@@ -318,6 +334,10 @@ export class FiltersComponent implements OnInit {
             this._OwnerDetails = [];
             this.ResetSelectedValue(argSelection);
             break;
+          case DropDownChangeEnum.CrossingChanged:
+            this._CrossingIds =[];
+            this.ResetSelectedValue(argSelection);
+            break;
         }
       }
   
@@ -325,32 +345,50 @@ export class FiltersComponent implements OnInit {
         {
           switch(argSelection)
           {
-              case DropDownChangeEnum.StateChanged:
+            case DropDownChangeEnum.AllClear:
+                this._SearchCriteria.StateId = undefined;
                 this._SearchCriteria.DistrictId = undefined;
                 this._SearchCriteria.TalukaId = undefined;
                 this._SearchCriteria.VillageId = undefined;
                 this._SearchCriteria.SurveyID = undefined;
+                this._SearchCriteria.ChainageFrom = null;
+                this._SearchCriteria.ChainageTo = null;
+                this._SearchCriteria.CrossingType = undefined;
+                this._SearchCriteria.TypeOfNotification = undefined;
                 this._SearchCriteria.OwnerID = undefined;
-                this._SearchCriteria.OwnerName = undefined;
+                this._SearchCriteria.OwnerName = undefined;  
+                this._SearchCriteria.CrossingID =undefined;    
+                this._SearchCriteria.TypeOfLand =  undefined;         
                 break;
-              case DropDownChangeEnum.DistrictChanged:
-                this._SearchCriteria.TalukaId = undefined;
-                this._SearchCriteria.VillageId = undefined;
-                this._SearchCriteria.SurveyID = undefined;
-                this._SearchCriteria.OwnerID = undefined;
-                this._SearchCriteria.OwnerName = undefined;
-                break;
-              case DropDownChangeEnum.TalukaChanged:
-                this._SearchCriteria.VillageId = undefined;
-                this._SearchCriteria.SurveyID = undefined;
-                this._SearchCriteria.OwnerID = undefined;
-                this._SearchCriteria.OwnerName = undefined;
-                break;
-              case DropDownChangeEnum.VillageChanged:
-                this._SearchCriteria.SurveyID = undefined;
-                this._SearchCriteria.OwnerID = undefined;
-                this._SearchCriteria.OwnerName = undefined;
-                break;
+            case DropDownChangeEnum.StateChanged:
+              this._SearchCriteria.DistrictId = undefined;
+              this._SearchCriteria.TalukaId = undefined;
+              this._SearchCriteria.VillageId = undefined;
+              this._SearchCriteria.SurveyID = undefined;
+              this._SearchCriteria.OwnerID = undefined;
+              this._SearchCriteria.OwnerName = undefined;
+              break;
+            case DropDownChangeEnum.DistrictChanged:
+              this._SearchCriteria.TalukaId = undefined;
+              this._SearchCriteria.VillageId = undefined;
+              this._SearchCriteria.SurveyID = undefined;
+              this._SearchCriteria.OwnerID = undefined;
+              this._SearchCriteria.OwnerName = undefined;
+              break;
+            case DropDownChangeEnum.TalukaChanged:
+              this._SearchCriteria.VillageId = undefined;
+              this._SearchCriteria.SurveyID = undefined;
+              this._SearchCriteria.OwnerID = undefined;
+              this._SearchCriteria.OwnerName = undefined;
+              break;
+            case DropDownChangeEnum.VillageChanged:
+              this._SearchCriteria.SurveyID = undefined;
+              this._SearchCriteria.OwnerID = undefined;
+              this._SearchCriteria.OwnerName = undefined;
+              break;
+            case DropDownChangeEnum.CrossingChanged:
+              this._SearchCriteria.CrossingID =undefined;
+              break;
           }
         }
 }

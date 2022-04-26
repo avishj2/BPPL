@@ -9,6 +9,7 @@ import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { VillageSummaryReqModel,ViewVillageModel } from 'src/app/Model/Village.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import printJS from 'print-js';
 
 @Component({
   selector: 'app-view-village-details',
@@ -27,6 +28,7 @@ export class ViewVillageDetailsComponent implements OnInit {
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
   _ShowDetailsDiv : boolean = false;
+  @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -49,6 +51,8 @@ export class ViewVillageDetailsComponent implements OnInit {
       this._FilterControls.ShowDistrict = true;
       this._FilterControls.ShowTaluka = true;  
       this._FilterControls.ShowSearchBtn = true;
+      this._FilterControls.ShowChainageFrom = true;
+      this._FilterControls.ShowChainageTo = true;
     }
 
   ngOnInit(): void {
@@ -115,5 +119,18 @@ export class ViewVillageDetailsComponent implements OnInit {
         }
         this.ReloadDatatable();
       }
+
+    printpdf()
+      {
+        if(this._ShowDetailsDiv == true)
+          {
+            const Table = this.pdfTable.nativeElement;
+            printJS({printable: Table, type:'html', gridStyle: 
+            'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""}) 
+          }
+        else{
+          alert("Show the table first!!")
+        }            
+      }    
 
 }

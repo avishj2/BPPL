@@ -116,7 +116,7 @@
                 <div class="col-lg-3">
                     <label class ="Label">Survey Agency</label>
                     <select *ngIf="_DisabledInputField != true"class="form-control"[ngModelOptions]="{standalone: true}"[disabled]="_DisabledInputField && _DisabledChainageField"[(ngModel)]="_NewChainage.SurveyAgency">
-                        <option class="disabled"[ngValue]="undefined" [disabled]="true">-- Select Agency --</option>
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">-- Select Agency --</option>
                         <option value="1">NKBPL</option>
                     </select>
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true && _DisabledChainageField ==true">

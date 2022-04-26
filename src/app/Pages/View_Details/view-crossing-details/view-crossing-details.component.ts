@@ -1,4 +1,4 @@
-import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild,SimpleChanges,OnChanges } from '@angular/core';
+import { AfterViewInit,ElementRef,Component, OnInit, Input, Output,EventEmitter,ViewChild,SimpleChanges,OnChanges } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import {CrossingModel,CrossingsSummaryRespModel,CrossingSummaryReqModel } from 'src/app/Model/Crossing.model';
 import { ChildViewCrossingComponent} from '../view-crossing-details/child-view-crossing/child-view-crossing.component';
-
+import printJS from 'print-js';
 
 @Component({
   selector: 'app-view-crossing-details',
@@ -34,6 +34,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
   _CrossingSummaryReqModel : CrossingSummaryReqModel;
   _CrossingsModel :CrossingsSummaryRespModel;
   _ChildPageLoad : boolean = false;
+  @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -140,5 +141,18 @@ export class ViewCrossingDetailsComponent implements OnInit {
           this._CrossingsModel = dtas;
         }
         this.ReloadDatatable();
+      }
+      
+    printpdf()
+      {
+        if(this._ShowChildViewpage == false)
+          {
+            const Table = this.pdfTable.nativeElement;
+            printJS({printable: Table, type:'html', gridStyle: 
+            'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""}) 
+          }
+        else{
+          alert("Show the Crossing table first!!")
+        }            
       }
 }

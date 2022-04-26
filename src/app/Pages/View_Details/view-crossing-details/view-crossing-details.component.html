@@ -1,5 +1,11 @@
 <!-- add filter component ,pass and get data from child -->
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+    <div class="exportedbtn">
+        <button (click)="printpdf()"class="btn-success">
+            <i class="fa fa-download"></i>    
+            Generate PDF
+        </button>
+    </div>
 </app-filters>
 <br>
 
@@ -11,31 +17,33 @@
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Crossings Details</div> 
         </div><br>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
-            <thead>
-                <tr>
-                    <th>S.No.</th>
-                    <th>Crossing Type</th>
-                    <th>No. of Crossing</th>
-                    <th>Demand Node</th>
-                    <th>Proposal Received</th>
-                    <th>Permission Received</th>
-                    <th>Refundable Amount</th>
-                    <th>Non-Refundable Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of _CrossingsModel.Crossings;let i = index">
-                    <td>{{i+1}}</td>
-                    <td>{{data.CrossingType}}</td>
-                    <td>{{data.NoOfCrossing}}</td>
-                    <td>{{data.DemandNoteReceived}}</td>
-                    <td>{{data.ProposalReceived}}</td>
-                    <td>{{data.PermissionReceived}}</td>
-                    <td>{{data.RefundableAmount}}</td>
-                    <td>{{data.NonRefundableAmount}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="pdfTable"#pdfTable>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Crossing Type</th>
+                        <th>No. of Crossing</th>
+                        <th>Demand Node</th>
+                        <th>Proposal Received</th>
+                        <th>Permission Received</th>
+                        <th>Refundable Amount</th>
+                        <th>Non-Refundable Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _CrossingsModel.Crossings;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{data.CrossingType}}</td>
+                        <td>{{data.NoOfCrossing}}</td>
+                        <td>{{data.DemandNoteReceived}}</td>
+                        <td>{{data.ProposalReceived}}</td>
+                        <td>{{data.PermissionReceived}}</td>
+                        <td>{{data.RefundableAmount}}</td>
+                        <td>{{data.NonRefundableAmount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

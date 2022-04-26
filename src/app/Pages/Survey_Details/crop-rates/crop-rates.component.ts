@@ -27,7 +27,6 @@ export class CropRatesComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
-
   _PopupTitle : string;
   _AddNewCropRates : boolean = false;
   _FilterControls: FilterControls;
@@ -39,6 +38,8 @@ export class CropRatesComponent implements OnInit {
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
   _ShowCropDetailsDiv : boolean = false;
+  _VillageName : string;
+  _VillageID : any;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -106,6 +107,8 @@ export class CropRatesComponent implements OnInit {
       if(this._SearchCriteria.VillageId != null)
         {
           this._ShowCropDetailsDiv = true;
+          this._VillageID = this._SearchCriteria.VillageId;
+          this._VillageName = " - "+ this._SearchCriteria.VillageName;
           this.GetAllCrops();
         }
       else
@@ -115,17 +118,6 @@ export class CropRatesComponent implements OnInit {
       }
     }
 
-  SearchFilterChanged(event)
-    {
-      let newSearchCriteria : SearchCriteria = event;
-        if(!this._ShowCropDetailsDiv && !this._AddNewCropRates)
-        {
-          this._SearchCriteria = newSearchCriteria;
-          this.Utility.LogText(this._SearchCriteria);
-          this._ShowCropDetailsDiv = true;
-          this.GetAllCrops();
-        }
-    }
   GetCropDropdownData()
     {
       let url = this.urlService.GetCropDropDownsAPI;
@@ -139,7 +131,7 @@ export class CropRatesComponent implements OnInit {
   GetAllCrops()
     {
       this.CommonService.ShowSpinnerLoading();
-      let url = this.urlService.GetAllCropsAPI + this._SearchCriteria.VillageId;
+      let url = this.urlService.GetAllCropsAPI + this._VillageID;
       this.httpService.get(url,null).subscribe(response => {
         this._CropDetailsModel  = response;
         this.ReloadDatatable();
@@ -176,7 +168,7 @@ export class CropRatesComponent implements OnInit {
   SaveDetails()
     {
       this.CommonService.ShowSpinnerLoading();
-      this._CropsRateModel.VillageId = this._SearchCriteria.VillageId;
+      this._CropsRateModel.VillageId = this._VillageID;
       this._CropsRateModel.CropLookupId = Number(this._CropsRateModel.CropLookupId);
       this._CropsRateModel.SeasonId = Number(this._CropsRateModel.SeasonId);
       let url = this.urlService.AddOrUpdateCropsRateAPI;     

@@ -66,7 +66,9 @@ export class SearchCriteria
     StateChanged = 1,
     DistrictChanged = 2,
     TalukaChanged = 3,
-    VillageChanged = 4
+    VillageChanged = 4,
+    AllClear = 5,
+    CrossingChanged= 6,
  }
 
  /**

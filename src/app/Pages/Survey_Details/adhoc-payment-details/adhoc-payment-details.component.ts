@@ -13,7 +13,6 @@ import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { CommonService} from 'src/app/services/common.service';
 import {CommonDtoService} from 'src/app/services/common.dto.service';
 
-
 @Component({
   selector: 'app-adhoc-payment-details',
   templateUrl: './adhoc-payment-details.component.html',
@@ -21,23 +20,22 @@ import {CommonDtoService} from 'src/app/services/common.dto.service';
 })
 
 export class AdhocPaymentDetailsComponent implements OnInit {
-  _ShowPaymentDetailsDiv: boolean = false;
-  _FilterControls : FilterControls;
-  _SearchCriteria : SearchCriteria;
    /**data table properties  */
-   @ViewChild(DataTableDirective, {static: false})
-   dtElement: DataTableDirective;
-   dtOptions: DataTables.Settings = {};
-   dtTrigger: Subject<any> = new Subject();
-   /**REFERSH DATATABLE  */
-   IsDtInitialized: boolean = false;
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  /**REFERSH DATATABLE  */
+  IsDtInitialized: boolean = false;
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it?";
   _AdHocPaymentDropDownsModel : AdHocPaymentDropDownsModel;
   _AdHocPaymentDetails : AdHocPaymentModel[];
-
-
+  _ShowPaymentDetailsDiv: boolean = false;
+  _FilterControls : FilterControls;
+  _SearchCriteria : SearchCriteria;
+  
   constructor(
     public urlService: UrlService,
     private router: Router,
@@ -47,8 +45,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
     public APIUtilityService: APIUtilityService,
     public CommonService : CommonService,
     private cd: ChangeDetectorRef,
-    public CommonDtoService : CommonDtoService,
-    
+    public CommonDtoService : CommonDtoService,    
   ) {
       this._FilterControls = new FilterControls();
       this._SearchCriteria = new SearchCriteria();
@@ -72,15 +69,19 @@ export class AdhocPaymentDetailsComponent implements OnInit {
 
   ngOnInit(): void 
     {
+      this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength: 10,
+        };
       this.GetAdHocPaymentDropDowns();
-      this.Utility.LogText("view payment page")
     }
 
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
-    }
-    
+      console.log("nidjwa")
+    }    
 
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  

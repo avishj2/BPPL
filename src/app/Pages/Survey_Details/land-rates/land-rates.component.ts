@@ -39,6 +39,8 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
+  _VillageName : string;
+  _VillageId : any;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -108,6 +110,8 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
        if(this._SearchCriteria.VillageId != null)
          {
           this.GetAllLandRates();
+          this._VillageId = this._SearchCriteria.VillageId
+          this._VillageName = " - "+ this._SearchCriteria.VillageName;
            this._ShowLandDetailsDiv = true;
          }
        else{
@@ -180,7 +184,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
         }
       this.CommonService.ShowSpinner();
       this._LandRatesModel.TypeOfLand = Number(this._SearchCriteria.TypeOfLand);
-      this._LandRatesModel.VillageId = Number(this._SearchCriteria.VillageId);
+      this._LandRatesModel.VillageId = Number(this._VillageId);
       this._LandRatesModel.SurveyId = Number(this._SearchCriteria.SurveyID);
       this._LandRatesModel.MeasureUnit = Number(this._LandRatesModel.MeasureUnit);
       let url = this.urlService.AddOrUpdateLandDetails;     

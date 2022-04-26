@@ -61,7 +61,7 @@
                     <div class="col-lg-6">
                         <label class="Label">Owner Name <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_TreeDataModel.SurveyOwnerId"[ngModelOptions]="{standalone: true}">
-                            <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                            <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
                                -- Select Owner --
                             </option>
                             <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">
@@ -73,7 +73,7 @@
                         <label class="Label">Range</label>
                         <!-- <input class="form-control"[(ngModel)]="_TreeDataModel.Range"[ngModelOptions]="{standalone: true}"> -->
                         <select class="form-control"[(ngModel)]="_TreeDataModel.Range"[ngModelOptions]="{standalone: true}">
-                            <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                            <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
                                 -- Select Range --
                             </option>
                             <option *ngFor="let data of SurveyDropDownsData.TreeRanges" [value]="data.Value">
@@ -84,7 +84,7 @@
                     <div class="col-lg-6">
                         <label class="Label">Tree Name  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_TreeDataModel.TreeName"[ngModelOptions]="{standalone: true}">
-                            <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                            <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
                                 -- Select Tree -- 
                             </option>
                             <option *ngFor="let data of SurveyDropDownsData.TreeNames" [value]="data.Value">

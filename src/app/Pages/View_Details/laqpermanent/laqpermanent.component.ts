@@ -115,8 +115,14 @@ export class LAQPermanentComponent implements OnInit {
 
     printpdf()
       {
-        const Table = this.pdfTable.nativeElement;
-        printJS({printable: Table, type:'html', gridStyle: 
-        'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""})     
+        if(this._ShowTable ==true)
+        {
+          const Table = this.pdfTable.nativeElement;
+          printJS({printable: Table, type:'html', gridStyle: 
+          'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""})  
+        }else{
+          alert("Show the table first!!")
+        }
+           
       }      
   }

@@ -1,4 +1,10 @@
 <app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)">
+  <div class="exportedbtn">
+    <button (click)="printpdf()"class="btn-success">
+      <i class="fa fa-download"></i>    
+      Generate PDF
+    </button>
+  </div>
 </app-filters>
 <br>
 <div class="card"*ngIf="_ShowDetailsDiv == true">  
@@ -6,30 +12,32 @@
     <div class="d-flex justify-content-between">
         <div class="CardTitle">Villages Details</div> 
     </div><br>
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">  
-        <thead>
-          <tr>
-            <th style="width: 28px;">S.No.</th>  
-            <th>Village Name</th>  
-            <th>ChainageFromTo</th>  
-            <th>Length In Kms</th>  
-            <th>Total Survey Nos</th>
-            <th>Total Panchnama Owners</th>
-            <th>Total Compensation Paid</th>
-            </tr>  
-          </thead>  
-          <tbody>
-            <tr *ngFor="let data of _ViewVillageModel.Villages; let i=index">  
-              <td style="width: 28px;">{{i+1}}</td>
-              <td>{{data.VillageName}}</td>  
-              <td>{{data.ChainageFromTo}}</td>  
-              <td>{{data.LengthInKms}}</td>  
-              <td>{{data.TotalSurveyNos}}</td>  
-              <td>{{data.TotalPanchnamaOwners}}</td>  
-              <td>{{data.TotalCompensationPaid}}</td>  
-            </tr>  
-          </tbody>  
-      </table>  
+      <div id="pdfTable" #pdfTable>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">  
+          <thead>
+            <tr>
+              <th style="width: 28px;">S.No.</th>  
+              <th>Village Name</th>  
+              <th>ChainageFromTo</th>  
+              <th>Length In Kms</th>  
+              <th>Total Survey Nos</th>
+              <th>Total Panchnama Owners</th>
+              <th>Total Compensation Paid</th>
+              </tr>  
+            </thead>  
+            <tbody>
+              <tr *ngFor="let data of _ViewVillageModel.Villages; let i=index">  
+                <td style="width: 28px;">{{i+1}}</td>
+                <td>{{data.VillageName}}</td>  
+                <td>{{data.ChainageFromTo}}</td>  
+                <td>{{data.LengthInKms}}</td>  
+                <td>{{data.TotalSurveyNos}}</td>  
+                <td>{{data.TotalPanchnamaOwners}}</td>  
+                <td>{{data.TotalCompensationPaid}}</td>  
+              </tr>  
+            </tbody>  
+        </table>  
+      </div>
   </div>
 </div> 
 <div class="card" *ngIf="_ShowDetailsDiv == false">

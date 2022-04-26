@@ -14,3 +14,12 @@ option[value=""][disabled] {
   .disabled {
     color: #888;
   }
+
+ .DDPlaceholder{
+    color: #888;
+ }
+
+ select[disabled] {
+  color: #848484 !important;
+  background-color: #eee !important;
+}

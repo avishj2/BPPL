@@ -1,10 +1,4 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"> 
-    <div class="ParentBtn"> 
-        <button class="btn-primary"routerLink="../Add_Adhoc_Details" *ngIf="_SearchCriteria.OwnerID != null"(click)="AddNewPaymentDetails()">
-            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-            Add Payment
-        </button>
-    </div>
 </app-filters>
 <br>
 <div class="card" *ngIf="_ShowPaymentDetailsDiv == false">
@@ -15,7 +9,13 @@
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Adhoc Payment Details - {{this._SearchCriteria.OwnerName}} </div> 
         </div>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="100%">
+        <div class="ParentBtn"> 
+            <button class="btn-primary"routerLink="../Add_Adhoc_Details" *ngIf="_SearchCriteria.OwnerID != null"(click)="AddNewPaymentDetails()">
+                <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                Add Payment
+            </button>
+        </div>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="100%">
             <thead>
                 <tr>
                     <th>Action</th>

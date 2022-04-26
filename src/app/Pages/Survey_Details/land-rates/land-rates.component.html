@@ -4,44 +4,49 @@
 <div class="card" *ngIf="_ShowLandDetailsDiv == false">
     <h5 style="color: red;"><b>Please Select Village and Type of Land!! </b></h5>
 </div>
-<div class="AddEditBtn"*ngIf="_ShowLandDetailsDiv == true"> 
-    <button class="btn-primary" (click)="AddNewLandDetails()"data-toggle="modal" data-target="#LandRateModal">
-        <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-        Add Land Rates
-    </button> 
-</div>
-<div *ngIf="_ShowLandDetailsDiv == true">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
-        <thead>
-            <tr>  
-                <th>Action</th>
-                <th>MeasureUnit</th>
-                <th>Reserve Price Ha</th> 
-                <th>Sale Deed Price Ha</th>   
-                <th>CA Price Ha</th>  
-                <th>Market Rate Date</th>       
-                <th>CA Remarks</th>   
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of _LandRateDetails;let i = index">
-                <td>
-                    <button type="button" class="btn-success"(click)="EditLandRates(data)" title="Edit" data-toggle="modal" data-target="#LandRateModal">
-                        <i class="fa fa-edit"></i>
-                    </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates(data)" title="Delete">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </td>   
-                <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>       
-                <td>{{data.ReservePriceHa}}</td>
-                <td>{{data.SaleDeedPriceHa}}</td>
-                <td>{{data.CAPriceHa }}</td>
-                <td>{{data.MarketRateDate | date:'mediumDate'}}</td>
-                <td>{{data.CARemarks}}</td>
-            </tr>
-        </tbody>
-    </table>
+<div  class="card"*ngIf="_ShowLandDetailsDiv == true">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Land Rates{{this._VillageName}}</div> 
+        </div>
+        <div class="AddEditBtn"> 
+            <button class="btn-primary" (click)="AddNewLandDetails()"data-toggle="modal" data-target="#LandRateModal">
+                <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                Add Land Rates
+            </button> 
+        </div>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+            <thead>
+                <tr>  
+                    <th>Action</th>
+                    <th>MeasureUnit</th>
+                    <th>Reserve Price</th> 
+                    <th>Sale Deed Price</th>   
+                    <th>CA Price</th>  
+                    <th>Market Rate Date</th>       
+                    <th>CA Remarks</th>   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of _LandRateDetails;let i = index">
+                    <td>
+                        <button type="button" class="btn-success"(click)="EditLandRates(data)" title="Edit" data-toggle="modal" data-target="#LandRateModal">
+                            <i class="fa fa-edit"></i>
+                        </button>&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates(data)" title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>   
+                    <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>       
+                    <td>{{data.ReservePriceHa}}</td>
+                    <td>{{data.SaleDeedPriceHa}}</td>
+                    <td>{{data.CAPriceHa }}</td>
+                    <td>{{data.MarketRateDate | date:'mediumDate'}}</td>
+                    <td>{{data.CARemarks}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="container">
@@ -53,7 +58,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <b><i class='fa fa-edit'style='font-size:24px'></i> 
-                    {{_PopupTitle}}
+                    {{_PopupTitle}} - {{this._VillageName}} 
                     </b>
                 </h5>  
                 <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>

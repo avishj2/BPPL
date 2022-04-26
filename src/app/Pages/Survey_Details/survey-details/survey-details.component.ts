@@ -79,7 +79,6 @@ export class SurveyDetailsComponent implements OnInit {
       this._SearchCriteria = event;
       if (Object.keys(this._SearchCriteria).length === 0) 
       {
-        // this.CommonService.hideSpinnerLoading();
         alert("Please Select State, District, taluka or village!!");
       }      
       if(this._SearchCriteria.VillageId != null && this._SearchCriteria.SurveyID != null){

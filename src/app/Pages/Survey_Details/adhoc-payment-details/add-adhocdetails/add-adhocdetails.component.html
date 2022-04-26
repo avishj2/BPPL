@@ -57,7 +57,7 @@
                 <div class="col-lg-3">
                     <label class="Label">Payment Mode </label>
                     <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.PaymentMode" [ngModelOptions]="{standalone: true}">
-                        <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
                             --Select Payment Mode --
                         </option>
                         <option *ngFor="let data of _AdHocPaymentDropDownsModel.PaymentModes" [value]="data.Value">
@@ -78,7 +78,7 @@
                 <div class="col-lg-3">
                     <label class="Label">Bank Name</label>
                     <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.BankId" [ngModelOptions]="{standalone: true}">
-                        <option class="disabled"[ngValue]="undefined" [disabled]="true">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
                             --Select  Bank Name --
                         </option>
                         <option *ngFor="let data of _AdHocPaymentDropDownsModel.Banks" [value]="data.Value">
