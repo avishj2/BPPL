@@ -156,6 +156,10 @@ export class CropRatesComponent implements OnInit {
         alert("Please Select Village!!");
       }
   }
+  ResetFilterValues(event)
+    {
+      this.Utility.LogText2("Reset data=>", event)
+    }
 
 
   EditCropRates(arg)

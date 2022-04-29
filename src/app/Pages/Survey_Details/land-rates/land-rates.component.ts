@@ -180,12 +180,11 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
       this.CommonService.ShowSpinnerLoading();
       if(this._SearchCriteria.SurveyID == null)
         {
-          this._SearchCriteria.SurveyID = 0;
+          this._SearchCriteria.SurveyID = "0";
         }
-      this.CommonService.ShowSpinner();
       this._LandRatesModel.TypeOfLand = Number(this._SearchCriteria.TypeOfLand);
       this._LandRatesModel.VillageId = Number(this._VillageId);
-      this._LandRatesModel.SurveyId = Number(this._SearchCriteria.SurveyID);
+      this._LandRatesModel.SurveyId = this._SearchCriteria.SurveyID;
       this._LandRatesModel.MeasureUnit = Number(this._LandRatesModel.MeasureUnit);
       let url = this.urlService.AddOrUpdateLandDetails;     
       this.httpService.HttpPostRequest(url,this._LandRatesModel, this.AddOrUpdateLandCallBack.bind(this),null);
@@ -222,7 +221,14 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
 
   DeleteLandRates(arg)
     {
-      let url = this.urlService.DeleteLandDetailsAPI + arg.LandId + '&villageId='+ arg.VillageId +'&surveyId='+ arg.SurveyId;
+      let url = "";
+      if(arg.SurveyId ==null)
+        {
+          url = this.urlService.DeleteLandDetailsAPI + arg.LandId + '&villageId='+ arg.VillageId;
+        }
+      else{
+        url = this.urlService.DeleteLandDetailsAPI + arg.LandId + '&villageId='+ arg.VillageId +'&surveyId='+ arg.SurveyId;
+      }       
       this.httpService.get(url,null).subscribe(response => {
         let CropDetails : any = response;
         if (CropDetails.StatusCode != 200) 
@@ -237,6 +243,11 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
         },error => {
           this.Utility.LogText(error);
         });
+    }
+
+  ResetFilterValues(event)
+    {
+      
     }
 GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
   {

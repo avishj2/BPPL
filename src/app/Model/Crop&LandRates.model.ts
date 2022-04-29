@@ -55,7 +55,7 @@ export class LandRespModel extends BaseResponse {
 export class LandRatesModel{
   LandId: Number;
   VillageId: Number;
-  SurveyId: Number;
+  SurveyId: string;
   TypeOfLand: Number;
   ReservePriceHa: Number;
   SaleDeedPriceHa: Number;

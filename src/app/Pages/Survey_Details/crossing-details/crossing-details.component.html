@@ -1,5 +1,5 @@
 <!-- add filter component ,pass and get data from child -->
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)" (CrossingChanged)="SearchFilterChanged($event)">
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)" (CrossingChanged)="SearchFilterChanged($event)"(ResetFilterValues)="ResetFilterValues($event)">
     <div class="ParentBtn"> 
         <button class="btn-primary" (click)="AddNewCrossingDetails()">
             <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
@@ -126,7 +126,7 @@
                 <div class="col-lg-3">
                     <label class ="Label">Approved </label>
                     <select class="form-control"*ngIf="_DisabledCrossingInputField != true"[(ngModel)]="_CrossingDataModel.CrossingApproval"[ngModelOptions]="{standalone: true}">
-                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">Approved </option>
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">--Select Approved -- </option>
                         <option *ngFor="let data of _CrossingDropdowns.CrossingApprovalTypes" [value]="data.Value">
                             {{data.Text}}
                         </option>

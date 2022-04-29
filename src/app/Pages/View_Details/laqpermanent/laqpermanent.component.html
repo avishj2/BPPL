@@ -1,4 +1,4 @@
-<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)">
+<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)"(ResetFilterValues)="ResetFilterValues($event)">
     <div class="exportedbtn">
         <button (click)="printpdf()"class="btn-success">
             <i class="fa fa-download"></i>    
@@ -11,20 +11,20 @@
 <div class="card1">
     <div class="pdfclass" id="pdfTable" #pdfTable *ngIf="_ShowTable">
         <div class="Headingdiv">
-            GUJRAT STATE PETRONET LIMITED, GADHINAGAR<br>LAND ACQUISTION STATEMENT <br>
+            {{this._SearchCriteria.StateName.toUpperCase()}} STATE PETRONET LIMITED, {{this._SearchCriteria.DistrictName.toUpperCase()}}<br>LAND ACQUISTION STATEMENT <br>
             BPPL PIPPELINES 
         </div>
         <div class="villagedetailsdiv">
             <div style="margin-bottom: 2px;">
                 <div style="float: left;width: 400px;">Village : {{this._SearchCriteria.VillageName}}</div>
-                <div style="float: right;width: 270px;margin-right: -50px;">Chainage : From 68 KM To 70.78 KM</div>                
-                <div style="margin: 0 auto; width: 250px;">State : Gujrat</div>
+                <div style="float: right;width: 280px;margin-right: -50px;">Chainage : From {{this._LAQDataModel.Result.Chainage}} KM <br/> Width of ROU 18 mtr.</div>                
+                <div style="margin: 0 auto; width: 250px;">State : {{this._SearchCriteria.StateName}}</div>
             </div>    
             <div>
-                <div style="float: left;width: 400px;">Taluka : Visnagr</div>
-                <div style="float: right;width:230px;margin-right: -30px;">Width of ROU 30 mtr.</div>
-                <div style="margin: 0 auto; width: 250px;">District : Mahsma</div>
-            </div>
+                <div style="float: left;width: 400px;">Taluka : {{this._SearchCriteria.TalukaName}}</div>
+                <!-- <div style="float: right;width:230px;margin-right: -30px;">Width of ROU 18 mtr.</div> -->
+                <div style="margin: 0 auto; width: 250px;">District : {{this._SearchCriteria.DistrictName}}</div>
+            </div>        
         </div><br>
         <table class="table table-bordered" width="90%">
             <tr>  
@@ -40,7 +40,7 @@
                 <th>Are</th>
                 <th>Sqmt</th>
             </tr> 
-            <ng-container *ngFor="let data of _LAQDataModel.Result;let i = index">
+            <ng-container *ngFor="let data of _LAQDataModel.Result.LAQData;let i = index">
                 <tr *ngFor="let innerdata of data.LandDetails; let j = index" >
                     <td *ngIf="j==0" [attr.rowspan]="data.LandDetails.length">{{i+1}}</td>
                     <td *ngIf="j==0" [attr.rowspan]="data.LandDetails.length">{{data.Survey.SurveyNo}}</td>

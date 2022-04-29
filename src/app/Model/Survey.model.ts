@@ -44,10 +44,20 @@ import {BaseResponse, CommonDropdownModel,CommonDocDataModel} from './Base.model
   }
 
   export class LAQDataModel extends BaseResponse{
-    Result : SurveyResult[]
+    Result : LAQModel;
     constructor(){      
       super();
-      this.Result = [];
+      this.Result = new LAQModel();
+    }
+  }
+
+  export class LAQModel
+  {
+    Chainage : string;
+    LAQData: SurveyResult[]
+
+    constructor(){      
+      this.LAQData =[];
     }
   }
 

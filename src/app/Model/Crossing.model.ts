@@ -61,3 +61,13 @@ export class CrossingsColModel
         RefundableAmount: Number;
         NonRefundableAmount: Number;
     }
+
+export class CrossingsValueTotalModel
+    {
+        NoOfCrossingTotal= 0;
+        DemandNoteReceivedTotal= 0;
+        ProposalReceivedTotal= 0;
+        PermissionReceivedTotal=0 ;
+        RefundableAmountTotal= 0;
+        NonRefundableAmountTotal=0;
+    }

@@ -10,7 +10,7 @@ import { DataTableDirective } from 'angular-datatables';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
-import {CrossingModel,CrossingsSummaryRespModel,CrossingSummaryReqModel } from 'src/app/Model/Crossing.model';
+import {CrossingModel,CrossingsSummaryRespModel,CrossingSummaryReqModel,CrossingsValueTotalModel } from 'src/app/Model/Crossing.model';
 import { ChildViewCrossingComponent} from '../view-crossing-details/child-view-crossing/child-view-crossing.component';
 import printJS from 'print-js';
 
@@ -35,6 +35,7 @@ export class ViewCrossingDetailsComponent implements OnInit {
   _CrossingsModel :CrossingsSummaryRespModel;
   _ChildPageLoad : boolean = false;
   @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
+  _CrossingsDataTotal :CrossingsValueTotalModel;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -47,8 +48,8 @@ export class ViewCrossingDetailsComponent implements OnInit {
         this.SetFilterControls();
         this._CrossingDataModel = new CrossingModel();
         this._CrossingSummaryReqModel = new CrossingSummaryReqModel();
-        this._CrossingsModel = new CrossingsSummaryRespModel();
-
+        this._CrossingsModel = new CrossingsSummaryRespModel();   
+        this._CrossingsDataTotal = new CrossingsValueTotalModel();  
       }
   /**hide/show filter menu based on the component requirement */
   SetFilterControls() 
@@ -117,6 +118,11 @@ export class ViewCrossingDetailsComponent implements OnInit {
         }
     }
 
+    ResetFilterValues(event)
+      {
+        
+      }
+
     /**once the child page has been loaded or not info */
     LoadInfo(event)
       {
@@ -139,6 +145,8 @@ export class ViewCrossingDetailsComponent implements OnInit {
         if(dtas!=null)
         {
           this._CrossingsModel = dtas;
+          this._CrossingsDataTotal = new CrossingsValueTotalModel();
+          this.TableColumnSum(this._CrossingsModel.Crossings);
         }
         this.ReloadDatatable();
       }
@@ -155,4 +163,28 @@ export class ViewCrossingDetailsComponent implements OnInit {
           alert("Show the Crossing table first!!")
         }            
       }
+
+  TableColumnSum(data)
+    {
+      data.forEach(element => {
+        element.RefundableAmount = Number(element.RefundableAmount)
+        element.NonRefundableAmount = Number(element.NonRefundableAmount)
+      });    
+      for(let i=0;i<data.length;i++)
+        { 
+          this._CrossingsDataTotal.NoOfCrossingTotal+= data[i].NoOfCrossing
+          this._CrossingsDataTotal.DemandNoteReceivedTotal += data[i].DemandNoteReceived
+          this._CrossingsDataTotal.ProposalReceivedTotal+= data[i].ProposalReceived
+          this._CrossingsDataTotal.PermissionReceivedTotal += data[i].PermissionReceived
+          this._CrossingsDataTotal.RefundableAmountTotal += data[i].RefundableAmount
+          this._CrossingsDataTotal.NonRefundableAmountTotal += data[i].NonRefundableAmount
+        }
+      this._CrossingsDataTotal.NoOfCrossingTotal = Number(this._CrossingsDataTotal.NoOfCrossingTotal.toFixed(2));
+      this._CrossingsDataTotal.DemandNoteReceivedTotal = Number(this._CrossingsDataTotal.DemandNoteReceivedTotal.toFixed(2));
+      this._CrossingsDataTotal.ProposalReceivedTotal = Number(this._CrossingsDataTotal.ProposalReceivedTotal.toFixed(2));
+      this._CrossingsDataTotal.PermissionReceivedTotal = Number(this._CrossingsDataTotal.PermissionReceivedTotal.toFixed(2));
+      this._CrossingsDataTotal.RefundableAmountTotal = Number(this._CrossingsDataTotal.RefundableAmountTotal.toFixed(2));
+      this._CrossingsDataTotal.NonRefundableAmountTotal = Number(this._CrossingsDataTotal.NonRefundableAmountTotal.toFixed(2));
+      console.log(this._CrossingsDataTotal)
+    }
 }

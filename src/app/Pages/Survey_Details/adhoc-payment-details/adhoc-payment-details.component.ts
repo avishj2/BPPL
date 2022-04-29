@@ -205,4 +205,9 @@ export class AdhocPaymentDetailsComponent implements OnInit {
         return lookUpid;
       }
     }
+
+    ResetFilterValues(event)
+    {
+      
+    }
 }
