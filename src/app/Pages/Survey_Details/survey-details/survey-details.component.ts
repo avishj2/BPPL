@@ -110,6 +110,10 @@ export class SurveyDetailsComponent implements OnInit {
           this._VillageName = "- " + this._SearchCriteria.VillageName;
         }
       }
+  ResetFilterValues(event)
+    {
+      
+    }
 
   /**Get ALL Survey details DropDowns */
   GetSurveyDropDowns()

@@ -145,6 +145,11 @@ _DisabledCrossingInputField : boolean = true;
         });
     }
 
+  ResetFilterValues(event)
+    {
+      
+    }
+
   /***
    * Get CROSSING details By ID - Called only on Search click !
    */

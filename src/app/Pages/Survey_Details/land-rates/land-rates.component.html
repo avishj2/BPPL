@@ -1,4 +1,4 @@
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)">
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)"(ResetFilterValues)="ResetFilterValues($event)">
 </app-filters>
 <br>
 <div class="card" *ngIf="_ShowLandDetailsDiv == false">
@@ -20,6 +20,7 @@
                 <tr>  
                     <th>Action</th>
                     <th>MeasureUnit</th>
+                    <th>SurveyNumber</th>
                     <th>Reserve Price</th> 
                     <th>Sale Deed Price</th>   
                     <th>CA Price</th>  
@@ -37,7 +38,8 @@
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>   
-                    <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>       
+                    <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>
+                    <td>{{data.SurveyNumber}}</td>       
                     <td>{{data.ReservePriceHa}}</td>
                     <td>{{data.SaleDeedPriceHa}}</td>
                     <td>{{data.CAPriceHa }}</td>

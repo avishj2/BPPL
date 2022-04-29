@@ -69,5 +69,16 @@ export class Villages
     LengthInKms: Number;
     TotalSurveyNos: Number;
     TotalPanchnamaOwners: Number;
-    TotalCompensationPaid: Number
+    TotalCompensationPaid: Number;
+    StartChainage : Number;
   }
+
+export class VillageTableSum{
+    VillageNameTotal=0;
+    ChainageFromToTotal=0;
+    LengthInKmsTotal = 0;
+    TotalSurveyNosTotal= 0;
+    TotalPanchnamaOwnersTotal=0;
+    TotalCompensationPaidTotal=0;
+    StartChainageTotal =0;
+}

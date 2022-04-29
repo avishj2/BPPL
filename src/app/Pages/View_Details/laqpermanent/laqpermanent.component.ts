@@ -79,7 +79,10 @@ export class LAQPermanentComponent implements OnInit {
             this._ShowTable = true;
           }
       }
-
+    ResetFilterValues(event)
+      {
+        
+      }
     GetLAQDetails()
     {
       let url = this.urlService.GetSurveyDetailsForLAQAPI + this._SearchCriteria.VillageId;     
@@ -106,7 +109,7 @@ export class LAQPermanentComponent implements OnInit {
         if(this._SearchCriteria.VillageId !=null)
         {
           let fileURL = "https://bppl.dgdatam.com/api/Crossing/Download?documentId=131";//103
-          console.log(this._LAQDataModel.Result[0])
+          console.log(this._LAQDataModel.Result.LAQData[0])
           this.docxTemplateService.GenerateDocument(fileURL,this._LAQDataModel.Result[0], "Output_doc")
         }else{
           alert("Please Select Village!!");

@@ -102,10 +102,13 @@ export class ViewSurveyTabsComponent implements OnInit {
 
     }
   ActiveTab(evt){
-    //console.log('evte',evt);
-    console.log('ActiveTab ID=>', evt.nextId)
+    this.Utility.LogText2('ActiveTab ID=>', evt.nextId)
   }
 
+  ResetFilterValues(event)
+  {
+    
+  }
 
   /**get survey and all tabs details based on survey Number*/
   GetSurveyDetailsById()

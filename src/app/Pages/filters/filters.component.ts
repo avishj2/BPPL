@@ -25,6 +25,7 @@ export class FiltersComponent implements OnInit {
   @Output() VillageChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
   @Output() CrossingChanged :EventEmitter<SearchCriteria>= new EventEmitter(); 
   @Output() ChangedVillage :EventEmitter<SearchCriteria>= new EventEmitter(); 
+  @Output() ResetFilterValues :EventEmitter<SearchCriteria>= new EventEmitter(); 
   _DropDownsDataModel : GazzateDropDownsDataModel;
 
  _TahsilLabel : string = "Tahsil";
@@ -288,6 +289,7 @@ export class FiltersComponent implements OnInit {
     resetSelectedField()
       {
         this.ResetDropDowns(DropDownChangeEnum.AllClear);
+        this.ResetFilterValues.emit(this._SearchCriteria)
       }
 
     /**
@@ -350,15 +352,19 @@ export class FiltersComponent implements OnInit {
                 this._SearchCriteria.DistrictId = undefined;
                 this._SearchCriteria.TalukaId = undefined;
                 this._SearchCriteria.VillageId = undefined;
-                this._SearchCriteria.SurveyID = undefined;
-                this._SearchCriteria.ChainageFrom = null;
-                this._SearchCriteria.ChainageTo = null;
+                this._SearchCriteria.SurveyID = undefined;                
                 this._SearchCriteria.CrossingType = undefined;
                 this._SearchCriteria.TypeOfNotification = undefined;
                 this._SearchCriteria.OwnerID = undefined;
                 this._SearchCriteria.OwnerName = undefined;  
                 this._SearchCriteria.CrossingID =undefined;    
-                this._SearchCriteria.TypeOfLand =  undefined;         
+                this._SearchCriteria.TypeOfLand =  undefined;   
+                this._SearchCriteria.ChainageFrom = null;
+                this._SearchCriteria.ChainageTo = null;  
+                this._SearchCriteria.StateName = null;    
+                this._SearchCriteria.TalukaName = null;    
+                this._SearchCriteria.VillageName = null;  
+                this._SearchCriteria.DistrictName = null;  
                 break;
             case DropDownChangeEnum.StateChanged:
               this._SearchCriteria.DistrictId = undefined;

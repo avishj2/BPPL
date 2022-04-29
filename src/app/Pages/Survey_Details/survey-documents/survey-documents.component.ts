@@ -135,6 +135,10 @@ export class SurveyDocumentsComponent implements OnInit {
           alert("Please select village!!")
         }
     }
+    ResetFilterValues(event)
+    {
+      
+    }
 
   CategoryChange()
     {

@@ -144,6 +144,11 @@ IsDtInitialized: boolean = false;
     }
   }
 
+  ResetFilterValues(event)
+  {
+    
+  }
+
   /**get village details based on the selected filter values */
   GetVillageByVillageId() 
     {

@@ -77,7 +77,11 @@ export class ViewNoticedeatilsComponent implements OnInit {
           this.dtTrigger.next();
         }
   }  
-
+  ResetFilterValues(event)
+    {
+      
+    }
+    
   GetValuesFromFilters(event)
     {
       this._SearchCriteria = event;

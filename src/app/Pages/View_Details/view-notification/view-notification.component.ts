@@ -90,4 +90,9 @@ ReloadDatatable(){
         this._ShowTableDiv = true;
       }
     }
+
+  ResetFilterValues(event)
+    {
+      
+    }
 }

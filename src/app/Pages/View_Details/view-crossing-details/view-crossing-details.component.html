@@ -1,5 +1,5 @@
 <!-- add filter component ,pass and get data from child -->
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)">
+<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ResetFilterValues)="ResetFilterValues($event)">
     <div class="exportedbtn">
         <button (click)="printpdf()"class="btn-success">
             <i class="fa fa-download"></i>    
@@ -12,7 +12,7 @@
 <app-child-view-crossing [ngClass]="_ShowChildViewpage?'show' : 'hide'" [filterdata]="_SearchCriteria"(ChildLoadInfo)="LoadInfo($event)">
 </app-child-view-crossing>
 
-<div class="card" [ngClass]="_ShowChildViewpage== false?'show' : 'hide'">  
+<div class="card" [ngClass]="_ShowChildViewpage == false?'show' : 'hide'">  
     <div class="innercard"> 
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Crossings Details</div> 
@@ -42,6 +42,18 @@
                         <td>{{data.RefundableAmount}}</td>
                         <td>{{data.NonRefundableAmount}}</td>
                     </tr>
+                </tbody>
+                <tbody>
+                    <tr>  
+                      <td><b style="margin-left: 5%;font-size: 15px;">Total:</b> </td>
+                      <td></td>
+                      <td><b>{{this._CrossingsDataTotal.NoOfCrossingTotal}}</b></td>
+                      <td><b>{{this._CrossingsDataTotal.DemandNoteReceivedTotal}}</b></td>                
+                      <td><b>{{this._CrossingsDataTotal.ProposalReceivedTotal}}</b></td>
+                      <td><b>{{this._CrossingsDataTotal.PermissionReceivedTotal}}</b></td>
+                      <td><b>{{this._CrossingsDataTotal.RefundableAmountTotal}}</b></td>
+                      <td><b>{{this._CrossingsDataTotal.NonRefundableAmountTotal}}</b></td>
+                    </tr> 
                 </tbody>
             </table>
         </div>

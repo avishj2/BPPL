@@ -1,4 +1,4 @@
-<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)">
+<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ResetFilterValues)="ResetFilterValues($event)">
   <div class="exportedbtn">
     <button (click)="printpdf()"class="btn-success">
       <i class="fa fa-download"></i>    
@@ -19,6 +19,7 @@
               <th style="width: 28px;">S.No.</th>  
               <th>Village Name</th>  
               <th>ChainageFromTo</th>  
+              <th>StartChainage</th>              
               <th>Length In Kms</th>  
               <th>Total Survey Nos</th>
               <th>Total Panchnama Owners</th>
@@ -28,14 +29,25 @@
             <tbody>
               <tr *ngFor="let data of _ViewVillageModel.Villages; let i=index">  
                 <td style="width: 28px;">{{i+1}}</td>
-                <td>{{data.VillageName}}</td>  
+                <td>{{data.VillageName}}</td> 
                 <td>{{data.ChainageFromTo}}</td>  
+                <td>{{data.StartChainage}}</td>                 
                 <td>{{data.LengthInKms}}</td>  
                 <td>{{data.TotalSurveyNos}}</td>  
                 <td>{{data.TotalPanchnamaOwners}}</td>  
-                <td>{{data.TotalCompensationPaid}}</td>  
-              </tr>  
+                <td>{{data.TotalCompensationPaid}}</td> 
+              </tr>                
             </tbody>  
+            <tbody>
+              <tr>  
+                <td colspan="3"><b style="margin-left: 30%;font-size: 15px;">Total:</b> </td>  
+                <td></td>                
+                <td><b>{{this._VillageTableSum.LengthInKmsTotal}}</b></td>
+                <td><b>{{this._VillageTableSum.TotalSurveyNosTotal}}</b></td>                
+                <td><b>{{this._VillageTableSum.TotalPanchnamaOwnersTotal}}</b></td>
+                <td><b>{{this._VillageTableSum.TotalCompensationPaidTotal}}</b></td>
+              </tr> 
+            </tbody>
         </table>  
       </div>
   </div>

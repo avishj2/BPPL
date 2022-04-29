@@ -6,7 +6,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { CommonService} from 'src/app/services/common.service';
 import { HttpService } from 'src/app/services/http.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
-import { VillageSummaryReqModel,ViewVillageModel } from 'src/app/Model/Village.model';
+import { VillageSummaryReqModel,ViewVillageModel,VillageTableSum } from 'src/app/Model/Village.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import printJS from 'print-js';
@@ -29,6 +29,7 @@ export class ViewVillageDetailsComponent implements OnInit {
   IsDtInitialized: boolean = false;
   _ShowDetailsDiv : boolean = false;
   @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
+  _VillageTableSum : VillageTableSum;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -42,6 +43,7 @@ export class ViewVillageDetailsComponent implements OnInit {
       this.SetFilterControls();
       this._VillageSummaryReqModel = new VillageSummaryReqModel();
       this._ViewVillageModel = new ViewVillageModel();
+      this._VillageTableSum = new VillageTableSum();
     }
 
   /**hide/show filter menu based on the component requirement */
@@ -91,15 +93,13 @@ export class ViewVillageDetailsComponent implements OnInit {
   GetValuesFromFilters(event)
   {
     this._SearchCriteria = event;
-    if(!(this._SearchCriteria && this._SearchCriteria.TalukaId ==null))
-      {
-        //this.IsDtInitialized = true;
-        this._ShowDetailsDiv = true;
-        this.GetVillageSummary();
-      }
-      else{
-        alert("Please Select Tahsil!!");
-      }
+    this._ShowDetailsDiv = true;
+    this.GetVillageSummary();
+  }
+
+  ResetFilterValues(event)
+  {
+    
   }
 
   GetVillageSummary()
@@ -116,6 +116,8 @@ export class ViewVillageDetailsComponent implements OnInit {
         if(dtas!= null)
         {
           this._ViewVillageModel = dtas;
+          this._VillageTableSum = new VillageTableSum();
+          this.TableColumnSum(this._ViewVillageModel.Villages)
         }
         this.ReloadDatatable();
       }
@@ -126,11 +128,26 @@ export class ViewVillageDetailsComponent implements OnInit {
           {
             const Table = this.pdfTable.nativeElement;
             printJS({printable: Table, type:'html', gridStyle: 
-            'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""}) 
+            'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""})
           }
         else{
           alert("Show the table first!!")
         }            
       }    
+
+  TableColumnSum(data)
+    {    
+      for(let i=0;i<data.length;i++)
+        {           
+          this._VillageTableSum.LengthInKmsTotal += data[i].LengthInKms;
+          this._VillageTableSum.TotalSurveyNosTotal += data[i].TotalSurveyNos;
+          this._VillageTableSum.TotalPanchnamaOwnersTotal += data[i].TotalPanchnamaOwners;
+          this._VillageTableSum.TotalCompensationPaidTotal += data[i].TotalCompensationPaid;
+        }  
+        this._VillageTableSum.LengthInKmsTotal = Number(this._VillageTableSum.LengthInKmsTotal.toFixed(2));
+        this._VillageTableSum.TotalSurveyNosTotal = Number(this._VillageTableSum.TotalSurveyNosTotal.toFixed(2));
+        this._VillageTableSum.TotalPanchnamaOwnersTotal = Number(this._VillageTableSum.TotalPanchnamaOwnersTotal.toFixed(2));
+        this._VillageTableSum.TotalCompensationPaidTotal = Number(this._VillageTableSum.TotalCompensationPaidTotal.toFixed(2));        
+    }  
 
 }

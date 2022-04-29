@@ -100,7 +100,11 @@ export class ViewAwardReportsComponent implements AfterViewInit, OnInit {
           alert("Please select village!!")
         }
     }
-
+    
+  ResetFilterValues(event)
+    {
+      
+    }
 
   /**Get Survey Document DropDowns values*/
   GetSurveyDocumentDropDowns()
