@@ -80,7 +80,6 @@ export class AdhocPaymentDetailsComponent implements OnInit {
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
-      console.log("nidjwa")
     }    
 
   /**refresh/reload data table 

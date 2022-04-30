@@ -110,13 +110,25 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
        if(this._SearchCriteria.VillageId != null)
          {
           this.GetAllLandRates();
-          this._VillageId = this._SearchCriteria.VillageId
-          this._VillageName = " - "+ this._SearchCriteria.VillageName;
-           this._ShowLandDetailsDiv = true;
+          this._VillageId = this._SearchCriteria.VillageId;                   
+          this.GetSurveyTabLabel();
+          this._ShowLandDetailsDiv = true;
          }
        else{
          alert("Please select Village");
        }
+     }
+
+    GetSurveyTabLabel()
+     {
+      if(this._SearchCriteria.SurveyID != null)
+        {
+          this._VillageName = " - "+ this._SearchCriteria.VillageName + " ("+this._SearchCriteria.SurveyName +")";
+        }
+      else
+      {
+        this._VillageName = " - "+ this._SearchCriteria.VillageName
+      }
      }
 
     SearchFilterChanged(event)

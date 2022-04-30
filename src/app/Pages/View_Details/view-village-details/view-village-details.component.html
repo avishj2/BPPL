@@ -18,8 +18,8 @@
             <tr>
               <th style="width: 28px;">S.No.</th>  
               <th>Village Name</th>  
-              <th>ChainageFromTo</th>  
-              <th>StartChainage</th>              
+              <th>StartChainage</th>     
+              <th>ChainageFromTo</th>                         
               <th>Length In Kms</th>  
               <th>Total Survey Nos</th>
               <th>Total Panchnama Owners</th>
@@ -30,8 +30,8 @@
               <tr *ngFor="let data of _ViewVillageModel.Villages; let i=index">  
                 <td style="width: 28px;">{{i+1}}</td>
                 <td>{{data.VillageName}}</td> 
-                <td>{{data.ChainageFromTo}}</td>  
-                <td>{{data.StartChainage}}</td>                 
+                <td>{{data.StartChainage}}</td>  
+                <td>{{data.ChainageFromTo}}</td>                                 
                 <td>{{data.LengthInKms}}</td>  
                 <td>{{data.TotalSurveyNos}}</td>  
                 <td>{{data.TotalPanchnamaOwners}}</td>  
@@ -40,8 +40,7 @@
             </tbody>  
             <tbody>
               <tr>  
-                <td colspan="3"><b style="margin-left: 30%;font-size: 15px;">Total:</b> </td>  
-                <td></td>                
+                <td colspan="4"><b style="margin-left: 30%;font-size: 15px;">Total:</b> </td>                  
                 <td><b>{{this._VillageTableSum.LengthInKmsTotal}}</b></td>
                 <td><b>{{this._VillageTableSum.TotalSurveyNosTotal}}</b></td>                
                 <td><b>{{this._VillageTableSum.TotalPanchnamaOwnersTotal}}</b></td>

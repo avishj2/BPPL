@@ -64,6 +64,7 @@ export class ViewSurveyTabsComponent implements OnInit {
     if (Object.keys(this._SearchCriteria).length === 0) 
       {
         alert("Please Select State, District, taluka or village!!");
+        return;
       }
     if(this._SearchCriteria.VillageId != null && this._SearchCriteria.SurveyID != null)
       {
@@ -81,7 +82,6 @@ export class ViewSurveyTabsComponent implements OnInit {
     {
       let url = this.urlService.GetSurveyDropDownsAPI;
       this.httpService.get(url, null).subscribe(response => {
-        // this._SurveyDropDownsDataModel = response
         this._SurveyDropDownsDataModel.CropNames = response.CropNames;
         this._SurveyDropDownsDataModel.CultivateLandTypes = response.CultivateLandTypes;
         this._SurveyDropDownsDataModel.DamageNames = response.DamageNames;
@@ -99,11 +99,12 @@ export class ViewSurveyTabsComponent implements OnInit {
       }, error => {
         this.Utility.LogText(error);
       });
-
     }
-  ActiveTab(evt){
-    this.Utility.LogText2('ActiveTab ID=>', evt.nextId)
-  }
+
+  ActiveTab(evt)
+    {
+      this.Utility.LogText2('ActiveTab ID=>', evt.nextId)
+    }
 
   ResetFilterValues(event)
   {
@@ -113,7 +114,7 @@ export class ViewSurveyTabsComponent implements OnInit {
   /**get survey and all tabs details based on survey Number*/
   GetSurveyDetailsById()
     {
-      //this.CommonService.ShowSpinner();
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetSurveyDetailsByIdAPI + this._SurveyModel.SurveyId;
       this.httpService.get(url,null).subscribe(response => {
         this._AllSurveyDetails  = response;
@@ -124,8 +125,10 @@ export class ViewSurveyTabsComponent implements OnInit {
           else {
             this._SurveyModel = this._AllSurveyDetails.Result.Survey;
           }
+        this.CommonService.hideSpinnerLoading();
         },error => {
           this.Utility.LogText(error);
+          this.CommonService.hideSpinnerLoading();
         });
     }
 

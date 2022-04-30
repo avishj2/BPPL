@@ -64,9 +64,11 @@ export class ViewProjectReportsComponent implements OnInit {
 
   GetProjectReports()
   {
+    this.CommonService.ShowSpinnerLoading();
     let url = this.urlService.GetProjectReports;
     this.httpService.get(url,null).subscribe(response => {
       this._ProjectReports  = response;
+      this.CommonService.hideSpinnerLoading();
        /**initialized datatable */
        if (this.IsDtInitialized) 
         {
@@ -83,7 +85,8 @@ export class ViewProjectReportsComponent implements OnInit {
         }
       },error => {
         this.Utility.LogText(error);
-      });
+        this.CommonService.hideSpinnerLoading();
+      });      
   }
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any

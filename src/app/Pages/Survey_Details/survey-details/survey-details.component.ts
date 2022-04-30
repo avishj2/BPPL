@@ -80,6 +80,7 @@ export class SurveyDetailsComponent implements OnInit {
       if (Object.keys(this._SearchCriteria).length === 0) 
       {
         alert("Please Select State, District, taluka or village!!");
+        return;
       }      
       if(this._SearchCriteria.VillageId != null && this._SearchCriteria.SurveyID != null){
         this._ShowSurveyDetailsDiv = true;
@@ -112,7 +113,11 @@ export class SurveyDetailsComponent implements OnInit {
       }
   ResetFilterValues(event)
     {
-      
+      this._ShowSurveyDetailsDiv = false;
+      this._AddNewSurveyDetails = false;
+      this._DisabledInputField = true;      
+      this.tabset.select(0);
+      this._VillageName = ""
     }
 
   /**Get ALL Survey details DropDowns */
@@ -197,7 +202,7 @@ export class SurveyDetailsComponent implements OnInit {
             alert(SurveyDetails.Message);
           }
           else {
-            alert("Survey deleted successfully !");
+            alert("The survey details have been successfully deleted!!");
             this._SurveyModel = new SurveyModel();
           }
         },error => {
@@ -255,5 +260,4 @@ export class SurveyDetailsComponent implements OnInit {
       }
       else { return lookUpid;}
     }
-
 }

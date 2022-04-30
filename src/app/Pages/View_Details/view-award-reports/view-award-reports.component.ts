@@ -119,13 +119,16 @@ export class ViewAwardReportsComponent implements AfterViewInit, OnInit {
 
   GetAwardAndMutations()
     {
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetAwardAndMutationsAPI + this._SearchCriteria.VillageId;
       this.httpService.get(url,null).subscribe(response => {
         this._AwardMutations  = response;
-        this.ReloadDatatable();
+        this.CommonService.hideSpinnerLoading();
+        this.ReloadDatatable();        
         },error => {
           this.Utility.LogText(error);
-        });
+          this.CommonService.hideSpinnerLoading();
+        });        
     }
 
     GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any

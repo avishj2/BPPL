@@ -1,4 +1,4 @@
-<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)"(ResetFilterValues)="ResetFilterValues($event)">
+<app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ResetFilterValues)="ResetFilterValues($event)">
     <div class="exportedbtn">
         <button (click)="printpdf()"class="btn-success">
             <i class="fa fa-download"></i>    
@@ -11,7 +11,7 @@
 <div class="card1">
     <div class="pdfclass" id="pdfTable" #pdfTable *ngIf="_ShowTable">
         <div class="Headingdiv">
-            {{this._SearchCriteria.StateName.toUpperCase()}} STATE PETRONET LIMITED, {{this._SearchCriteria.DistrictName.toUpperCase()}}<br>LAND ACQUISTION STATEMENT <br>
+            {{GetUpperCase(this._SearchCriteria.StateName)}} STATE PETRONET LIMITED, {{GetUpperCase(this._SearchCriteria.DistrictName)}}<br>LAND ACQUISTION STATEMENT <br>
             BPPL PIPPELINES 
         </div>
         <div class="villagedetailsdiv">
@@ -21,7 +21,7 @@
                 <div style="margin: 0 auto; width: 250px;">State : {{this._SearchCriteria.StateName}}</div>
             </div>    
             <div>
-                <div style="float: left;width: 400px;">Taluka : {{this._SearchCriteria.TalukaName}}</div>
+                <div style="float: left;width: 400px;">{{this._TahsilLabel}} : {{this._SearchCriteria.TalukaName}}</div>
                 <!-- <div style="float: right;width:230px;margin-right: -30px;">Width of ROU 18 mtr.</div> -->
                 <div style="margin: 0 auto; width: 250px;">District : {{this._SearchCriteria.DistrictName}}</div>
             </div>        

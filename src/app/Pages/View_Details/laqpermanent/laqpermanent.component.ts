@@ -21,7 +21,7 @@ export class LAQPermanentComponent implements OnInit {
   _LAQDataModel : LAQDataModel;
   @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
   _ShowTable : boolean = false;
-
+  _TahsilLabel : string;
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -56,12 +56,20 @@ export class LAQPermanentComponent implements OnInit {
 
   GetValuesFromFilters(event) 
     {
-      this.Utility.LogText2("view-award-reports",event);
-      this._SearchCriteria = event;
+      this._SearchCriteria = this.Utility.CloneFilterData(event);
+      this.Utility.LogText2("_SearchCriteria",this._SearchCriteria);
       if(this._SearchCriteria.VillageId != null)
         {
           this.GetLAQDetails();
           this._ShowTable = true;
+          if(this._SearchCriteria.StateId == 2)
+          {
+            this._TahsilLabel = "Taluka";
+          }
+          else
+            {
+              this._TahsilLabel = "Tahsil";
+            }
         }
       else
         {
@@ -69,20 +77,20 @@ export class LAQPermanentComponent implements OnInit {
         }
     }
 
-    SearchFilterChanged(event)
+  
+    GetUpperCase(arg: string)
       {
-        let newSearchCriteria : SearchCriteria = event;
-          if(newSearchCriteria.VillageId !=null)
-          {
-            this._SearchCriteria = newSearchCriteria;
-            this.GetLAQDetails();
-            this._ShowTable = true;
-          }
+        if(arg)
+        {
+          return arg.toUpperCase();
+        }     
       }
+
     ResetFilterValues(event)
       {
-        
+        this._ShowTable = false;
       }
+
     GetLAQDetails()
     {
       let url = this.urlService.GetSurveyDetailsForLAQAPI + this._SearchCriteria.VillageId;     
@@ -109,7 +117,7 @@ export class LAQPermanentComponent implements OnInit {
         if(this._SearchCriteria.VillageId !=null)
         {
           let fileURL = "https://bppl.dgdatam.com/api/Crossing/Download?documentId=131";//103
-          console.log(this._LAQDataModel.Result.LAQData[0])
+         this.Utility.LogText(this._LAQDataModel.Result.LAQData[0])
           this.docxTemplateService.GenerateDocument(fileURL,this._LAQDataModel.Result[0], "Output_doc")
         }else{
           alert("Please Select Village!!");
@@ -125,7 +133,6 @@ export class LAQPermanentComponent implements OnInit {
           'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""})  
         }else{
           alert("Show the table first!!")
-        }
-           
+        }           
       }      
   }

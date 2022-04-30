@@ -447,7 +447,7 @@ export class GazetteDetailsComponent implements OnInit {
     } 
 
 
-/**add new Notification details */
+  /**add new Notification details */
   AddNewNotificationDetails()
     {
       this._AddNewNotification = true;
