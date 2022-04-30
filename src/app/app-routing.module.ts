@@ -27,6 +27,7 @@ import { CAInfoComponent } from './Pages/ProjectManagement/cainfo/cainfo.compone
 import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details/region-details.component';
 import { ViewNotificationComponent } from './Pages/View_Details/view-notification/view-notification.component';
 import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeatils/view-noticedeatils.component';
+import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -43,6 +44,9 @@ const routes: Routes = [
       {path: 'Project', component: ProjectPageComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Project Management / Project'}},
       {path: 'CAInfo', component: CAInfoComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Project Management / CAInfo'}},
       {path: 'RegionDetails', component: RegionDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Project Management / Region Details'}},
+
+      //test
+      {path: 'test', component: TestPopupComponent,canActivate:[AuthGuard], data: { breadcrumb: 'test Details'}},
 
       /**Add-Edit details section components */
       {path: 'VillageDetails', component: VillageDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Village Details'}},

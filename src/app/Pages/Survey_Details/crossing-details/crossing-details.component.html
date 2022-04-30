@@ -124,6 +124,13 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
+                    <label class ="Label">Date Of DemandNote </label>
+                    <input type="date" *ngIf="_DisabledCrossingInputField != true"class="form-control"[value]="_CrossingDataModel.DateOfDemandNote | date:'yyyy-MM-dd'" (input)="_CrossingDataModel.DateOfDemandNote = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledCrossingInputField == true">
+                        {{this._CrossingDataModel.DateOfDemandNote | date:'mediumDate'}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
                     <label class ="Label">Approved </label>
                     <select class="form-control"*ngIf="_DisabledCrossingInputField != true"[(ngModel)]="_CrossingDataModel.CrossingApproval"[ngModelOptions]="{standalone: true}">
                         <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">--Select Approved -- </option>

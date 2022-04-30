@@ -69,6 +69,20 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
+                    <label class="Label">Payment Category </label>
+                    <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.PaymentCategory" [ngModelOptions]="{standalone: true}">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
+                            --Select Payment Category --
+                        </option>
+                        <option *ngFor="let data of _AdHocPaymentDropDownsModel.PaymentCategories" [value]="data.Value">
+                            {{data.Text}}
+                        </option>
+                    </select>
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                            {{GetLookupValue(_AdHocPaymentDropDownsModel.PaymentCategories,_AdHocPaymentModel.PaymentCategory)}}
+                    </div>
+                </div>
+                <div class="col-lg-3">
                     <label class="Label"> Payment Date </label>
                     <input type="date"  *ngIf="DisableInputField != true"class="form-control"[value]="_AdHocPaymentModel.Paymentdate | date:'yyyy-MM-dd'" (input)="_AdHocPaymentModel.Paymentdate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
                     <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">

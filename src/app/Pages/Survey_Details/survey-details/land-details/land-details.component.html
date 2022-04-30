@@ -15,6 +15,7 @@
                 <th>Ha.</th>
                 <th>Are.</th>
                 <th>Sqmt.</th>
+                <th>Compensation</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,7 @@
                 <td>{{data.Ha}}</td>
                 <td>{{data.Are}}</td>
                 <td>{{data.Sqmt}}</td>
+                <td>{{data.Compensation}}</td>
         </tbody>
     </table>     
 </div>
@@ -81,6 +83,10 @@
                 <div class="col-lg-4">
                     <label class="Label">Sqmt</label>
                     <input type="text" class="form-control"[(ngModel)]="_LandDataModel.Sqmt">
+                </div>
+                <div class="col-lg-6">
+                    <label class="Label">Compensation</label>
+                    <input type="text" class="form-control"[(ngModel)]="_LandDataModel.Compensation">
                 </div>
             </div>
             <div class="row">

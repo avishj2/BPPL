@@ -176,6 +176,7 @@ export class SurveyOwnerModel{
     Are: any;
     Sqmt: any;
     SurveyOwnerName : any;
+    Compensation : any;
 }
 
 export class CropRespDataModel extends BaseResponse {
@@ -196,7 +197,8 @@ export class CropDataModel{
   Ha: any;
   Are: any;
   Sqmt: any;
-  CropStatus: string
+  CropStatus: string;
+  Compensation : any;
 }
 
 
@@ -218,7 +220,8 @@ export class TreeModel{
     AgeYears: any;
     Dia: any;
     HeightM: any;
-    Remarks: string
+    Remarks: string;
+    Compensation : any;
 }
 
 

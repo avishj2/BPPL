@@ -4,11 +4,13 @@ export class AdHocPaymentDropDownsModel{
     Banks: CommonDropdownModel[];
     PaymentModes: CommonDropdownModel[];
     AdhocPaymentDocumentTypes: CommonDropdownModel[];
+    PaymentCategories : CommonDropdownModel[];
 
     constructor(){
         this.Banks = [];
         this.PaymentModes = [];
         this.AdhocPaymentDocumentTypes =[];
+        this.PaymentCategories =[];
     }
 }
 export class AdHocPaymentRespDataModel extends BaseResponse {
@@ -30,7 +32,8 @@ export class AdHocPaymentModel{
     Paymentdate: any;
     BankId: Number;
     ChequeNo: string;
-    ChequeIssuedTo: string
+    ChequeIssuedTo: string;
+    PaymentCategory : any;
     Documents : CommonDocDataModel[];
 
     constructor(){

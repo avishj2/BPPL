@@ -168,6 +168,7 @@ export class GazetteDetailsComponent implements OnInit {
         this.GetGazzateByGazzateID();
         this._ShowGazetteDetailsDiv = true
         this._DisabledGazetteInputField = true;
+        this._AddNewGazette = false;
       }
       else
         {

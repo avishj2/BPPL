@@ -26,13 +26,11 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
-
   _PopupTitle : string;
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
   _ShowLandDetailsDiv : boolean = false;
   _AddNewLandDetails : boolean = false;
-
   _LandRatesModel : LandRatesModel;
   _LandRateDetails : LandRatesModel[];
   _LandDropDownsModel :LandDropDownsModel;
