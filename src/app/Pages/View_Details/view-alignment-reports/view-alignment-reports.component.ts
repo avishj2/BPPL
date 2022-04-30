@@ -64,9 +64,11 @@ export class ViewAlignmentReportsComponent implements OnInit {
 
   GetAlignmentSheets()
     {
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetAlignmentSheetsAPI;
       this.httpService.get(url,null).subscribe(response => {
         this._AlignmentSheets  = response;
+        this.CommonService.hideSpinnerLoading();
         /**initialized datatable */
         if (this.IsDtInitialized) 
           {
@@ -83,7 +85,8 @@ export class ViewAlignmentReportsComponent implements OnInit {
           }
         },error => {
           this.Utility.LogText(error);
-        });
+          this.CommonService.hideSpinnerLoading();        
+        });      
     }  
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any

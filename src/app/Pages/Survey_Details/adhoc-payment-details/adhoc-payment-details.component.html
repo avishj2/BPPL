@@ -21,6 +21,7 @@
                     <th>Action</th>
                     <th>AdHocPaymentId </th>
                     <th>Payment</th>
+                    <th>Payment Category</th>
                     <th>ChequeDate</th>
                     <th>ChequeNo</th>
                     <th>Paid</th>
@@ -40,6 +41,7 @@
                     </td>
                     <td>{{data.AdHocPaymentId}}</td>
                     <td>{{data.PaymentAmountRs}}</td>
+                    <td>{{GetLookupValue(_AdHocPaymentDropDownsModel.PaymentCategories, data.PaymentCategory)}}</td>
                     <td>{{data.ChequeDate| date:'mediumDate'}}</td>
                     <td>{{data.ChequeNo}}</td>
                     <td>{{data.paid}}</td>

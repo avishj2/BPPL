@@ -62,6 +62,7 @@ import { CAInfoComponent } from './Pages/ProjectManagement/cainfo/cainfo.compone
 import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details/region-details.component';
 import { ViewNotificationComponent } from './Pages/View_Details/view-notification/view-notification.component';
 import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeatils/view-noticedeatils.component';
+import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,7 @@ import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeat
     RegionDetailsComponent,
     ViewNotificationComponent,
     ViewNoticedeatilsComponent,
+    TestPopupComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

@@ -185,6 +185,6 @@ export class ViewCrossingDetailsComponent implements OnInit {
       this._CrossingsDataTotal.PermissionReceivedTotal = Number(this._CrossingsDataTotal.PermissionReceivedTotal.toFixed(2));
       this._CrossingsDataTotal.RefundableAmountTotal = Number(this._CrossingsDataTotal.RefundableAmountTotal.toFixed(2));
       this._CrossingsDataTotal.NonRefundableAmountTotal = Number(this._CrossingsDataTotal.NonRefundableAmountTotal.toFixed(2));
-      console.log(this._CrossingsDataTotal)
+      this.Utility.LogText(this._CrossingsDataTotal)
     }
 }

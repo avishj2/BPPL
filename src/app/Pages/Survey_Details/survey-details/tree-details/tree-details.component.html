@@ -15,7 +15,8 @@
                 <th>No. of Tree</th>  
                 <th>Age (Years)</th>  
                 <th>Dia (m)</th>       
-                <th>Height (m)</th>   
+                <th>Height (m)</th>
+                <th>Compensation</th>   
                 <th>Remarks</th>  
             </tr>
         </thead>
@@ -36,6 +37,7 @@
                 <td>{{data.AgeYears}}</td>
                 <td>{{data.Dia}}</td>
                 <td>{{data.HeightM}}</td>
+                <td>{{data.Compensation}}</td>
                 <td>{{data.Remarks}}</td> 
             </tr>
         </tbody>
@@ -107,6 +109,10 @@
                     <div class="col-lg-6">
                         <label class="Label">Height (m)</label>
                        <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.HeightM"[ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Compensation</label>
+                       <input type="text" class="form-control"[(ngModel)]="_TreeDataModel.Compensation"[ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="col-lg-6">
                         <label class="Label">Remarks</label>

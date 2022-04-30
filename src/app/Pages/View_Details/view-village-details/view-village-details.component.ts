@@ -104,6 +104,7 @@ export class ViewVillageDetailsComponent implements OnInit {
 
   GetVillageSummary()
     {
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetVillageSummaryAPI;
       this._VillageSummaryReqModel.StartChainage = this._SearchCriteria.ChainageFrom;
       this._VillageSummaryReqModel.EndChainage = this._SearchCriteria.ChainageTo;

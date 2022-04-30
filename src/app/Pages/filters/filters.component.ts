@@ -56,11 +56,20 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit() 
     {
-      this.PopulateState();
       /**get data From parent component */
       this.Utility.LogText(this.filterControls);
-      this.PopulateCrossingType();
-      this.GetGazzateDropDowns();
+      if(this.filterControls.ShowState == true)
+      {
+        this.PopulateState();
+      }
+      if(this.filterControls.ShowCrossingTypes == true)
+      {
+        this.PopulateCrossingType();
+      }
+      if(this.filterControls.ShowNotificationDD == true)
+      {
+        this.GetGazzateDropDowns();
+      }
     }
 
   /**API CALL FOR state details */

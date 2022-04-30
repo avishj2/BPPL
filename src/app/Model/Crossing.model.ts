@@ -26,6 +26,7 @@ export class CrossingModel{
     AuthorityName: string;
     AuthorityAddress: string;
     TypeOfCrossing: any;
+    DateOfDemandNote : any;
     Documents: CommonDocDataModel[];
 
     constructor(){

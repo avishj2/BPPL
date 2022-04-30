@@ -20,6 +20,7 @@ import { APIUtilityService } from 'src/app/services/APIUtility.service';
 })
 export class ChildViewCrossingComponent implements OnInit,OnChanges {
   @Input() filterdata :SearchCriteria;
+  @Input() public fromParent;
   _CrossingDataModel : CrossingModel;
   _CrossingDropdowns :CrossingDropdownDataModel;
   _Crossingdoc : CommonDocDataModel;
@@ -50,6 +51,15 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
   ngOnInit(): void 
     {
       this.PopulateCrossingDropdowns();  
+      if(this.fromParent)
+      {
+        console.log("model open", this.fromParent);
+        this._CrossingTypeName= this.fromParent.CrossingTypeName;
+        this.filterdata = new SearchCriteria();
+        this.filterdata.CrossingID = this.fromParent.CrossingID;
+        this.GetCrossingDetails();    
+      }
+       
     }
 
   ngOnChanges(changes: SimpleChanges)
@@ -106,7 +116,7 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
       let url = this.urlService.GetCrossingDropDownsAPI;
       this.httpService.get(url,null).subscribe(response => {
         this._CrossingDropdowns = response;
-        this.ReloadDatatable();
+        // this.ReloadDatatable();
         },
         error => {
           this.Utility.LogText(error);

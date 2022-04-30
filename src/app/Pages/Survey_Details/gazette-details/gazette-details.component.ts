@@ -168,6 +168,7 @@ export class GazetteDetailsComponent implements OnInit {
         this.GetGazzateByGazzateID();
         this._ShowGazetteDetailsDiv = true
         this._DisabledGazetteInputField = true;
+        this._AddNewGazette = false;
       }
       else
         {
@@ -447,7 +448,7 @@ export class GazetteDetailsComponent implements OnInit {
     } 
 
 
-/**add new Notification details */
+  /**add new Notification details */
   AddNewNotificationDetails()
     {
       this._AddNewNotification = true;
