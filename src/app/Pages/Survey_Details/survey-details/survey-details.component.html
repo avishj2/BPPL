@@ -379,7 +379,7 @@
           <ngb-tab title="Compensation" [id]="9">
             <ng-template ngbTabContent>
               <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
-                Compensation
+                <app-compensation [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-compensation>
               </div>
                 <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                     <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>

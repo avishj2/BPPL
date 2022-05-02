@@ -1,0 +1,22 @@
+
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <thead>
+            <tr>  
+                <th style="width: 35px;">S.No.</th>                
+                <th>Owner Name</th>
+                <th>Payment Category</th>
+                <th>Compensation Amount</th>  
+                
+            </tr>
+        </thead>
+        <tbody>          
+            <ng-container *ngFor="let data of _CompensationModel.Compensation;let i = index">
+                <tr>
+                    <td style="width: 35px;">{{i+1}}</td>
+                    <td>{{GetLookupValue(_AllSurveyDetails.Result.SurveyOwnersDrp,data.OwnerID)}}</td>
+                    <td>{{data.PaymentCategory}}</td>
+                    <td>{{data.Amount}}</td> 
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
