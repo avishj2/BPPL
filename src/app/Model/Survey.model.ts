@@ -258,3 +258,17 @@ export class RevenueRespDataModel extends BaseResponse {
     this.Result = [];
   }
 }
+
+export class CompensationModel{
+  Compensation : CompensationCol[]
+  constructor(){
+    this.Compensation = [];
+  }
+}
+
+export class CompensationCol{
+  OwnerID : any;
+  PaymentCategory : any;
+  Amount : Number;  
+}
+

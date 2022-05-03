@@ -169,6 +169,7 @@ export class SurveyDetailsComponent implements OnInit {
     {
       if(this._SearchCriteria.VillageId != null)
       {
+        // this._SurveyModel.VillageId = this._SearchCriteria.VillageId; //need to add this line
         this._AddNewSurveyDetails = true;
         this._DisabledInputField = false;
         this._ShowSurveyDetailsDiv = false;
@@ -193,7 +194,7 @@ export class SurveyDetailsComponent implements OnInit {
 
   DeleteSurveyDetails()
     {
-      this.CommonService.ShowSpinner();
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.DeleteSurveyAPI + this._SurveyModel.SurveyId;
       this.httpService.get(url,null).subscribe(response => {
         let SurveyDetails : any = response;
@@ -214,7 +215,8 @@ export class SurveyDetailsComponent implements OnInit {
     {
       this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.AddOrUpdateSurveyAPI;     
-      this.httpService.HttpPostRequest(url,this._SurveyModel,this.AddOrUpdateSurveyCallBack.bind(this),null);
+     console.log(this._SurveyModel)
+      //this.httpService.HttpPostRequest(url,this._SurveyModel,this.AddOrUpdateSurveyCallBack.bind(this),null);
     }
 
     /**

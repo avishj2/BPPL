@@ -63,6 +63,7 @@ import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details
 import { ViewNotificationComponent } from './Pages/View_Details/view-notification/view-notification.component';
 import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeatils/view-noticedeatils.component';
 import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
+import { CompensationComponent } from './Pages/Survey_Details/survey-details/compensation/compensation.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +113,7 @@ import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.c
     ViewNotificationComponent,
     ViewNoticedeatilsComponent,
     TestPopupComponent,
+    CompensationComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
