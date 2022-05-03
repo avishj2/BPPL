@@ -64,6 +64,7 @@ import { ViewNotificationComponent } from './Pages/View_Details/view-notificatio
 import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeatils/view-noticedeatils.component';
 import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 import { CompensationComponent } from './Pages/Survey_Details/survey-details/compensation/compensation.component';
+import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { CompensationComponent } from './Pages/Survey_Details/survey-details/com
     ViewNoticedeatilsComponent,
     TestPopupComponent,
     CompensationComponent,
+    ViewMapComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

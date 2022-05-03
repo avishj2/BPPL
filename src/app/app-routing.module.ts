@@ -28,6 +28,7 @@ import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details
 import { ViewNotificationComponent } from './Pages/View_Details/view-notification/view-notification.component';
 import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeatils/view-noticedeatils.component';
 import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
+import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -79,6 +80,8 @@ const routes: Routes = [
       {path: 'LAQPermanent', component: LAQPermanentComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /LAQPermanent Details'}},
       {path: 'ViewNotification', component: ViewNotificationComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Notification Details'}},
       {path: 'ViewNotice', component: ViewNoticedeatilsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Notice Details'}},
+
+      {path: 'ViewMap', component: ViewMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Project Management / ViewMap'}},
 
     ]},
 ];

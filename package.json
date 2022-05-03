@@ -46,6 +46,8 @@
     "ngx-select-dropdown": "^1.4.4",
     "ngx-spinner": "^7.2.0",
     "office-to-pdf": "^4.0.0",
+    "ol": "^5.3.3",
+    "ol-proj": "^1.1.0",
     "pizzip": "^3.1.1",
     "primeicons": "^4.1.0",
     "primeng": "^11.0.0",
