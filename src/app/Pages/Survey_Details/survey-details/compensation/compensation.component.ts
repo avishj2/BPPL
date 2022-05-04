@@ -1,5 +1,5 @@
 import { Component,AfterViewInit, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
-import { TreeModel,CompensationCol, SurveyDropDownsDataModel,AllSurveyDetailsDataModel,CompensationModel} from 'src/app/Model/Survey.model';
+import { CompensationCol, SurveyDropDownsDataModel,AllSurveyDetailsDataModel,CompensationModel} from 'src/app/Model/Survey.model';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
