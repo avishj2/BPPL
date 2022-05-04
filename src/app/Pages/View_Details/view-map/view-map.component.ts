@@ -9,6 +9,8 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import 'ol/ol.css';
 import {FullScreen, defaults as defaultControls} from 'ol/control';
+import {toStringHDMS} from 'ol/coordinate';
+import Overlay from 'ol/Overlay';
 
 /**ol map plugins */
 import 'ol/ol.css';
@@ -22,6 +24,7 @@ import {get as GetProjection} from 'ol/proj'
 import {Extent} from 'ol/extent';
 import GeoJSON from 'ol/format/GeoJSON';
 import {fromLonLat} from 'ol/proj';
+import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 
 @Component({
   selector: 'app-view-map',
@@ -49,64 +52,6 @@ export class ViewMapComponent implements OnInit {
     {
       //  this.ShowMap();
       this.showJsonLayer();  
-     
-    }
-
-  /**show openlayer map */
-  ShowMap()
-    {
-      // var washingtonLonLat = [75.778885,26.922070];//lat long jaipur
-      var washingtonLonLat = [82.7525294,20.9880135];//lat long india
-      var washingtonWebMercator = new olProj.fromLonLat(washingtonLonLat);
-        var OSMLayer = new TileLayer({
-            source: new OSM()
-        });
-        var source = new VectorSource();
-        var vector = new VectorLayer({
-            source: source,
-            style : [
-              new Style({
-                stroke: new Stroke({
-                  color: 'blue',
-                  width: 3,
-                }),
-                fill: new Fill({
-                  color: 'rgba(255, 255, 255, 0.2)',
-                }),
-              }),
-              new Style({
-                image: new Circle({
-                  radius: 6,
-                  fill: new Fill({
-                    color: 'blue',
-                  }),
-                }),
-              })],
-        });
-        var layers = [
-        OSMLayer,
-        vector
-        ];
-      //console.log(layers);
-        var view = new View({
-            center: washingtonWebMercator,
-            zoom: 5,
-            maxZoom: 20
-        })
-        var map = new Map({
-            layers: layers,
-            target: map,
-            view: view,
-            controls: defaultControls().extend([new FullScreen()]),
-            //controls: [] // Hide default controls.(zoomin and zoomout button hide)
-        });
-        map.setTarget('map');
-        var thing = new Point( washingtonWebMercator);
-        var featurething = new Feature({
-            name: "Thing",
-            geometry: thing
-        });
-        source.addFeature( featurething );
     }
 
   showJsonLayer()
@@ -140,7 +85,7 @@ export class ViewMapComponent implements OnInit {
         }),
         'MultiPolygon': new Style({
           stroke: new Stroke({
-            color: 'yellow',
+            color: 'blue',
             width: 1,
           }),
           fill: new Fill({
@@ -183,50 +128,33 @@ export class ViewMapComponent implements OnInit {
           }),
         }),
       };
-      
+      const highlightStyle = new Style({
+        fill: new Fill({
+          color: '#EEE',
+        }),
+        stroke: new Stroke({
+          color: '#3399CC',
+          width: 2,
+        }),
+      });
       const styleFunction = function (feature) {
         return styles[feature.getGeometry().getType()];
       };
       
-      const geojsonObject = 
-      {
-        "type": "FeatureCollection",
-        "crs": { "type": "name", "properties": { "name": "EPSG:32643" } },
-        "features": [
-        { "type": "Feature", "properties": { "TEXTSTRING": "CART TRACK", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 220916.331, 2869106.143, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-18", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 220916.331, 2869106.143, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "ELECTRIC LINE", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221441.498525064263958, 2870792.852005797438323, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-17", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221441.498525064263958, 2870792.852005797438323, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "ELECTRIC LINE", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221471.484065008815378, 2870975.50134636182338, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-16", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221471.484065008815378, 2870975.50134636182338, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "WBM ROAD", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221508.973902911675395, 2871057.832667193375528, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-15", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221508.973902911675395, 2871057.832667193375528, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "LT LINE", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221621.65853906123084, 2871356.257315917871892, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-14", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221621.65853906123084, 2871356.257315917871892, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "WBM ROAD", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221647.767619494057726, 2871408.340449570678174, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-13", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221647.767619494057726, 2871408.340449570678174, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "OPTICAL FIBER CABLE", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221656.573525705840439, 2871425.906720866449177, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-12", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221656.573525705840439, 2871425.906720866449177, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "NH-25", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221663.28879680566024, 2871439.30253398604691, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-11", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221663.28879680566024, 2871439.30253398604691, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "LT LINE", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221694.289468126487918, 2871501.143551784101874, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-10", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221694.289468126487918, 2871501.143551784101874, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "RAILWAY  LAND", "TEXT_SIZE": 1.5, "TEXT_ANGLE": 0.0 }, "geometry": { "type": "Point", "coordinates": [ 221775.149, 2871999.90199999977, 0.0 ] } },
-        { "type": "Feature", "properties": { "TEXTSTRING": "CS-9A", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0 }, "geometry": { "type": "Point", "coordinates": [ 221775.149, 2871999.90199999977, 0.0 ] } }
-        ]
-      }
-
-      const vectorSource = new VectorSource({
-        features: new GeoJSON().readFeatures(geojsonObject),
+      const vectorSource = new VectorSource({        
+        url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=387",//387,382
+        //features: new GeoJSON().readFeatures(geojsonObject),
+        format: new GeoJSON()//{dataProjection: 'EPSG:4326', featureProjection: 'EPSG:32643'}
       });
-      var features = new Feature();
-      vectorSource.addFeature(features);
       
+      var features = new Feature();
+      vectorSource.addFeature(features);      
       const vectorLayer = new VectorLayer({
         source: vectorSource,
         style: styleFunction,
       });
-      
+      var washingtonLonLat = [72.2584733,25.9234036];//lat long panchpadra
+      var washingtonWebMercator = new olProj.fromLonLat(washingtonLonLat);
       const map = new Map({
         layers: [
           new TileLayer({
@@ -236,10 +164,34 @@ export class ViewMapComponent implements OnInit {
         ],
         target: 'map',
         view: new View({
-          center: [0, 0],
-          zoom: 2,
+          center: washingtonWebMercator,//[0, 0],
+          zoom: 10, 
         }),
+        controls: defaultControls().extend([new FullScreen()]),
       });
+      const selected = [];
+      //Creating a Map Click Event Listener
+      map.on('singleclick', function (e) {
+        var feature = map.forEachFeatureAtPixel(e.pixel,
+          function(feature, layer) {  
+            feature.getProperties();//get all properties using
+            //feature.get('name')//if  just need one field
+            console.log(feature.getProperties());  
+            /**selecte multiple feature highlight */
+            const selIndex = selected.indexOf(feature);
+              if (selIndex < 0) 
+              {
+                selected.push(feature);
+                feature.setStyle(highlightStyle);
+              } 
+              else 
+              {
+                selected.splice(selIndex, 1);
+                feature.setStyle(undefined);
+              }          
+          });          
+      })
     }
 }
+
 
