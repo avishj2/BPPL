@@ -5,6 +5,8 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Icon from 'ol/style/Icon';
 import * as olProj from 'ol/proj';
+import * as  olProj4 from 'ol/proj/proj4';
+import * as  Proj4 from 'proj4/dist/proj4';
 import {Fill, Stroke, Style,Circle, Text} from 'ol/style';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -50,7 +52,8 @@ export class ViewMapComponent implements OnInit {
 
   ngOnInit(): void 
     {
-      this.showJsonLayer();  
+      this.RegisterProj4s();
+      this.showJsonLayer();        
     }
 
   showJsonLayer()
@@ -64,6 +67,7 @@ export class ViewMapComponent implements OnInit {
         }),
         stroke: new Stroke({color: 'red', width: 1}),
       });
+
       const pointstyleFunction = function (feature) 
         {  
           return new Style({
@@ -78,17 +82,13 @@ export class ViewMapComponent implements OnInit {
             }),
           })
         }; 
-
-      const CS_PointSource = new VectorSource({        
-          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388",//387,382
-          //features: new GeoJSON().readFeatures(geojsonObject),
-          format: new GeoJSON()
-        });      
-        var features = new Feature();
-        CS_PointSource.addFeature(features); 
         /*** */     
         const CS_PointLayer = new VectorLayer({
-          source: CS_PointSource,
+          source: new VectorSource({        
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388",//387,382
+            //features: new GeoJSON().readFeatures(geojsonObject),
+            format: new GeoJSON()
+          })  ,
           style: pointstyleFunction,
         });
   
@@ -111,14 +111,12 @@ export class ViewMapComponent implements OnInit {
             }),
           })
         }; 
-        const Center_LineSource = new VectorSource({        
-          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398",
-          format: new GeoJSON()
-        });
-        var features = new Feature();
-        Center_LineSource.addFeature(features); 
+
         const Center_LineLayer = new VectorLayer({
-          source: Center_LineSource,
+          source: new VectorSource({        
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398",
+            format: new GeoJSON()
+          }),
           style: LinestyleFunction,
         });
 
@@ -144,14 +142,12 @@ export class ViewMapComponent implements OnInit {
             }),
           })
         }; 
-        const Village_Source = new VectorSource({        
+
+        const Village_Layer = new VectorLayer({
+          source:  new VectorSource({        
           url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=401",
           format: new GeoJSON()
-        });
-        var features = new Feature();
-        Village_Source.addFeature(features); 
-        const Village_Layer = new VectorLayer({
-          source: Village_Source,
+        }),
           style: VillagePolygonstyle,
         });
 
@@ -177,30 +173,28 @@ export class ViewMapComponent implements OnInit {
           })
         }; 
 
-        const Khasra_Source = new VectorSource({        
-          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=399",
-          format: new GeoJSON()
-        });
-        var features = new Feature();
-        Khasra_Source.addFeature(features); 
+        
         const Khasra_Layer = new VectorLayer({
-          source: Khasra_Source,
+          source: new VectorSource({        
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=399",
+            format: new GeoJSON()
+          }),
           style: KhasraPolygonstyle,
         });
 
-        const ROU_Source = new VectorSource({        
-          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400",
-          format: new GeoJSON()
-        });
-        var features = new Feature();
-        ROU_Source.addFeature(features); 
+        
         const ROU_Layer = new VectorLayer({
-          source: ROU_Source,
+          source:  new VectorSource({        
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400",
+            format: new GeoJSON()
+          }),
           style: KhasraPolygonstyle,
         });
       /**base map style and add layers */
+
       var washingtonLonLat = [72.2584733,25.9234036];//lat long panchpadra
-      var washingtonWebMercator = new olProj.fromLonLat(washingtonLonLat);
+      var washingtonWebMercator = olProj.transform(washingtonLonLat,'EPSG:32643', 'EPSG:3857');
+
       const map = new Map({
         layers: [
           new TileLayer({
@@ -219,6 +213,7 @@ export class ViewMapComponent implements OnInit {
         }),
         controls: defaultControls().extend([new FullScreen()]),
       });
+      
       //Creating a Map Click Event Listener
       map.on('singleclick', function (e) {
         var feature = map.forEachFeatureAtPixel(e.pixel,
@@ -237,6 +232,15 @@ export class ViewMapComponent implements OnInit {
       })
     }
 
+
+    RegisterProj4s()
+    {
+      let p4 = olProj4;
+      //proj4.defs("EPSG:32644", "+proj=utm +zone=44 +datum=WGS84 +units=m +no_defs"); // projection definitions needs to be added on proj4 library
+      Proj4.defs("EPSG:32643", "+proj=utm +zone=43 +datum=WGS84 +units=m +no_defs");
+      Proj4.defs("EPSG:32644","+proj=utm +zone=44 +datum=WGS84 +units=m +no_defs");
+      p4.register(Proj4);
+    }    
 
     ShowCrossingPopup(arg)
       { 
