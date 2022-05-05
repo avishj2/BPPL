@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import Map from 'ol/Map';
+import OSM from 'ol/source/OSM';
 import VectorLayer from 'ol/layer/Vector';
-//import Proj from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
 import Icon from 'ol/style/Icon';
 import * as olProj from 'ol/proj';
@@ -9,22 +10,19 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import 'ol/ol.css';
 import {FullScreen, defaults as defaultControls} from 'ol/control';
-import {toStringHDMS} from 'ol/coordinate';
-import Overlay from 'ol/Overlay';
-
-/**ol map plugins */
-import 'ol/ol.css';
-import Map from 'ol/Map';
-import OSM from 'ol/source/OSM';
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
 import View from 'ol/View';
-import Projection from 'ol/proj/Projection';
-import {get as GetProjection} from 'ol/proj'
-import {Extent} from 'ol/extent';
 import GeoJSON from 'ol/format/GeoJSON';
 import {fromLonLat} from 'ol/proj';
+import { Pointer as PointerInteraction,defaults as defaultInteractions,} from 'ol/interaction';
 import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
+import {ModelServiceService} from 'src/app/services/model-service.service';
+import { NgbDateStruct, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService} from 'src/app/services/common.service';
+import { UrlService } from 'src/app/services/url.service';
+import { UtilityService } from 'src/app/services/utility.service';
+import { ChildViewCrossingComponent } from 'src/app/Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component'
 
 @Component({
   selector: 'app-view-map',
@@ -33,126 +31,174 @@ import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 })
 export class ViewMapComponent implements OnInit {
   map: any;
-  geometry:any;
-  draw: any;
-  snap: any;
-  source:any;
-  select:any;
-  VectorLayer : any;
-  testp;
-  vectorSource;
-  vectorLayer;
-
-  projection: Projection;
-  extent: Extent 
-  //= [-20026376.39, -20048966.10, 20026376.39, 20048966.10];
-  constructor() { }
+  
+  constructor(public urlService: UrlService,
+    public modelServiceService : ModelServiceService,
+    public Utility: UtilityService,
+    public CommonService : CommonService
+    ){
+      // super({
+      //   handleDownEvent: handleDownEvent,
+      //   handleDragEvent: handleDragEvent,
+      //   handleMoveEvent: handleMoveEvent,
+      //   handleUpEvent: handleUpEvent,
+      // });
+      // this.cursor_ = 'pointer';
+      // this.feature_ = null;
+      // this.previousCursor_ = undefined;
+     }
 
   ngOnInit(): void 
     {
-      //  this.ShowMap();
       this.showJsonLayer();  
     }
 
   showJsonLayer()
     {
+      var self = this;
+      /**point layer */
       const image = new Circle({
         radius: 5,
         fill: new Fill({
-          color: 'blue',
+          color: '#f34141ed',
         }),
         stroke: new Stroke({color: 'red', width: 1}),
       });
-      
-      const styles = {
-        'Point': new Style({
-          image: image,
-        }),
-        'LineString': new Style({
-          stroke: new Stroke({
-            color: 'green',
-            width: 1,
-          }),
-        }),
-        'MultiLineString': new Style({
-          stroke: new Stroke({
-            color: 'green',
-            width: 1,
-          }),
-        }),
-        'MultiPoint': new Style({
-          image: image,
-        }),
-        'MultiPolygon': new Style({
-          stroke: new Stroke({
-            color: 'blue',
-            width: 1,
-          }),
-          fill: new Fill({
-            color: 'rgba(255, 255, 0, 0.1)',
-          }),
-        }),
-        'Polygon': new Style({
-          stroke: new Stroke({
-            color: 'blue',
-            lineDash: [4],
-            width: 3,
-          }),
-          fill: new Fill({
-            color: 'rgba(0, 0, 255, 0.1)',
-          }),
-        }),
-        'GeometryCollection': new Style({
-          stroke: new Stroke({
-            color: 'magenta',
-            width: 2,
-          }),
-          fill: new Fill({
-            color: 'magenta',
-          }),
-          image: new Circle({
-            radius: 10,
-            fill: null,
-            stroke: new Stroke({
-              color: 'magenta',
+      const pointstyleFunction = function (feature) 
+        {  
+          return new Style({
+            image: image,
+            text : new Text({
+              font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#000'}),
+              stroke: new Stroke({color: '#000', width: 1}),
+              text: feature.get('TEXTSTRING'),
+              textAlign : 'left',  
+              padding : [0,2,4,5]
             }),
-          }),
-        }),
-        'Circle': new Style({
-          stroke: new Stroke({
-            color: 'red',
-            width: 2,
-          }),
-          fill: new Fill({
-            color: 'rgba(255,0,0,0.2)',
-          }),
-        }),
-      };
-      const highlightStyle = new Style({
-        fill: new Fill({
-          color: '#EEE',
-        }),
-        stroke: new Stroke({
-          color: '#3399CC',
-          width: 2,
-        }),
-      });
-      const styleFunction = function (feature) {
-        return styles[feature.getGeometry().getType()];
-      };
-      
-      const vectorSource = new VectorSource({        
-        url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=387",//387,382
-        //features: new GeoJSON().readFeatures(geojsonObject),
-        format: new GeoJSON()//{dataProjection: 'EPSG:4326', featureProjection: 'EPSG:32643'}
-      });
-      
-      var features = new Feature();
-      vectorSource.addFeature(features);      
-      const vectorLayer = new VectorLayer({
-        source: vectorSource,
-        style: styleFunction,
-      });
+          })
+        }; 
+
+      const CS_PointSource = new VectorSource({        
+          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388",//387,382
+          //features: new GeoJSON().readFeatures(geojsonObject),
+          format: new GeoJSON()
+        });      
+        var features = new Feature();
+        CS_PointSource.addFeature(features); 
+        /*** */     
+        const CS_PointLayer = new VectorLayer({
+          source: CS_PointSource,
+          style: pointstyleFunction,
+        });
+  
+
+      /**line feature styling */
+      const LinestyleFunction = function (feature) 
+        {  
+          return new Style({
+            stroke: new Stroke({
+              color: 'green',
+              width: 1,
+            }),
+            text : new Text({
+              font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#000'}),
+              stroke: new Stroke({color: '#000', width: 1}),
+              //text: feature.get('Shape'),
+              textAlign : 'left',  
+              padding : [0,2,4,5]
+            }),
+          })
+        }; 
+        const Center_LineSource = new VectorSource({        
+          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398",
+          format: new GeoJSON()
+        });
+        var features = new Feature();
+        Center_LineSource.addFeature(features); 
+        const Center_LineLayer = new VectorLayer({
+          source: Center_LineSource,
+          style: LinestyleFunction,
+        });
+
+
+      /**polygon feature styling */
+      const VillagePolygonstyle = function (feature) 
+        {  
+          return new Style({
+            stroke: new Stroke({
+              color: '#5990cb',
+              width: 1,
+            }),
+            fill: new Fill({
+              color: '#dfdf326e',
+            }),
+            text : new Text({
+              font: '17px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#f04141'}),
+              stroke: new Stroke({color: '#f04141', width: 1}),
+              text: feature.get('Village_N'),
+              textAlign : 'left',  
+              padding : [0,2,4,5]
+            }),
+          })
+        }; 
+        const Village_Source = new VectorSource({        
+          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=401",
+          format: new GeoJSON()
+        });
+        var features = new Feature();
+        Village_Source.addFeature(features); 
+        const Village_Layer = new VectorLayer({
+          source: Village_Source,
+          style: VillagePolygonstyle,
+        });
+
+
+        const KhasraPolygonstyle = function (feature) 
+        {  
+          return new Style({
+            stroke: new Stroke({
+              color: '#d30d39e8',
+              width: 1,
+            }),
+            fill: new Fill({
+              color: '#0052eb4a',
+            }),
+            text : new Text({
+              font: '17px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#0052eb'}),
+              stroke: new Stroke({color: '#0052eb', width: 1}),
+              text: feature.get('Survey_No'),
+              textAlign : 'left',  
+              padding : [0,2,4,5]
+            }),
+          })
+        }; 
+
+        const Khasra_Source = new VectorSource({        
+          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=399",
+          format: new GeoJSON()
+        });
+        var features = new Feature();
+        Khasra_Source.addFeature(features); 
+        const Khasra_Layer = new VectorLayer({
+          source: Khasra_Source,
+          style: KhasraPolygonstyle,
+        });
+
+        const ROU_Source = new VectorSource({        
+          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400",
+          format: new GeoJSON()
+        });
+        var features = new Feature();
+        ROU_Source.addFeature(features); 
+        const ROU_Layer = new VectorLayer({
+          source: ROU_Source,
+          style: KhasraPolygonstyle,
+        });
+      /**base map style and add layers */
       var washingtonLonLat = [72.2584733,25.9234036];//lat long panchpadra
       var washingtonWebMercator = new olProj.fromLonLat(washingtonLonLat);
       const map = new Map({
@@ -160,7 +206,11 @@ export class ViewMapComponent implements OnInit {
           new TileLayer({
             source: new OSM(),
           }),
-          vectorLayer,
+          Village_Layer,
+          Khasra_Layer,
+          ROU_Layer,
+          Center_LineLayer,
+          CS_PointLayer
         ],
         target: 'map',
         view: new View({
@@ -169,29 +219,42 @@ export class ViewMapComponent implements OnInit {
         }),
         controls: defaultControls().extend([new FullScreen()]),
       });
-      const selected = [];
       //Creating a Map Click Event Listener
       map.on('singleclick', function (e) {
         var feature = map.forEachFeatureAtPixel(e.pixel,
           function(feature, layer) {  
-            feature.getProperties();//get all properties using
-            //feature.get('name')//if  just need one field
-            console.log(feature.getProperties());  
-            /**selecte multiple feature highlight */
-            const selIndex = selected.indexOf(feature);
-              if (selIndex < 0) 
+            let data = feature.get('crossingId')
+            if(data != null) 
               {
-                selected.push(feature);
-                feature.setStyle(highlightStyle);
+                self.ShowCrossingPopup(data)
               } 
-              else 
-              {
-                selected.splice(selIndex, 1);
-                feature.setStyle(undefined);
-              }          
+            else{
+              alert("CrossingId is not available!!")
+            }
+            //console.log(feature.get('crossingId'))//if  just need one field
+            console.log(feature.getProperties()); //get all properties using
           });          
       })
     }
+
+
+    ShowCrossingPopup(arg)
+      { 
+        /**NgbModalOptions  add some option in ngbmodel  */
+        let ngbModalOptions: NgbModalOptions = {
+          //backdrop : 'static',//outside click to not close model
+          keyboard : false,
+          size: 'xl'
+          };
+          let argdata = {
+            CrossingID : arg,
+            CrossingTypeName : "Openlayer map",
+            ShowModel : true
+          }
+        /**used popup model common service function */
+        this.modelServiceService.ShowPopUP(ChildViewCrossingComponent,ngbModalOptions,argdata,
+          null,null);
+      }
 }
 
 

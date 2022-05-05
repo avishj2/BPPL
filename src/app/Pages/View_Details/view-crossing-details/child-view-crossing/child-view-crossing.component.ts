@@ -12,6 +12,7 @@ import { CommonDropdownModel,CommonDocDataModel} from 'src/app/Model/Base.model'
 import { SearchCriteria, FilterControls,CrossingDropdownDataModel } from 'src/app/Model/Filters.model';
 import {CrossingModel } from 'src/app/Model/Crossing.model';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-child-view-crossing',
@@ -34,14 +35,15 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
   _FirstLoad : boolean = false;
   @Output() ChildLoadInfo:EventEmitter<boolean>= new EventEmitter(); 
   _CrossingTypeName : string;
-
+  _ShowPopModel : boolean;
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
     public Utility :UtilityService,
     private cd: ChangeDetectorRef,
-    public APIUtilityService: APIUtilityService,) 
+    public APIUtilityService: APIUtilityService,
+    public activeModal: NgbActiveModal,) 
       {
         this._CrossingDataModel = new CrossingModel();
         this._CrossingDropdowns = new CrossingDropdownDataModel();
@@ -53,7 +55,8 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
       this.PopulateCrossingDropdowns();  
       if(this.fromParent)
       {
-        console.log("model open", this.fromParent);
+        this.Utility.LogText2("model open", this.fromParent);
+        this._ShowPopModel = this.fromParent.ShowModel;
         this._CrossingTypeName= this.fromParent.CrossingTypeName;
         this.filterdata = new SearchCriteria();
         this.filterdata.CrossingID = this.fromParent.CrossingID;
@@ -153,5 +156,11 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
     {
       let url = this.urlService.DownloadCrossingDocAPI + doc.DocumentId;
       this.APIUtilityService.DownloadDocument(url);
+    }
+
+  /**after click on top right side of model it excute */
+  closeModal(sendData) 
+    {
+      this.activeModal.close(sendData);
     }
 }
