@@ -10,6 +10,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import {SurveyModel,ChildControlModel ,SurveyDropDownsDataModel,SurveyResponeDataModel, AllSurveyDetailsDataModel } from 'src/app/Model/Survey.model';
 import { CommonDropdownModel} from 'src/app/Model/Base.model';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-view-survey-tabs',
@@ -24,13 +25,16 @@ export class ViewSurveyTabsComponent implements OnInit {
   _AllSurveyDetails : AllSurveyDetailsDataModel;
   @ViewChild('tabset')
   tabset: any;
+  @Input() public fromParent;
+  _ShowPopModel : boolean = false;
 
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
     public Utility :UtilityService,
-    public APIUtilityService: APIUtilityService,) 
+    public APIUtilityService: APIUtilityService,
+    public activeModal: NgbActiveModal) 
       {
         this._SearchCriteria = new SearchCriteria();
         this._FilterControls = new FilterControls();
@@ -51,7 +55,35 @@ export class ViewSurveyTabsComponent implements OnInit {
       }
   ngOnInit(): void 
     {
-      
+      if(this.fromParent)
+        {
+          this.Utility.LogText2("Survey model", this.fromParent);
+          this._ShowPopModel = this.fromParent.ShowModel; 
+          this._SearchCriteria.SurveyName = this.fromParent.SurveyName
+          this.GetSurveyDetailsByName(); 
+        } 
+    }
+
+  GetSurveyDetailsByName()
+    {
+      this.CommonService.ShowSpinnerLoading();
+      let url = this.urlService.GetSurveyDetailsByNameAPI + this.fromParent.SurveyName + +'&villageName='+this.fromParent.VillageName + '&tehsilName='+ this.fromParent.TehsilName;
+      this.httpService.get(url,null).subscribe(response => {
+        this._AllSurveyDetails  = response;
+        if (this._AllSurveyDetails.StatusCode != 200) 
+          {
+            alert(this._AllSurveyDetails.Message);
+            this.closeModal(null)
+          }
+          else {
+            this._SurveyModel = this._AllSurveyDetails.Result.Survey;
+          }
+        this.CommonService.hideSpinnerLoading();
+        },error => {
+          this.Utility.LogText(error);
+          this.CommonService.hideSpinnerLoading();
+          this.closeModal(null)
+        });
     }
 
   /**1. Get Values From Filters component and assign into SearchCriteria
@@ -140,5 +172,11 @@ export class ViewSurveyTabsComponent implements OnInit {
         return object.Text;
       }
       else { return lookUpid;}
+    }
+
+      /**after click on top right side of model it excute */
+  closeModal(sendData) 
+    {
+      this.activeModal.close(sendData);
     }
 }

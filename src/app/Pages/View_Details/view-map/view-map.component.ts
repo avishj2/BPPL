@@ -25,7 +25,7 @@ import { CommonService} from 'src/app/services/common.service';
 import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ChildViewCrossingComponent } from 'src/app/Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component'
-
+import { ViewSurveyTabsComponent } from 'src/app/Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
 @Component({
   selector: 'app-view-map',
   templateUrl: './view-map.component.html',
@@ -82,10 +82,10 @@ export class ViewMapComponent implements OnInit {
             }),
           })
         }; 
-        /*** */     
+        /***CS_PointLayer */     
         const CS_PointLayer = new VectorLayer({
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388",//387,382
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388",//387,
             //features: new GeoJSON().readFeatures(geojsonObject),
             format: new GeoJSON()
           })  ,
@@ -172,16 +172,14 @@ export class ViewMapComponent implements OnInit {
             }),
           })
         }; 
-
         
         const Khasra_Layer = new VectorLayer({
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=399",
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=419",
             format: new GeoJSON()
           }),
           style: KhasraPolygonstyle,
         });
-
         
         const ROU_Layer = new VectorLayer({
           source:  new VectorSource({        
@@ -190,11 +188,10 @@ export class ViewMapComponent implements OnInit {
           }),
           style: KhasraPolygonstyle,
         });
+
       /**base map style and add layers */
-
-      var washingtonLonLat = [72.2584733,25.9234036];//lat long panchpadra
-      var washingtonWebMercator = olProj.transform(washingtonLonLat,'EPSG:32643', 'EPSG:3857');
-
+      var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
+      var washingtonWebMercator = olProj.transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
       const map = new Map({
         layers: [
           new TileLayer({
@@ -208,8 +205,9 @@ export class ViewMapComponent implements OnInit {
         ],
         target: 'map',
         view: new View({
-          center: washingtonWebMercator,//[0, 0],
-          zoom: 10, 
+          projection: 'EPSG:4326',
+          center: washingtonLonLat,//washingtonWebMercator,//[0, 0],
+          zoom: 7,
         }),
         controls: defaultControls().extend([new FullScreen()]),
       });
@@ -218,18 +216,20 @@ export class ViewMapComponent implements OnInit {
       map.on('singleclick', function (e) {
         var feature = map.forEachFeatureAtPixel(e.pixel,
           function(feature, layer) {  
-            let data = feature.get('crossingId')
-            if(data != null) 
+            if(feature.get('TEXTSTRING'))
               {
-                self.ShowCrossingPopup(data)
-              } 
-            else{
-              alert("CrossingId is not available!!")
-            }
-            //console.log(feature.get('crossingId'))//if  just need one field
-            console.log(feature.getProperties()); //get all properties using
+                let data = feature.get('TEXTSTRING');
+                self.ShowCrossingPopup(data);
+              }
+            // else if(feature.get('Survey_No'))
+            //   {
+            //     let data = feature.getProperties();
+            //     self.ShowSurveyPopup(data);                
+            //   }  
+            //console.log(feature.getProperties()); //get all properties using
           });          
       })
+      
     }
 
 
@@ -242,6 +242,7 @@ export class ViewMapComponent implements OnInit {
       p4.register(Proj4);
     }    
 
+    /**open crossing deatils popup model */
     ShowCrossingPopup(arg)
       { 
         /**NgbModalOptions  add some option in ngbmodel  */
@@ -251,14 +252,32 @@ export class ViewMapComponent implements OnInit {
           size: 'xl'
           };
           let argdata = {
-            CrossingID : arg,
-            CrossingTypeName : "Openlayer map",
+            CrossingName : arg,
             ShowModel : true
           }
         /**used popup model common service function */
         this.modelServiceService.ShowPopUP(ChildViewCrossingComponent,ngbModalOptions,argdata,
           null,null);
       }
+
+    ShowSurveyPopup(arg)
+      {
+        /**NgbModalOptions  add some option in ngbmodel  */
+        let ngbModalOptions: NgbModalOptions = {
+          keyboard : false,
+          size: 'xl'
+          };
+          let argdata = {
+            TehsilName :arg.Tehsil_N,
+            VillageName : arg.Village_N,
+            SurveyName :arg.Survey_No,
+            ShowModel : true
+          }
+        /**used popup model common service function */
+        this.modelServiceService.ShowPopUP(ViewSurveyTabsComponent,ngbModalOptions,argdata,
+          null,null);
+      }
+  
 }
 
 
