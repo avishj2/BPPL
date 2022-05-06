@@ -50,19 +50,17 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
         this._Crossingdoc = new CommonDocDataModel();
       }
 
-  ngOnInit(): void 
+  async  ngOnInit() 
     {
-      this.PopulateCrossingDropdowns();  
+      await this.PopulateCrossingDropdowns();  
       if(this.fromParent)
       {
         this.Utility.LogText2("model open", this.fromParent);
-        this._ShowPopModel = this.fromParent.ShowModel;
-        this._CrossingTypeName= this.fromParent.CrossingTypeName;
+        this._ShowPopModel = this.fromParent.ShowModel;        
         this.filterdata = new SearchCriteria();
-        this.filterdata.CrossingID = this.fromParent.CrossingID;
-        this.GetCrossingDetails();    
-      }
-       
+        this.filterdata.CrossingID = this.fromParent.CrossingName;
+        this.GetCrossingDatabyName();    
+      }       
     }
 
   ngOnChanges(changes: SimpleChanges)
@@ -91,7 +89,6 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
             this.GetCrossingDatabyId();
           }
       }
-
   
  /**refresh/reload data table 
   *when data update/delete/add in the datatable  
@@ -118,13 +115,34 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
     {
       let url = this.urlService.GetCrossingDropDownsAPI;
       this.httpService.get(url,null).subscribe(response => {
-        this._CrossingDropdowns = response;
-        // this.ReloadDatatable();
+        this._CrossingDropdowns = response;       
         },
         error => {
           this.Utility.LogText(error);
         });
     }
+
+    /***
+    * Get CROSSING details By Name 
+    */
+    GetCrossingDatabyName()
+      {
+        //this.CommonService.ShowSpinnerLoading();
+        let url = this.urlService.GetCrossingByNameAPI + this.filterdata.CrossingID;
+        this.httpService.get(url, null).subscribe(response => {
+          this._CrossingDataModel = response;
+          this._CrossingTypeName = this.GetLookupValue(this._CrossingDropdowns.CrossingTypes,
+          this._CrossingDataModel.TypeOfCrossing);
+          this.ReloadDatatable();
+        }, 
+        error => {
+          this.Utility.LogText(error);
+          alert(error.error.Message);
+          this.closeModal(null)
+        }); 
+        //this.CommonService.ShowSpinnerLoading();
+      }
+
 
   /***
    * Get CROSSING details By ID 
@@ -142,7 +160,7 @@ export class ChildViewCrossingComponent implements OnInit,OnChanges {
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
     {
-      let object = lookups.find(elm=>elm.Value == lookUpid );
+      let object = lookups.find(elm=>elm.Value == lookUpid);
       if(object)
       {
         return object.Text;

@@ -75,6 +75,7 @@ export class UrlService {
   AddSurveyDocumentAPI = this.url+'/api/Survey/AddSurveyDocument';
   DownloadRevDocAPI = this.url +'/api/Survey/Download?documentId=';
   DeleteSurveyDocumentAPI = this.url+'/api/Survey/DeleteSurveyDocument?documentId=';
+  GetSurveyDetailsByNameAPI = this.url +'/api/Survey/GetSurveyDetailsByName?surveyNumber=';
 
   //survey documents APIs
   GetSurveyDocumentDropDowns = this.url+'/api/SurveyDocuments/GetSurveyDocumentDropDowns';
@@ -121,6 +122,7 @@ export class UrlService {
   //viewcrossing
   GetCrossingSummaryAPI =this.url+ '/api/Crossing/GetCrossingSummary';  
   GetVillageSummaryAPI = this.url+ '/api/Survey/GetVillageSummary';
+  GetCrossingByNameAPI = this.url+ "/api/Crossing/GetCrossingByName?crossingNo="
 
   NavigateAddEditAdhocDetails ="../Add_Adhoc_Details";
   

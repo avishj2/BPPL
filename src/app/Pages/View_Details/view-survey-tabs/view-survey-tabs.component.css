@@ -27,3 +27,11 @@
     margin-left: 1.2%;
     margin-right: 5%;
 }
+.close {
+    float: right;
+    font-size: 2rem;
+    line-height: 1;
+    color: #000;
+    opacity: 0.8;
+    margin-right: 8px;
+}
