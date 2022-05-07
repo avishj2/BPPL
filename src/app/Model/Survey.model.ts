@@ -88,15 +88,15 @@ export class SurveyModel
     InActive :boolean;
     InactiveReason :string ;
     RevRecUpdated :boolean ;
-    ROUHa : any;
-    ROUAre : any;
-    ROUSqmt : any;
-    TotalHa : any;
-    TotalAre : any;
-    TotalSqmt : any;
-    PanchnamaHa : any;
-    PanchnamaAre : any;
-    PanchnamaSqmt : any;
+    ROUHa : string;
+    ROUAre : string;
+    ROUSqmt : string;
+    TotalHa : string;
+    TotalAre : string;
+    TotalSqmt : string;
+    PanchnamaHa : string;
+    PanchnamaAre : string;
+    PanchnamaSqmt : string;
     IsMurabaNo :boolean;
     VillageId : any;
     JamabandiOwner : string;
@@ -172,9 +172,9 @@ export class SurveyOwnerModel{
     SurveyId: any;
     SurveyOwnerId: any;
     LandType: any;
-    Ha: any;
-    Are: any;
-    Sqmt: any;
+    Ha: string;
+    Are: string;
+    Sqmt: string;
     SurveyOwnerName : any;
     Compensation : any;
 }
@@ -194,9 +194,9 @@ export class CropDataModel{
   AwardType: any;
   SeasonType: any;
   CropName: any;
-  Ha: any;
-  Are: any;
-  Sqmt: any;
+  Ha: string;
+  Are: string;
+  Sqmt: string;
   CropStatus: string;
   Compensation : any;
 }
