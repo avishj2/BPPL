@@ -14,7 +14,7 @@ ReadFromString()
                 CategoryID : 2
             },
             {
-                CategoryName :"Award and Mutation Entry",
+                CategoryName :"Village Documents",
                 CategoryID : 3
             }
         ];

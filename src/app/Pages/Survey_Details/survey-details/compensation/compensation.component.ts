@@ -1,5 +1,5 @@
 import { Component,AfterViewInit, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
-import { CompensationCol, SurveyDropDownsDataModel,AllSurveyDetailsDataModel,CompensationModel} from 'src/app/Model/Survey.model';
+import { SurveyDropDownsDataModel,AllSurveyDetailsDataModel,CompensationModel} from 'src/app/Model/Survey.model';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -43,45 +43,8 @@ export class CompensationComponent implements OnInit {
       this._AllSurveyDetails.Result.Crops = this.AllSurveyDetails.Result.Crops;
       this._AllSurveyDetails.Result.LandDetails = this.AllSurveyDetails.Result.LandDetails;
       this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
-      this.GetComponesationData();
+      this._CompensationModel = this.Utility.CalTotalCompensation(this._AllSurveyDetails.Result.LandDetails,this._AllSurveyDetails.Result.Crops,this._AllSurveyDetails.Result.Trees);
     }
-
-
-  GetComponesationData()
-    {
-      /**land details */
-      this._AllSurveyDetails.Result.LandDetails.forEach(element => {
-        this._CompensationModel.Compensation.push({OwnerID: element.SurveyOwnerId,PaymentCategory:"Land",Amount: element.Compensation })
-      });
-
-      /**crop details */
-      this._AllSurveyDetails.Result.Crops.forEach(element => {
-        this._CompensationModel.Compensation.push({OwnerID: element.SurveyOwnerId,PaymentCategory:"Crop",Amount: element.Compensation })
-       });
-
-       /**tree details */
-       this._AllSurveyDetails.Result.Trees.forEach(element => {
-        this._CompensationModel.Compensation.push({OwnerID: element.SurveyOwnerId,PaymentCategory:"Tree",Amount: element.Compensation })
-       });     
-
-        /**group object by OwnerName & PaymentCategory */
-        let obj = {};
-        this._CompensationModel.Compensation = this._CompensationModel.Compensation.reduce(function(r, o) 
-        {
-          let key = o.PaymentCategory + '-' + o.OwnerID;          
-          if(!obj[key]) {
-            obj[key] = Object.assign({}, o); // copy of o
-            r.push(obj[key]);
-          } else {             
-            obj[key].Amount += o.Amount;
-          }
-          return r;
-          }, []);
-        this.Utility.LogText(this._CompensationModel.Compensation);
-        this._CompensationModel.Compensation = this._CompensationModel.Compensation.sort((a, b) => (a.OwnerID < b.OwnerID ? -1 : 1));//SORTING BY OWNERNAME
-        
-    }
-
   
   ngAfterViewInit(): void 
     {

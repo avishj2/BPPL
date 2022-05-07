@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewNoticedeatilsComponent } from './view-noticedeatils.component';
+import { ViewGazetteComponent } from './view-gazette.component';
 
-describe('ViewNoticedeatilsComponent', () => {
-  let component: ViewNoticedeatilsComponent;
-  let fixture: ComponentFixture<ViewNoticedeatilsComponent>;
+describe('ViewGazetteComponent', () => {
+  let component: ViewGazetteComponent;
+  let fixture: ComponentFixture<ViewGazetteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewNoticedeatilsComponent ]
+      declarations: [ ViewGazetteComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewNoticedeatilsComponent);
+    fixture = TestBed.createComponent(ViewGazetteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

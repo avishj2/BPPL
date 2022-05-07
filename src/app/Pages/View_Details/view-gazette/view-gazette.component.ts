@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { HttpClient,HttpResponse, HttpHeaders } from "@angular/common/http";
+import { GazzateDropDownsDataModel} from 'src/app/Model/Gazette.model';
+import { CommonDropdownModel} from 'src/app/Model/Base.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
@@ -11,11 +13,11 @@ import { CommonService} from 'src/app/services/common.service';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 
 @Component({
-  selector: 'app-view-noticedeatils',
-  templateUrl: './view-noticedeatils.component.html',
-  styleUrls: ['./view-noticedeatils.component.css']
+  selector: 'app-view-gazette',
+  templateUrl: './view-gazette.component.html',
+  styleUrls: ['./view-gazette.component.css']
 })
-export class ViewNoticedeatilsComponent implements OnInit {
+export class ViewGazetteComponent implements OnInit {
   _FilterControls: FilterControls;
   _SearchCriteria: SearchCriteria;
   /**data table properties  */
@@ -46,46 +48,51 @@ export class ViewNoticedeatilsComponent implements OnInit {
       this._FilterControls.ShowState = true;
       this._FilterControls.ShowDistrict = true;
       this._FilterControls.ShowTaluka = true;
-      this._FilterControls.ShowVillage = true;
+      this._FilterControls.ShowVillage = false;
+      this._FilterControls.ShowNotificationDD = true;
       this._FilterControls.ShowSearchBtn = true;
     }
 
   ngOnInit(): void 
-    {
+  {
+  }
 
-    }
-    ngAfterViewInit(): void 
+  ngAfterViewInit(): void 
+  {
+    this.dtTrigger.next();
+  }
+/**refresh/reload data table 
+ * when data update/delete/add in the datatable  
+ * */
+ReloadDatatable(){
+  /**initialized datatable */
+  if (this.IsDtInitialized) 
     {
-      this.dtTrigger.next();
-    }
-  /**refresh/reload data table 
-   * when data update/delete/add in the datatable  
-   * */
-	ReloadDatatable(){
-    /**initialized datatable */
-    if (this.IsDtInitialized) 
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
       {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-        {
-          dtInstance.destroy();//Destroy the table first
-          this.dtTrigger.next();//Call the dtTrigger to rerender again
-        });
+        dtInstance.destroy();//Destroy the table first
+        this.dtTrigger.next();//Call the dtTrigger to rerender again
+      });
+    }
+    else
+      {
+        this.IsDtInitialized = true;
+        this.dtTrigger.next();
       }
-      else
-        {
-          this.IsDtInitialized = true;
-          this.dtTrigger.next();
-        }
-  }  
+}  
+
+  GetValuesFromFilters(event)
+    {
+      this._SearchCriteria = event;
+      this.Utility.LogText(this._SearchCriteria)
+      if(this._SearchCriteria.TalukaId != null)
+      {
+        this._ShowTableDiv = true;
+      }
+    }
+
   ResetFilterValues(event)
     {
       
     }
-    
-  GetValuesFromFilters(event)
-    {
-      this._SearchCriteria = event;
-      this._ShowTableDiv = true;
-    }
-
 }

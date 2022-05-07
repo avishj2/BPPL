@@ -13,7 +13,6 @@ import Point from 'ol/geom/Point';
 import 'ol/ol.css';
 import {FullScreen, defaults as defaultControls} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
-import TileWMS from 'ol/source/TileWMS';
 import View from 'ol/View';
 import GeoJSON from 'ol/format/GeoJSON';
 import {fromLonLat} from 'ol/proj';
@@ -26,6 +25,7 @@ import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ChildViewCrossingComponent } from 'src/app/Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component'
 import { ViewSurveyTabsComponent } from 'src/app/Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
+
 @Component({
   selector: 'app-view-map',
   templateUrl: './view-map.component.html',
@@ -84,6 +84,7 @@ export class ViewMapComponent implements OnInit {
         }; 
         /***CS_PointLayer */     
         const CS_PointLayer = new VectorLayer({
+          // name : 'CS_POINT',
           source: new VectorSource({        
             url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388",//387,
             //features: new GeoJSON().readFeatures(geojsonObject),
@@ -113,6 +114,7 @@ export class ViewMapComponent implements OnInit {
         }; 
 
         const Center_LineLayer = new VectorLayer({
+          // name : 'Center_Line',
           source: new VectorSource({        
             url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398",
             format: new GeoJSON()
@@ -211,23 +213,26 @@ export class ViewMapComponent implements OnInit {
         }),
         controls: defaultControls().extend([new FullScreen()]),
       });
-      
+
       //Creating a Map Click Event Listener
       map.on('singleclick', function (e) {
-        var feature = map.forEachFeatureAtPixel(e.pixel,
-          function(feature, layer) {  
+        var feature = map.forEachFeatureAtPixel(e.pixel,        
+          function(feature, layer) { 
+            console.log("321321",layer.get('name'))
             if(feature.get('TEXTSTRING'))
               {
                 let data = feature.get('TEXTSTRING');
                 self.ShowCrossingPopup(data);
+                return;
               }
             // else if(feature.get('Survey_No'))
             //   {
             //     let data = feature.getProperties();
-            //     self.ShowSurveyPopup(data);                
+            //     self.ShowSurveyPopup(data);   
+            //     return;             
             //   }  
             //console.log(feature.getProperties()); //get all properties using
-          });          
+          });       
       })
       
     }
@@ -277,7 +282,7 @@ export class ViewMapComponent implements OnInit {
         this.modelServiceService.ShowPopUP(ViewSurveyTabsComponent,ngbModalOptions,argdata,
           null,null);
       }
-  
+
 }
 
 

@@ -65,23 +65,20 @@ export class ViewSurveyTabsComponent implements OnInit {
     }
 
   GetSurveyDetailsByName()
-    {
-      this.CommonService.ShowSpinnerLoading();
+    {      
       let url = this.urlService.GetSurveyDetailsByNameAPI + this.fromParent.SurveyName + +'&villageName='+this.fromParent.VillageName + '&tehsilName='+ this.fromParent.TehsilName;
       this.httpService.get(url,null).subscribe(response => {
         this._AllSurveyDetails  = response;
         if (this._AllSurveyDetails.StatusCode != 200) 
           {
             alert(this._AllSurveyDetails.Message);
-            this.closeModal(null)
+            //this.closeModal(null)
           }
           else {
             this._SurveyModel = this._AllSurveyDetails.Result.Survey;
           }
-        this.CommonService.hideSpinnerLoading();
         },error => {
-          this.Utility.LogText(error);
-          this.CommonService.hideSpinnerLoading();
+          this.Utility.LogText(error);         
           this.closeModal(null)
         });
     }

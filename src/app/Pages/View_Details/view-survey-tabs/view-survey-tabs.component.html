@@ -1,7 +1,7 @@
 <app-filters *ngIf="_ShowPopModel== false" [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ResetFilterValues)="ResetFilterValues($event)">
 </app-filters>
 <!-- used when component open as popup model -->
-<!-- <div class="card"*ngIf="_ShowPopModel==true">
+<div class="card"*ngIf="_ShowPopModel==true">
     <div class="innercard"> 
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Survey Details</div> 
@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 <br>
 <div class="row" >
     <div class="col-lg-12">
@@ -291,7 +291,7 @@
             <ngb-tab title="Compensation" [id]="9">
                 <ng-template ngbTabContent>
                   <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
-                    Compensation
+                    <app-view-compensation-details [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-compensation-details>
                   </div>
                     <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                         <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>

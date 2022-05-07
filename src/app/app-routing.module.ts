@@ -25,8 +25,7 @@ import { LAQPermanentComponent } from './Pages/View_Details/laqpermanent/laqperm
 import { ProjectPageComponent } from './Pages/ProjectManagement/project-page/project-page.component';
 import { CAInfoComponent } from './Pages/ProjectManagement/cainfo/cainfo.component';
 import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details/region-details.component';
-import { ViewNotificationComponent } from './Pages/View_Details/view-notification/view-notification.component';
-import { ViewNoticedeatilsComponent } from './Pages/View_Details/view-noticedeatils/view-noticedeatils.component';
+import { ViewGazetteComponent } from './Pages/View_Details/view-gazette/view-gazette.component';
 import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 
@@ -78,8 +77,7 @@ const routes: Routes = [
       {path: 'ViewAwardReports', component: ViewAwardReportsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / View Award Reports'}},
       {path: 'ViewSurveyTabs', component: ViewSurveyTabsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /View Survey Details'}},
       {path: 'LAQPermanent', component: LAQPermanentComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /LAQPermanent Details'}},
-      {path: 'ViewNotification', component: ViewNotificationComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Notification Details'}},
-      {path: 'ViewNotice', component: ViewNoticedeatilsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Notice Details'}},
+      {path: 'ViewGazette', component: ViewGazetteComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Notification Details'}},
 
       {path: 'ViewMap', component: ViewMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Project Management / ViewMap'}},
 
