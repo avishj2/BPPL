@@ -260,7 +260,7 @@ export class RevenueRespDataModel extends BaseResponse {
 }
 
 export class CompensationModel{
-  Compensation : CompensationCol[]
+  Compensation : CompensationCol[];
   constructor(){
     this.Compensation = [];
   }
