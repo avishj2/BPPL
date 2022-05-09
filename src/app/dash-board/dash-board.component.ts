@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-dash-board',
@@ -12,11 +12,14 @@ export class DashBoardComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    public Utility: UtilityService,
   ) { }
 
-  ngOnInit(): void {
-    
-  }
+  async ngOnInit() 
+    {
+      let data = await this.Utility.MapLayerGeoJson();  
+      this.Utility.LogText(data);  
+    }
 
 
   /**top right side clicks on logout button and logout website  */
