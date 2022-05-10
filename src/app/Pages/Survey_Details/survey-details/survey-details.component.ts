@@ -62,12 +62,7 @@ export class SurveyDetailsComponent implements OnInit {
     }
 
   ngOnInit(): void 
-    {
-
-      //this._DisabledInputField = false;
-    }
-
-
+    {}
 
   /**1. Get Values From Filters component and assign into SearchCriteria
   * 2. 
@@ -148,21 +143,22 @@ export class SurveyDetailsComponent implements OnInit {
   /**get survey and all tabs details based on survey Number*/
   GetSurveyDetailsById()
     {
-      this.CommonService.ShowSpinner();
+      this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetSurveyDetailsByIdAPI + this._SurveyModel.SurveyId;
       this.httpService.get(url,null).subscribe(response => {
         this._AllSurveyDetails  = response;
         if (this._AllSurveyDetails.StatusCode != 200) 
           {
             alert(this._AllSurveyDetails.Message);
-            // this.CommonService.hideSpinnerLoading();
           }
           else {
             this._SurveyModel = this._AllSurveyDetails.Result.Survey;
           }
+          this.CommonService.hideSpinnerLoading();
         },error => {
           this.Utility.LogText(error);
-        });
+          this.CommonService.hideSpinnerLoading();
+        });        
     }
 
   AddNewSurveyDetails()

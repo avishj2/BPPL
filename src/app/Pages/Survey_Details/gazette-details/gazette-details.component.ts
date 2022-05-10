@@ -453,7 +453,6 @@ export class GazetteDetailsComponent implements OnInit {
     {
       this._AddNewNotification = true;
       this._DisabledNoticeInputField = false;
-      this.GetAllGazette();
       this._NotificationModel = new NotificationModel();
       this._ShowNotificationDetailsDiv = false;
     }
@@ -463,7 +462,6 @@ export class GazetteDetailsComponent implements OnInit {
     {
       this._DisabledNoticeInputField = false;
       this._AddNewNotification = false;
-      this.GetAllGazette();
     }
 
     /**
