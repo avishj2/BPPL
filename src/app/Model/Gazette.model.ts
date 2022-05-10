@@ -22,6 +22,7 @@ export class GazetteModel{
     HindiFromPage: any;
     HindiToPage: any;
     AwardSeqId : any;
+    SONames : string;
     Documents : GazzetteDocuments[];
 
     constructor(){
@@ -82,7 +83,6 @@ export class NotificationModel{
     GazzateId: any;
     NottificationName : string;
     NotificationNo: any;
-    SONames: string;
     EnglishFromPage: any;
     EnglishToPage: any;
     HindiFromPage: any;

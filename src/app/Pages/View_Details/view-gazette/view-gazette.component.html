@@ -1,24 +1,255 @@
-<app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ResetFilterValues)="ResetFilterValues($event)">
-</app-filters>
-<br>
-<div *ngIf="_ShowTableDiv">
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
-        <thead>
-            <tr>
-                <th>Document Type</th>
-                <th>File Name</th>
-                <th>Action</th>
-            </tr>  
-        </thead>
-        <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>    
-    </table>
-</div>
-<div *ngIf="_ShowTableDiv== false">
-    <h5 style="color: red;"><b>Please Select Taluka Name</b></h5>
-</div>
+<ngb-tabset [justify]="currentJustify" style="width: 100%;">
+    <ngb-tab title="Gazette Details" class="ngbtitle">
+        <ng-template ngbTabContent>
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class ="Label">Type of Notification</label>
+                    <select class="form-control"[(ngModel)]="_TypeOfNotification"(change)="GetGazzatesByTypeOfNotification()">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">-- Select Notification Type --</option>
+                        <option *ngFor="let data of _GazzateDropDownsDataModel.TypeOfNotifications"[value]="data.Value">
+                            {{data.Text}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label class ="Label">Gazette </label>
+                    <select class="form-control"[(ngModel)]="_GazetteModel.Gazzateid">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
+                            -- Select Gazzate Number --
+                        </option>
+                        <option *ngFor="let data of _GetGazetteByTypeNotification"[value]="data.Value">
+                            {{data.Text}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <div class="SearchBtnClass">
+                        <button class="btn-primary" (click)="SearchGazetteDetails()">
+                            <i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div> <br>
+            <form *ngIf="_ShowGazetteDetailsDiv == true">
+                <div class="card">
+                    <div class="innercard">
+                        <div class="d-flex justify-content-between">
+                            <div class="CardTitle">Gazette Details</div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label class ="Label">File Number</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.FileNo}}
+                                </div>
+                            </div>                            
+                            <div class="col-lg-3">
+                                <label class ="Label">Hindi File Number</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.HindiFileNo}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">SO Numbers</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.SONames}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Dispatch Date </label>
+                                <div class="DisabledFieldLabel" >
+                                    {{ this._GazetteModel.DispatchDate | date:'mediumDate' }}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Gazette Generate Date</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.GazzateGeneratedDate | date:'mediumDate'}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Gazette Publish Date</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.GazzatePublishedDate | date:'mediumDate'}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Gazette Print Date</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.GazzatePrintedDate | date:'mediumDate'}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Gazette Recevied Date</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.GazzateRecievedDate | date:'mediumDate'}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">English From Page</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.EnglishFromPage}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">English To Page</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.EnglishToPage}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Hindi From Page</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.HindiFromPage}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Hindi To Page</label>                               
+                                <div class="DisabledFieldLabel" >
+                                    {{this._GazetteModel.HindiToPage}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Award Sequence</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{GetLookupValue(_GazzateDropDownsDataModel.AwardSequence,_GazetteModel.AwardSeqId)}}
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="card" *ngIf="_ShowGazetteDetailsDiv == true">
+                    <div class="innercard">
+                        <div class="d-flex justify-content-between">
+                            <div class="CardTitle">Documents Details</div> 
+                        </div><br>
+                        <!-- [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" -->
+                        <table class="stripe table table-striped table-bordered" width="98%">
+                            <thead>
+                                <tr>
+                                    <th>FileName</th>
+                                    <th>Document Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of _GazetteModel.Documents;let i = index">
+                                    <td>{{data.FileName}}</td>
+                                    <td>{{GetLookupValue(_GazzateDropDownsDataModel.GazzateDocumentTypes,data.Lookupid)}}</td>
+                                    <td>
+                                        <button type="button" class="btn-success" title="Download" (click)="DownlaodDocument(data)">
+                                            <i class="fa fa-download"></i>
+                                        </button>&nbsp;                                        
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>    
+            </form>
+        </ng-template>
+    </ngb-tab>
+
+    <!-- Notification Details tab start -->
+    <ngb-tab>
+        <ng-template ngbTabTitle><b>Notification</b></ng-template>
+        <ng-template ngbTabContent>
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class ="Label">Notification Number</label>
+                    <select class="form-control"[(ngModel)]="_NotificationValue">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">-- Select Notification --</option>
+                        <option *ngFor="let data of _NotificationDetails" [value]="data.Value">
+                            {{data.Text}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <div class="SearchBtnClass">
+                        <button class="btn-primary" (click)="SearchNotificationDetails()">
+                            <i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div> 
+            <br>
+            <form *ngIf="_ShowNotificationDetailsDiv == true">
+                <div class="card">
+                    <div class="innercard">
+                        <div class="d-flex justify-content-between">
+                            <div class="CardTitle">Notification Details</div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label class ="Label">Gazette File Number <b><h7 style="color: red;">*</h7></b></label>                                
+                                <div class="DisabledFieldLabel" >
+                                    {{GetLookupValue(_GetAllGazetteDetails,_NotificationModel.GazzateId)}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Notification Name</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._NotificationModel.NottificationName}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">English From Page</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._NotificationModel.EnglishFromPage}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">English To Page</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._NotificationModel.EnglishToPage}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Hindi From Page</label>
+                                <div class="DisabledFieldLabel" >
+                                    {{this._NotificationModel.HindiFromPage}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">Hindi To Page</label>                               
+                                <div class="DisabledFieldLabel" >
+                                    {{this._NotificationModel.HindiToPage}}
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+                <div class="card" *ngIf="_ShowNotificationDetailsDiv == true">
+                    <div class="innercard">
+                        <div class="d-flex justify-content-between">
+                            <div class="CardTitle">Documents Details</div> 
+                        </div>
+                        <br>
+                        <table class="stripe table table-striped table-bordered" width="98%">
+                            <thead>
+                                <tr>
+                                    <th>FileName</th>
+                                    <th>Document Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of _NotificationModel.Documents;let i = index">
+                                    <td>{{data.FileName}}</td>
+                                    <td>{{GetLookupValue(_GazzateDropDownsDataModel.NotificationDocumentTypes,data.Lookupid)}}</td>
+                                    <td>
+                                        <button type="button" class="btn-success" title="Download" (click)="DownlaodDocument(data)">
+                                            <i class="fa fa-download"></i>
+                                        </button>&nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                </div> 
+            </form>
+        </ng-template>
+    </ngb-tab><!-- Notification Details tab end -->
+</ngb-tabset>
