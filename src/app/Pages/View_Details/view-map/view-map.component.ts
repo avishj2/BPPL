@@ -39,21 +39,13 @@ export class ViewMapComponent implements OnInit {
     public Utility: UtilityService,
     public CommonService : CommonService
     ){
-      // super({
-      //   handleDownEvent: handleDownEvent,
-      //   handleDragEvent: handleDragEvent,
-      //   handleMoveEvent: handleMoveEvent,
-      //   handleUpEvent: handleUpEvent,
-      // });
-      // this.cursor_ = 'pointer';
-      // this.feature_ = null;
-      // this.previousCursor_ = undefined;
      }
 
-  ngOnInit(): void 
+ async ngOnInit() 
     {
       this.RegisterProj4s();
-      this.showJsonLayer();        
+      this.showJsonLayer();
+      //await console.log(this.Utility._ROULayer);
     }
 
   showJsonLayer()
@@ -170,7 +162,7 @@ export class ViewMapComponent implements OnInit {
               stroke: new Stroke({color: '#0052eb', width: 1}),
               text: feature.get('Survey_No'),
               textAlign : 'left',  
-              padding : [0,2,4,5]
+              padding : [0,0,0,0]
             }),
           })
         }; 
@@ -209,7 +201,7 @@ export class ViewMapComponent implements OnInit {
         view: new View({
           projection: 'EPSG:4326',
           center: washingtonLonLat,//washingtonWebMercator,//[0, 0],
-          zoom: 7,
+          zoom: 10,
         }),
         controls: defaultControls().extend([new FullScreen()]),
       });
@@ -218,19 +210,17 @@ export class ViewMapComponent implements OnInit {
       map.on('singleclick', function (e) {
         var feature = map.forEachFeatureAtPixel(e.pixel,        
           function(feature, layer) { 
-            console.log("321321",layer.get('name'))
             if(feature.get('TEXTSTRING'))
               {
                 let data = feature.get('TEXTSTRING');
                 self.ShowCrossingPopup(data);
                 return;
               }
-            // else if(feature.get('Survey_No'))
-            //   {
-            //     let data = feature.getProperties();
-            //     self.ShowSurveyPopup(data);   
-            //     return;             
-            //   }  
+             if(feature.get('Survey_No'))
+              {
+                let data = feature.getProperties();
+                self.ShowSurveyPopup(data);            
+              }  
             //console.log(feature.getProperties()); //get all properties using
           });       
       })
@@ -273,10 +263,11 @@ export class ViewMapComponent implements OnInit {
           size: 'xl'
           };
           let argdata = {
-            TehsilName :arg.Tehsil_N,
-            VillageName : arg.Village_N,
+            ShowModel: true,
+            VillageName: "variya bhagji",
+            //VillageName : arg.Village_N,//need to be change in db Variya Bhagji
+            TehsilName :arg.Tehsil_N,           
             SurveyName :arg.Survey_No,
-            ShowModel : true
           }
         /**used popup model common service function */
         this.modelServiceService.ShowPopUP(ViewSurveyTabsComponent,ngbModalOptions,argdata,

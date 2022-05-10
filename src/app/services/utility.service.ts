@@ -5,7 +5,12 @@ import { CompensationCol,AllSurveyDetailsDataModel,CompensationModel} from 'src/
   providedIn: 'root'
 })
 export class UtilityService {
-   _CompensationModel : CompensationModel;
+  _CompensationModel : CompensationModel;
+  _CSPointLayer;
+  _CenterLineLayer;
+  _KhasraLayer;
+  _VillageLayer;
+  _ROULayer;
 
   constructor() {}
 
@@ -45,7 +50,7 @@ export class UtilityService {
       }
 
 
-      CalTotalCompensation(argLandDetails, argCrops ,argTrees)
+    CalTotalCompensation(argLandDetails, argCrops ,argTrees)
       {
         this._CompensationModel = new CompensationModel(); 
         /**land details */
@@ -81,5 +86,50 @@ export class UtilityService {
           //this.LogText2("this._CompensationModel=>",this._CompensationModel);
           return this._CompensationModel;
       }
+
+    async MapLayerGeoJson()
+      {
+        /**CS_Point Layer */
+        let CS_PointURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388";
+        this._CSPointLayer = await this.UrlToGeoJSON(CS_PointURL)
+      
+        /**Center_Line Layer */     
+        let Center_LineURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398";   
+        this._CenterLineLayer = await this.UrlToGeoJSON(Center_LineURL);
+
+        /**Khasra_Layer Layer */     
+        let Khasra_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=419"; 
+        this._KhasraLayer = await this.UrlToGeoJSON(Khasra_LayerURL);
+
+
+        let Village_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=401";
+        this._VillageLayer = await this.UrlToGeoJSON(Village_LayerURL);
+
+        /**Center_Line Layer */     
+        let ROU_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400";
+        this._ROULayer = await this.UrlToGeoJSON(ROU_LayerURL);
+
+        // return{
+        //   CSPointLayer : JSON.parse(CS_PointLayer),
+        //   CenterLineLayer: JSON.parse(Center_LineLayer),
+        //   KhasraLayer :JSON.parse(Khasra_Layer),
+        //   VillageLayer : JSON.parse(Village_Layer),
+        //   ROULayer: JSON.parse(ROU_Layer)
+        // }
+         
+      }
+
+
+      /**get Geojson data from API url */
+      UrlToGeoJSON(argURL)
+        {
+          return fetch(argURL)
+          .then(response => response.json())
+          .then(data => {
+            let Geodata = JSON.stringify(data);
+            return Geodata;  
+          });
+        }
+
 
 }

@@ -60,12 +60,19 @@
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
                                     {{this._GazetteModel.FileNo}}
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="col-lg-3">
                                 <label class ="Label">Hindi File Number</label>
                                 <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.HindiFileNo" [ngModelOptions]="{standalone: true}">
                                 <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
                                     {{this._GazetteModel.HindiFileNo}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class ="Label">SO Numbers</label>
+                                <input *ngIf="_DisabledGazetteInputField != true" class="form-control"[(ngModel)]="_GazetteModel.SONames"[ngModelOptions]="{standalone: true}">
+                                <div class="DisabledFieldLabel" *ngIf="_DisabledGazetteInputField == true">
+                                    {{this._GazetteModel.SONames}}
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -191,7 +198,7 @@
                                     <td>{{data.FileName}}</td>
                                     <td>{{GetLookupValue(_GazzateDropDownsDataModel.GazzateDocumentTypes,data.Lookupid)}}</td>
                                     <td>
-                                        <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument(data)">
+                                        <button type="button" class="btn-success" title="Download" (click)="DownlaodDocument(data)">
                                             <i class="fa fa-download"></i>
                                         </button>&nbsp;&nbsp;&nbsp;
                                         <button type="button" class="btn-danger"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteGazetteDocument(data,true)" title="Delete">
@@ -276,14 +283,6 @@
                                     {{GetLookupValue(_GetAllGazetteDetails,_NotificationModel.GazzateId)}}
                                 </div>
                             </div>
-                          
-                            <div class="col-lg-3">
-                                <label class ="Label">SO Numbers</label>
-                                <input *ngIf="_DisabledNoticeInputField != true" class="form-control"[(ngModel)]="_NotificationModel.SONames"[ngModelOptions]="{standalone: true}">
-                                <div class="DisabledFieldLabel" *ngIf="_DisabledNoticeInputField == true">
-                                    {{this._NotificationModel.SONames}}
-                                </div>
-                            </div>
                             <div class="col-lg-3">
                                 <label class ="Label">Notification Name</label>
                                 <input *ngIf="_DisabledNoticeInputField != true" class="form-control"[(ngModel)]="_NotificationModel.NottificationName"[ngModelOptions]="{standalone: true}">
@@ -363,7 +362,7 @@
                                     <td>{{data.FileName}}</td>
                                     <td>{{GetLookupValue(_GazzateDropDownsDataModel.NotificationDocumentTypes,data.Lookupid)}}</td>
                                     <td>
-                                        <button type="button" class="btn-info" title="Download" (click)="DownlaodDocument(data)">
+                                        <button type="button" class="btn-success" title="Download" (click)="DownlaodDocument(data)">
                                             <i class="fa fa-download"></i>
                                         </button>&nbsp;&nbsp;&nbsp;
                                         <button type="button" class="btn-danger"(click)="DeleteGazetteDocument(data,false)" title="Delete">
