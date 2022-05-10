@@ -201,8 +201,7 @@ export class CropRatesComponent implements OnInit {
               this._CropDetailsModel = RespDataModel.Result;
               this. _AddNewCropRates = false;
               this.closebutton.nativeElement.click();
-              this.ReloadDatatable();
-              
+              this.ReloadDatatable();              
             }   
         }
         this.CommonService.hideSpinnerLoading();

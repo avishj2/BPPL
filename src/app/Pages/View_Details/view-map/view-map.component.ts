@@ -45,7 +45,8 @@ export class ViewMapComponent implements OnInit {
     {
       this.RegisterProj4s();
       this.showJsonLayer();
-      //await console.log(this.Utility._ROULayer);
+      let data = await this.Utility._ROULayer;
+      console.log(data);
     }
 
   showJsonLayer()

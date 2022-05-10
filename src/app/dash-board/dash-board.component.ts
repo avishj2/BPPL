@@ -17,8 +17,7 @@ export class DashBoardComponent implements OnInit {
 
   async ngOnInit() 
     {
-      let data = await this.Utility.MapLayerGeoJson();  
-      this.Utility.LogText(data);  
+      await this.Utility.MapLayerGeoJson();  
     }
 
 

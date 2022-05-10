@@ -202,10 +202,12 @@ _DisabledCrossingInputField : boolean = true;
       if(!this._SearchCriteria.CrossingType)
       {
         alert("Please select CrossingType !!");
-        return;
+        this.CommonService.hideSpinnerLoading();
+        return;        
       }
       if (!this._CrossingDataModel.hasOwnProperty('CrossingApproval')) {
         alert("Please select Crossing Approval option!");
+        this.CommonService.hideSpinnerLoading();
         return;
       }
       let url = this.urlService.AddOrUpdateCrossingAPI;     

@@ -5,13 +5,12 @@ import { CompensationCol,AllSurveyDetailsDataModel,CompensationModel} from 'src/
   providedIn: 'root'
 })
 export class UtilityService {
-  _CompensationModel : CompensationModel;
-  _CSPointLayer;
-  _CenterLineLayer;
-  _KhasraLayer;
-  _VillageLayer;
-  _ROULayer;
-
+   _CompensationModel : CompensationModel;
+   _CSPointLayer
+   _CenterLineLayer
+   _KhasraLayer
+   _VillageLayer
+   _ROULayer
   constructor() {}
 
     LogText(argText)
@@ -91,32 +90,31 @@ export class UtilityService {
       {
         /**CS_Point Layer */
         let CS_PointURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388";
-        this._CSPointLayer = await this.UrlToGeoJSON(CS_PointURL)
+        let CS_PointLayer; //store json
+        CS_PointLayer = await this.UrlToGeoJSON(CS_PointURL)
       
         /**Center_Line Layer */     
         let Center_LineURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398";   
-        this._CenterLineLayer = await this.UrlToGeoJSON(Center_LineURL);
+        let Center_LineLayer = await this.UrlToGeoJSON(Center_LineURL);
 
         /**Khasra_Layer Layer */     
         let Khasra_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=419"; 
-        this._KhasraLayer = await this.UrlToGeoJSON(Khasra_LayerURL);
+        let Khasra_Layer = await this.UrlToGeoJSON(Khasra_LayerURL);
 
 
         let Village_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=401";
-        this._VillageLayer = await this.UrlToGeoJSON(Village_LayerURL);
+        let Village_Layer//store json      S
+        Village_Layer = await this.UrlToGeoJSON(Village_LayerURL);
 
         /**Center_Line Layer */     
         let ROU_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400";
-        this._ROULayer = await this.UrlToGeoJSON(ROU_LayerURL);
-
-        // return{
-        //   CSPointLayer : JSON.parse(CS_PointLayer),
-        //   CenterLineLayer: JSON.parse(Center_LineLayer),
-        //   KhasraLayer :JSON.parse(Khasra_Layer),
-        //   VillageLayer : JSON.parse(Village_Layer),
-        //   ROULayer: JSON.parse(ROU_Layer)
-        // }
-         
+        let ROU_Layer //store json      
+        ROU_Layer = await this.UrlToGeoJSON(ROU_LayerURL);
+        this._CSPointLayer = JSON.parse(CS_PointLayer);
+        this._CenterLineLayer= JSON.parse(Center_LineLayer);
+        this._KhasraLayer =JSON.parse(Khasra_Layer);
+        this._VillageLayer = JSON.parse(Village_Layer);
+        this._ROULayer= JSON.parse(ROU_Layer);
       }
 
 

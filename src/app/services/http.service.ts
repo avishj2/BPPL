@@ -51,7 +51,7 @@ export class HttpService {
             }      
             else
             {
-               alert("Something Went Wrong ! Please try again.");
+               alert("Something Went Wrong ! Please ensure that all mandatory fields are filled and then try again..");
             }
             this.commonService.hideSpinnerLoading();
       });
