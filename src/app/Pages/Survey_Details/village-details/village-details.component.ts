@@ -223,7 +223,7 @@ IsDtInitialized: boolean = false;
               this._DisabledInputField = true;
             }
           },error => {
-            this.Utility.LogText(error);
+            alert(error.error.Message ? error.error.Message : "Please enter mendatory fields" );
           });
         }
   }
@@ -329,13 +329,15 @@ IsDtInitialized: boolean = false;
           let resp: VillageChainageResModel = response;
           if (resp.StatusCode != 200) {
             alert(resp.Message);
+            this._VillageModel = new VillageModel();
+
           }
           else {
             this._VillageModel.Chainages = resp.Result;
             this.ReloadDatatable();
           }
         }, error => {
-          this.Utility.LogText("AddOrUpdateVillageAPI error" + error);
+          this.Utility.LogText("DeleteVillageChainageAPI error" + error);
         });
       }
     }

@@ -7,7 +7,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadCrumbComponent } from 'src/app/dash-board/breadcrumb.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AlertsModule } from 'angular-alert-module';
 import { CommonModule } from '@angular/common';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -64,6 +64,7 @@ import { ViewGazetteComponent } from './Pages/View_Details/view-gazette/view-gaz
 import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 import { CompensationComponent } from './Pages/Survey_Details/survey-details/compensation/compensation.component';
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
+import { HttpInterceptorService } from './services/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,9 @@ import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.compone
     NgMultiSelectDropDownModule.forRoot(),
     NgxSpinnerModule
   ],
-  providers: [DialogService,NgbActiveModal],
+  providers: [DialogService,NgbActiveModal,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

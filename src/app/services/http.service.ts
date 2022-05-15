@@ -160,10 +160,11 @@ export class HttpService {
 
    /**POST api call*/
    /**get api call */
-   public Post(argurl,argParams ): Observable<any> {
+  
+  public Post(argurl,argParams ): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
     return this.http.post(argurl, argParams)//params
     .pipe(map(res => res));
   }
-  
+
 }

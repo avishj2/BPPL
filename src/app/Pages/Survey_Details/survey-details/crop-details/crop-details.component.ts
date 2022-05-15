@@ -52,6 +52,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
       {
         pagingType: 'full_numbers',
         pageLength: 5,
+        language: {emptyTable : "No Crops !"}
       };
       this.Utility.LogText2("FromParentData=>",this.SurveyDropDownsData);
       this._AllSurveyDetails.Result.Crops = this.AllSurveyDetails.Result.Crops;

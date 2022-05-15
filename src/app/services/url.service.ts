@@ -124,7 +124,9 @@ export class UrlService {
   GetVillageSummaryAPI = this.url+ '/api/Survey/GetVillageSummary';
   GetCrossingByNameAPI = this.url+ "/api/Crossing/GetCrossingByName?crossingNo="
 
-  NavigateAddEditAdhocDetails ="../Add_Adhoc_Details";
+  Authenticate = this.url+ "/api/Users/Authenticate";
+
+  NavigateAddEditAdhocDetails ="../Add_Adhoc_Details"; 
   
 }
 

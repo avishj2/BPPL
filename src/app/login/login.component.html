@@ -15,18 +15,19 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="ace-icon fa fa-user"style="font-size:21px"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Username" >
+              <input type="text" class="form-control" [(ngModel)]="_userName" placeholder="Username" [ngModelOptions]="{standalone: true}" >
             </div>
 
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="ace-icon fa fa-lock" style="font-size:21px"></i></span>
               </div>
-              <input type="password" class="form-control" placeholder="Password" >
+              <input type="password" class="form-control" [(ngModel)]="_password" placeholder="Password" [ngModelOptions]="{standalone: true}">
             </div>
             
             <div style="text-align: center">
               <input type="button" value="Login" (click)="Submit()" class="submitBtn">
+              <div *ngIf="_error" class="alert alert-danger mt-3 mb-0">{{_error}}</div>
             </div>
           </form>
         </div>
