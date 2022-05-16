@@ -72,6 +72,7 @@ export class CropRatesComponent implements OnInit {
         {
           pagingType: 'full_numbers',
           pageLength: 5,
+          language: {emptyTable : "No Crops!!"}
         };
       this.GetCropDropdownData();
     }
@@ -146,7 +147,7 @@ export class CropRatesComponent implements OnInit {
   AddNewCropDetails(){
     if(this._SearchCriteria.VillageId != null)
     {
-      this. _AddNewCropRates = true;
+      this._AddNewCropRates = true;
       this._PopupTitle = "Add Crop Rates";
       this._CropsRateModel = new CropsRateModel();
       this._CropsRateModel.CropId = 0;
@@ -188,7 +189,7 @@ export class CropRatesComponent implements OnInit {
             {
               alert(RespDataModel.Message);
             }
-          if (this. _AddNewCropRates == false)
+          if (this._AddNewCropRates == false)
             {
               alert("Crop updated sucessfully!!");
               this._CropDetailsModel = RespDataModel.Result;
@@ -199,13 +200,13 @@ export class CropRatesComponent implements OnInit {
             {
               alert("Crop added sucessfully!!");
               this._CropDetailsModel = RespDataModel.Result;
-              this. _AddNewCropRates = false;
+              this._AddNewCropRates = false;
               this.closebutton.nativeElement.click();
               this.ReloadDatatable();              
             }   
         }
         this.CommonService.hideSpinnerLoading();
-        this. _AddNewCropRates = false;
+        this._AddNewCropRates = false;
     }
 
   DeleteCropRates(arg)

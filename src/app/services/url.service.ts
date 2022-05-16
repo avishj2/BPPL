@@ -127,6 +127,13 @@ export class UrlService {
   Authenticate = this.url+ "/api/Users/Authenticate";
 
   NavigateAddEditAdhocDetails ="../Add_Adhoc_Details"; 
+
+  //Configuration
+  GetLookupGroupsAPI = this.url + '/api/Project/GetLookupGroups';
+  AddOrUpdateLookupsAPI = this.url +'/api/Project/AddOrUpdateLookups';
+  DeleteLookupAPI = this.url + '/api/Project/DeleteLookup?lookupId=';
+  GetAllLookupsForGroupAPI = this.url+'/api/Project/GetAllLookupsForGroup?lookupGroupId=';
+
   
 }
 

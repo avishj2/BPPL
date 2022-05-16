@@ -51,7 +51,14 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
     }
   
 
-  ngOnInit() {
+  ngOnInit() 
+  {
+    this.dtOptions = 
+      {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        language: {emptyTable : "No Lands!!"}
+      };
     this.Utility.LogText2("tdtgrg=>", this.SurveyDropDownsData);
     this.Utility.LogText2("land AllSurveyDetails=>",this.AllSurveyDetails)
     this._LandDataModel.SurveyId = this.SurveyNumber;

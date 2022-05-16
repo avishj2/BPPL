@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
                 error => {
                     this._error = error.error.Message;
                    // this.loading = false;
-                });;
+                });
     //this.router.navigateByUrl('dashboard');
     //location.replace("/dashboard");
     // Call api get authenticated .. store token in cokies and then refresh dashboard

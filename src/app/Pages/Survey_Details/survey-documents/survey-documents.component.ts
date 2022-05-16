@@ -75,7 +75,7 @@ export class SurveyDocumentsComponent implements OnInit {
       this._FilterControls.ShowVillage = true;
       this._FilterControls.ShowSurneyNos = false;
       this._FilterControls.ShowChainageFrom = false;
-      this._FilterControls.ShowChainageTo = false;
+      this._FilterControls.ShowChainageTo = false;      
       this._FilterControls.ShowSearchBtn = true;
     }
 
@@ -83,15 +83,18 @@ export class SurveyDocumentsComponent implements OnInit {
     this._CategoryDataModel.ReadFromString();
     this.dtOptions[1] = {
       pagingType: 'full_numbers',
-      destroy:true //Add to allow the datatable to destroy
+      destroy:true, //Add to allow the datatable to destroy
+      language: {emptyTable : "No Project Reports !"}
     };
     this.dtOptions[2] = {
       pagingType: 'full_numbers',
-      destroy:true 
+      destroy:true ,     
+      language: {emptyTable : "No Alignment Reports !"}
     };
     this.dtOptions[3] = {
       pagingType: 'full_numbers',
-      destroy:true 
+      destroy:true,
+      language: {emptyTable : "No Documents !"} 
     };
     this.GetSurveyDocumentDropDowns();
   }

@@ -39,6 +39,12 @@ export class ViewCompensationDetailsComponent implements OnInit {
 
   ngOnInit(): void 
     {
+      this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength: 5,        
+          language: {emptyTable : "No Lands,Crops and Trees!!"}
+        }
       this._AllSurveyDetails.Result.Trees = this.AllSurveyDetails.Result.Trees;
       this._AllSurveyDetails.Result.Crops = this.AllSurveyDetails.Result.Crops;
       this._AllSurveyDetails.Result.LandDetails = this.AllSurveyDetails.Result.LandDetails;

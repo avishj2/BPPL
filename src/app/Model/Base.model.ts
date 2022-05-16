@@ -61,3 +61,19 @@ export class User {
     LastName: string;
     Token?: string;
 }
+
+export class LookupGroupRespModel extends BaseResponse {
+    Result : LookupGroupModel[];
+    constructor(){      
+      super();
+      this.Result = [];
+    }
+}
+
+export class LookupGroupModel
+    {
+        LookupId: Number;
+        LookupGroupId:  Number;
+        lookupName: string;
+        LookupDesc: string;
+    }

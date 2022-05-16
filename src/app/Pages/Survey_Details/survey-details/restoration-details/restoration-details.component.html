@@ -10,7 +10,7 @@
         <thead>
             <tr> 
                 <th>Action  </th> 
-                <th>Owner Name</th> 
+                <th>Panchnama Owner</th> 
                 <th>Damage Name</th>   
                 <th>Damage Type</th>
                 <th>Length(m)</th>
@@ -71,7 +71,7 @@
                
                 <div class="form-group row">
                     <div class="col-lg-6">
-                        <label class="Label">Owner Name  <b><h7 style="color: red;">*</h7></b></label>
+                        <label class="Label">Panchnama Owner Name  <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"[(ngModel)]="_RestorationDataModel.SurveyOwnerId">
                             <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">-- Select Owner --</option>
                             <option *ngFor="let data of _AllSurveyDetails.Result.SurveyOwnersDrp"[value]="data.Value">

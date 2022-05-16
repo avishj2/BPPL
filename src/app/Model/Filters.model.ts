@@ -57,6 +57,7 @@ export class SearchCriteria
         CrossingTypeName : string;
         SurveyName : string;
         TypeOfNotification : any;
+        VillageDocLookupid : any;
     }
 /**
  * Defines the selection from the dropdown.
@@ -90,6 +91,7 @@ export class SearchCriteria
      ShowOwnerName : boolean;
      ShowLandTypes : boolean;
      ShowNotificationDD : boolean;
+     ShowVillageDocTypes : boolean;
  }
 
  export class CrossingDropdownDataModel{

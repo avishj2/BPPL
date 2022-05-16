@@ -52,10 +52,18 @@ export class ViewAwardReportsComponent implements AfterViewInit, OnInit {
       this._FilterControls.ShowSurneyNos = false;
       this._FilterControls.ShowChainageFrom = false;
       this._FilterControls.ShowChainageTo = false;
+      this._FilterControls.ShowVillageDocTypes = true;
       this._FilterControls.ShowSearchBtn = true;
     }
   ngOnInit(): void 
     {
+      this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength:10,
+          destroy: true,
+          language: {emptyTable : "No Documents !"}
+        };
       this.GetSurveyDocumentDropDowns();
     }
     

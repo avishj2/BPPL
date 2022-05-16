@@ -65,6 +65,7 @@ import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.c
 import { CompensationComponent } from './Pages/Survey_Details/survey-details/compensation/compensation.component';
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { ConfigurationComponent } from './Pages/Survey_Details/configuration/configuration.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     TestPopupComponent,
     CompensationComponent,
     ViewMapComponent,
+    ConfigurationComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

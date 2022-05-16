@@ -10,14 +10,14 @@
         <thead>
             <tr>  
                 <th>Action</th>
-                <th>Owner Name (English)</th>
-                <th>Owner Name (Hindi)</th>  
-                <th>Owner Name (Hindi)</th>  
-                <th>Owner Type</th>  
+                <th>Panchnama Owner(English)</th>
+                <th>Panchnama Owner(Hindi)</th>  
+                <th>Panchnama Owner(Local)</th>  
+                <th>Panchnama Owner Type</th>  
                 <th>Address (English)</th>  
                 <th>Address (Hindi)</th>       
                 <th>Address (Local)</th>   
-                <th>Owner Code</th>
+                <th>Panchnama Owner Code</th>
                 <th>InActive</th>
                 <th>Minor</th>
             </tr>
@@ -65,22 +65,22 @@
             <div class="modal-body">
                 <div class="form-group row">
                     <div class="col-lg-6">
-                        <label class="Label">Owner Name (English)</label>
+                        <label class="Label">Panchnama Owner Name (English)</label>
                         <input type="text"class="form-control"
                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerName">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Owner Name (Hindi)</label>
+                        <label class="Label">Panchnama Owner Name (Hindi)</label>
                         <input type="text"class="form-control"
                          [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerNamehindi">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Owner Name  (Local)</label>
+                        <label class="Label">Panchnama Owner Name  (Local)</label>
                         <input type="text"class="form-control"
                          [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerNameLocal">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Owner Type <b><h7 style="color: red;">*</h7></b></label>
+                        <label class="Label">Panchnama Owner Type <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"
                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerType">
                             <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
@@ -106,7 +106,7 @@
                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.AddressLocal">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Owner Code</label>
+                        <label class="Label">Panchnama Owner Code</label>
                         <input type="text"class="form-control"
                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerCode">
                     </div>

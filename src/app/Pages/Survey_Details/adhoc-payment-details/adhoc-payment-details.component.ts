@@ -73,6 +73,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
         {
           pagingType: 'full_numbers',
           pageLength: 10,
+          language: {emptyTable : "No Details!!"}
         };
       this.GetAdHocPaymentDropDowns();
     }
