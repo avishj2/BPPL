@@ -45,6 +45,7 @@ export class ViewProjectReportsComponent implements OnInit {
           pagingType: 'full_numbers',
           pageLength: 10,
           destroy : true,
+          language: {emptyTable : "No Project Reports!!"}
         };
       this.GetSurveyDocumentDropDowns();
       this.GetProjectReports();

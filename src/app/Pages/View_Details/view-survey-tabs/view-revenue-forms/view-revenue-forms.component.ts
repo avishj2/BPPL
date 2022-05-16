@@ -47,6 +47,7 @@ export class ViewRevenueFormsComponent implements AfterViewInit, OnInit {
       {
         pagingType: 'full_numbers',
         pageLength: 5,
+        language: {emptyTable : "No Documents!!"}
       };
       //console.log("FromParentData revenue=>",this.SurveyDropDownsData.RevenueFormTypes);
       this._AllSurveyDetails.Result.SurveyDocuments = this.AllSurveyDetails.Result.SurveyDocuments;

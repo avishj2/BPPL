@@ -72,6 +72,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
         {
           pagingType: 'full_numbers',
           pageLength: 5,
+          language : {emptyTable : "No Land rates!!"}
         };
       this.GetLandDropdownData();
     }

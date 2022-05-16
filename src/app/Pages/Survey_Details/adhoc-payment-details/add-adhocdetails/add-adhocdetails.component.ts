@@ -56,6 +56,12 @@ export class AddAdhocdetailsComponent implements OnInit {
 
   ngOnInit(): void 
     {
+      this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          language: {emptyTable : "No Documents!!"}
+        };
       this.GetAdHocPaymentDropDowns();
       this._SearchCriteria = this.CommonDtoService._SearchCriteriaDTO;
       this.Utility.LogText2("get data", this._SearchCriteria);

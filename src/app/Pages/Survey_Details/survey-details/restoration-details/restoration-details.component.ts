@@ -53,6 +53,7 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
         pageLength: 10,
         scrollX: true, //enable horizontal scrolling in the table
         scrollCollapse: true,
+        language: {emptyTable : "No Restoration!!"}
       }
       this._RestorationDataModel.SurveyId = this.SurveyNumber;
       this._AllSurveyDetails.Result.RestorationDetails = this.AllSurveyDetails.Result.RestorationDetails;

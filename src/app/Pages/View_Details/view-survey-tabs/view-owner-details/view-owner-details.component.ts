@@ -49,6 +49,7 @@ export class ViewOwnerDetailsComponent implements OnInit {
           pageLength: 5,
           //scrollX: true, //enable horizontal scrolling in the table
           //scrollCollapse: true,
+          language: {emptyTable : "No Owners!!"}
         }
       // console.log("Owner FromParentData=>", this.SurveyDropDownsData);
       // console.log("Owner AllSurveyDetails=>",this.AllSurveyDetails)

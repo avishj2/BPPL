@@ -46,6 +46,7 @@ export class ViewAlignmentReportsComponent implements OnInit {
           pagingType: 'full_numbers',
           pageLength:10,
           destroy: true,
+          language: {emptyTable : "No Alignment Reports!!"}
         };
     this.GetSurveyDocumentDropDowns();
     this.GetAlignmentSheets();

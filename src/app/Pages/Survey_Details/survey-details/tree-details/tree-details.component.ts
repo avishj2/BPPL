@@ -56,6 +56,7 @@ export class TreeDetailsComponent implements OnInit {
       {
         pagingType: 'full_numbers',
         pageLength: 5,
+        language : {emptyTable : "No Trees!!"}
       };
       this._TreeDataModel.SurveyId = this.SurveyNumber;
       this._AllSurveyDetails.Result.Trees = this.AllSurveyDetails.Result.Trees;

@@ -41,6 +41,12 @@ export class ViewCropDetailsComponent implements OnInit {
       }
 
   ngOnInit(): void {
+      this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength: 5,        
+          language: {emptyTable : "No Crops!!"}
+        }
       //console.log("FromParentData=>",this.SurveyDropDownsData);
       this._AllSurveyDetails.Result.Crops = this.AllSurveyDetails.Result.Crops;
       this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;

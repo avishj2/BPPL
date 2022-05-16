@@ -11,6 +11,7 @@ import {from} from 'rxjs';
 import { TwoDigitDecimaNumberDirective } from './two-digit-decima-number.directive';
 import {CommonDropdownModel} from 'src/app/Model/Base.model';
 import { GazzateDropDownsDataModel} from 'src/app/Model/Gazette.model';
+import {SurveyDocDropDownsDataModel } from 'src/app/Model/SurveyDocument.model';
 
 @Component({
   selector: 'app-filters',
@@ -27,6 +28,7 @@ export class FiltersComponent implements OnInit {
   @Output() ChangedVillage :EventEmitter<SearchCriteria>= new EventEmitter(); 
   @Output() ResetFilterValues :EventEmitter<SearchCriteria>= new EventEmitter(); 
   _DropDownsDataModel : GazzateDropDownsDataModel;
+  _SurveyDocDropDownsDataModel : SurveyDocDropDownsDataModel;
 
  _TahsilLabel : string = "Tahsil";
   //api models
@@ -52,6 +54,7 @@ export class FiltersComponent implements OnInit {
       this._SearchCriteria = new SearchCriteria();
       this._CrossingDetails = new CrossingDropdownDataModel();
       this._DropDownsDataModel = new GazzateDropDownsDataModel();
+      this._SurveyDocDropDownsDataModel = new SurveyDocDropDownsDataModel();
     }
 
   ngOnInit() 
@@ -69,6 +72,10 @@ export class FiltersComponent implements OnInit {
       if(this.filterControls.ShowNotificationDD == true)
       {
         this.GetGazzateDropDowns();
+      }
+      if(this.filterControls.ShowVillageDocTypes == true)
+      {
+        this.GetSurveyDocumentDropDowns();
       }
     }
 
@@ -284,6 +291,17 @@ export class FiltersComponent implements OnInit {
         this.Utility.LogText(error);
       });
     }
+
+      /**Get Survey Document DropDowns values*/
+    GetSurveyDocumentDropDowns()
+      {
+        let url = this.urlService.GetSurveyDocumentDropDowns;
+        this.httpService.get(url,null).subscribe(response => {
+          this._SurveyDocDropDownsDataModel  = response;
+          },error => {
+            this.Utility.LogText(error);
+          });
+      }
 
     /**
     * pass data child(filter) component to parent component 

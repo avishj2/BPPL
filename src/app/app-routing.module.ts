@@ -28,6 +28,7 @@ import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details
 import { ViewGazetteComponent } from './Pages/View_Details/view-gazette/view-gazette.component';
 import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
+import { ConfigurationComponent } from './Pages/Survey_Details/configuration/configuration.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -53,7 +54,8 @@ const routes: Routes = [
       {path: 'GazetteDetails', component: GazetteDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Gazette Details'}},
       {path: 'CrossingDetails', component: CrossingDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Crossing Details'}},
       {path: 'AGI_Terminals', component: TerminalsDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / AGI/Terminals Details'}},
-      {path: 'SurveyDocuments', component: SurveyDocumentsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Survey-Documents'}},      
+      {path: 'SurveyDocuments', component: SurveyDocumentsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Survey-Documents'}},
+      {path: 'Configuration', component: ConfigurationComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Configuration'}},      
 
       //first method
       // {path: 'View_Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'},
