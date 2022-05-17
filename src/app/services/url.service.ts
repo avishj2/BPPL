@@ -21,6 +21,7 @@ export class UrlService {
   GetSurveyDetailsByVillageId  = this.url +'/api/Survey/GetSurveyDetailsByVillageId?villageId=';
   GetOwnerNamesForSurveyAPI  = this.url + '/api/Filter/GetOwnerNamesForSurvey?surveyId=';
   GetLandTypesByVillageAPI = this.url + '/api/Filter/GetLandTypesByVillage?villageId=';
+  GetAllTalukaVillagesAPI = this.url +'/api/Filter/GetAllTalukaVillages';
 
 
   AddOrUpdateVillageAPI = this.url + '/api/Village/AddOrUpdateVillage';
@@ -93,6 +94,12 @@ export class UrlService {
   AddAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/AddAwardAndMutations';
   DownloadAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DownloadAwardAndMutations?documentId=';
   DeleteAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DeleteAwardAndMutations?documentId=';
+  //==4 leagal documents
+  GetLegalDocumentsAPI = this.url + '/api/SurveyDocuments/GetLegalDocuments';
+  AddLegalDocumentAPI = this.url + '/api/SurveyDocuments/AddLegalDocument';
+  DownloadLegalDocumentAPI = this.url + '/api/SurveyDocuments/DownloadLegalDocument?documentId=';
+  DeleteLegalDocumentAPI = this.url + '/api/SurveyDocuments/DeleteLegalDocument?documentId=';
+  GetAllLookupsForLegalDocsAPI = this.url+ '/api/Project/GetAllLookupsForGroup?lookupGroupId=1029';
 
   //crop rates APIs
   GetCropDropDownsAPI = this.url + '/api/LandCrop/GetCropDropDowns';

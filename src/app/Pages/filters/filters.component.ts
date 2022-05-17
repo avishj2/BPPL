@@ -42,6 +42,7 @@ export class FiltersComponent implements OnInit {
   _SurveyDetails : CommonDropdownModel[];
   _OwnerDetails : CommonDropdownModel[];
   _LandTypeDetails : CommonDropdownModel[];
+
   
   constructor(
     public urlService: UrlService,
@@ -139,6 +140,7 @@ export class FiltersComponent implements OnInit {
         });
       this._SearchCriteria.DistrictName = this.GetLookupDistrict(this._DistrictDetails, this._SearchCriteria.DistrictId)     
     }
+
 
      /** taluka name*/
     GetLookupDistrict(lookups : DistrictDetails[], lookUpid: number) : any

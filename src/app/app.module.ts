@@ -66,6 +66,7 @@ import { CompensationComponent } from './Pages/Survey_Details/survey-details/com
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { ConfigurationComponent } from './Pages/Survey_Details/configuration/configuration.component';
+import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/legal-documents.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { ConfigurationComponent } from './Pages/Survey_Details/configuration/con
     CompensationComponent,
     ViewMapComponent,
     ConfigurationComponent,
+    LegalDocumentsComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

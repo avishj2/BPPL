@@ -27,16 +27,12 @@ export class CommonReportsDataModel{
     Document: File
 }
 
-// export class AlignmentSheetsModel{
-//     DocumentId: any;
-//     RequestId: any;
-//     Lookupid: any;
-//     FileName: string;
-//     FileNameWithGuid: string;
-//     FilePath: string;
-//     Description: string;
-//     FromChainage: any;
-//     ToChainage: any;
-//     Document: File
-// }
+
+export class LegalDataModel extends BaseResponse {
+    Result : CommonDocDataModel[];
+    constructor(){      
+      super();
+      this.Result = [];
+    }
+  }
 

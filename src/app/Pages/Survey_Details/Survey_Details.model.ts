@@ -16,6 +16,10 @@ ReadFromString()
             {
                 CategoryName :"Village Documents",
                 CategoryID : 3
+            },
+            {
+                CategoryName :"Legal Documents",
+                CategoryID : 4
             }
         ];
         this.Categories =  JSON.parse(JSON.stringify(data));
