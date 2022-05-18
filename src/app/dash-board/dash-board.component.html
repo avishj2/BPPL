@@ -216,7 +216,12 @@
 								Village Documents
 							</a>	
 						</li>
-						
+						<li class="" routerLinkActive="active">
+							<a routerLink="LegalDocuments" >
+								<i class="menu-icon fa fa-caret-right"></i>
+								Legal Documents
+							</a>	
+						</li>
 						<li class="" routerLinkActive="active">
 							<a routerLink="" >
 								<i class="menu-icon fa fa-caret-right"></i>
@@ -302,9 +307,20 @@
 				</div> -->
 				<!-- /.navigation bar add breadcrumb -->
 				<div class="page-content">
-
 				<!-- Children components add -->	
-				<router-outlet>
+				<div *ngIf="outlet.isActivated == false">
+					<div class="center">
+						<img style="height:90px;margin-bottom: 5px;" src="/assets/NKBPLImages/logo.png">
+						<br>
+						<div class= "textstyle">
+							<h3><b>हिंदुस्तान पेट्रोलियम कॉर्पोरेशन लिमिटेड</b></h3>
+							<h3><b>HINDUSTAN PETROLEUM CORPORATION <br> LIMITED (HPCL)</b></h3><br><br>
+							<h3><b>Detailed Route Survey of Barmer-Palanpur Pipeline Project</b></h3>
+							<div style="margin-top: 45%;"></div>
+						</div>
+					</div>
+				</div>
+				<router-outlet #outlet="outlet">
 					<ngx-spinner type="ball-clip-rotate-multiple" bdColor="rgba(51,51,51,0.8)"
 					size="default" color="white"[fullScreen]="false">
 						<p style="color: rgb(255, 255, 255)" > Loading... </p>

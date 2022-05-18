@@ -58,6 +58,7 @@ export class SearchCriteria
         SurveyName : string;
         TypeOfNotification : any;
         VillageDocLookupid : any;
+        VillageTalukaID : any;
     }
 /**
  * Defines the selection from the dropdown.

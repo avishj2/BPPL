@@ -29,6 +29,7 @@ import { ViewGazetteComponent } from './Pages/View_Details/view-gazette/view-gaz
 import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 import { ConfigurationComponent } from './Pages/Survey_Details/configuration/configuration.component';
+import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/legal-documents.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -80,6 +81,7 @@ const routes: Routes = [
       {path: 'ViewSurveyTabs', component: ViewSurveyTabsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /View Survey Details'}},
       {path: 'LAQPermanent', component: LAQPermanentComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /LAQPermanent Details'}},
       {path: 'ViewGazette', component: ViewGazetteComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Notification Details'}},
+      {path: 'LegalDocuments', component: LegalDocumentsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Legal Documents'}},
 
       {path: 'ViewMap', component: ViewMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Project Management / ViewMap'}},
 

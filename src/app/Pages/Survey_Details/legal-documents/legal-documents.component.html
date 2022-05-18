@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Legal Documents</div> 
+        </div>
+        <div class="row" *ngIf="OpenAsChild == true">
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">Tahsil - Village </label>
+                <ng-select placeholder="-- Select Tahsil - Village --" [allowClear]="true"[items]="_VillageTaluka" bindLabel="Text" bindValue ="Value" [(ngModel)]="_VillageTalukaID"> 
+                </ng-select>
+            </div>
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">Documents </label>
+                <ng-select placeholder="-- Select Document Type --" [allowClear]="true"[items]="_LegalDocsType" bindLabel="lookupName" bindValue ="LookupId" [(ngModel)]="_LegalDocuments.Lookupid"> 
+                </ng-select>                
+            </div>
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">Remarks </label>
+                <input type="text" class="form-control" [(ngModel)]="_LegalDocuments.Description" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-lg-3">
+                <div class="FileInputClass">
+                    <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                </div> 
+            </div>
+            <div class="col-lg-3">
+                <button class="btn-primary" style="margin-top: 10%;"(click)="UploadDocument(fileInput)">Upload</button>
+            </div>
+        </div><br>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+            <thead>
+                <tr>
+                    <th class="tbstyle">S.No.</th>
+                    <th>Tahsil - Village </th>           
+                    <th>Document</th>
+                    <th>FileName</th>   
+                    <th>Remarks</th>     
+                    <th>Action</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr *ngFor="let data of _LegalDataModel;let i = index">           
+                    <td class="tbstyle">{{i+1}}</td>  
+                    <td>{{GetLookupValue(this._VillageTaluka , data.RequestId)}}</td>
+                    <td>{{GetLookupValueNew(this._LegalDocsType , data.Lookupid)}}</td>
+                    <td>{{data.FileName}}</td>
+                    <td>{{data.Description}}</td>
+                    <td>
+                        <button type="button" class="btn-success"title="download" (click)="DownloadDocument(data)">
+                        <i class="fa fa-download"></i>
+                        </button>&nbsp;&nbsp;&nbsp;
+                        <button *ngIf="OpenAsChild == true" type="button" class="btn-danger"title="Delete"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeletedDocument(data)">
+                        <i class="fa fa-trash"></i>
+                        </button>  
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
