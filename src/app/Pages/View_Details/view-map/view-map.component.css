@@ -22,3 +22,7 @@ html, body {
     .map .ol-rotate {
       top: 3em;
     }
+
+  .ol-attribution.ol-uncollapsible {
+      display: none;
+  }

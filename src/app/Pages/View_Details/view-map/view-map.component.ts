@@ -204,7 +204,7 @@ export class ViewMapComponent implements OnInit {
           center: washingtonLonLat,//washingtonWebMercator,//[0, 0],
           zoom: 10,
         }),
-        controls: defaultControls().extend([new FullScreen()]),
+        controls: defaultControls({ attribution: false }).extend([new FullScreen()]),
       });
 
       //Creating a Map Click Event Listener
