@@ -61,7 +61,6 @@ import { ProjectPageComponent } from './Pages/ProjectManagement/project-page/pro
 import { CAInfoComponent } from './Pages/ProjectManagement/cainfo/cainfo.component';
 import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details/region-details.component';
 import { ViewGazetteComponent } from './Pages/View_Details/view-gazette/view-gazette.component';
-import { TestPopupComponent } from './Pages/View_Details/test-popup/test-popup.component';
 import { CompensationComponent } from './Pages/Survey_Details/survey-details/compensation/compensation.component';
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
@@ -114,7 +113,6 @@ import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/
     CAInfoComponent,
     RegionDetailsComponent,
     ViewGazetteComponent,
-    TestPopupComponent,
     CompensationComponent,
     ViewMapComponent,
     ConfigurationComponent,

@@ -10164,7 +10164,7 @@ th {
     border-radius: 0 !important;
 }
 .table > thead > tr {
-    color: #707070;
+    color: #323131;
     font-weight: 400;
     background: repeat-x #f2f2f2;
     background-image: -webkit-linear-gradient(top, #f8f8f8 0, #ececec 100%);
@@ -10180,10 +10180,10 @@ th {
     margin-right: 2px;
 }
 .table > thead > tr > th:first-child {
-    border-left-color: #f1f1f1;
+    border-left-color: #b9b8b8;
 }
 .table > thead > tr > th:last-child {
-    border-right-color: #f1f1f1;
+    border-right-color: #b9b8b8;
 }
 .table.table-bordered > thead > tr > th {
     vertical-align: middle;

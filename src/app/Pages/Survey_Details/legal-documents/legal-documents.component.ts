@@ -1,4 +1,4 @@
-import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
+import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild,SimpleChanges } from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { CommonDropdownModel,CommonDocDataModel,LookupGroupModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
 import { LegalDataModel } from 'src/app/Model/SurveyDocument.model';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-legal-documents',
@@ -53,17 +54,16 @@ export class LegalDocumentsComponent implements OnInit {
 
   async ngOnInit() 
     {
+      this.PopulateVillageTaluka();
+      this.GetLegalDocsType(); 
       this.dtOptions = 
       {
         pagingType: 'full_numbers',
         pageLength: 10,
         language: {emptyTable : "No Documents!!"}
-      };
-      await this.PopulateVillageTaluka();
-      await this.GetLegalDocsType();      
-      await this.GetLegalDocuments();
+      };      
+      this.GetLegalDocuments(); 
     }
-
       /**get all Taluka and village details */
   PopulateVillageTaluka()
     {
@@ -78,7 +78,7 @@ export class LegalDocumentsComponent implements OnInit {
 
   ngAfterViewInit(): void 
     {
-      this.dtTrigger.next();
+      this.dtTrigger.next();      
     }
 
   /**refresh/reload data table 
@@ -110,7 +110,7 @@ export class LegalDocumentsComponent implements OnInit {
         this._LegalDocsType  = response;
         },error => {
           this.Utility.LogText(error);
-        });        
+        });      
     }
 
    /**get survey and all tabs details based on survey Number*/
@@ -188,12 +188,21 @@ export class LegalDocumentsComponent implements OnInit {
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
     {
-      let object = lookups.find(elm=>elm.Value == lookUpid );
-      if(object)
-      {
-        return object.Text;
-      }
-      else { return lookUpid;}
+      if(lookUpid != 0)
+        {
+          let object = lookups.find(elm=>elm.Value == lookUpid );
+          if(object)
+          {
+            return object.Text;
+          }
+          else { return lookUpid;}
+        }
+      else
+        {
+          lookUpid = null;
+          return lookUpid;
+        }
+      
     }
 
   GetLookupValueNew(lookups : LookupGroupModel[], lookUpid: Number) : any
