@@ -27,6 +27,15 @@ export class CommonReportsDataModel{
     Document: File
 }
 
+export class AwardMutationsModel {
+    Document : CommonReportsDataModel;
+    TalukaVillage : string;
+    
+    constructor() {
+        this.Document = new CommonReportsDataModel();
+    }
+}
+
 
 export class LegalDataModel extends BaseResponse {
     Result : CommonDocDataModel[];
