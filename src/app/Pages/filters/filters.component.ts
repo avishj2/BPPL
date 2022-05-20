@@ -394,6 +394,7 @@ export class FiltersComponent implements OnInit {
                 this._SearchCriteria.TalukaName = null;    
                 this._SearchCriteria.VillageName = null;  
                 this._SearchCriteria.DistrictName = null;  
+                this._SearchCriteria.VillageDocLookupid = null;
                 break;
             case DropDownChangeEnum.StateChanged:
               this._SearchCriteria.DistrictId = undefined;

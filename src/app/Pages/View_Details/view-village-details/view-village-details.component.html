@@ -1,5 +1,9 @@
 <app-filters [filterControls]="_FilterControls" (filterOutput)="GetValuesFromFilters($event)"(ResetFilterValues)="ResetFilterValues($event)">
   <div class="exportedbtn">
+    <button (click)="ToggleVillageSummary()"class="btn-primary">
+      <i class="fa fa-toggle-on"></i>&nbsp;&nbsp;
+      {{ToggleBtnName}}
+    </button>&nbsp;&nbsp;&nbsp;
     <button (click)="printpdf()"class="btn-success">
       <i class="fa fa-download"></i>    
       Generate PDF
@@ -12,13 +16,44 @@
     <div class="d-flex justify-content-between">
         <div class="CardTitle">Villages Details</div> 
     </div><br>
-      <div id="pdfTable" #pdfTable>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">  
+    
+      <div id="pdfTable" #pdfTable [ngClass]="_HideEndChainge == false? 'show' : 'hide'">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger1"class="stripe table table-striped table-bordered" width="98%">  
+            <thead>
+              <tr>
+                <th style="width: 28px;">S.No.</th>  
+                <th>Village Name</th>  
+                <th>StartChainage</th> 
+                <th >EndChainage</th>     
+                </tr>  
+              </thead>  
+              <tbody>
+                <tr *ngFor="let data of _ViewVillageModel.Villages; let i=index">  
+                  <td style="width: 28px;">{{i+1}}</td>
+                  <td>{{data.VillageName}}</td> 
+                  <td>{{data.StartChainage}}</td> 
+                  <td>{{data.EndChainage}}</td>
+                </tr>                
+              </tbody>  
+              <!-- <tbody>
+                <tr>  
+                  <td colspan="4"><b style="margin-left: 30%;font-size: 15px;">Total:</b> </td>                  
+                  <td><b>{{this._VillageTableSum.LengthInKmsTotal}}</b></td>
+                  <td><b>{{this._VillageTableSum.TotalSurveyNosTotal}}</b></td>                
+                  <td><b>{{this._VillageTableSum.TotalPanchnamaOwnersTotal}}</b></td>
+                  <td><b>{{this._VillageTableSum.TotalCompensationPaidTotal}}</b></td>
+                </tr> 
+              </tbody> -->
+          </table>  
+      </div>
+
+      <div id="pdfTable" #pdfTable [ngClass]="_HideEndChainge == true? 'show' : 'hide'">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger2"class="stripe table table-striped table-bordered" width="98%">  
           <thead>
             <tr>
               <th style="width: 28px;">S.No.</th>  
               <th>Village Name</th>  
-              <th>StartChainage</th>     
+              <th>StartChainage</th> 
               <th>ChainageFromTo</th>                         
               <th>Length In Kms</th>  
               <th>Total Survey Nos</th>
@@ -30,8 +65,8 @@
               <tr *ngFor="let data of _ViewVillageModel.Villages; let i=index">  
                 <td style="width: 28px;">{{i+1}}</td>
                 <td>{{data.VillageName}}</td> 
-                <td>{{data.StartChainage}}</td>  
-                <td>{{data.ChainageFromTo}}</td>                                 
+                <td>{{data.StartChainage}}</td> 
+                <td >{{data.ChainageFromTo}}</td>                                 
                 <td>{{data.LengthInKms}}</td>  
                 <td>{{data.TotalSurveyNos}}</td>  
                 <td>{{data.TotalPanchnamaOwners}}</td>  

@@ -21,16 +21,20 @@ export class ViewVillageDetailsComponent implements OnInit {
   _SearchCriteria: SearchCriteria;
   _ViewVillageModel : ViewVillageModel;
   _VillageSummaryReqModel : VillageSummaryReqModel;
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
+  @ViewChildren(DataTableDirective)
+  dtElements: QueryList<DataTableDirective>;
   dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
+  dtTrigger1: Subject<any> = new Subject();
+  dtTrigger2: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
   _ShowDetailsDiv : boolean = false;
   @ViewChild('pdfTable', {static: false}) pdfTable: ElementRef;
   _VillageTableSum : VillageTableSum;
-
+  _ShowVillageSumChainage : boolean = false;
+  ToggleBtnName : string = "Display Village By Chainage";
+  _HideEndChainge: boolean = true;
+  
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
@@ -62,45 +66,64 @@ export class ViewVillageDetailsComponent implements OnInit {
     {
       pagingType: 'full_numbers',
       pageLength: 10,
+      language: {emptyTable : "No Data!"} 
     };
   }
 
   ngAfterViewInit(): void 
     {
-      this.dtTrigger.next();
+      this.dtTrigger1.next();
+      this.dtTrigger2.next();
     }
   /**refresh/reload data table 
    * when data update/delete/add in the datatable  
   **/
   ReloadDatatable()
     {
-      /**initialized datatable */
-      if (this.IsDtInitialized) 
-        {
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-          {
-            dtInstance.destroy();//Destroy the table first
-            this.dtTrigger.next();//Call the dtTrigger to rerender again
-          });
-        }
-      else
-        {
-          this.IsDtInitialized = true;
-          this.dtTrigger.next();
-        }
+      this.dtElements.forEach((dtElement: DataTableDirective,index: number) => {
+        if(dtElement.dtInstance)
+          // dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtElement.dtInstance.then((dtInstance: any) => {
+            dtInstance.destroy(); 
+            this.Utility.LogText(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
+        });
+      });
+      this.dtTrigger1.next(); 
+      this.dtTrigger2.next(); 
     }
 
   GetValuesFromFilters(event)
-  {
-    this._SearchCriteria = event;
-    this._ShowDetailsDiv = true;
-    this.GetVillageSummary();
-  }
+    {
+      this._SearchCriteria = event;
+      this._ShowDetailsDiv = true;
+      if(this._ShowVillageSumChainage == false)
+        {
+          this.GetVillageSummary();
+        }      
+    }
+
+  ToggleVillageSummary() 
+    {
+      this._ShowVillageSumChainage = !this._ShowVillageSumChainage;   
+      if(this._ShowVillageSumChainage)
+        {
+          this._ShowDetailsDiv = true;
+          this.IsDtInitialized = true;
+          this.ToggleBtnName = "Display Village Summary";
+          this.GetVillageSummaryChainageWise();
+          this._HideEndChainge = false;
+        }
+      else{
+        this.ToggleBtnName = "Display Village By Chainage";          
+        this.GetVillageSummary();
+        this._HideEndChainge = true;
+      }
+    }
 
   ResetFilterValues(event)
-  {
-    
-  }
+    {
+      
+    }
 
   GetVillageSummary()
     {
@@ -123,18 +146,40 @@ export class ViewVillageDetailsComponent implements OnInit {
         this.ReloadDatatable();
       }
 
-    printpdf()
+
+    GetVillageSummaryChainageWise()
       {
-        if(this._ShowDetailsDiv == true)
+        this.CommonService.ShowSpinnerLoading();
+        let url = this.urlService.GetVillageSummaryChainageWiseAPI;
+        this._VillageSummaryReqModel.StartChainage = this._SearchCriteria.ChainageFrom;
+        this._VillageSummaryReqModel.EndChainage = this._SearchCriteria.ChainageTo;
+        this._VillageSummaryReqModel.TalukaId = this._SearchCriteria.TalukaId;
+        this.httpService.HttpPostRequest(url,this._VillageSummaryReqModel,this.VillageSummaryChainageWiseCallBack.bind(this),null);
+      }
+  
+    VillageSummaryChainageWiseCallBack(dtas)
+        {
+          if(dtas!= null)
           {
-            const Table = this.pdfTable.nativeElement;
-            printJS({printable: Table, type:'html', gridStyle: 
-            'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""})
+            this._ViewVillageModel = dtas;
+            this._VillageTableSum = new VillageTableSum();
+            this.TableColumnSum(this._ViewVillageModel.Villages)
           }
-        else{
-          alert("Show the table first!!")
-        }            
-      }    
+          this.ReloadDatatable();
+        }
+
+  printpdf()
+    {
+      if(this._ShowDetailsDiv == true)
+        {
+          const Table = this.pdfTable.nativeElement;
+          printJS({printable: Table, type:'html', gridStyle: 
+          'border: 1px solid black; margin-bottom: -1px;',targetStyles: ['*'],documentTitle: ""})
+        }
+      else{
+        alert("Show the table first!!")
+      }            
+    }    
 
   TableColumnSum(data)
     {    
@@ -150,5 +195,4 @@ export class ViewVillageDetailsComponent implements OnInit {
         this._VillageTableSum.TotalPanchnamaOwnersTotal = Number(this._VillageTableSum.TotalPanchnamaOwnersTotal.toFixed(2));
         this._VillageTableSum.TotalCompensationPaidTotal = Number(this._VillageTableSum.TotalCompensationPaidTotal.toFixed(2));        
     }  
-
 }

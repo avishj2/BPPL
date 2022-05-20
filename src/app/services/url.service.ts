@@ -94,7 +94,8 @@ export class UrlService {
   AddAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/AddAwardAndMutations';
   DownloadAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DownloadAwardAndMutations?documentId=';
   DeleteAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DeleteAwardAndMutations?documentId=';
-  //==4 leagal documents
+  GetAwardAndMutationsPostAPI = this.url +'/api/SurveyDocuments/GetAwardAndMutations';
+  //=== 4 leagal documents
   GetLegalDocumentsAPI = this.url + '/api/SurveyDocuments/GetLegalDocuments';
   AddLegalDocumentAPI = this.url + '/api/SurveyDocuments/AddLegalDocument';
   DownloadLegalDocumentAPI = this.url + '/api/SurveyDocuments/DownloadLegalDocument?documentId=';
@@ -129,7 +130,8 @@ export class UrlService {
   //viewcrossing
   GetCrossingSummaryAPI =this.url+ '/api/Crossing/GetCrossingSummary';  
   GetVillageSummaryAPI = this.url+ '/api/Survey/GetVillageSummary';
-  GetCrossingByNameAPI = this.url+ "/api/Crossing/GetCrossingByName?crossingNo="
+  GetCrossingByNameAPI = this.url+ "/api/Crossing/GetCrossingByName?crossingNo=";
+  GetVillageSummaryChainageWiseAPI = this.url + '/api/Survey/GetVillageSummaryChainageWise';
 
   Authenticate = this.url+ "/api/Users/Authenticate";
 
@@ -141,6 +143,16 @@ export class UrlService {
   DeleteLookupAPI = this.url + '/api/Project/DeleteLookup?lookupId=';
   GetAllLookupsForGroupAPI = this.url+'/api/Project/GetAllLookupsForGroup?lookupGroupId=';
 
+  //CA Details API
+  GetCADetailsDropDownsAPI = this.url +'/api/Project/GetCADetailsDropDowns';
+  AddOrUpdateCADetailsAPI = this.url + '/api/Project/AddOrUpdateCADetails';
+  DeleteCADetailsAPI = this.url + '/api/Project/DeleteCADetails?caDetailsId=';
+  GetCADetailsAPI = this.url + '/api/Project/GetCADetails?caDetailsId=';
+  AddCADetailsDocumentAPI = this.url + '/api/Project/AddCADetailsDocument';
+  DownloadCAdocAPI = this.url +'/api/Project/Download?documentId=';
+  DeleteCADetailsDocumentAPI = this.url + '/api/Project/DeleteCADetailsDocument?documentId=';
+
+  
   
 }
 

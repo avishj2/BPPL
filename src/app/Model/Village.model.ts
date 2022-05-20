@@ -47,11 +47,15 @@ export class VillageChainageModel{
 
 /***VIEW Village details data models */
 export class VillageSummaryReqModel
-  {
-    StartChainage : Number;
-    EndChainage :Number;
-    TalukaId : number;
-  }
+    {
+      StartChainage : Number;
+      EndChainage :Number;
+      TalukaId : number;
+      StateId : Number;
+      DistrictId : Number;
+      VillageID : Number;
+      DocumentTypeId : Number;
+    }
 
 
 export class ViewVillageModel{
@@ -71,6 +75,7 @@ export class Villages
     TotalPanchnamaOwners: Number;
     TotalCompensationPaid: Number;
     StartChainage : Number;
+    EndChainage : Number;
   }
 
 export class VillageTableSum{
