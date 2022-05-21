@@ -1,0 +1,53 @@
+<div>
+    <div class="ParentBtn"> 
+        <br>
+        <button class="btn-primary" (click)="AddNewSurveyNOC()">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+            Add Survey NOC
+        </button>&nbsp;&nbsp;  
+        <button class="btn-primary" (click)="EditSurveyNOC()" *ngIf="_ShowSurveyNOCDiv == true">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+            Edit Survey NOC
+        </button>&nbsp;&nbsp;  
+        <button class="btn-danger" *ngIf="_ShowSurveyNOCDiv == true" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteSurveyNOC()" ngbTooltip ="Delete Village Information">
+            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+            Delete Survey NOC
+        </button>
+    </div><br>
+    <div *ngIf="_ShowSurveyNOCDiv == true">
+        <div class="form-group row">            
+            <div class="col-lg-3">
+                <label class="Label">NOC Given By </label>
+                <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyFarmerNOCModel.NOCGivenBy" [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{this._SurveyFarmerNOCModel.NOCGivenBy}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class="Label">Noc Date</label>
+                <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_SurveyFarmerNOCModel.NOCDate | date:'yyyy-MM-dd'" (input)="_SurveyFarmerNOCModel.NOCDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"[ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{ this._SurveyFarmerNOCModel.NOCDate | date:'mediumDate'}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class="Label">Remarks </label>
+                <input  *ngIf="_DisabledInputField != true" type="text" class="form-control" [(ngModel)]="_SurveyFarmerNOCModel.Reamarks" [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{this._SurveyFarmerNOCModel.Reamarks}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                <div class="div-to-align" *ngIf="_DisabledInputField == false">
+                    <br>
+                    <button type="button" style="margin-bottom:8px;"class="btn-primary"(click)="SaveDetails()">
+                            Save NOC Details
+                    </button><br> 
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>

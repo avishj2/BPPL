@@ -1,4 +1,5 @@
 import {BaseResponse, CommonDropdownModel,CommonDocDataModel} from './Base.model';
+import { GazetteModel } from './Gazette.model';
 
   export class ChildControlModel{
     ShowLand : boolean;
@@ -120,10 +121,12 @@ export class SurveyResult{
     RestorationDetails :RestorationDataModel[];
     SurveyOwnersDrp :  CommonDropdownModel[];
     SurveyDocuments : CommonDocDataModel[];
-
+    SurveyFarmerNOCModels : SurveyFarmerNOCModel;
+    Gazzates : GazetteModel[];
 
     constructor(){
       this.Survey = new SurveyModel();
+      this.SurveyFarmerNOCModels = new SurveyFarmerNOCModel();
       this.SurveyOwners = [];
       this.LandDetails =[];
       this.Crops = [];
@@ -131,9 +134,27 @@ export class SurveyResult{
       this.RestorationDetails = [];
       this.SurveyOwnersDrp =[];
       this.SurveyDocuments =[];
+      this.Gazzates = [];
     }
 }
 
+  export class NOCRespDataModel extends BaseResponse {
+    Result : SurveyFarmerNOCModel;
+    constructor(){      
+      super();
+      this.Result = new SurveyFarmerNOCModel();
+    }
+  }
+
+
+export class SurveyFarmerNOCModel
+  {
+    SurveyFarmerNocId: any;
+    SurveyId: any;
+    NOCDate: any;
+    Reamarks: string;
+    NOCGivenBy: string
+  }
 
 export class OwnerRespDataModel extends BaseResponse {
   Result : SurveyOwnerModel[];

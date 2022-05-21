@@ -30,7 +30,6 @@ export class SurveyDetailsComponent implements OnInit {
   _AllSurveyDetails : AllSurveyDetailsDataModel
   _ActivetabTitle : string = "Survey- ";
   _VillageName : string;
-
   @ViewChild('tabset')
   tabset: any;
 

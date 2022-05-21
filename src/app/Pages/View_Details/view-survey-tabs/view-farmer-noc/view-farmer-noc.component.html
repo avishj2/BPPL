@@ -1,0 +1,27 @@
+<br><br>
+<div *ngIf="_ShowSurveyNOCDiv == true">
+    <div class="form-group row"> 
+        <div class="col-lg-3">
+            <label class="Label">NOC Given By </label>
+            <div class="DisabledFieldLabel">
+                {{this._SurveyFarmerNOCModel.NOCGivenBy}}
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label class="Label">Noc Date</label>           
+            <div class="DisabledFieldLabel">
+                {{ this._SurveyFarmerNOCModel.NOCDate | date:'mediumDate'}}
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label class="Label">Remarks </label>
+            <div class="DisabledFieldLabel">
+                {{this._SurveyFarmerNOCModel.Reamarks}}
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+<div *ngIf="_ShowSurveyNOCDiv == false">
+    <h5 style="color: red;"><b>No Objection Certificate Not Available!</b></h5>
+</div>

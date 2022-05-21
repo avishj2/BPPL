@@ -76,11 +76,11 @@ _DisabledCrossingInputField : boolean = true;
   ngOnInit(): void 
     {
       this.dtOptions = 
-      {
-        pagingType: 'full_numbers',
-        pageLength: 5,
-        language: {emptyTable : "No Crossing Documents!!"}
-      };
+        {
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          language: {emptyTable : "No Crossing Documents!!"}
+        };
       this.PopulateCrossingDropdowns();      
     }
 

@@ -243,10 +243,20 @@
                 </ng-template>
             </ngb-tab> 
 
-            <ngb-tab title="Farmer NOC" [id]="5">
+            <!-- <ngb-tab title="Farmer NOC" [id]="5">
                 <ng-template ngbTabContent>
                     <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
                     <app-view-restoration [SurveyDropDownsData]="_SurveyDropDownsDataModel" [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-restoration>
+                    </div>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                        <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                    </div>
+                </ng-template>
+            </ngb-tab>  -->
+            <ngb-tab title="Farmer NOC" [id]="10">
+                <ng-template ngbTabContent>
+                    <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                    <app-view-farmer-noc [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-view-farmer-noc>
                     </div>
                     <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                         <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
@@ -279,7 +289,8 @@
             <ngb-tab title="Gazette And Notice" [id]="8">
                 <ng-template ngbTabContent>
                     <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
-                    
+                        <app-gazette-notice-details [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID">                            
+                        </app-gazette-notice-details>
                     </div>
                     <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                         <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>

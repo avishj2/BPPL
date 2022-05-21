@@ -77,6 +77,8 @@ export class UrlService {
   DownloadRevDocAPI = this.url +'/api/Survey/Download?documentId=';
   DeleteSurveyDocumentAPI = this.url+'/api/Survey/DeleteSurveyDocument?documentId=';
   GetSurveyDetailsByNameAPI = this.url +'/api/Survey/GetSurveyDetailsByName?surveyNumber=';
+  AddOrUpdateSurveyFarmerNOCAPI = this.url + '/api/Survey/AddOrUpdateSurveyFarmerNOC';
+  DeleteSurveyFarmerNOCAPI = this.url + '/api/Survey/DeleteSurveyFarmerNOC?surveyFarmerNocId=';
 
   //survey documents APIs
   GetSurveyDocumentDropDowns = this.url+'/api/SurveyDocuments/GetSurveyDocumentDropDowns';

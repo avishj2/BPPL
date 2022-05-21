@@ -3,222 +3,211 @@
         <div class="d-flex justify-content-between">
             <div class="CardTitle">CA Details </div> 
         </div>
-        <div><br>
-            <div class="row">
-                <label style="margin-left: 5px;" class="col-sm-1 col-form-label">Select CA</label>
-                <div class="col-lg-3">
-                    <select class="form-control">
-                        <option>hfgjhgfjd</option>
-                    </select>
-                </div>   
-                <button class="btn-primary" (click)="AddCADetails()" data-toggle="modal" data-target="#CAModal">
+        <div class="row">
+            <label style="margin-left: 5px;" class="col-sm-1 col-form-label">Select CA</label>
+            <div class="col-lg-3">
+                <select class="form-control"[(ngModel)]="_CAdocumnet.RequestId">
+                    <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
+                        -- Select CA Name --
+                    </option>
+                    <option *ngFor="let data of _CADropdownModel.CADropDown" [value]="data.Value">
+                        {{data.Text}}
+                    </option>
+                </select>
+            </div>  
+            <div>
+                <button class="btn-primary" (click)="SerachDetails()">
+                    <i class="fa fa-search" aria-hidden="true"></i>&nbsp;
+                    Search
+                </button>
+                <button class="btn-primary" (click)="AddCADetails()">
                     <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                     Add CA Details
                 </button>
-                <button class="btn-primary" (click)="EditCADetails()" data-toggle="modal" data-target="#CAModal">
+                <button class="btn-primary" (click)="EditCADetails()"*ngIf="_ShowCADetailsDiv == true">
                     <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
                     Edit CA Details
-                </button>
-                <button class="btn-danger" (click)="DeleteCADetails()">
-                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+                </button>              
+                <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="bottom"(confirm)="DeleteCADetails()" *ngIf="_ShowCADetailsDiv == true" ngbTooltip ="Delete CA Information">
+                    <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                     Delete CA Details
                 </button>
-            </div><hr><br>
+            </div> 
+        </div><br>
 
-            <div class="form-group row">
+        <div *ngIf="_ShowCADetailsDiv == true || _AddNewCA == true">
+            <div class="form-group row" >
                 <div class="col-lg-3">
                     <label class="Label">Name (English)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_CADataModel.CAName" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.CAName }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Name (Hindi)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_CADataModel.CANameHindi" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.CANameHindi }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Name (Local)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_CADataModel.CANameLocal" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.CANameLocal }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Address (English)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_CADataModel.AddressEng"[ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.AddressEng }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Address (Hindi)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_CADataModel.AddressHindi" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.AddressHindi }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Address (Local)</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_CADataModel.AddressLocal" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.AddressLocal }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Pin Code</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control"[(ngModel)]="_CADataModel.PinCode" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.PinCode }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Start Date</label>
+                    <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_CADataModel.StartDate | date:'yyyy-MM-dd'" (input)="_CADataModel.StartDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.StartDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">End Date</label>
+                    <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_CADataModel.EndDate | date:'yyyy-MM-dd'" (input)="_CADataModel.EndDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.EndDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Notification No</label>
+                    <input *ngIf="_DisabledInputField != true" type="text"class="form-control" [(ngModel)]="_CADataModel.NotificationNo" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <label class="Label">Notification Date</label>
-                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.NotificationNo }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Gazette No</label>
+                    <input *ngIf="_DisabledInputField != true"type="date"class="form-control"[(ngModel)]="_CADataModel.GazzateNo" [ngModelOptions]="{standalone: true}">  
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.GazzateNo }}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Gazette Date</label>
+                    <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_CADataModel.GazzateDate | date:'yyyy-MM-dd'" (input)="_CADataModel.GazzateDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">  
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.GazzateDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">CA Application Date</label>
+                    <input *ngIf="_DisabledInputField != true" type="date" class="form-control"[value]="_CADataModel.CaApplicationDate | date:'yyyy-MM-dd'" (input)="_CADataModel.CaApplicationDate = $event.target.valueAsDate" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        
+                        {{this._CADataModel.CaApplicationDate | date:'mediumDate'}}
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <label class="Label">InActive Status</label>
+                    <input *ngIf="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox" [(ngModel)]="_CADataModel.InActiveStatus" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._CADataModel.InActiveStatus }}
+                    </div>
+                </div> 
+                <div class="col-lg-3">
+                    <div class="SaveDataClass">
+                        <button class="btn-primary"*ngIf="_DisabledInputField == false && _AddNewCA == false" (click)="AddOrUpdateCADetails()">
+                            Save CA Details
+                        </button>
+                    </div>
+                </div>               
+            </div>  
+
+            <div class="card" *ngIf="_ShowCADetailsDiv == true && _AddNewCA == false">
+                <div class="innercard">
+                    <div class="d-flex justify-content-between">
+                        <div class="CardTitle">Documents Details</div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label class ="Label">Document Types</label>
+                            <ng-select [allowClear]="true" [items]="_CADropdownModel.CADropDownDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_CAdocumnet.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
+                            </ng-select>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="FileInputClass">
+                                <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="UploattchClass">
+                                <button class="btn-primary" (click)="FileUpload(true,fileInput)">
+                                    Upload Document
+                                </button>
+                            </div>
+                        </div>
+                
+                    </div><br>
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
+                        <thead>
+                            <tr>
+                                <th>FileName</th>
+                                <th>Document Type</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of _CADataModel.Documents;let i = index">
+                                <td>{{data.FileName}}</td>
+                                <td>
+                                {{GetLookupValue(_CADropdownModel.CADropDownDocumentTypes,data.Lookupid)}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn-success" title="Download" (click)="DownlaodCADocument(data)">
+                                        <i class="fa fa-download"></i>
+                                    </button>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn-danger"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteCADocument(data)" title="Delete">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </div> 
+
+            <div class="row">
+                <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                    <div class="div-to-align" *ngIf="_DisabledInputField == false && _AddNewCA == true">
+                        <br>
+                        <button type="button" style="margin-top:-10px;margin-bottom:8px;"class="btn-primary"(click)="AddOrUpdateCADetails()">
+                                Save CA Details  
+                        </button><br> 
                     </div>
                 </div>
-                
-            </div>  
+            </div>
         </div>
     </div>
 </div> 
-
-<div class="container">
-    <!-- Modal -->
-    <div class="modal" id="CAModal" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <b><i class='fa fa-edit'style='font-size:24px'></i> 
-                    {{_PopupTitle}}
-                    </b>
-                </h5> 
-                <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group row">
-                    <div class="col-lg-6">
-                        <label class="Label">Name (English)</label>
-                        <input type="text"class="form-control"
-                        [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Name (Hindi)</label>
-                        <input type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Name (Local)</label>
-                        <input type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Address (English)</label>
-                        <input   type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Address (Hindi)</label>
-                        <input type="text"class="form-control"
-                         [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Address (Local)</label>
-                        <input type="text"class="form-control" [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Pin Code</label>
-                        <input type="text"class="form-control" [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Start Date</label>
-                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">End Date</label>
-                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Notification No</label>
-                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Notification Date</label>
-                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Gazette No</label>
-                        <input type="text"class="form-control"[ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">Gazette Date</label>
-                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="Label">CA Application Date</label>
-                        <input type="date"class="form-control"[ngModelOptions]="{standalone: true}">
-                    </div>
-                    <label class="col-sm-4 col-form-label">InActive Status</label>
-                    <div class="col-lg-2">
-                        <input type="checkbox" class="form-controlCheckBox"
-                    [ngModelOptions]="{standalone: true}">
-                    </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
-                        <div class="div-to-align">
-                            <br>
-                        <button type="button" class="btn-primary"(click)="SaveCADetails()">
-                                Save CA Details  
-                        </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-            </div> 
-        </div>
-      </div>
-    </div>
-  </div>

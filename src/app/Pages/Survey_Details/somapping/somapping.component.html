@@ -1,0 +1,86 @@
+
+<div class="card">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">SO Mapping</div> 
+        </div>
+        <div class="AddEditBtn"> 
+            <button class="btn-primary" (click)="AddNewDetails()" data-toggle="modal" data-target="#OpenModal">
+                <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                Add SO Mapping
+            </button> 
+        </div>
+        <div>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>SO Number</th>    
+                        <th>Taluka/Tahsil</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _LookupGroupRespModel.Result;let i = index">
+                        <td>
+                            <button type="button" class="btn-success"(click)="EditLookup(data)" title="Edit" data-toggle="modal" data-target="#OpenModal">
+                                <i class="fa fa-edit"></i>
+                            </button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteValue(data)" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>          
+                        <td>{{data.lookupName}}</td>
+                        <td>{{GetLookupValue(_AllTaluka, data.LookupDesc)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal" id="OpenModal" role="dialog">
+      <div class="modal-dialog">      
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <b><i class='fa fa-edit'style='font-size:24px'></i> 
+                    {{_PopupTitle}}                     
+                    </b>
+                </h5>  
+                <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label class="Label">SO Number</label>
+                        <input type="text" class="form-control" [(ngModel)]="_LookupGroupModel.lookupName">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Select Taluka </label>
+                        <ng-select placeholder="-- Select lookup Type --"[allowClear]="true"[items]="_AllTaluka" bindLabel="Text" bindValue ="Value"[(ngModel)]="_LookupGroupModel.LookupDesc"> 
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary" (click)="SaveLookUpValue()">
+                                Save Details
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+      </div>
+    </div>
+    
+</div>
+
