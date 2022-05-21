@@ -29,6 +29,7 @@ import { ViewGazetteComponent } from './Pages/View_Details/view-gazette/view-gaz
 import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.component';
 import { ConfigurationComponent } from './Pages/Survey_Details/configuration/configuration.component';
 import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/legal-documents.component';
+import { SOMappingComponent } from './Pages/Survey_Details/somapping/somapping.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -53,6 +54,7 @@ const routes: Routes = [
       {path: 'AGI_Terminals', component: TerminalsDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / AGI/Terminals Details'}},
       {path: 'SurveyDocuments', component: SurveyDocumentsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Survey-Documents'}},
       {path: 'Configuration', component: ConfigurationComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Configuration'}},      
+      {path: 'SOMapping', component: SOMappingComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / SO Mapping'}},      
 
       //first method
       // {path: 'View_Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'},

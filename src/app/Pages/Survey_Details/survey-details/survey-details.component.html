@@ -326,12 +326,25 @@
             </ng-template>
           </ngb-tab>
   
-          <ngb-tab title="Farmer NOC"[id]="5">
+          <!-- <ngb-tab title="Restoration Details"[id]="5">
+            <ng-template ngbTabContent>
+              <div class="m-t-15">
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
+                   <app-restoration-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-restoration-details>
+                </div>
+                <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
+                    <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab> -->
+
+          <ngb-tab title="Farmer NOC"[id]="10">
             <ng-template ngbTabContent>
               <div class="m-t-15">
                 <!-- info card start -->
                 <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID != null">
-                   <app-restoration-details [SurveyDropDownsData]="_SurveyDropDownsDataModel"[AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-restoration-details>
+                   <app-farmer-noc-details [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-farmer-noc-details>
                 </div>
                 <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                     <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>
@@ -365,7 +378,7 @@
           <ngb-tab title="Gazette And Notice" [id]="9">
             <ng-template ngbTabContent>
                 <div class="m-t-15"*ngIf="_SearchCriteria.SurveyID != null">
-                    <app-gazette-notice-details></app-gazette-notice-details>
+                    <app-gazette-notice-details [AllSurveyDetails]="_AllSurveyDetails" [SurveyNumber]="this._SearchCriteria.SurveyID"></app-gazette-notice-details>
                 </div>
                 <div class="m-t-15" *ngIf="_SearchCriteria.SurveyID == null">
                 <h5 style="color: red;"><b>Please Select Survey Number!</b></h5>

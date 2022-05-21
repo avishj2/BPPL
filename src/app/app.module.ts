@@ -66,6 +66,9 @@ import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.compone
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { ConfigurationComponent } from './Pages/Survey_Details/configuration/configuration.component';
 import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/legal-documents.component';
+import { FarmerNocDetailsComponent } from './Pages/Survey_Details/survey-details/farmer-noc-details/farmer-noc-details.component';
+import { ViewFarmerNocComponent } from './Pages/View_Details/view-survey-tabs/view-farmer-noc/view-farmer-noc.component';
+import { SOMappingComponent } from './Pages/Survey_Details/somapping/somapping.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +120,9 @@ import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/
     ViewMapComponent,
     ConfigurationComponent,
     LegalDocumentsComponent,
+    FarmerNocDetailsComponent,
+    ViewFarmerNocComponent,
+    SOMappingComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

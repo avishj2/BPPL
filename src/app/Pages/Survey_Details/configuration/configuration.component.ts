@@ -102,6 +102,11 @@ export class ConfigurationComponent implements OnInit {
       }
   }
 
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();
+    }
+
   AddNewDetails()
     {
       if(this._lookupGroupId != null)
@@ -185,6 +190,5 @@ export class ConfigurationComponent implements OnInit {
       }
       else { return lookUpid;}
     }
-
 
 }

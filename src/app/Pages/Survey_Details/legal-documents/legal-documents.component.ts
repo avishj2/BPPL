@@ -126,6 +126,7 @@ export class LegalDocumentsComponent implements OnInit {
       if (dtas != null)
         {
           this._LegalDataModel  = dtas;
+          this.DescriptionNull(this._LegalDataModel);
         }
         this.ReloadDatatable();
     }
@@ -168,6 +169,7 @@ export class LegalDocumentsComponent implements OnInit {
       this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
         let DocumentModelResp: CommonDocDataModel[] = response.Result;         
         this._LegalDataModel = DocumentModelResp;
+        this.DescriptionNull(this._LegalDataModel);
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
         this.ReloadDatatable(); 
@@ -183,6 +185,16 @@ export class LegalDocumentsComponent implements OnInit {
     {
       element.value = "";
       this.Documentfile = null;  
+    }
+
+  DescriptionNull(argData)
+    {
+      argData.forEach(element => {
+        if(element.Description == "undefined")
+          {
+            element.Description = null;
+          }
+      });
     }
 
 
@@ -224,7 +236,7 @@ export class LegalDocumentsComponent implements OnInit {
   DeletedDocument(argData)
     {
       let APIurl = this.urlService.DeleteLegalDocumentAPI + argData.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._LegalDocuments,argData);
+      this.APIUtilityService.DeleteDocument(APIurl,this._LegalDataModel,argData);
       this.ReloadDatatable();
     }
 }
