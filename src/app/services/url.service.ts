@@ -116,6 +116,16 @@ export class UrlService {
   DeleteLandDetailsAPI = this.url + '/api/LandCrop/DeleteLandDetails?landId=';
   GetAllLandDetails= this.url + '/api/LandCrop/GetAllLandDetails?villageId=';
   
+  //SVIPS
+  GetSVIPSDropDownsAPI = this.url + '/api/LandCrop/GetSVIPSDropDowns';
+  AddOrUpdateSVIPSDetailsAPI = this.url + '/api/LandCrop/AddOrUpdateSVIPSDetails';
+  DeleteSVIPSDetailsAPI = this.url +'/api/LandCrop/DeleteSVIPSDetails?SVIPSDetailsId=';
+  GetSVIPSDetailsByIdAPI = this.url + '/api/LandCrop/GetSVIPSDetailsById?SVIPSDetailsId=';
+  GetAllSVIPSDetailsAPI = this.url + '/api/LandCrop/GetAllSVIPSDetails';
+  AddSVIPSDetailsDocumentAPI = this.url + '/api/LandCrop/AddSVIPSDetailsDocument';
+  SVIPSDownloadAPI = this.url +'/api/LandCrop/Download?documentId=';
+  DeleteSVIPSDetailsDocumentAPI = this.url +'/api/LandCrop/DeleteSVIPSDetailsDocument?documentId=';
+
 
   //Adhoc payment details
   GetAdHocPaymentDropDownsAPI = this.url + '/api/AdHocPayment/GetAdHocPaymentDropDowns';

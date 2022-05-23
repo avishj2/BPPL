@@ -41,7 +41,7 @@ export class APIUtilityService {
           {
             let index = argParams.indexOf(argDoc);
             argParams.splice(index,1);
-            alert("document deleted Sucessfully!");  
+            alert("Document deleted Sucessfully!");  
           }
       }, 
       error => {

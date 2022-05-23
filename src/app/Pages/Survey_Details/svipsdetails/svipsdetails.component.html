@@ -1,0 +1,165 @@
+<div class="card">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">SV-IPS</div> 
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">SV-IPS</label>
+                <ng-select placeholder="-- SV-IPS --" [allowClear]="true"[items]="_SVIPSDetails" bindLabel="Text" bindValue ="Value"(change)="GetSVIPSDetailsById()" [(ngModel)]="_SVIPSDetailsId"> 
+                </ng-select>
+            </div>
+            <div class="ParentBtn"> 
+                <button class="btn-primary" (click)="AddNewSVIPSDetails()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                    Add SV-IPS
+                </button>&nbsp;&nbsp;  
+                <button *ngIf="_ShowDetailsDiv == true" class="btn-primary"(click)="EditSVIPSDetails()">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;
+                    Edit SV-IPS
+                </button>&nbsp;&nbsp;  
+                <button class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="right"(confirm)="DeleteSVIPSDetails()" *ngIf="_ShowDetailsDiv == true" ngbTooltip ="Delete SV-IPS Information">
+                    <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                    Delete SV-IPS
+                </button>
+            </div>
+        </div><br>
+
+        <div class="row" *ngIf="_ShowDetailsDiv == true || _AddNewSVIPS == true">
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">SV-IPS Category</label>                
+                <select class="form-control"*ngIf="_DisabledInputField != true"[(ngModel)]="_SVIPSModel.SVDetailsType"[ngModelOptions]="{standalone: true}">
+                    <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">-- Select SV-IPS Category --</option>
+                    <option *ngFor="let data of _SVIPSDropDownsModel.SVIPSCategories" [value]="data.Value">
+                        {{data.Text}}
+                    </option>
+                </select>
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{GetLookupValue(_SVIPSDropDownsModel.SVIPSCategories,_SVIPSModel.SVDetailsType)}}
+                </div>
+                <!-- <ng-select placeholder="-- SV-IPS --" [allowClear]="true"[items]="_SVIPSDropDownsModel.SVIPSCategories" bindLabel="Text" bindValue ="Value"(change)="GetSVIPSDetailsById()" [(ngModel)]="_SVIPSModel.SVDetailsType"> 
+                </ng-select> -->
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Tahsil - Village </label> 
+                <select class="form-control"*ngIf="_DisabledInputField != true"[(ngModel)]="_SVIPSModel.VillageId"[ngModelOptions]="{standalone: true}">
+                    <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">-- Select Tahsil - Village --</option>
+                    <option *ngFor="let data of _VillageTaluka" [value]="data.Value">
+                        {{data.Text}}
+                    </option>
+                </select>
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{ GetLookupValue(_VillageTaluka, _SVIPSModel.VillageId)}}
+                </div>
+                <!-- <ng-select placeholder="-- Select Tahsil - Village --" [allowClear]="true"[items]="_VillageTaluka" bindLabel="Text" bindValue ="Value" [(ngModel)]="_SVIPSModel.VillageId"> 
+                </ng-select> -->
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Chainage</label> 
+                <input type="text"*ngIf="_DisabledInputField != true" class="form-control"[(ngModel)]="_SVIPSModel.Chainage" [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{ this._SVIPSModel.Chainage }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Area</label> 
+                <input type="text"*ngIf="_DisabledInputField != true" class="form-control"[(ngModel)]="_SVIPSModel.Area" [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{ this._SVIPSModel.Area }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Name</label> 
+                <input type="text"*ngIf="_DisabledInputField != true" class="form-control"[(ngModel)]="_SVIPSModel.Name" [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{ this._SVIPSModel.Name }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Coordinate</label> 
+                <input type="text"*ngIf="_DisabledInputField != true" class="form-control"[(ngModel)]="_SVIPSModel.Coordinate" [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{ this._SVIPSModel.Coordinate }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Remarks</label> 
+                <input type="text"*ngIf="_DisabledInputField != true" class="form-control"[(ngModel)]="_SVIPSModel.Remarks" [ngModelOptions]="{standalone: true}">
+                <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                    {{ this._SVIPSModel.Remarks }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="SaveDataClass">
+                    <button class="btn-primary"*ngIf="_DisabledInputField == false && _AddNewSVIPS == false" (click)="SaveSVIPSDetails()">
+                        Save SV-IPS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card" *ngIf="_ShowDetailsDiv == true && _AddNewSVIPS == false">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Documents Details</div> 
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class ="Label">Document Types</label>
+                    <ng-select [allowClear]="true" [items]="_SVIPSDropDownsModel.SVIPSDocuments" bindLabel="Text" bindValue ="Value" [(ngModel)]="_SVIPSdoc.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
+                    </ng-select>
+                </div>
+                <div class="col-lg-3">
+                    <div class="FileInputClass">
+                        <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="UploattchClass">
+                        <button class="btn-primary" (click)="FileUpload(true,fileInput)">Upload Document</button>
+                    </div>
+                </div>
+        
+            </div><br>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
+                <thead>
+                    <tr>
+                        <th>FileName</th>
+                        <th>Document Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _SVIPSModel.Documents;let i = index">
+                        <td>{{data.FileName}}</td>
+                        <td>
+                        {{GetLookupValue(_SVIPSDropDownsModel.SVIPSDocuments, data.Lookupid)}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn-success" title="Download" (click)="DownlaodSVIPSDocument(data)">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger"mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteSVIPSDocument(data)" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>   
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div> 
+
+    <div class="row">
+        <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+            <div class="div-to-align"*ngIf="_DisabledInputField == false && _AddNewSVIPS == true">
+                <br>
+                <button type="button" class="btn-primary" (click)="SaveSVIPSDetails()">
+                   Add SV-IPS
+                </button>
+            </div>
+        </div><br>
+    </div>
+</div>

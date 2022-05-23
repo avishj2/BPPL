@@ -8,6 +8,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import {BaseResponse, CommonDropdownModel,LookupGroupRespModel,LookupGroupModel} from 'src/app/Model/Base.model';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
 
 @Component({
   selector: 'app-somapping',
@@ -35,6 +36,7 @@ export class SOMappingComponent implements OnInit {
   _LookupGroupRespModel : LookupGroupRespModel;
 
   constructor(public urlService: UrlService,
+    public APIUtilityService: APIUtilityService,
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
@@ -158,19 +160,8 @@ export class SOMappingComponent implements OnInit {
 
     DeleteValue(argdata)
       {
-        let url = this.urlService.DeleteLookupAPI + argdata.LookupId + '&lookupGroupId='+ argdata.LookupGroupId;
-        this.httpService.get(url,null).subscribe(response => {
-        let Details : any = response;
-          if (Details.StatusCode != 200) 
-            {
-              alert(Details.Message);
-            }
-            else {
-              alert("Value deleted successfully !");
-              this.ReloadDatatable();    
-            }          
-          },error => {
-            this.Utility.LogText(error);
-          });
+        let APIurl = this.urlService.DeleteLookupAPI + argdata.LookupId + '&lookupGroupId='+ argdata.LookupGroupId;
+        this.APIUtilityService.DeleteDocument(APIurl,this._LookupGroupRespModel.Result,argdata);
+        this.ReloadDatatable();
       }
 }
