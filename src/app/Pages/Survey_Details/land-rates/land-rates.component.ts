@@ -169,7 +169,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   EditLandRates(arg)
     {
       this._AddNewLandDetails = false;
-      this._LandRatesModel = arg;
+      this._LandRatesModel = this._LandRatesModel.CloneData(arg);
     }
 
   GetAllLandRates()

@@ -105,12 +105,9 @@ export class TreeDetailsComponent implements OnInit {
           }
     }
 
-
-    
-
   EditTreeDetails(arg)
     {
-      this._TreeDataModel = arg;
+      this._TreeDataModel = this._TreeDataModel.CloneTreeData(arg);
       this._AddNewTree = false;
       this._PopupTitle = "Edit Tree Details";
     }

@@ -76,4 +76,14 @@ export class LookupGroupModel
         LookupGroupId:  Number;
         lookupName: string;
         LookupDesc: string;
+
+        public CloneData(argData)
+            {
+                let l_LookupGroupModel = new LookupGroupModel();
+                l_LookupGroupModel.LookupId = argData.LookupId;
+                l_LookupGroupModel.LookupGroupId = argData.LookupGroupId;
+                l_LookupGroupModel.lookupName = argData.lookupName;
+                l_LookupGroupModel.LookupDesc = argData.LookupDesc;
+                return l_LookupGroupModel;
+            }
     }

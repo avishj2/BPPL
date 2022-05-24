@@ -100,7 +100,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
     }
   EditCropDetails(arg)
     {
-      this._CropDataModel = arg;
+      this._CropDataModel = this._CropDataModel.CloneCropData(arg);
       this._PopupTitle = "Edit Crop Details";
       this._AddNewCropDetails = false;
     }

@@ -123,9 +123,9 @@ export class ConfigurationComponent implements OnInit {
 
   EditLookup(argData)
     {
+      this._LookupGroupModel = this._LookupGroupModel.CloneData(argData);
       this._AddNewDetails = false;
       this._PopupTitle = "Edit New Details";
-      this._LookupGroupModel = argData;
     }
 
   SaveLookUpValue()

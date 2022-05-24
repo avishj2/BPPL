@@ -108,7 +108,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
 
   EditLandDetails(arg)
     {
-      this._LandDataModel = arg;
+      this._LandDataModel = this._LandDataModel.CloneLandData(arg);
       this._PopupTitle = "Edit Land Details";
       //this.GetLookupValue(this.SurveyDropDownsData.LandClassifications, this._LandDataModel.LandType);
     }

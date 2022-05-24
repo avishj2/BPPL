@@ -104,7 +104,7 @@ export class RestorationDetailsComponent implements AfterViewInit, OnInit {
 
   EditRestorationDetails(arg)
     {
-      this._RestorationDataModel = arg;
+      this._RestorationDataModel = this._RestorationDataModel.CloneData(arg);
       this._PopupTitle = "Edit Restoration Details";
       this._AddNewDetails = false;
     }
