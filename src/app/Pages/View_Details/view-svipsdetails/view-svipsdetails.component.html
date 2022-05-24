@@ -1,0 +1,93 @@
+<div class="card">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">SV-IPS</div> 
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">SV-IPS</label>
+                <ng-select placeholder="-- SV-IPS --" [allowClear]="true"[items]="_SVIPSDetails" bindLabel="Text" bindValue ="Value"(change)="GetSVIPSDetailsById()" [(ngModel)]="_SVIPSDetailsId"> 
+                </ng-select>
+            </div>
+        </div><br>
+
+        <div class="row" *ngIf="_ShowDetailsDiv == true">
+            <div class="col-lg-3">
+                <label class ="dropdownsLabel">SV-IPS Category</label>
+                <div class="DisabledFieldLabel" >
+                    {{GetLookupValue(_SVIPSDropDownsModel.SVIPSCategories,_SVIPSModel.SVDetailsType)}}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Tahsil - Village </label>
+                <div class="DisabledFieldLabel" >
+                    {{ GetLookupValue(_VillageTaluka, _SVIPSModel.VillageId)}}
+                </div>               
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Chainage</label>
+                <div class="DisabledFieldLabel" >
+                    {{ this._SVIPSModel.Chainage }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Area</label>
+                <div class="DisabledFieldLabel" >
+                    {{ this._SVIPSModel.Area }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Name</label>
+                <div class="DisabledFieldLabel" >
+                    {{ this._SVIPSModel.Name }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Coordinate</label>
+                <div class="DisabledFieldLabel">
+                    {{ this._SVIPSModel.Coordinate }}
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label class ="Label"> Remarks</label>                 
+                <div class="DisabledFieldLabel">
+                    {{ this._SVIPSModel.Remarks }}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <div class="card" *ngIf="_ShowDetailsDiv == true">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Documents Details</div> 
+            </div>
+            <br>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="98%">
+                <thead>
+                    <tr>
+                        <th>FileName</th>
+                        <th>Document Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _SVIPSModel.Documents;let i = index">
+                        <td>{{data.FileName}}</td>
+                        <td>
+                        {{GetLookupValue(_SVIPSDropDownsModel.SVIPSDocuments, data.Lookupid)}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn-success" title="Download" (click)="DownlaodSVIPSDocument(data)">
+                                <i class="fa fa-download"></i>
+                            </button>                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div> 
+</div>
+

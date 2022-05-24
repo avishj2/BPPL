@@ -30,6 +30,9 @@ import { ViewMapComponent } from './Pages/View_Details/view-map/view-map.compone
 import { ConfigurationComponent } from './Pages/Survey_Details/configuration/configuration.component';
 import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/legal-documents.component';
 import { SOMappingComponent } from './Pages/Survey_Details/somapping/somapping.component';
+import { SVIPSDetailsComponent } from './Pages/Survey_Details/svipsdetails/svipsdetails.component';
+import { ViewSVIPSDetailsComponent } from './Pages/View_Details/view-svipsdetails/view-svipsdetails.component';
+
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -55,7 +58,7 @@ const routes: Routes = [
       {path: 'SurveyDocuments', component: SurveyDocumentsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Survey-Documents'}},
       {path: 'Configuration', component: ConfigurationComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / Configuration'}},      
       {path: 'SOMapping', component: SOMappingComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / SO Mapping'}},      
-
+      {path: 'SV_IPSDetails', component: SVIPSDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Details / SV-IPS Details'}}, 
       //first method
       // {path: 'View_Adhoc_Payment', component: AdhocPaymentDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: ' Survey Details / Adhoc Payment Details'},
       // children: [
@@ -81,7 +84,8 @@ const routes: Routes = [
       {path: 'ViewGazette', component: ViewGazetteComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Notification Details'}},
       {path: 'LegalDocuments', component: LegalDocumentsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Legal Documents'}},
 
-      {path: 'ViewMap', component: ViewMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Project Management / ViewMap'}},
+      {path: 'ViewMap', component: ViewMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / ViewMap'}},
+      {path: 'ViewSVIPSDetails', component: ViewSVIPSDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / ViewSVIPSDetails'}},
 
     ]},
 ];
