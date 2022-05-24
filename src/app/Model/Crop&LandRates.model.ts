@@ -40,6 +40,22 @@ export class CropsRateModel{
     MinPrice: Number;
     MaxPrice: Number;
     AvgPrice: Number;
+
+
+    public CloneData(argData)
+      {
+        let l_CropsRateModel = new CropsRateModel();
+        l_CropsRateModel.CropId = argData.CropId;
+        l_CropsRateModel.VillageId = argData.VillageId;
+        l_CropsRateModel.CropLookupId = argData.CropLookupId;
+        l_CropsRateModel.SeasonId = argData.SeasonId;
+        l_CropsRateModel.YieldInQuintalMinPH = argData.YieldInQuintalMinPH;
+        l_CropsRateModel.YieldInQuintalMaxPH = argData.YieldInQuintalMaxPH;
+        l_CropsRateModel.MinPrice = argData.MinPrice;
+        l_CropsRateModel.MaxPrice = argData.MaxPrice;
+        l_CropsRateModel.AvgPrice = argData.AvgPrice;
+        return l_CropsRateModel;      
+      }
 }
 
 //LAND RATES DATA MODELS
@@ -63,4 +79,21 @@ export class LandRatesModel{
   MarketRateDate: any;
   CARemarks: string;
   MeasureUnit : any;
+
+  public CloneData(argData)
+    {
+      let l_LandRatesModel = new LandRatesModel();
+      l_LandRatesModel.LandId = argData.LandId;
+      l_LandRatesModel.VillageId = argData.VillageId;
+      l_LandRatesModel.SurveyId = argData.SurveyId;
+      l_LandRatesModel.TypeOfLand = argData.TypeOfLand;
+      l_LandRatesModel.ReservePriceHa = argData.ReservePriceHa;
+      l_LandRatesModel.SaleDeedPriceHa = argData.SaleDeedPriceHa;
+      l_LandRatesModel.CAPriceHa = argData.CAPriceHa;
+      l_LandRatesModel.MarketRateDate = argData.MarketRateDate;
+      l_LandRatesModel.CARemarks = argData.CARemarks;
+      l_LandRatesModel.MeasureUnit = argData.MeasureUnit;
+      return l_LandRatesModel;
+    }
 }
+

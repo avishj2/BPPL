@@ -117,9 +117,9 @@ export class SOMappingComponent implements OnInit {
 
   EditLookup(argData)
     {
+      this._LookupGroupModel = this._LookupGroupModel.CloneData(argData);
       this._AddNewDetails = false;
       this._PopupTitle = "Edit SO Mapping";
-      this._LookupGroupModel = argData;
     }
 
   SaveLookUpValue()

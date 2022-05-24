@@ -165,7 +165,7 @@ export class CropRatesComponent implements OnInit {
 
   EditCropRates(arg)
     {
-      this._CropsRateModel = arg;
+      this._CropsRateModel = this._CropsRateModel.CloneData(arg);
       this._PopupTitle = "Edit Crop Rates";
       this._AddNewCropRates = false;
     }

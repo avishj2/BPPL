@@ -177,6 +177,24 @@ export class SurveyOwnerModel{
       OwnerCode: string;
       InActive: boolean;
       MinorOwner: boolean;
+
+      public CloneOwnerData(argData)
+        {
+          let l_OwnerModel = new SurveyOwnerModel();
+          l_OwnerModel.SurveyOwnerId = argData.SurveyOwnerId;
+          l_OwnerModel.SurveyId = argData.SurveyId;
+          l_OwnerModel.OwnerName = argData.OwnerName;
+          l_OwnerModel.OwnerNamehindi = argData.OwnerNamehindi;
+          l_OwnerModel.OwnerNameLocal = argData.OwnerNameLocal;
+          l_OwnerModel.OwnerType = argData.OwnerType;
+          l_OwnerModel.Address = argData.Address;
+          l_OwnerModel.AddressHindi = argData.AddressHindi;
+          l_OwnerModel.AddressLocal = argData.AddressLocal;
+          l_OwnerModel.OwnerCode = argData.OwnerCode;
+          l_OwnerModel.InActive = argData.InActive;
+          l_OwnerModel.MinorOwner = argData.MinorOwner;
+          return l_OwnerModel;
+        }
   }
 
   export class LandRespDataModel extends BaseResponse {
@@ -198,6 +216,21 @@ export class SurveyOwnerModel{
     Sqmt: string;
     SurveyOwnerName : any;
     Compensation : any;
+
+    public CloneLandData(argData)
+      {
+        let l_LandDataModel = new LandDataModel();
+        l_LandDataModel.SurveyLandId = argData.SurveyLandId;
+        l_LandDataModel.SurveyId = argData.SurveyId;
+        l_LandDataModel.SurveyOwnerId = argData.SurveyOwnerId;
+        l_LandDataModel.LandType = argData.LandType;
+        l_LandDataModel.Ha = argData.Ha;
+        l_LandDataModel.Are = argData.Are;
+        l_LandDataModel.Sqmt = argData.Sqmt;
+        l_LandDataModel.SurveyOwnerName = argData.SurveyOwnerName;
+        l_LandDataModel.Compensation = argData.Compensation;
+        return l_LandDataModel;
+      }
 }
 
 export class CropRespDataModel extends BaseResponse {
@@ -220,6 +253,23 @@ export class CropDataModel{
   Sqmt: string;
   CropStatus: string;
   Compensation : any;
+
+  public CloneCropData(argData)
+    {
+      let l_CropDataModel = new CropDataModel();
+      l_CropDataModel.SurveyCropId = argData.SurveyCropId;
+      l_CropDataModel.SurveyId = argData.SurveyId;
+      l_CropDataModel.SurveyOwnerId = argData.SurveyOwnerId;
+      l_CropDataModel.AwardType = argData.AwardType;
+      l_CropDataModel.SeasonType = argData.SeasonType;
+      l_CropDataModel.CropName = argData.CropName;
+      l_CropDataModel.Ha = argData.Ha;
+      l_CropDataModel.Are = argData.Are;
+      l_CropDataModel.Sqmt = argData.Sqmt;
+      l_CropDataModel.CropStatus = argData.CropStatus;
+      l_CropDataModel.Compensation = argData.Compensation;
+      return l_CropDataModel;
+    }
 }
 
 
@@ -243,6 +293,23 @@ export class TreeModel{
     HeightM: any;
     Remarks: string;
     Compensation : any;
+
+    public CloneTreeData(argData)
+      {
+        let l_TreeModel = new TreeModel();
+        l_TreeModel.SurveyTreeId = argData.SurveyTreeId;
+        l_TreeModel.SurveyOwnerId = argData.SurveyOwnerId;
+        l_TreeModel.SurveyId = argData.SurveyId;
+        l_TreeModel.Range = argData.Range;
+        l_TreeModel.TreeName = argData.TreeName;
+        l_TreeModel.NumberOfTree = argData.NumberOfTree;
+        l_TreeModel.AgeYears = argData.AgeYears;
+        l_TreeModel.Dia = argData.Dia;
+        l_TreeModel.HeightM = argData.HeightM;
+        l_TreeModel.Remarks = argData.Remarks;
+        l_TreeModel.Compensation = argData.Compensation;
+        return l_TreeModel;
+      }
 }
 
 
@@ -268,7 +335,27 @@ export class RestorationDataModel{
     HeightM: any;
     Description: string;
     Remarks: string;
-    RemarksLocal: string
+    RemarksLocal: string;
+
+    public CloneData(argData)
+      {
+        let l_RestorationDataModel = new RestorationDataModel();
+        l_RestorationDataModel.SurveyRestorationId = argData.SurveyRestorationId;
+        l_RestorationDataModel.SurveyOwnerId = argData.SurveyOwnerId;
+        l_RestorationDataModel.SurveyId = argData.SurveyId;
+        l_RestorationDataModel.DamageType = argData.DamageType;
+        l_RestorationDataModel.DamageName = argData.DamageName;
+        l_RestorationDataModel.LengthM = argData.LengthM;
+        l_RestorationDataModel.ApproxValue = argData.ApproxValue;
+        l_RestorationDataModel.DiameterInch = argData.DiameterInch;
+        l_RestorationDataModel.WidthM = argData.WidthM;
+        l_RestorationDataModel.DepthM = argData.DepthM;
+        l_RestorationDataModel.HeightM = argData.HeightM;
+        l_RestorationDataModel.Description = argData.Description;
+        l_RestorationDataModel.Remarks = argData.Remarks;
+        l_RestorationDataModel.RemarksLocal = argData.RemarksLocal;
+        return l_RestorationDataModel;
+      }
 
 }
 

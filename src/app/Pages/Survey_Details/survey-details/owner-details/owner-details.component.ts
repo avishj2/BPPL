@@ -86,7 +86,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
   EditOwnerDetails(arg)
     {
       this._PopupTitle = "Edit Owner Details";
-      this._SurveyOwnerModel = arg;
+      this._SurveyOwnerModel = this._SurveyOwnerModel.CloneOwnerData(arg);
       this._AddNewOwner = false;
     }
 
