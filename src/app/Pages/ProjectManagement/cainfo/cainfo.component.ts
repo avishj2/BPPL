@@ -105,7 +105,7 @@ ReloadDatatable()
         this._ShowCADetailsDiv = true;
         this._AddNewCA = false;
         this._DisabledInputField = true;
-        this.IsDtInitialized = false
+        this.IsDtInitialized = true;
         this.ReloadDatatable();
         }, error => {
         this.Utility.LogText(error);

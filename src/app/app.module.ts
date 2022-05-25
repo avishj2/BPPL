@@ -71,6 +71,7 @@ import { ViewFarmerNocComponent } from './Pages/View_Details/view-survey-tabs/vi
 import { SOMappingComponent } from './Pages/Survey_Details/somapping/somapping.component';
 import { SVIPSDetailsComponent } from './Pages/Survey_Details/svipsdetails/svipsdetails.component';
 import { ViewSVIPSDetailsComponent } from './Pages/View_Details/view-svipsdetails/view-svipsdetails.component';
+import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { ViewSVIPSDetailsComponent } from './Pages/View_Details/view-svipsdetail
     SOMappingComponent,
     SVIPSDetailsComponent,
     ViewSVIPSDetailsComponent,
+    UserDetailsComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.

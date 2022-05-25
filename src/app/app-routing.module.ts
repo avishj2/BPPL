@@ -32,7 +32,7 @@ import { LegalDocumentsComponent } from './Pages/Survey_Details/legal-documents/
 import { SOMappingComponent } from './Pages/Survey_Details/somapping/somapping.component';
 import { SVIPSDetailsComponent } from './Pages/Survey_Details/svipsdetails/svipsdetails.component';
 import { ViewSVIPSDetailsComponent } from './Pages/View_Details/view-svipsdetails/view-svipsdetails.component';
-
+import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-details.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -86,6 +86,9 @@ const routes: Routes = [
 
       {path: 'ViewMap', component: ViewMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / ViewMap'}},
       {path: 'ViewSVIPSDetails', component: ViewSVIPSDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / ViewSVIPSDetails'}},
+
+      //user management
+      {path: 'UserDetails', component: UserDetailsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Users / Users'}},
 
     ]},
 ];

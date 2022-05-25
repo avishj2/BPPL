@@ -72,6 +72,7 @@ export class ConfigurationComponent implements OnInit {
     {
       if(this._lookupGroupId != null)
         {
+          this.IsDtInitialized = true;
           let url = this.urlService.GetAllLookupsForGroupAPI + this._lookupGroupId;
           this.httpService.get(url,null).subscribe(response => {
             this._LookupGroupRespModel.Result  = response;

@@ -1,0 +1,205 @@
+<div class="card">
+    <div class="innercard"> 
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle"> User Details </div> 
+        </div>
+        <div class="row" style="margin-left: 8px;margin-top: 3px;">
+           <button class="btn-primary"(click)="AddNewUserDetails()"data-toggle="modal" data-target="#AddUserModal">
+            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+               Add User Details
+           </button>
+        </div><br>
+        <div>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="stripe table table-striped table-bordered" width="90%">
+                <thead>
+                    <tr>
+                        <th style="width:34px">S.No.</th>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Phone Number</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _UserDetails;let i = index">
+                        <td style="width:34px" >{{i+1}}</td>
+                        <td>{{data.UserName}}</td>
+                        <td>{{data.Email}}</td>                        
+                        <td>{{GetLookupValue(_UserDropdownsModel.UserStatus, data.Status)}}</td>
+                        <td>{{data.PhNo}}</td>
+                        <td>
+                            <button type="button" class="btn-primary" title="AddOrUpdate Details" (click)="EditUserDetails(data)"data-toggle="modal" data-target="#AddUserModal">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-primary"(click)="GetRolesByUserId(data)" title="ManageRoles"data-toggle="modal" data-target="#ManageRoleModal">
+                                <i class="fa fa-check-square-o"></i>
+                            </button>  
+							&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-primary"(click)="ChangePassword(data)" title="Change Password"data-toggle="modal" data-target="#PasswordModal">
+                                <i class="fa fa-eyedropper"></i>
+                            </button> 							
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- User details add popup model -->
+<div class="container">
+    <!-- Modal *ngIf="_lookupGroupId != null"-->
+    <div class="modal" id="AddUserModal"role="dialog">
+      <div class="modal-dialog">      
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <b>
+                        <i class='fa fa-edit'style='font-size:24px'></i> 
+                        {{_PopupTitle}}
+                    </b>
+                </h5>  
+                <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label class="Label">User Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="_UserDataModel.UserName">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">First Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="_UserDataModel.FName">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Last Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="_UserDataModel.LName">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Password</label>
+                        <input type="text" class="form-control" [(ngModel)]="_UserDataModel.Password">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class ="Label">User Status </label>
+                        <select class="form-control"[ngModelOptions]="{standalone: true}"[(ngModel)]="_UserDataModel.Status">
+                            <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">--User Status -- </option>
+                            <option *ngFor="let data of _UserDropdownsModel.UserStatus" [value]="data.Value">
+                                {{data.Text}}
+                            </option>
+                        </select>               
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Email</label>
+                        <input type="email" class="form-control" [(ngModel)]="_UserDataModel.Email">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label">Phone No</label>
+                        <input type="text" class="form-control" [(ngModel)]="_UserDataModel.PhNo">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary" (click)="AddOrUpdateDetails()">
+                                Save User Details
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+      </div>
+    </div>    
+</div>
+
+
+<div class="container">
+    <!-- Modal *ngIf="_lookupGroupId != null"-->
+    <div class="modal" id="ManageRoleModal"role="dialog">
+      <div class="modal-dialog">      
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <b>
+                        <i class='fa fa-edit'style='font-size:24px'></i> 
+                        Manage User Role
+                    </b>
+                </h5>  
+                <button type="button" #closebutton2 class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label class="dropdownsLabel">{{this._UserName}} - Roles</label> 
+                <div class="form-group row"*ngFor="let data of _UserDropdownsModel.UserRoles">
+                    <div class="col-lg-6">
+                        <input type="checkbox" class="form-controlCheckBox" [(ngModel)]="data.Selected">
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="Label1">{{data.Text}}</label>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary" (click)="AddOrUpdateRoles()">
+                            Update User Roles
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+      </div>
+    </div>    
+</div>
+
+<div class="container">
+    <!-- Modal *ngIf="_lookupGroupId != null"-->
+    <div class="modal" id="PasswordModal"role="dialog">
+      <div class="modal-dialog">      
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <b>
+                        <i class='fa fa-edit'style='font-size:24px'></i> 
+                        Change User Password 
+                    </b>
+                </h5>  
+                <button type="button" #closebutton3 class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <label class="Label">Password</label>
+                        <input type="text" class="form-control" [(ngModel)]="_UserDataModel.Password">
+                    </div>                   
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary" (click)="UpdatePassword()">
+                            Update Password
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+      </div>
+    </div>    
+</div>

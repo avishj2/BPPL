@@ -164,7 +164,14 @@ export class UrlService {
   DownloadCAdocAPI = this.url +'/api/Project/Download?documentId=';
   DeleteCADetailsDocumentAPI = this.url + '/api/Project/DeleteCADetailsDocument?documentId=';
 
-  
-  
+  //user magament
+  GetAllUsersAPI = this.url +'/api/Users/GetAllUsers';
+  GetUsersDropDownsAPI = this.url +'/api/Users/GetUsersDropDown';
+  AddOrUpdateUsersAPI = this.url +'/api/Users/AddOrUpdateUsers';
+  GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
+  AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
+  UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
+
+
 }
 

@@ -90,7 +90,7 @@
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowNotificationDD == true">
-            <label class ="Label">Type of Notification</label>
+            <label class ="dropdownsLabel">Type of Notification</label>
             <select class="form-control"[(ngModel)]="_SearchCriteria.TypeOfNotification">
                 <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
                     -- Select Notification Type --
@@ -101,7 +101,7 @@
             </select>
         </div>
         <div class="col-lg-3" *ngIf="filterControls.ShowVillageDocTypes == true">
-            <label class ="Label">Select Document</label>
+            <label class ="dropdownsLabel">Select Document</label>
             <ng-select placeholder="-- Select Document Type --" [allowClear]="true"[items]="_SurveyDocDropDownsDataModel.VillageLevelDocumentsTypes"bindLabel="Text" bindValue ="Value" [(ngModel)]="_SearchCriteria.VillageDocLookupid"> 
             </ng-select>
         </div>
