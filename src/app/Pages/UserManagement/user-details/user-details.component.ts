@@ -23,7 +23,6 @@ export class UserDetailsComponent implements OnInit {
   _UserDetails : UserDataModel[];
   _UserDataModel : UserDataModel;
   _UserDropdownsModel : UserDropdownsModel;
-  _RoleDataModel : RoleDataModel[];
   /**data table properties  */
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
@@ -37,6 +36,7 @@ export class UserDetailsComponent implements OnInit {
   @ViewChild('closebutton3') closebutton3;//password
   _AddNewUser : boolean = false;
   _UserName : string;
+  _UserIDForUdpate : number; // Will be used to populate roles colelction
 
   constructor(public urlService: UrlService,
     public APIUtilityService: APIUtilityService,
@@ -168,15 +168,23 @@ export class UserDetailsComponent implements OnInit {
           element.Selected = false;
       });
       this._UserName = arg.UserName;
+      this._UserIDForUdpate = arg.UserId;
       let url = this.urlService.GetRolesByUserIdAPI + arg.UserId;
       this.httpService.get(url,null).subscribe(response => {
-        this._RoleDataModel = response;
+        let usersRoleFromAPi : RoleDataModel[] = response;
          this._UserDropdownsModel.UserRoles.forEach(element => {
-          element.Selected = Rolefound
+         let userRoleFound = usersRoleFromAPi.find(elm=>elm.RoleId == element.Value);
+         if(userRoleFound)
+         {
+          element.Selected = true;
+         }
+         else
+         {
+          element.Selected = false;
+         }
         });
-        let Rolefound = this._UserDropdownsModel.UserRoles.some(ele=> this._RoleDataModel.indexOf(ele.Value));        
-        //console.log(Rolefound)//boolean
        
+        
         },
         error => {
           this.Utility.LogText(error);
@@ -185,9 +193,21 @@ export class UserDetailsComponent implements OnInit {
 
   AddOrUpdateRoles()
     {
-      // this._RoleDataModel
+      let RoleDataModels :RoleDataModel[] = [];
+
+      this._UserDropdownsModel.UserRoles.forEach(element => {
+          if(element.Selected)
+          {
+            element.Selected = true;
+            let newRole = new RoleDataModel();
+            newRole.RoleId = element.Value;
+            newRole.UserId = this._UserIDForUdpate;
+            RoleDataModels.push(newRole);     
+          }
+       });
+
       let url = this.urlService.AddOrUpdateUsersRolesAPI;
-      this.httpService.HttpPostRequest(url,this._RoleDataModel,this.RoleAddOrUpdateCallBack.bind(this),null);
+      this.httpService.HttpPostRequest(url,RoleDataModels,this.RoleAddOrUpdateCallBack.bind(this),null);
     }
 
 
@@ -203,7 +223,6 @@ export class UserDetailsComponent implements OnInit {
         else
           {
             alert("User Roles updated sucessfully!!");
-            this._RoleDataModel = ResponseData.Result;
             this.closebutton2.nativeElement.click();
             this.ReloadDatatable();
           }
