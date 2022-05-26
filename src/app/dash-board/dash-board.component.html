@@ -35,6 +35,7 @@
 			<!-- /.sidebar-space -->	
 			</div><!-- /.sidebar-shortcuts -->
             <!-- 1st step -->
+		
 			<ul class="nav nav-list">
                 <!-- 2nd step -->
 				<li class="open" routerLinkActive="active">
@@ -43,271 +44,25 @@
 						<span class="menu-text"> Home &nbsp;</span>
 					</a>
 				</li>
+				<ng-container *ngFor="let Items of APIUtilityService.DisplayMenuItems;let i = index">	
+					<li class="open" role="navigation" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+						<a class="dropdown-toggle">
+						<i class={{Items.Icon}}></i>
+						<span class="menu-text"> {{Items.MenuName}} </span>
+						</a>
 
-                <!-- project management -->
-				<li class="open" role="navigation" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-					<a class="dropdown-toggle">
-					<i class="menu-icon fa fa-id-badge"></i>
-					<span class="menu-text"> Project Management </span>
-					</a>
-
-					<ul class="submenu">
-						<li class="" routerLinkActive="active">
-							<a routerLink="Project" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Project
-							</a>
-							<!-- <b class="arrow"></b> -->
-						</li>	
-						<!-- <li class="" routerLinkActive="active">
-							<a routerLink="">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Jurisdiction
-							</a>
-						</li>
-                        <li class="" routerLinkActive="active">
-							<a routerLink="" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Section
-							</a>	
-						</li>	 -->
-						<li class="" routerLinkActive="active">
-							<a routerLink="">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Department Details
-							</a>
-						</li>
-                        <li class="" routerLinkActive="active">
-							<a routerLink="CAInfo" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								CA Info
-							</a>	
-						</li>	
-						<li class="" routerLinkActive="active">
-							<a routerLink="RegionDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Region Details
-							</a>
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Survey Agency
-							</a>
-						</li>	
-					</ul>				
-				</li> 
-
-                <!-- add/edit section -->
-                <li class="open" routerLinkActive="active">
-					<a class="dropdown-toggle">
-					<i class="menu-icon fa fa-pencil-square-o"></i>
-					<span class="menu-text"> Survey Details   </span>
-					</a>
-					<ul class="submenu">
-						<li class="" routerLinkActive="active">
-							<a routerLink="GazetteDetails" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Gazzettes
-							</a>	
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="VillageDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Village
-							</a>
-						</li>	
-						<li class="" routerLinkActive="active">
-							<a routerLink="SurveyDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Survey Numbers
-							</a>
-						</li>
-                        <li class="" routerLinkActive="active">
-							<a routerLink="CrossingDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Crossings
-							</a>	
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="CropRates">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Crop Rates
-							</a>	
-						</li>	
-						<li class="" routerLinkActive="active">
-							<a routerLink="LandRates">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Land Rates
-							</a>	
-						</li>		
-						<li class="" routerLinkActive="active">
-							<a routerLink="AGI_Terminals">
-								<i class="menu-icon fa fa-caret-right"></i>
-								AGI/Terminals
-							</a>
-						</li>
-                        <li class="" routerLinkActive="active">
-							<a routerLink="SurveyDocuments">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Survey Documents
-							</a>	
-						</li>
-                        <li class="" routerLinkActive="active">
-							<a routerLink="View_Adhoc_Payment">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Ad Hoc Payment
-							</a>
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="Configuration">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Configuration
-							</a>
-						</li>	
-						<li class="" routerLinkActive="active">
-							<a routerLink="SOMapping">
-								<i class="menu-icon fa fa-caret-right"></i>
-								SO Mapping
-							</a>
-						</li>	
-						<li class="" routerLinkActive="active">
-							<a routerLink="SV_IPSDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								SV-IPS 
-							</a>
-						</li>
-					</ul>				
-				</li>
-
-				
-                <!-- View  Details -->
-				<li class="open" routerLinkActive="active">
-					<a class="dropdown-toggle">
-					<i class="menu-icon fa fa-book"></i>
-					<span class="menu-text"> Survey Analysis   </span>
-					</a>
-					<ul class="submenu">
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewCrossingDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Crossings Details
-							</a>	
-						</li>
-						
-						<li class="" routerLinkActive="active">
-							<a routerLink="VeiwVillageDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Village Details
-							</a>	
-						</li>
-
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewSurveyTabs" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Survey Number Details
-							</a>	
-						</li>
-						
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewProjectReports" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Project Reports
-							</a>	
-						</li>
-						
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewAlignmentReports" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Alignment Reports
-							</a>	
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewAwardReports" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Village Documents
-							</a>	
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="LegalDocuments" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Legal Documents
-							</a>	
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								AGI/Terminal View
-							</a>	
-						</li>
-						
-						<!-- <li class="" routerLinkActive="active">
-							<a routerLink="" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Compensation details
-							</a>	
-						</li>	 -->
-                        <li class="" routerLinkActive="active">
-							<a routerLink="LAQPermanent" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								LAQ Permanent
-							</a>	
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewGazette">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Gazette & Notification
-							</a>	
-						</li>
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewSVIPSDetails">
-								<i class="menu-icon fa fa-caret-right"></i>
-								View SV-IPS 
-							</a>
-						</li>                       
-						<!-- <li class="" routerLinkActive="active">
-							<a routerLink="" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Govt Land report
-							</a>	
-						</li> -->
-						<li class="" routerLinkActive="active">
-							<a routerLink="ViewMap" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Map
-							</a>	
-						</li>
-					</ul>				
-				</li>
-
-                <!-- USER MANAGEMNET -->
-                <li class="" routerLinkActive="active">
-					<a class="dropdown-toggle">
-					<i class="menu-icon fa fa-id-badge"></i>
-					<span class="menu-text"> User </span>
-					</a>
-					<ul class="submenu">
-						<li class="open" routerLinkActive="active">
-							<a routerLink="UserDetails" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								User Details
-							</a>	
-						</li>	
-						<li class="" routerLinkActive="active">
-							<a routerLink="">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Add User
-							</a>
-						</li>
-                        <li class="" routerLinkActive="active">
-							<a routerLink="" >
-								<i class="menu-icon fa fa-caret-right"></i>
-								Assign Roles
-							</a>	
-						</li>	
-					</ul>				
-				</li> 
+						<ul class="submenu">
+							<li class="" routerLinkActive="active" *ngFor="let InnerItem of Items.Submenu">
+								<a routerLink= {{InnerItem.url}} >
+									<i class="menu-icon fa fa-caret-right"></i>
+									{{InnerItem.title}}
+								</a>
+							</li>						
+						</ul>				
+					</li> 
+				</ng-container>
 			</ul><!-- /.nav-list -->
+		
 
 			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 				<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>

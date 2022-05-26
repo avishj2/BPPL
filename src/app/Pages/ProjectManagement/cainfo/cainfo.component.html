@@ -150,17 +150,21 @@
                         <div class="CardTitle">Documents Details</div> 
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <label class ="Label">Document Types</label>
                             <ng-select [allowClear]="true" [items]="_CADropdownModel.CADropDownDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_CAdocumnet.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
                             </ng-select>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="Label">Remarks</label>
+                            <input class="form-control" type="text"[(ngModel)]="_CAdocumnet.Description"[ngModelOptions]="{standalone: true}"/>                           
                         </div>
                         <div class="col-lg-3">
                             <div class="FileInputClass">
                                 <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <div class="UploattchClass">
                                 <button class="btn-primary" (click)="FileUpload(true,fileInput)">
                                     Upload Document

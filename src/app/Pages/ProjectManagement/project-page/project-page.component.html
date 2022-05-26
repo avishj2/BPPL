@@ -4,18 +4,10 @@
             <div class="CardTitle">Project Details </div> 
         </div>
         <div><br>
-            <div class="row"> 
-                <button class="btn-primary" (click)="AddDetails()" data-toggle="modal" data-target="#Modal">
-                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-                    Add Project Details
-                </button>
+            <div class="row" style="margin-left: 10px;"> 
                 <button class="btn-primary" (click)="EditDetails()" data-toggle="modal" data-target="#Modal">
                     <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
                     Edit Project Details
-                </button>
-                <button class="btn-danger" (click)="DeleteProjectDetails()">
-                    <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
-                    Delete Project Details
                 </button>
             </div><hr>
             <div class="form-group row">
@@ -99,7 +91,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <b><i class='fa fa-edit'style='font-size:24px'></i> 
-                    {{_PopupTitle}}
+                        Edit Project Details
                     </b>
                 </h5> 
                 <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>

@@ -4,6 +4,8 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,//to add json file
+    "esModuleInterop": true,
      "types": ["node"],//for exceljs plugin
      "paths": {
       "exceljs": [
