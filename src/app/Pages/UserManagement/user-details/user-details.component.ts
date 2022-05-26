@@ -37,6 +37,9 @@ export class UserDetailsComponent implements OnInit {
   _AddNewUser : boolean = false;
   _UserName : string;
   _UserIDForUdpate : number; // Will be used to populate roles colelction
+  /**popup message variables */
+  popoverTitle ="Password";
+  popoverMessage = "Are you sure you want to change your password ?";
 
   constructor(public urlService: UrlService,
     public APIUtilityService: APIUtilityService,
@@ -228,11 +231,13 @@ export class UserDetailsComponent implements OnInit {
           }
         }
     }
-//===========================change password ============
+    
+  //=========================== change password ============
   /**change password */  
   ChangePassword(argData)
     {
-      this._UserDataModel = argData;     
+      this._UserDataModel = argData;
+      this._UserName = argData.UserName;     
     }
 
   UpdatePassword()

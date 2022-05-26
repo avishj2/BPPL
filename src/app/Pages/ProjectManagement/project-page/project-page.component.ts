@@ -12,33 +12,33 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class ProjectPageComponent implements OnInit {
   @ViewChild('closebutton') closebutton;
-  _PopupTitle : string;
   _DisabledInputField : boolean = true;
+
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
     public Utility :UtilityService,) { }
 
-  ngOnInit(): void {
-  }
 
-  AddDetails()
-  {
-    this._PopupTitle = "Add Project Details"
-  }
+  ngOnInit(): void 
+    {
+      
+    }
+
 
   EditDetails()
-  {
-    this._PopupTitle = "Edit Project Details"
-  }
+    {
+
+    }
 
   DeleteProjectDetails()
-  {
+    {
 
-  }
+    }
+
   SaveProjectDetails()
-  {
+    {
 
-  }
+    }
 }

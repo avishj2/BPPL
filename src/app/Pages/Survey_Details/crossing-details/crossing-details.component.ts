@@ -161,7 +161,7 @@ _DisabledCrossingInputField : boolean = true;
    */
   GetCrossingDatabyId()
     {
-      this.CommonService.ShowSpinnerLoading();
+      //this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetCrossingByIdAPI + this._SearchCriteria.CrossingID;
       this.httpService.get(url, null).subscribe(response => {
         this._CrossingDataModel = response;        

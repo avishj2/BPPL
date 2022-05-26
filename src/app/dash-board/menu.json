@@ -1,0 +1,57 @@
+[
+    {
+        "Id": 15,
+        "MenuName": "Project Details",
+        "Icon": "menu-icon fa fa-id-badge",
+        "Submenu": [
+            {"title" : "Project", "url" : "Project"},
+            {"title" : "CA Info", "url" : "CAInfo"},
+            {"title" : "Survey Agency", "url" : "AL"}       
+        ]
+    },
+    {
+        "Id" : 25,
+        "MenuName": "Survey Details",
+        "Icon": "menu-icon fa fa-pencil-square-o",
+        "Submenu":[
+            {"title" : "Gazzettes", "url" : "GazetteDetails"},
+            {"title" : "Villages", "url" : "VillageDetails"},
+            {"title" : "Survey Numbers", "url" : "SurveyDetails"},
+            {"title" : "Crossings", "url" : "CrossingDetails"},
+            {"title" : "Crop Rates", "url" : "CropRates"},
+            {"title" : "Land Rates", "url" : "LandRates"},
+            {"title" : "AGI/Terminals", "url" : "AGI_Terminals"},
+            {"title" : "Survey Documents", "url" : "SurveyDocuments"},
+            {"title" : "Ad Hoc Payment", "url" : "View_Adhoc_Payment"},
+            {"title" : "Configuration", "url" : "Configuration"},
+            {"title" : "SO Mapping", "url" : "SOMapping"},
+            {"title" : "SV-IPS", "url" : "SV_IPSDetails"}
+        ]
+    },
+    {
+        "Id":35,
+        "MenuName":"Survey Analysis",
+        "Icon": "menu-icon fa fa-book",
+        "Submenu" : [
+            {"title" : "Crossings Details", "url" : "ViewCrossingDetails"},
+            {"title" : "Village Details", "url" : "VeiwVillageDetails"},
+            {"title" : "Survey Number Details", "url" : "ViewSurveyTabs"},
+            {"title" : "Project Reports", "url" : "ViewProjectReports"},
+            {"title" : "Alignment Reports", "url" : "ViewAlignmentReports"},
+            {"title" : "Village Documents", "url" : "ViewAwardReports"},
+            {"title" : "Legal Documents", "url" : "LegalDocuments"},
+            {"title" : "LAQ Permanent", "url" : "LAQPermanent"},
+            {"title" : "Gazette & Notification", "url" : "ViewGazette"},
+            {"title" : "View SV-IPS ", "url" : "ViewSVIPSDetails"},
+            {"title" : "View Map", "url" : "ViewMap"}
+        ]
+    },
+    {
+        "Id":45,
+        "MenuName":"User Details",
+        "Icon": "menu-icon fa fa-users",
+        "Submenu":[
+            {"title" : "Users", "url" : "UserDetails"}
+        ]
+    }
+]

@@ -9,9 +9,10 @@
                     <tr> 
                         <th class="tbstyle">S.No.</th>
                         <th>Alignment Sheet</th>
-                        <th>Chainage From</th> 
-                        <th>Chainage To</th>
+                        <th class="tbstyle">Chainage From</th> 
+                        <th class="tbstyle">Chainage To</th>
                         <th>FileName</th> 
+                        <th>Alignment Number</th> 
                         <th>Download</th>   
                     </tr>
                 </thead>
@@ -20,8 +21,9 @@
                         <td class="tbstyle">{{i+1}}</td>  
                         <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.AlignmentSheetTypes, data.Lookupid)}}</td>
                         <td>{{data.FromChainage}}</td>
-                        <td>{{data.ToChainage}}</td>
-                        <td>{{data.FileName}}</td>
+                        <td class="tbstyle">{{data.ToChainage}}</td>                        
+                        <td class="tbstyle">{{data.FileName}}</td>
+                        <td>{{data.Description}}</td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="button" class="btn-success"(click)="DownloadDocument(data)" title="Download">
                                     <i class="fa fa-download "></i>

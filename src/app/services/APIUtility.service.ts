@@ -8,12 +8,15 @@ import { UrlService } from '../services/url.service';
 import { HttpService } from '../services/http.service';
 import {UtilityService} from '../services/utility.service';
 import { User } from '../Model/Base.model';
+import MenuData from 'src/app/dash-board/menu.json';
 
 @Injectable({
     providedIn: 'root'
   })
 
 export class APIUtilityService {
+  _MenuJsonData = MenuData;
+  DisplayMenuItems = [];
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
