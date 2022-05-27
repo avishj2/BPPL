@@ -90,8 +90,6 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
         alert("Document updated sucessfully!!");
         this.rerenderDataTable();
         this.SetParentData();
-      },error => {
-        this.Utility.LogText(error);
       });
     }
 
@@ -116,8 +114,10 @@ export class RevenueFormComponent implements AfterViewInit, OnInit {
     {
       let APIurl = this.urlService.DeleteSurveyDocumentAPI + arg.DocumentId;
       this.APIUtilityService.DeleteDocument(APIurl,this._AllSurveyDetails.Result.SurveyDocuments,arg)
-      this.SetParentData();
-      this.rerenderDataTable();
+      .subscribe(response => {
+          this.SetParentData();
+          this.rerenderDataTable();
+        });
     }
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any

@@ -161,7 +161,9 @@ export class SOMappingComponent implements OnInit {
     DeleteValue(argdata)
       {
         let APIurl = this.urlService.DeleteLookupAPI + argdata.LookupId + '&lookupGroupId='+ argdata.LookupGroupId;
-        this.APIUtilityService.DeleteDocument(APIurl,this._LookupGroupRespModel.Result,argdata);
-        this.ReloadDatatable();
+        this.APIUtilityService.DeleteDocument(APIurl,this._LookupGroupRespModel.Result,argdata)
+        .subscribe(response => {
+          this.ReloadDatatable();
+        });
       }
 }

@@ -224,17 +224,15 @@ ReloadDatatable()
       /**api call */
       let url = this.urlService.AddCADetailsDocumentAPI; 
       this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
-        let crossingDocumentModelResp: CommonDocDataModel[] = response.Result;   
-        if(isDoc)
-        {       
-          this._CADataModel.Documents = crossingDocumentModelResp;
-        }
-        this.ReloadDatatable();
-        this.Utility.LogText(crossingDocumentModelResp);
-        alert("Document updated sucessfully!!");
-      },error => {
-        this.Utility.LogText(error);
-      });
+          let crossingDocumentModelResp: CommonDocDataModel[] = response.Result;   
+          if(isDoc)
+          {       
+            this._CADataModel.Documents = crossingDocumentModelResp;
+          }
+          this.ReloadDatatable();
+          this.Utility.LogText(crossingDocumentModelResp);
+          alert("Document updated sucessfully!!");
+        });
       this.FileUploadreset(fileinput)// file object clear
   }
 
@@ -268,8 +266,10 @@ ReloadDatatable()
   DeleteCADocument(doc : CommonDocDataModel)
     {
       let APIUrl = this.urlService.DeleteCADetailsDocumentAPI + doc.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIUrl,this._CADataModel.Documents,doc);
-      this.ReloadDatatable();
+      this.APIUtilityService.DeleteDocument(APIUrl,this._CADataModel.Documents,doc).subscribe(response => {
+        this.ReloadDatatable();
+      });
+      
     }
 
 }

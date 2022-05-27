@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { UrlService } from './url.service';
 import {CommonService} from './common.service';
 import {UtilityService} from './utility.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -151,20 +152,37 @@ export class HttpService {
   }
 
   /**get api call */
-  public get(argurl,argParams ): Observable<any> {
+  public get(argurl,argParams,showAlertOnFail = true ): Observable<any> {
+    this.commonService.ShowSpinnerLoading();
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
     return this.http.get(argurl, {headers: headers ,params: argParams })//params
-    .pipe(map(res => res));
-    
+    .pipe(tap(res=>this.commonService.hideSpinnerLoading()), catchError(err => {
+            this.commonService.hideSpinnerLoading();
+            this.utilityService.LogText(err);
+            if(showAlertOnFail)
+            {
+              alert("Something went wrong ! Please try again.");
+            }
+            return throwError(err);
+        }) )   
     }
 
    /**POST api call*/
    /**get api call */
   
-  public Post(argurl,argParams ): Observable<any> {
+  public Post(argurl,argParams, showAlertOnFail = true ): Observable<any> {
+    this.commonService.ShowSpinnerLoading();
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
     return this.http.post(argurl, argParams)//params
-    .pipe(map(res => res));
+    .pipe(tap(res=>this.commonService.hideSpinnerLoading()), catchError(err => {
+            this.commonService.hideSpinnerLoading();
+            this.utilityService.LogText(err);
+            if(showAlertOnFail)
+            {
+              alert("Something went wrong ! Please try again.");
+            }
+            return throwError(err);
+        }) )
   }
 
 }

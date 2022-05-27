@@ -228,8 +228,6 @@ export class AddAdhocdetailsComponent implements OnInit {
         this.ReloadDatatable();
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
-      },error => {
-        this.Utility.LogText(error);
       });
       this.FileUploadreset(fileInput)// file object clear
     }
@@ -250,8 +248,10 @@ export class AddAdhocdetailsComponent implements OnInit {
   DeleteDocument(doc)
     {
       let APIurl = this.urlService.DeleteAdHocPaymentDocumentAPI + doc.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._AdHocPaymentModel.Documents,doc);
-      this.ReloadDatatable();
+      this.APIUtilityService.DeleteDocument(APIurl,this._AdHocPaymentModel.Documents,doc)
+      .subscribe(response => {
+        this.ReloadDatatable();
+      });
     } 
 
       /**Go Back To AssetsList page*/

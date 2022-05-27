@@ -276,8 +276,6 @@ export class GazetteDetailsComponent implements OnInit {
           this.Utility.LogText(gazzetteDocumentModelResp);
           alert("Document updated sucessfully!!");
           // this.ReloadDatatable();
-        },error => {
-          this.Utility.LogText(error);
         });
         this.FileUploadreset(fileInput)
     }

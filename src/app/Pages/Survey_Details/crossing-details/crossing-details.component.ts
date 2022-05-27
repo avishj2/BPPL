@@ -307,8 +307,6 @@ _DisabledCrossingInputField : boolean = true;
         this.ReloadDatatable();
         this.Utility.LogText(crossingDocumentModelResp);
         alert("Document updated sucessfully!!");
-      },error => {
-        this.Utility.LogText(error);
       });
       this.FileUploadreset(fileinput)// file object clear
   }
@@ -330,8 +328,10 @@ _DisabledCrossingInputField : boolean = true;
   DeleteCrossingDocument(doc : CommonDocDataModel)
     {
       let APIurl = this.urlService.DeleteCrossingDocumentAPI + doc.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._CrossingDataModel.Documents,doc);
-      this.ReloadDatatable();
+      this.APIUtilityService.DeleteDocument(APIurl,this._CrossingDataModel.Documents,doc)
+      .subscribe(response => {
+        this.ReloadDatatable();
+      });
     }
 
     

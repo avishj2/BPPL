@@ -210,7 +210,7 @@ GetProjectReports()
       Doc = this._Projectdoc;
 
       /**api call */
-      this.CommonService.ShowSpinner();
+      // this.CommonService.ShowSpinner();
       let url = this.urlService.AddProjectReportAPI; 
       this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
         let DocumentModelResp: CommonDocDataModel[] = response.Result;         
@@ -218,10 +218,8 @@ GetProjectReports()
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
         this.rerenderDataTable(); 
-      },error => {
-        this.Utility.LogText(error);
       });
-      this.CommonService.hideSpinnerLoading();
+      // this.CommonService.hideSpinnerLoading();
       this.FileUploadreset(fileInput);
     }
 
@@ -235,8 +233,10 @@ GetProjectReports()
   DeleteProjectDocument(arg)
     {
       let APIurl = this.urlService.DeleteProjectReportAPI + arg.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._ProjectReports,arg);
-      this.rerenderDataTable();
+      this.APIUtilityService.DeleteDocument(APIurl,this._ProjectReports,arg)
+      .subscribe(response => {
+        this.rerenderDataTable();
+      });
     }
 
 
@@ -279,15 +279,13 @@ UploadAlignmentSheet(fileInput)
     Doc = this._Aligntdoc;
 
     /**api call */
-    this.CommonService.ShowSpinner();
+    // this.CommonService.ShowSpinner();
     let url = this.urlService.AddAlignmentSheetAPI; 
     this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
       let DocumentModelResp: CommonDocDataModel[] = response.Result;         
       this._AlignmentSheets = DocumentModelResp;
       this.rerenderDataTable();
       alert("Document updated sucessfully!!");
-    },error => {
-      this.Utility.LogText(error);
     });
     this.FileUploadreset(fileInput);
   }
@@ -301,8 +299,9 @@ UploadAlignmentSheet(fileInput)
   DeleteAlignmentDoc(arg)
     {
       let APIurl = this.urlService.DeleteAlignmentSheetAPI + arg.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._AlignmentSheets,arg);
-      this.rerenderDataTable();
+      this.APIUtilityService.DeleteDocument(APIurl,this._AlignmentSheets,arg).subscribe(response => {
+        this.rerenderDataTable();
+      });
     }
 
 
@@ -342,15 +341,13 @@ UploadAlignmentSheet(fileInput)
         Doc = this._Mutationdoc;
 
         /**api call */
-        this.CommonService.ShowSpinner();
+        // this.CommonService.ShowSpinner();
         let url = this.urlService.AddAwardAndMutationsAPI; 
         this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
           let DocumentModelResp: CommonDocDataModel[] = response.Result;         
           this._AwardMutations = DocumentModelResp;
           this.rerenderDataTable();
           alert("Document updated sucessfully!!");
-        },error => {
-          this.Utility.LogText(error);
         });
         this.FileUploadreset(fileInput)
       }
@@ -368,8 +365,9 @@ UploadAlignmentSheet(fileInput)
   DeleteAwardDoc(arg)
     {
       let APIurl = this.urlService.DeleteAwardAndMutationsAPI + arg.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._AwardMutations,arg);
-      this.rerenderDataTable();  
+      this.APIUtilityService.DeleteDocument(APIurl,this._AwardMutations,arg).subscribe(response => {
+        this.rerenderDataTable();
+      });
     }
 
 GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any

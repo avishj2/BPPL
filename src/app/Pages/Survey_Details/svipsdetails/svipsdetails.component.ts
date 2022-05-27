@@ -250,8 +250,6 @@ export class SVIPSDetailsComponent implements OnInit {
           this.ReloadDatatable();
           this.Utility.LogText(DocumentModelResp);
           alert("Document updated sucessfully!!");
-        },error => {
-          this.Utility.LogText(error);
         });
         this.FileUploadreset(fileinput)// file object clear
     }
@@ -273,8 +271,9 @@ export class SVIPSDetailsComponent implements OnInit {
   DeleteSVIPSDocument(doc : CommonDocDataModel)
     {
       let APIurl = this.urlService.DeleteSVIPSDetailsDocumentAPI + doc.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._SVIPSModel.Documents,doc);
-      this.ReloadDatatable();
+      this.APIUtilityService.DeleteDocument(APIurl,this._SVIPSModel.Documents,doc).subscribe(response => {
+        this.ReloadDatatable();
+      });
     }
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any

@@ -164,7 +164,7 @@ export class LegalDocumentsComponent implements OnInit {
       Doc = this._LegalDocuments;
 
       /**api call */
-      this.CommonService.ShowSpinner();
+     // this.CommonService.ShowSpinner();
       let url = this.urlService.AddLegalDocumentAPI; 
       this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
         let DocumentModelResp: CommonDocDataModel[] = response.Result;         
@@ -173,9 +173,6 @@ export class LegalDocumentsComponent implements OnInit {
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
         this.ReloadDatatable(); 
-      },
-      error => {
-        this.Utility.LogText(error);
       });
       this.CommonService.hideSpinnerLoading();
       this.FileUploadreset(fileInput);
@@ -236,7 +233,9 @@ export class LegalDocumentsComponent implements OnInit {
   DeletedDocument(argData)
     {
       let APIurl = this.urlService.DeleteLegalDocumentAPI + argData.DocumentId;
-      this.APIUtilityService.DeleteDocument(APIurl,this._LegalDataModel,argData);
-      this.ReloadDatatable();
+      this.APIUtilityService.DeleteDocument(APIurl,this._LegalDataModel,argData)
+      .subscribe(response => {
+        this.ReloadDatatable();
+      });
     }
 }
