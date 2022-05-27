@@ -12,6 +12,7 @@ import { UrlService } from 'src/app/services/url.service';
   styleUrls: ['./dash-board.component.scss']
 })
 export class DashBoardComponent implements OnInit {
+_CurrentUserName: string;
 
   constructor(
     private router: Router,
@@ -29,7 +30,7 @@ export class DashBoardComponent implements OnInit {
       //this.Utility.LogText2("===",this.APIUtilityService._MenuJsonData);
       let userDetails = JSON.parse(localStorage.getItem('currentUser'));
       this.GetRolesByUserId(userDetails.Id)
-     
+      this._CurrentUserName = userDetails.FirstName +" " + userDetails.LastName;
     }
 
     GetRolesByUserId(arg)
@@ -107,7 +108,8 @@ export class DashBoardComponent implements OnInit {
   /**top right side clicks on logout button and logout website  */
   logoutBtn()
   {
+    this.APIUtilityService.logout();
     this.router.navigate(['/login']); 
-    localStorage.removeItem('loginDetails'); //remove username and password from localstroage after click logout
+    //localStorage.removeItem('loginDetails'); //remove username and password from localstroage after click logout
   }
 }

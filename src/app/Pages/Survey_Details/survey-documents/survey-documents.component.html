@@ -108,8 +108,9 @@
                     <tr> 
                         <th class="tbstyle2">S.No.</th>
                         <th>Document</th>
-                        <th>Chainage From</th> 
-                        <th>Chainage To</th>
+                        <th class="tbstyle">Chainage From</th> 
+                        <th class="tbstyle">Chainage To</th>
+                        <th>Alignment Number</th>
                         <th>FileName</th>    
                         <th>Action</th>
                     </tr>
@@ -118,8 +119,9 @@
                     <tr *ngFor="let data of _AlignmentSheets; let i = index">
                         <td class="tbstyle2">{{i+1}}</td>  
                         <td>{{GetLookupValue(_SurveyDocDropDownsDataModel.AlignmentSheetTypes, data.Lookupid)}}</td>
-                        <td>{{data.FromChainage}}</td>
-                        <td>{{data.ToChainage}}</td>
+                        <td class="tbstyle">{{data.FromChainage}}</td>
+                        <td class="tbstyle">{{data.ToChainage}}</td>
+                        <td>{{data.Description}}</td>
                         <td>{{data.FileName}}</td>
                         <td>
                             <button type="button" class="btn-success"title="download" (click)="DownloadAlignDoc(data)">

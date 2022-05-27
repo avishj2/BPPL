@@ -20,7 +20,6 @@
             {"title" : "Crossings", "url" : "CrossingDetails"},
             {"title" : "Crop Rates", "url" : "CropRates"},
             {"title" : "Land Rates", "url" : "LandRates"},
-            {"title" : "AGI/Terminals", "url" : "AGI_Terminals"},
             {"title" : "Survey Documents", "url" : "SurveyDocuments"},
             {"title" : "Ad Hoc Payment", "url" : "View_Adhoc_Payment"},
             {"title" : "Configuration", "url" : "Configuration"},

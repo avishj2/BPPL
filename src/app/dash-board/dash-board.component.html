@@ -21,8 +21,11 @@
 				<a class="backIcon" type="button" (click)="logoutBtn()">
 					<i class="ace-icon fa fa-power-off"></i>
 				</a>
-			</div>
+			</div>			
 		</div><!-- /.navbar-container -->
+		<div class="userClass">
+			Welcome {{this._CurrentUserName}}
+		</div>
 	</div><!-- /.header navbar-->
 <!-- <div> -->
 
@@ -39,7 +42,7 @@
 			<ul class="nav nav-list">
                 <!-- 2nd step -->
 				<li class="open" routerLinkActive="active">
-					<a routerLink="dashboard">
+					<a routerLink="/dashboard">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Home &nbsp;</span>
 					</a>

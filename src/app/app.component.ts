@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,HostListener  } from '@angular/core';
 import { User } from './Model/Base.model';
 import { APIUtilityService } from './services/APIUtility.service';
 
@@ -8,12 +8,19 @@ import { APIUtilityService } from './services/APIUtility.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'NoticeDistributionwebsite';
+  title = 'BPPL';
   currentUser: User;
+  @HostListener('window:beforeunload', ['$event'])
+
+  browserClose($event) 
+    {
+      this.apiUtilityService.logout()
+    }
   /**
    *
    */
-  constructor(private apiUtilityService: APIUtilityService) {    
-    this.apiUtilityService.currentUser.subscribe(x => this.currentUser = x);
-  }
+  constructor(private apiUtilityService: APIUtilityService) 
+    {    
+      this.apiUtilityService.currentUser.subscribe(x => this.currentUser = x);
+    }
 }

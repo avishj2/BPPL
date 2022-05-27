@@ -166,20 +166,11 @@ export class ConfigurationComponent implements OnInit {
     
   DeletelookupValue(argdata)
     {
-      let url = this.urlService.DeleteLookupAPI + argdata.LookupId + '&lookupGroupId='+ argdata.LookupGroupId;
-      this.httpService.get(url,null).subscribe(response => {
-      let Details : any = response;
-        if (Details.StatusCode != 200) 
-          {
-            alert(Details.Message);
-          }
-          else {
-            alert("Value deleted successfully !");
-          }
-        this.ReloadDatatable();    
-        },error => {
-          this.Utility.LogText(error);
-        });
+      let APIurl = this.urlService.DeleteLookupAPI + argdata.LookupId + '&lookupGroupId='+ argdata.LookupGroupId;
+      this.APIUtilityService.DeleteDocument(APIurl,this._LookupGroupRespModel.Result,argdata)
+      .subscribe(response => {
+        this.ReloadDatatable();
+      });
     }
 
   GetLookupValue(lookups : CommonDropdownModel[], lookUpid: Number) : any
