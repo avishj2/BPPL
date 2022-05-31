@@ -25,7 +25,7 @@ import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ChildViewCrossingComponent } from 'src/app/Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component'
 import { ViewSurveyTabsComponent } from 'src/app/Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
-
+import {MapFeature} from './mapModel';
 @Component({
   selector: 'app-view-map',
   templateUrl: './view-map.component.html',
@@ -85,7 +85,7 @@ export class ViewMapComponent implements OnInit {
           })  ,
           style: pointstyleFunction,
         });
-  
+        CS_PointLayer.set('title','Crossing');
 
       /**line feature styling */
       const LinestyleFunction = function (feature) 
@@ -114,7 +114,7 @@ export class ViewMapComponent implements OnInit {
           }),
           style: LinestyleFunction,
         });
-
+        Center_LineLayer.set('title','Center');
 
       /**polygon feature styling */
       const VillagePolygonstyle = function (feature) 
@@ -141,11 +141,12 @@ export class ViewMapComponent implements OnInit {
         const Village_Layer = new VectorLayer({
           source:  new VectorSource({        
           url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=401",
-          format: new GeoJSON()
+          format: new GeoJSON(),
+          
         }),
           style: VillagePolygonstyle,
         });
-
+        Village_Layer.set('title','Village');
 
         const KhasraPolygonstyle = function (feature) 
         {  
@@ -175,7 +176,8 @@ export class ViewMapComponent implements OnInit {
           }),
           style: KhasraPolygonstyle,
         });
-        
+        Khasra_Layer.set('title','Khasra');
+
         const ROU_Layer = new VectorLayer({
           source:  new VectorSource({        
             url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400",
@@ -184,6 +186,7 @@ export class ViewMapComponent implements OnInit {
           style: KhasraPolygonstyle,
         });
 
+        ROU_Layer.set('title','ROU');
       /**base map style and add layers */
       var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
       var washingtonWebMercator = olProj.transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
@@ -209,23 +212,51 @@ export class ViewMapComponent implements OnInit {
 
       //Creating a Map Click Event Listener
       map.on('singleclick', function (e) {
+        let crossingFeatures : MapFeature[] = [];
+        let khasraFeatures : MapFeature[] = [];
+        let features : MapFeature[] = [];
         var feature = map.forEachFeatureAtPixel(e.pixel,        
           function(feature, layer) { 
-            if(feature.get('TEXTSTRING'))
+            let layerName = layer.get('title');
+            if(layerName == "Crossing")
+            {
+              if(!khasraFeatures.find(elm=>elm.CrossingName==feature.get('TEXTSTRING')))
               {
-                let data = feature.get('TEXTSTRING');
-                self.ShowCrossingPopup(data);
-                return;
+                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),SelectedFeature: feature , SurveyNo:""};
+                crossingFeatures.push(mf);   
+                features.push(mf);
+              }   
+            }  
+            if(layerName == "Khasra")
+            {              
+              if(!khasraFeatures.find(elm=>elm.SurveyNo==feature.get('Survey_No')))
+              {
+                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),SelectedFeature : feature , CrossingName:""};
+                khasraFeatures.push(mf);      
+                features.push(mf);
               }
-             if(feature.get('Survey_No'))
-              {
-                let data = feature.getProperties();
-                self.ShowSurveyPopup(data);            
-              }  
-            //console.log(feature.getProperties()); //get all properties using
-          });       
-      })
-      
+            }              
+          });  
+        if(features.length > 2)
+        {
+           alert("Multiple features are selected please zoom in and select precise !")
+        }
+        else
+        {
+          if(crossingFeatures.length > 0)
+          {
+            let data = crossingFeatures[0].CrossingName;
+            self.ShowCrossingPopup(data);
+            return;
+          }
+          if(khasraFeatures.length > 0)
+          {
+            let data =khasraFeatures[0].SelectedFeature.getProperties();
+            self.ShowSurveyPopup(data);  
+            return;
+          }
+        }     
+      })      
     }
 
 
@@ -265,7 +296,7 @@ export class ViewMapComponent implements OnInit {
           };
           let argdata = {
             ShowModel: true,
-            VillageName: "variya bhagji",
+            VillageName: arg.Village_N,
             //VillageName : arg.Village_N,//need to be change in db Variya Bhagji
             TehsilName :arg.Tehsil_N,           
             SurveyName :arg.Survey_No,
