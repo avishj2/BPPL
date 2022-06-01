@@ -161,7 +161,7 @@ export class HttpService {
             this.utilityService.LogText(err);
             if(showAlertOnFail)
             {
-              alert("Something went wrong ! Please try again.");
+              alert(err.error.Message ? err.error.Message : "Something went wrong ! Please try again or check your selection." );
             }
             return throwError(err);
         }) )   
@@ -179,7 +179,8 @@ export class HttpService {
             this.utilityService.LogText(err);
             if(showAlertOnFail)
             {
-              alert("Something went wrong ! Please try again.");
+              alert(err.error.Message ? err.error.Message : "Something went wrong ! Please try again or check your selection." );
+              //alert("Something went wrong ! Please try again.");
             }
             return throwError(err);
         }) )
