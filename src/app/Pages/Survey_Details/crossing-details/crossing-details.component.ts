@@ -306,7 +306,7 @@ _DisabledCrossingInputField : boolean = true;
         }
         this.ReloadDatatable();
         this.Utility.LogText(crossingDocumentModelResp);
-        alert("Document updated sucessfully!!");
+        alert("Document Uploaded sucessfully!!");
       });
       this.FileUploadreset(fileinput)// file object clear
   }

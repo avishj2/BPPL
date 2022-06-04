@@ -1,10 +1,10 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ResetFilterValues)="ResetFilterValues($event)">
 </app-filters>
 <br>
-<div class="card" *ngIf="_ShowCropDetailsDiv == false">
+<div class="card"[ngClass]="_ShowCropDetailsDiv == false ? 'show' : 'hide'">
     <h5 style="color: red;"><b>Please Select Village Name</b></h5>
 </div>
-<div class="card" *ngIf="_ShowCropDetailsDiv == true">
+<div class="card" [ngClass]="_ShowCropDetailsDiv == true ? 'show' : 'hide'">
     <div class="innercard">
         <div class="d-flex justify-content-between">
             <div class="CardTitle">Crop Rates{{this._VillageName}}</div> 
@@ -15,7 +15,7 @@
                 Add Crop Rates
             </button> 
         </div>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
+        <table datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger1" class="stripe table table-striped table-bordered" width="98%" >
             <thead>
                 <tr>  
                     <th>Action</th>
@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of _CropDetailsModel;let i = index">
+                <tr *ngFor="let data of _CropandDocDetailsModel.Crops;let i = index">
                     <td>
                         <button type="button" class="btn-success"(click)="EditCropRates(data)" title="Edit" data-toggle="modal" data-target="#CropRateModal">
                             <i class="fa fa-edit"></i>
@@ -50,10 +50,59 @@
         </table>
     </div>
 </div>
+<br>
+<div class="card" [ngClass]="_ShowCropDetailsDiv == true ? 'show' : 'hide'">
+    <div class="innercard">
+        <div class="d-flex justify-content-between">
+            <div class="CardTitle">Documents Details</div> 
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label class ="Label">Document Types</label>
+                <ng-select [allowClear]="true" [items]="_CropDropDownsModel.CropDocuments" bindLabel="Text" bindValue ="Value" [(ngModel)]="_Cropdocument.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
+                </ng-select>
+            </div>
+            <div class="col-lg-3">
+                <div class="FileInputClass">
+                    <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="UploattchClass">
+                    <button class="btn-primary" (click)="FileUpload(true,fileInput)">Upload Document</button>
+                </div>
+            </div>    
+        </div><br>
+        <table datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger2" class="stripe table table-striped table-bordered" width="98%" >
+            <thead>
+                <tr>  
+                    <th>FileName</th>
+                    <th>Document Type</th>
+                    <th>Action</th>  
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of _CropandDocDetailsModel.Documents;let i = index">        
+                    <td>{{data.FileName}}</td>
+                    <td>{{GetLookupValue(_CropDropDownsModel.CropDocuments,data.Lookupid)}}</td>
+                    <td>
+                        <button type="button" class="btn-success"(click)="DownloadDoc(data)">
+                            <i class="fa fa-download"></i>
+                        </button>&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteCropDocument(data)" title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 <div class="container">
     <!-- Modal -->
-    <div class="modal" id="CropRateModal" role="dialog" *ngIf="_SearchCriteria.VillageId != null">
+    <div class="modal" id="CropRateModal" role="dialog" *ngIf="_SearchCriteria.TalukaId != null">
       <div class="modal-dialog">
       
         <!-- Modal content-->
@@ -61,7 +110,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <b><i class='fa fa-edit'style='font-size:24px'></i> 
-                    {{_PopupTitle}} - {{this._VillageName}}
+                    {{_PopupTitle}}
                     </b>
                 </h5>  
                 <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>

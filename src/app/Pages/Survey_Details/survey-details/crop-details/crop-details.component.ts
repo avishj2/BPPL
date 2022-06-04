@@ -54,7 +54,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
         pageLength: 5,
         language: {emptyTable : "No Crops !"}
       };
-      this.Utility.LogText2("FromParentData=>",this.SurveyDropDownsData);
+      //this.Utility.LogText2("FromParentData=>",this.SurveyDropDownsData);
       this._AllSurveyDetails.Result.Crops = this.AllSurveyDetails.Result.Crops;
       this._AllSurveyDetails.Result.SurveyOwnersDrp = this.AllSurveyDetails.Result.SurveyOwnersDrp;
       this.ReloadDatatable();

@@ -108,13 +108,20 @@ export class UrlService {
   GetCropDropDownsAPI = this.url + '/api/LandCrop/GetCropDropDowns';
   AddOrUpdateCropsRateAPI = this.url +'/api/LandCrop/AddOrUpdateCrops';
   DeleteCropsAPI = this.url +'/api/LandCrop/DeleteCrops?cropId=';
-  GetAllCropsAPI = this.url +'/api/LandCrop/GetAllCrops?villageId=';
+  GetAllCropsAPI = this.url +'/api/LandCrop/GetAllCrops?tehsilId=';
+  AddTehsilCropDocumentAPI = this.url +'/api/LandCrop/AddTehsilCropDocument';
+  DownloadTehsilCropDocumentAPI = this.url +'/api/LandCrop/DownloadTehsilCropDocument?documentId=';
+  DeleteTehsilCropDocumentAPI = this.url +'/api/LandCrop/DeleteTehsilCropDocument?documentId='
+
 
   //land rates APIs
   GetLandDropDownsAPI = this.url +'/api/LandCrop/GetLandDropDowns';
   AddOrUpdateLandDetails = this.url + '/api/LandCrop/AddOrUpdateLandDetails';
   DeleteLandDetailsAPI = this.url + '/api/LandCrop/DeleteLandDetails?landId=';
   GetAllLandDetails= this.url + '/api/LandCrop/GetAllLandDetails?villageId=';
+  AddVillageLandDocumentAPI = this.url +'/api/LandCrop/AddVillageLandDocument';
+  DownloadVillageLandDocumentAPI = this.url + '/api/LandCrop/DownloadVillageLandDocument?documentId=';
+  DeleteVillageLandDocumentAPI = this.url +'/api/LandCrop/DeleteVillageLandDocument?documentId=3';
   
   //SVIPS
   GetSVIPSDropDownsAPI = this.url + '/api/LandCrop/GetSVIPSDropDowns';

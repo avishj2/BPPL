@@ -1,4 +1,4 @@
-import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild } from '@angular/core';
+import { AfterViewInit,Component, OnInit, Input, Output,EventEmitter,ViewChild ,ViewChildren,QueryList} from '@angular/core';
 import { HttpClient, HttpResponse,HttpClientModule,HttpHeaders } from '@angular/common/http';
 import { UrlService } from 'src/app/services/url.service';
 import { Router } from '@angular/router';
@@ -8,9 +8,11 @@ import { HttpService } from 'src/app/services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { CommonDropdownModel} from 'src/app/Model/Base.model';
+import { CommonDropdownModel,CommonDocDataModel} from 'src/app/Model/Base.model';
 import { SearchCriteria, FilterControls } from 'src/app/Model/Filters.model';
-import { LandRatesModel, LandRespModel,LandDropDownsModel }from 'src/app/Model/Crop&LandRates.model';
+import { LandRatesModel, LandRespModel,LandDropDownsModel,LandandDocDetailsModel }from 'src/app/Model/Crop&LandRates.model';
+import { APIUtilityService } from 'src/app/services/APIUtility.service';
+
 @Component({
   selector: 'app-land-rates',
   templateUrl: './land-rates.component.html',
@@ -20,10 +22,11 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   @ViewChild('closebutton') closebutton;
 
   /**data table properties  */
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
+  @ViewChildren(DataTableDirective)
+  dtElements: QueryList<DataTableDirective>;
+  dtOptions: DataTables.Settings[] = [];
+  dtTrigger1: Subject<any> = new Subject();
+  dtTrigger2: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
   _PopupTitle : string;
@@ -39,12 +42,16 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   popoverMessage = "Are you sure you want to delete it ?";
   _VillageName : string;
   _VillageId : any;
+  _LandRatesdocument: CommonDocDataModel;
+  Landfile: File = null; // Variable to store file
+  _LandandDocDetailsModel : LandandDocDetailsModel;
 
   constructor(public urlService: UrlService,
     private router: Router,
     public CommonService : CommonService,
     public httpService : HttpService,
-    public Utility :UtilityService,) 
+    public Utility :UtilityService,
+    public APIUtilityService: APIUtilityService,) 
     { 
         this._SearchCriteria = new SearchCriteria();
         this._FilterControls = new FilterControls();
@@ -52,6 +59,8 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
         this._LandRatesModel = new LandRatesModel();
         this._LandRateDetails = [];
         this._LandDropDownsModel = new LandDropDownsModel();
+        this._LandRatesdocument = new CommonDocDataModel();
+        this._LandandDocDetailsModel = new LandandDocDetailsModel();
     }
 
   /**hide/show filter menu based on the component requirement */
@@ -61,43 +70,45 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
       this._FilterControls.ShowDistrict = true;
       this._FilterControls.ShowTaluka = true;
       this._FilterControls.ShowVillage = true;
-      this._FilterControls.ShowSurneyNos = true;
       this._FilterControls.ShowSearchBtn = true;
       this._FilterControls.ShowLandTypes = true;
     }
   
   ngOnInit(): void 
     {
-      this.dtOptions = 
+      this.dtOptions[1] = 
         {
           pagingType: 'full_numbers',
           pageLength: 5,
-          language : {emptyTable : "No Land rates!!"}
+          language: {emptyTable : "No Crops!!"}
+        };
+      this.dtOptions[2] = 
+        {
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          language: {emptyTable : "No Documents!!"}
         };
       this.GetLandDropdownData();
     }
+
     ngAfterViewInit(): void 
-    {
-      this.dtTrigger.next();
-    }
+      {
+        this.dtTrigger1.next();
+        this.dtTrigger2.next();
+      }
   /**refresh/reload data table 
    * when data update/delete/add in the datatable  
    * */
 	ReloadDatatable(){
-    /**initialized datatable */
-    if (this.IsDtInitialized) 
-      {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-        {
-          dtInstance.destroy();//Destroy the table first
-          this.dtTrigger.next();//Call the dtTrigger to rerender again
-        });
-      }
-      else
-        {
-          this.IsDtInitialized = true;
-          this.dtTrigger.next();
-        }
+    this.dtElements.forEach((dtElement: DataTableDirective,index: number) => {
+      if(dtElement.dtInstance)
+          dtElement.dtInstance.then((dtInstance: any) => {
+          dtInstance.destroy(); 
+          this.Utility.LogText(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
+      });
+    });
+    this.dtTrigger1.next(); 
+    this.dtTrigger2.next();   
   }  
     /**1. Get Values From Filters component and assign into SearchCriteria
   *  2. 
@@ -177,7 +188,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
       this.CommonService.ShowSpinnerLoading();
       let url = this.urlService.GetAllLandDetails + this._SearchCriteria.VillageId + (this._SearchCriteria.SurveyID ? '&surveyId=' + this._SearchCriteria.SurveyID:"" );
       this.httpService.get(url,null).subscribe(response => {
-        this._LandRateDetails  = response;
+        this._LandandDocDetailsModel  = response;
         this.ReloadDatatable();
         this.CommonService.hideSpinnerLoading();
         },error => {
@@ -189,16 +200,20 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   SaveLandDetails()
     {
       this.CommonService.ShowSpinnerLoading();
-      if(this._SearchCriteria.SurveyID == null)
+      if(this._SearchCriteria.TypeOfLand == null)
         {
-          this._SearchCriteria.SurveyID = "0";
+          alert("Please select Land Type!!")
         }
-      this._LandRatesModel.TypeOfLand = Number(this._SearchCriteria.TypeOfLand);
-      this._LandRatesModel.VillageId = Number(this._VillageId);
-      this._LandRatesModel.SurveyId = this._SearchCriteria.SurveyID;
-      this._LandRatesModel.MeasureUnit = Number(this._LandRatesModel.MeasureUnit);
-      let url = this.urlService.AddOrUpdateLandDetails;     
-      this.httpService.HttpPostRequest(url,this._LandRatesModel, this.AddOrUpdateLandCallBack.bind(this),null);
+      else
+      {
+        this._SearchCriteria.SurveyID = null;        
+        this._LandRatesModel.TypeOfLand = Number(this._SearchCriteria.TypeOfLand);
+        this._LandRatesModel.VillageId = Number(this._VillageId);
+        this._LandRatesModel.SurveyId = this._SearchCriteria.SurveyID;
+        this._LandRatesModel.MeasureUnit = Number(this._LandRatesModel.MeasureUnit);
+        let url = this.urlService.AddOrUpdateLandDetails;     
+        this.httpService.HttpPostRequest(url,this._LandRatesModel, this.AddOrUpdateLandCallBack.bind(this),null);
+      }
     }
 
   AddOrUpdateLandCallBack(dtas)
@@ -213,14 +228,14 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
           if (this. _AddNewLandDetails == false)
             {
               alert("Land updated sucessfully!!");
-              this._LandRateDetails = RespDataModel.Result;
+              this._LandandDocDetailsModel.Lands = RespDataModel.Result;
               this.closebutton.nativeElement.click();
               this.ReloadDatatable();
             }
           else
             {
               alert("Land added sucessfully!!");
-              this._LandRateDetails = RespDataModel.Result;
+              this._LandandDocDetailsModel.Lands = RespDataModel.Result;
               this. _AddNewLandDetails = false;
               this.closebutton.nativeElement.click();
               this.ReloadDatatable();              
@@ -271,4 +286,66 @@ GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any
       return lookUpid;
     }
   }
+
+  DownloadDoc(doc : CommonDocDataModel)
+    {
+      let url = this.urlService.DownloadVillageLandDocumentAPI + doc.DocumentId;
+      this.APIUtilityService.DownloadDocument(url);
+    }
+
+  // On file Select
+  onChangeDocument(event)
+    {
+      this.Landfile = event.target.files[0];
+    }
+
+  FileUpload(isDoc : boolean, fileinput)
+    {
+      let Doc : CommonDocDataModel;
+      if(!this.Landfile && isDoc)
+      {
+        alert("Please select file!!");
+        return;
+      }
+      if(!this._LandRatesdocument.Lookupid && isDoc)
+        {
+          alert("Please select land document type !");
+          return;
+        }
+      this._LandRatesdocument.RequestId = Number(this._SearchCriteria.VillageId);
+      this._LandRatesdocument.Document = this.Landfile;
+      this._LandRatesdocument.ToChainage = '';
+      this._LandRatesdocument.FromChainage = '';
+      this._LandRatesdocument.DocumentId = 0;
+      Doc = this._LandRatesdocument;
+
+      /**api call */
+      let url = this.urlService.AddVillageLandDocumentAPI; 
+      this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
+        let LandDocumentModelResp: CommonDocDataModel[] = response.Result;   
+        if(isDoc)
+        {       
+          this._LandandDocDetailsModel.Documents = LandDocumentModelResp;
+        }
+        this.ReloadDatatable();
+        alert("Document Uploaded sucessfully!!");
+      });
+      this.FileUploadreset(fileinput)// file object clear
+  }
+
+  FileUploadreset(element) 
+    {
+        element.value = "";
+        this.Landfile = null;
+    }
+
+    DeleteLandDocument(doc : CommonDocDataModel)
+      {
+        let APIurl = this.urlService.DeleteVillageLandDocumentAPI + doc.DocumentId;
+        this.APIUtilityService.DeleteDocument(APIurl,this._LandandDocDetailsModel.Documents,doc)
+        .subscribe(response => {
+          this.ReloadDatatable();
+        });
+      }
+  
 }

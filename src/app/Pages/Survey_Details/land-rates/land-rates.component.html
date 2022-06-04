@@ -1,53 +1,104 @@
 <app-filters [filterControls]="_FilterControls"(filterOutput)="GetValuesFromFilters($event)"(ChangedVillage)="SearchFilterChanged($event)"(ResetFilterValues)="ResetFilterValues($event)">
 </app-filters>
 <br>
-<div class="card" *ngIf="_ShowLandDetailsDiv == false">
+<div class="card" [ngClass]="_ShowLandDetailsDiv == false ? 'show' : 'hide'">
     <h5 style="color: red;"><b>Please Select Village and Type of Land!! </b></h5>
 </div>
-<div  class="card"*ngIf="_ShowLandDetailsDiv == true">
-    <div class="innercard">
-        <div class="d-flex justify-content-between">
-            <div class="CardTitle">Land Rates{{this._VillageName}}</div> 
+
+<div [ngClass]="_ShowLandDetailsDiv == true ? 'show' : 'hide'">
+    <div class="card">
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Land Rates{{this._VillageName}}</div> 
+            </div>
+            <div class="AddEditBtn"> 
+                <button class="btn-primary" (click)="AddNewLandDetails()"data-toggle="modal" data-target="#LandRateModal">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                    Add Land Rates
+                </button> 
+            </div>
+            <table datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger1" class="stripe table table-striped table-bordered" width="98%" >
+                <thead>
+                    <tr>  
+                        <th>Action</th>
+                        <th>MeasureUnit</th>
+                        <th>SurveyNumber</th>
+                        <th>Reserve Price</th> 
+                        <th>Sale Deed Price</th>   
+                        <th>CA Price</th>  
+                        <th>Market Rate Date</th>       
+                        <th>CA Remarks</th>   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _LandandDocDetailsModel.Lands;let i = index">
+                        <td>
+                            <button type="button" class="btn-success"(click)="EditLandRates(data)" title="Edit" data-toggle="modal" data-target="#LandRateModal">
+                                <i class="fa fa-edit"></i>
+                            </button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates(data)" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>   
+                        <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>
+                        <td>{{data.SurveyNumber}}</td>       
+                        <td>{{data.ReservePriceHa}}</td>
+                        <td>{{data.SaleDeedPriceHa}}</td>
+                        <td>{{data.CAPriceHa }}</td>
+                        <td>{{data.MarketRateDate | date:'mediumDate'}}</td>
+                        <td>{{data.CARemarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="AddEditBtn"> 
-            <button class="btn-primary" (click)="AddNewLandDetails()"data-toggle="modal" data-target="#LandRateModal">
-                <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-                Add Land Rates
-            </button> 
+    </div><br>
+
+    <div>
+        <div class="innercard">
+            <div class="d-flex justify-content-between">
+                <div class="CardTitle">Documents Details</div> 
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <label class ="Label">Document Types</label>
+                    <ng-select [allowClear]="true" [items]="_LandDropDownsModel.LandDocuments" bindLabel="Text" bindValue ="Value" [(ngModel)]="_LandRatesdocument.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
+                    </ng-select>
+                </div>
+                <div class="col-lg-3">
+                    <div class="FileInputClass">
+                        <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="UploattchClass">
+                        <button class="btn-primary" (click)="FileUpload(true,fileInput)">Upload Document</button>
+                    </div>
+                </div>    
+            </div><br>
+            <table datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger2" class="stripe table table-striped table-bordered" width="98%" >
+                <thead>
+                    <tr>  
+                        <th>FileName</th>
+                        <th>Document Type</th>
+                        <th>Action</th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of _LandandDocDetailsModel.Documents;let i = index">        
+                        <td>{{data.FileName}}</td>
+                        <td>{{GetLookupValue(_LandDropDownsModel.LandDocuments,data.Lookupid)}}</td>
+                        <td>
+                            <button type="button" class="btn-success"(click)="DownloadDoc(data)">
+                                <i class="fa fa-download"></i>
+                            </button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandDocument(data)" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td> 
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="stripe table table-striped table-bordered" width="98%" >
-            <thead>
-                <tr>  
-                    <th>Action</th>
-                    <th>MeasureUnit</th>
-                    <th>SurveyNumber</th>
-                    <th>Reserve Price</th> 
-                    <th>Sale Deed Price</th>   
-                    <th>CA Price</th>  
-                    <th>Market Rate Date</th>       
-                    <th>CA Remarks</th>   
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of _LandRateDetails;let i = index">
-                    <td>
-                        <button type="button" class="btn-success"(click)="EditLandRates(data)" title="Edit" data-toggle="modal" data-target="#LandRateModal">
-                            <i class="fa fa-edit"></i>
-                        </button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn-danger" mwlConfirmationPopover  [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"(confirm)="DeleteLandRates(data)" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </td>   
-                    <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>
-                    <td>{{data.SurveyNumber}}</td>       
-                    <td>{{data.ReservePriceHa}}</td>
-                    <td>{{data.SaleDeedPriceHa}}</td>
-                    <td>{{data.CAPriceHa }}</td>
-                    <td>{{data.MarketRateDate | date:'mediumDate'}}</td>
-                    <td>{{data.CARemarks}}</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 

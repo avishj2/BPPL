@@ -3,21 +3,25 @@ import {BaseResponse, CommonDropdownModel,CommonDocDataModel} from './Base.model
 export class CropDropDownsModel{
     CropNames : CommonDropdownModel[];
     SeasonTypes : CommonDropdownModel[];
+    CropDocuments : CommonDropdownModel[];
 
     constructor(){
         this.CropNames = [];
         this.SeasonTypes = [];
+        this.CropDocuments = [];
     }
 }
 export class LandDropDownsModel{
   CropNames : CommonDropdownModel[];
   SeasonTypes : CommonDropdownModel[];
   MeasureUnits : CommonDropdownModel[];
+  LandDocuments : CommonDropdownModel[];
 
   constructor(){
       this.CropNames = [];
       this.SeasonTypes = [];
       this.MeasureUnits = [];
+      this.LandDocuments = [];
   }
 }
 
@@ -29,10 +33,21 @@ export class CropsRateRespDataModel extends BaseResponse {
     }
   }
 
+
+  export class CropandDocDetailsModel{
+    Crops : CropsRateModel[];
+    Documents : CommonDocDataModel[];
+
+    constructor(){      
+      this.Crops = [];
+      this.Documents = [];
+    }
+  }
   
 export class CropsRateModel{
     CropId: Number;
     VillageId: Number;
+    TehsilId : Number;
     CropLookupId: Number;
     SeasonId: Number;
     YieldInQuintalMinPH: Number;
@@ -59,6 +74,16 @@ export class CropsRateModel{
 }
 
 //LAND RATES DATA MODELS
+export class LandandDocDetailsModel{
+  Lands : LandRatesModel[];
+  Documents : CommonDocDataModel[];
+  
+  constructor(){      
+    this.Lands = [];
+    this.Documents = [];
+  }
+}
+
 export class LandRespModel extends BaseResponse {
     Result : LandRatesModel[];
 
