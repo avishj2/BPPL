@@ -89,25 +89,25 @@ export class UtilityService {
     async MapLayerGeoJson()
       {
         /**CS_Point Layer */
-        let CS_PointURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388";
+        let CS_PointURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1457";
         let CS_PointLayer; //store json
         CS_PointLayer = await this.UrlToGeoJSON(CS_PointURL)
       
         /**Center_Line Layer */     
-        let Center_LineURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398";   
+        let Center_LineURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1456";   
         let Center_LineLayer = await this.UrlToGeoJSON(Center_LineURL);
 
         /**Khasra_Layer Layer */     
-        let Khasra_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=419"; 
+        let Khasra_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1458"; 
         let Khasra_Layer = await this.UrlToGeoJSON(Khasra_LayerURL);
 
 
-        let Village_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=401";
+        let Village_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1460";
         let Village_Layer//store json      S
         Village_Layer = await this.UrlToGeoJSON(Village_LayerURL);
 
         /**Center_Line Layer */     
-        let ROU_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400";
+        let ROU_LayerURL = "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1459";
         let ROU_Layer //store json      
         ROU_Layer = await this.UrlToGeoJSON(ROU_LayerURL);
         this._CSPointLayer = JSON.parse(CS_PointLayer);

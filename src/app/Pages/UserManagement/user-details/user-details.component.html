@@ -80,10 +80,6 @@
                         <input type="text" class="form-control" [(ngModel)]="_UserDataModel.LName">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Password</label>
-                        <input type="text" class="form-control" [(ngModel)]="_UserDataModel.Password">
-                    </div>
-                    <div class="col-lg-6">
                         <label class ="Label">User Status </label>
                         <select class="form-control"[ngModelOptions]="{standalone: true}"[(ngModel)]="_UserDataModel.Status">
                             <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">--User Status -- </option>

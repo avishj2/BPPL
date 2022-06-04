@@ -79,7 +79,7 @@ export class ViewMapComponent implements OnInit {
         const CS_PointLayer = new VectorLayer({
           // name : 'CS_POINT',
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=388",//387,
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1457",//387,
             //features: new GeoJSON().readFeatures(geojsonObject),
             format: new GeoJSON()
           })  ,
@@ -109,7 +109,7 @@ export class ViewMapComponent implements OnInit {
         const Center_LineLayer = new VectorLayer({
           // name : 'Center_Line',
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=398",
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1456",
             format: new GeoJSON()
           }),
           style: LinestyleFunction,
@@ -140,7 +140,7 @@ export class ViewMapComponent implements OnInit {
 
         const Village_Layer = new VectorLayer({
           source:  new VectorSource({        
-          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=401",
+          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1460",
           format: new GeoJSON(),
           
         }),
@@ -171,7 +171,7 @@ export class ViewMapComponent implements OnInit {
         
         const Khasra_Layer = new VectorLayer({
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=419",
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1458",
             format: new GeoJSON()
           }),
           style: KhasraPolygonstyle,
@@ -180,7 +180,7 @@ export class ViewMapComponent implements OnInit {
 
         const ROU_Layer = new VectorLayer({
           source:  new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadAwardAndMutations?documentId=400",
+            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1459",
             format: new GeoJSON()
           }),
           style: KhasraPolygonstyle,
