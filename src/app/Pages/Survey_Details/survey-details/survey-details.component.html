@@ -122,43 +122,32 @@
                                 {{this._SurveyModel.KhataNo}}
                             </div>
                         </div>
-                        <div class="col-lg-3" *ngIf="_DisabledInputField != true">
-                            <div class="form-group row" style="margin-top: 11%;">
-                                <div class="col-lg-8">
-                                    <label class="Label" style="margin-left: 3px;">
-                                        Rev. Rec. Updated
-                                    </label>
-                                </div>
-                                <div class="col-lg-4">
-                                    <input type="checkbox"class="form-controlCheckBox"
-                                    [(ngModel)]="_SurveyModel.RevRecUpdated" [ngModelOptions]="{standalone: true}">
-                                </div>    
-                            </div>
-                        </div>
-                        <div class="col-lg-3" *ngIf="_DisabledInputField != true">
-                            <div class="form-group row" style="margin-top: 11%;">
-                                <div class="col-lg-6">
-                                    <label class="Label" style="margin-left:3px;">
-                                        Inactive
-                                    </label>
-                                </div>
-                                <div class="col-lg-6"> 
-                                    <input type="checkbox"class="form-controlCheckBox" style="margin-left:-15px;"
-                                    [(ngModel)]="_SurveyModel.InActive" [ngModelOptions]="{standalone: true}">
-                                </div>   
+
+                        <div class="col-lg-3">
+                            <label class="Label">Rev. Rec. Updated</label>
+                            <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.RevRecUpdated">
+                                <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
+                                -- Select Rev. Rec. Updated --
+                                </option>
+                                <option [ngValue]="true" >Yes</option>
+                                <option [ngValue]="false" >No</option>
+                            </select>
+                            <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.RevRecUpdated === true ? 'Yes' : 'No'}}
                             </div>
                         </div>
 
-                        <div class="col-lg-3"*ngIf="_DisabledInputField == true">
-                            <label class="Label">Rev. Rec. Updated</label>
-                            <div class="DisabledFieldLabel">
-                                {{this._SurveyModel.RevRecUpdated}}
-                            </div>
-                        </div>
-                        <div class="col-lg-3"*ngIf="_DisabledInputField == true">
+                        <div class="col-lg-3">
                             <label class="Label">Inactive</label>
-                            <div class="DisabledFieldLabel" >
-                                {{this._SurveyModel.InActive}}
+                            <select *ngIf="_DisabledInputField != true"class="form-control" [(ngModel)]="_SurveyModel.InActive">
+                                <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
+                                -- Select Inactive --
+                                </option>
+                                <option [ngValue]="true" >Yes</option>
+                                <option [ngValue]="false" >No</option>
+                            </select>
+                            <div class="DisabledFieldLabel"*ngIf="_DisabledInputField == true">
+                                {{this._SurveyModel.InActive === true ? 'Yes' : 'No'}}
                             </div>
                         </div>
 

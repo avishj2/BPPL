@@ -96,13 +96,13 @@
                             <div class="col-lg-3">
                                 <label class="Label">Rev. Rec. Updated</label>
                                 <div class="DisabledFieldLabel">
-                                    {{this._SurveyModel.RevRecUpdated}}
+                                    {{this._SurveyModel.RevRecUpdated === true ? 'Yes' : 'No'}}
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <label class="Label">Inactive</label>
                                 <div class="DisabledFieldLabel" >
-                                    {{this._SurveyModel.InActive}}
+                                    {{this._SurveyModel.InActive === true ? 'Yes' : 'No'}}
                                 </div>
                             </div>    
                             <div class="col-lg-3">

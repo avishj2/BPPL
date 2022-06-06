@@ -40,8 +40,8 @@
                 <td>{{data.AddressHindi}}</td>
                 <td>{{data.AddressLocal}}</td>
                 <td>{{data.OwnerCode}}</td>
-                <td>{{data.InActive}}</td>
-                <td>{{data.MinorOwner}}</td>
+                <td>{{data.InActive === true ? 'Yes' : 'No'}}</td>
+                <td>{{data.MinorOwner === true ? 'Yes' : 'No'}}</td>
             </tr>
         </tbody>
     </table>
