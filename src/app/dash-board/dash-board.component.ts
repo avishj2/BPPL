@@ -26,6 +26,7 @@ _CurrentUserName: string;
   async ngOnInit() 
     {
       //await this.Utility.MapLayerGeoJson();  
+      document.getElementById("sidebar-toggle-icon").click();
       this.APIUtilityService.DisplayMenuItems = [];
       //this.Utility.LogText2("===",this.APIUtilityService._MenuJsonData);
       let userDetails = JSON.parse(localStorage.getItem('currentUser'));
