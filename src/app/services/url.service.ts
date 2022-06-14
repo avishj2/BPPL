@@ -1,5 +1,6 @@
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
+import UrlData from 'src/assets/Dashboard/url.json';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,10 @@ export class UrlService {
   constructor(   
   ) { }
 
-  url ="https://bppl.dgdatam.com"; //"https://localhost:44340"; 
-
+  url = UrlData.url;
+  
+  //url ="https://bppl.dgdatam.com"; //"https://localhost:44340"; 
+  //url ="http://192.168.0.135:99/";
   /**bppl FILTER api url **/
   GetAllStatesAPI = this.url + '/api/Filter/GetAllStates';
   GetAllDistrictAPI = this.url + '/api/Filter/GetAllDistrict';
