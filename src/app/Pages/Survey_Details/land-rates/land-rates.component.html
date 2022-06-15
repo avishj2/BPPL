@@ -22,7 +22,7 @@
                     <tr>  
                         <th>Action</th>
                         <th>MeasureUnit</th>
-                        <th>SurveyNumber</th>
+                        <th>Land Types</th>
                         <th>Reserve Price</th> 
                         <th>Sale Deed Price</th>   
                         <th>CA Price</th>  
@@ -41,7 +41,7 @@
                             </button>
                         </td>   
                         <td>{{GetLookupValue(_LandDropDownsModel.MeasureUnits,data.MeasureUnit)}}</td>
-                        <td>{{data.SurveyNumber}}</td>       
+                        <td>{{GetLookupValue(_LandTypeDetails, data.TypeOfLand)}}</td>       
                         <td>{{data.ReservePriceHa}}</td>
                         <td>{{data.SaleDeedPriceHa}}</td>
                         <td>{{data.CAPriceHa }}</td>
@@ -119,14 +119,11 @@
 
             <div class="modal-body">
                 <div class="form-group row">
-                    <!-- <div class="col-lg-6">
+                    <div class="col-lg-8">
                         <label class="Label">Land Types</label>
-                        <select class="form-control"[(ngModel)]="_LandRatesModel.CropLookupId">
-                            <option *ngFor="let data of _CropDropDownsModel.CropNames"[value]="data.Value">
-                                {{data.Text}}
-                            </option>
-                        </select>
-                    </div> -->
+                        <ng-select [allowClear]="true" [items]="_LandTypeDetails" bindLabel="Text" bindValue ="Value" [(ngModel)]="_LandRatesModel.TypeOfLand" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Land Types --"> 
+                        </ng-select>
+                    </div>
                     <div class="col-lg-6">
                         <label class="Label">Measure Unit</label>
                         <select class="form-control"[(ngModel)]="_LandRatesModel.MeasureUnit">

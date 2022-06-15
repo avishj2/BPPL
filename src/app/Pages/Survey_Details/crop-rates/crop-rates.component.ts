@@ -40,7 +40,7 @@ export class CropRatesComponent implements OnInit {
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it ?";
   _ShowCropDetailsDiv : boolean = false;
-  _VillageName : string;
+  _TalukaName : string;
   _VillageID : any;
   _Cropdocument : CommonDocDataModel ;
   Cropfile: File = null; // Variable to store file
@@ -78,7 +78,7 @@ export class CropRatesComponent implements OnInit {
         {
           pagingType: 'full_numbers',
           pageLength: 5,
-          language: {emptyTable : "No Crops!!"}
+          language: {emptyTable : "There are no details!!"}
         };
       this.dtOptions[2] = 
         {
@@ -118,7 +118,7 @@ export class CropRatesComponent implements OnInit {
         {
           this._ShowCropDetailsDiv = true;
           this._VillageID = null;
-          this._VillageName = " - "+ this._SearchCriteria.VillageName;
+          this._TalukaName = " - "+ this._SearchCriteria.TalukaName;
           this.GetAllCrops();
         }
       else

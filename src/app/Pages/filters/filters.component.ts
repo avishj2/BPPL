@@ -138,7 +138,7 @@ export class FiltersComponent implements OnInit {
         },error => {
           this.Utility.LogText2("GetTalukaByDistrictAPI error",error);
         });
-      this._SearchCriteria.DistrictName = this.GetLookupDistrict(this._DistrictDetails, this._SearchCriteria.DistrictId)     
+      this._SearchCriteria.DistrictName = this.GetLookupDistrict(this._DistrictDetails, this._SearchCriteria.DistrictId)  
     }
 
 
@@ -158,6 +158,7 @@ export class FiltersComponent implements OnInit {
     /**get all village details base on the selected Taluka */
   GetAllVillageDetails(argTalukaId)
     {
+      this._SearchCriteria.TalukaName = this.GetLookupTaluka(this._TalukaDetails, this._SearchCriteria.TalukaId)   
       this.ResetDropDowns(DropDownChangeEnum.TalukaChanged)
       if(this.filterControls.ShowVillage == true)
         {
@@ -167,14 +168,13 @@ export class FiltersComponent implements OnInit {
           },error => {
             this.Utility.LogText2("GetVillageByTalukaAPI error",error);
           }); 
-        this._SearchCriteria.TalukaName = this.GetLookupTaluka(this._TalukaDetails, this._SearchCriteria.TalukaId)
       }
     }
 
     /** taluka name*/
     GetLookupTaluka(lookups : TalukaDetails[], lookUpid: number) : any
       {
-        let object = lookups.find(elm=>elm.TalukaId == lookUpid );
+        let object = lookups.find(elm=>elm.TalukaId == lookUpid);
         if(object)
         {
           return object.TalukaName;
@@ -196,10 +196,6 @@ export class FiltersComponent implements OnInit {
             },error => {
               this.Utility.LogText2("GetVillageByTalukaAPI error",error);
             });
-        }
-      if(this.filterControls.ShowLandTypes == true)
-        {
-          this.GetLandTypesByVillage(argVillageId);
         }
       this._SearchCriteria.VillageName = this.GetLookupVillage(this._VillageDetails,argVillageId);
       this.ChangedVillage.emit(this._SearchCriteria); 
@@ -251,16 +247,6 @@ export class FiltersComponent implements OnInit {
           this.Utility.LogText2("GetAllCrossingsAPI error",error); 
         });
       this._SearchCriteria.SurveyName = this.GetLookupValue(this._SurveyDetails, argSurveyId)
-    }
-
-  GetLandTypesByVillage(argvillageId)
-    {
-      let url = this.urlService.GetLandTypesByVillageAPI + argvillageId;
-      this.httpService.get(url,null).subscribe(response => {
-        this._LandTypeDetails = response; 
-        },error => {
-          this.Utility.LogText2("GetLandTypesByVillageAPI error",error); 
-        });
     }
 
     GetLookupValue(lookups : CommonDropdownModel[], lookUpid: number) : any

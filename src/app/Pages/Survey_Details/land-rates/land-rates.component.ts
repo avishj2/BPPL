@@ -45,6 +45,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   _LandRatesdocument: CommonDocDataModel;
   Landfile: File = null; // Variable to store file
   _LandandDocDetailsModel : LandandDocDetailsModel;
+  _LandTypeDetails : CommonDropdownModel[];
 
   constructor(public urlService: UrlService,
     private router: Router,
@@ -80,7 +81,7 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
         {
           pagingType: 'full_numbers',
           pageLength: 5,
-          language: {emptyTable : "No Crops!!"}
+          language: {emptyTable : "There are no details!!"}
         };
       this.dtOptions[2] = 
         {
@@ -123,11 +124,25 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
           this._VillageId = this._SearchCriteria.VillageId;                   
           this.GetSurveyTabLabel();
           this._ShowLandDetailsDiv = true;
+          this.GetLandTypesByVillage(this._VillageId)
          }
        else{
          alert("Please select Village");
        }
      }
+
+
+     GetLandTypesByVillage(argvillageId)
+      {
+        let url = this.urlService.GetLandTypesByVillageAPI + argvillageId;
+        this.httpService.get(url,null).subscribe(response => {
+          this._LandTypeDetails = response; 
+          },
+          error => {
+            this.Utility.LogText2("GetLandTypesByVillageAPI error",error); 
+          });
+      }
+ 
 
     GetSurveyTabLabel()
      {
@@ -200,14 +215,14 @@ export class LandRatesComponent implements AfterViewInit , OnInit {
   SaveLandDetails()
     {
       this.CommonService.ShowSpinnerLoading();
-      if(this._SearchCriteria.TypeOfLand == null)
+      if(this._LandRatesModel.TypeOfLand == null)
         {
           alert("Please select Land Type!!")
         }
       else
       {
         this._SearchCriteria.SurveyID = null;        
-        this._LandRatesModel.TypeOfLand = Number(this._SearchCriteria.TypeOfLand);
+        this._LandRatesModel.TypeOfLand = Number(this._LandRatesModel.TypeOfLand);
         this._LandRatesModel.VillageId = Number(this._VillageId);
         this._LandRatesModel.SurveyId = this._SearchCriteria.SurveyID;
         this._LandRatesModel.MeasureUnit = Number(this._LandRatesModel.MeasureUnit);
