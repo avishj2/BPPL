@@ -31,7 +31,6 @@ import { CrossingDetailsComponent } from './Pages/Survey_Details/crossing-detail
 import { TerminalsDetailsComponent } from './Pages/Survey_Details/terminals-details/terminals-details.component';
 import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/adhoc-payment-details.component';
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
-import { TestLoginComponent } from './test-login/test-login.component';
 import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/survey-details.component';
 import { CropDetailsComponent } from './Pages/Survey_Details/survey-details/crop-details/crop-details.component';
 import { TreeDetailsComponent } from './Pages/Survey_Details/survey-details/tree-details/tree-details.component';
@@ -90,7 +89,6 @@ import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-d
     TerminalsDetailsComponent,
     AdhocPaymentDetailsComponent,
     ViewVillageDetailsComponent,
-    TestLoginComponent,
     SurveyDetailsComponent,
     CropDetailsComponent,
     TreeDetailsComponent,

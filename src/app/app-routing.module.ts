@@ -12,7 +12,6 @@ import { TerminalsDetailsComponent } from './Pages/Survey_Details/terminals-deta
 import { AdhocPaymentDetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/adhoc-payment-details.component';
 import { AddAdhocdetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/add-adhocdetails/add-adhocdetails.component';
 import { ViewVillageDetailsComponent } from './Pages/View_Details/view-village-details/view-village-details.component';
-import { TestLoginComponent } from './test-login/test-login.component';
 import { SurveyDetailsComponent } from './Pages/Survey_Details/survey-details/survey-details.component';
 import { CropRatesComponent } from './Pages/Survey_Details/crop-rates/crop-rates.component';
 import { LandRatesComponent } from './Pages/Survey_Details/land-rates/land-rates.component';
@@ -37,7 +36,6 @@ import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-d
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
     { path: '' , redirectTo: '/login', pathMatch: 'full'},
-    // {path: 'login', component: TestLoginComponent},
     // { path: '' , redirectTo: '/login', pathMatch: 'full'},
     {path: 'dashboard', component: DashBoardComponent , canActivate:[AuthGuard], 
      data: { breadcrumb: 'Home'},

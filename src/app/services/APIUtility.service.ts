@@ -8,7 +8,7 @@ import { UrlService } from '../services/url.service';
 import { HttpService } from '../services/http.service';
 import {UtilityService} from '../services/utility.service';
 import { User } from '../Model/Base.model';
-import MenuData from 'src/app/dash-board/menu.json';
+import MenuData from 'src/assets/Dashboard/menu.json';
 
 @Injectable({
     providedIn: 'root'
