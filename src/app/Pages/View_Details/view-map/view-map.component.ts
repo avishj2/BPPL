@@ -26,6 +26,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { ChildViewCrossingComponent } from 'src/app/Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component'
 import { ViewSurveyTabsComponent } from 'src/app/Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
 import {MapFeature} from './mapModel';
+import { ConfigService } from 'src/app/services/config.service';
 @Component({
   selector: 'app-view-map',
   templateUrl: './view-map.component.html',
@@ -37,9 +38,11 @@ export class ViewMapComponent implements OnInit {
   constructor(public urlService: UrlService,
     public modelServiceService : ModelServiceService,
     public Utility: UtilityService,
-    public CommonService : CommonService
-    ){
-     }
+    public CommonService : CommonService,
+    public configService : ConfigService
+    )
+    {
+    }
 
  async ngOnInit() 
     {
@@ -79,8 +82,8 @@ export class ViewMapComponent implements OnInit {
         const CS_PointLayer = new VectorLayer({
           // name : 'CS_POINT',
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1457",//387,
-            //features: new GeoJSON().readFeatures(geojsonObject),
+            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1457",//387,
+            features: new GeoJSON().readFeatures(this.configService.getCSPoint()),
             format: new GeoJSON()
           })  ,
           style: pointstyleFunction,
@@ -109,7 +112,8 @@ export class ViewMapComponent implements OnInit {
         const Center_LineLayer = new VectorLayer({
           // name : 'Center_Line',
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1456",
+            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1456",
+            features: new GeoJSON().readFeatures(this.configService.getCenterLine()),
             format: new GeoJSON()
           }),
           style: LinestyleFunction,
@@ -140,7 +144,8 @@ export class ViewMapComponent implements OnInit {
 
         const Village_Layer = new VectorLayer({
           source:  new VectorSource({        
-          url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1460",
+          //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1460",
+          features: new GeoJSON().readFeatures(this.configService.getVIllageBoundry()),
           format: new GeoJSON(),
           
         }),
@@ -171,7 +176,8 @@ export class ViewMapComponent implements OnInit {
         
         const Khasra_Layer = new VectorLayer({
           source: new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1458",
+            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1458",
+            features: new GeoJSON().readFeatures(this.configService.getKhasrBoundry()),
             format: new GeoJSON()
           }),
           style: KhasraPolygonstyle,
@@ -180,7 +186,8 @@ export class ViewMapComponent implements OnInit {
 
         const ROU_Layer = new VectorLayer({
           source:  new VectorSource({        
-            url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1459",
+            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1459",
+            features: new GeoJSON().readFeatures(this.configService.getROW()),
             format: new GeoJSON()
           }),
           style: KhasraPolygonstyle,

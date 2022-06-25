@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
 import MenuData from 'src/assets/Dashboard/menu.json';
+
+import CenterLine from 'src/assets/GeoJson/Center_line.json';
+import CSPoint from 'src/assets/GeoJson/CS_POINT.json';
+import KhasrBoundry from 'src/assets/GeoJson/Khasra_boundary.json';
+import ROW from 'src/assets/GeoJson/ROW.json';
+import VIllageBoundry from 'src/assets/GeoJson/Village_boundary.json';
+
 import { MenuOption } from 'src/app/Model/Base.model';
 import { map } from 'rxjs/operators';
 import { HttpService } from './http.service';
@@ -22,6 +29,23 @@ export class ConfigService {
   getConfiguration(): MenuOption[] {
     return MenuData; //this.config;
   }
+
+  getCenterLine(): any {
+    return CenterLine; //this.config;
+  }
+  getCSPoint(): any {
+    return CSPoint; //this.config;
+  }
+  getKhasrBoundry(): any {
+    return KhasrBoundry; //this.config;
+  }
+  getROW(): any {
+    return ROW; //this.config;
+  }
+  getVIllageBoundry(): any {
+    return VIllageBoundry; //this.config;
+  }
+
 
   getApiUrl(): string {
     return this.apiUrl.url;
