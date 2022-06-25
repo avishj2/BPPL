@@ -9,7 +9,161 @@ export class UrlService {
   constructor(   
   ) { }
 
-  url = UrlData.url;
+  url = "";
+  
+  setUrl(argUrl: string)
+  {
+    this.url = argUrl; 
+
+    this.GetAllStatesAPI = this.url + '/api/Filter/GetAllStates';
+    this.GetAllDistrictAPI = this.url + '/api/Filter/GetAllDistrict';
+    this.GetDistrictByStateAPI = this.url + '/api/Filter/GetDistrictByState?stateId=';
+    this.GetAllTalukaAPI = this.url + '/api/Filter/GetAllTaluka';  
+    this.GetTalukaByDistrictAPI = this.url + '/api/Filter/GetTalukaByDistrict?districtId=';
+    this.GetAllVillagesAPI = this.url +'/api/Filter/GetAllVillages';
+    this.GetVillageByTalukaAPI = this.url +'/api/Filter/GetVillageByTaluka?talukaId=';
+    this.GetSurveyDetailsByVillageId  = this.url +'/api/Survey/GetSurveyDetailsByVillageId?villageId=';
+    this.GetOwnerNamesForSurveyAPI  = this.url + '/api/Filter/GetOwnerNamesForSurvey?surveyId=';
+    this.GetLandTypesByVillageAPI = this.url + '/api/Filter/GetLandTypesByVillage?villageId=';
+    this.GetAllTalukaVillagesAPI = this.url +'/api/Filter/GetAllTalukaVillages';
+    
+    this.AddOrUpdateVillageAPI = this.url + '/api/Village/AddOrUpdateVillage';
+    this.GetVillageByVillageIdAPI = this.url +'/api/Village/GetVillageByVillageId?villageId=';
+    this.DeleteVillageAPI = this.url +'/api/Village/DeleteVillage?villageId=';
+    this.AddOrUpdateVillageChainageAPI = this.url +'/api/Village/AddOrUpdateVillageChainage';
+    this.DeleteVillageChainageAPI = this.url + '/api/Village/DeleteVillageChainage?villageChainageId=';
+    /**gazette APIs */
+    this.GetTypeOfNotificationsAPI = this.url + '/api/Gazzate/GetTypeOfNotifications';
+    this.GetGazzateDropDownsAPI = this.url + '/api/Gazzate/GetGazzateDropDowns';
+    this.GetAllNotificationNosAPI = this.url + '/api/Gazzate/GetAllNotificationNos';
+    this.GetAllGazzatesbasedOntypeOfNoAPI =  this.url +'/api/Gazzate/GetAllGazzates?typeOfNotification=';
+    this.GetAllGazzatesAPI =  this.url +'/api/Gazzate/GetAllGazzates';
+    this.GetGazzateByIdAPI = this.url +'/api/Gazzate/GetGazzateById?gazzateId=';
+    this.AddOrUpdateGazzateAPI = this.url + '/api/Gazzate/AddOrUpdateGazzate';
+    this.DeleteGazzateAPI = this.url + '/api/Gazzate/DeleteGazzate?gazzateId=';
+    this.AddGazzetteDocument = this.url + '/api/Gazzate/AddGazzetteDocument';
+    this.DownloadGazzete = this.url + '/api/Gazzate/Download?documentId=';
+    this.DeleteGazzetteDocument = this.url+ '/api/Gazzate/DeleteGazzetteDocument?documentId=';
+    this.GetNotificationByIdAPI = this.url + '/api/Gazzate/GetNotificationById?notificationId=';
+    this.AddOrUpdateNotificationAPI = this.url +'/api/Gazzate/AddOrUpdateNotification';
+    this.DeleteNotificationAPI = this.url +'/api/Gazzate/DeleteNotification?notificationId=';
+    //crosssing api
+    this.GetCrossingDropDownsAPI = this.url +'/api/Crossing/GetCrossingDropDowns';
+    this.AddOrUpdateCrossingAPI = this.url + '/api/Crossing/AddOrUpdateCrossing';
+    this.DeleteCrossingAPI= this.url + '/api/Crossing/DeleteCrossing?crossingId=';
+    this.GetCrossingByIdAPI= this.url + '/api/Crossing/GetCrossingById?crossingId=';
+    this.GetAllCrossingsAPI= this.url + '/api/Crossing/GetAllCrossings?typeOfCrossing=';
+    this.AddCrossingDocumentAPI= this.url + '/api/Crossing/AddCrossingDocument';
+    this.DownloadCrossingDocAPI= this.url + '/api/Crossing/Download?documentId=';
+    this.DeleteCrossingDocumentAPI = this.url + '/api/Crossing/DeleteGazzetteDocument?documentId=';
+    /**survey numbers apis */
+    this.GetSurveyDropDownsAPI = this.url + '/api/Survey/GetSurveyDropDowns';
+    this.AddOrUpdateSurveyAPI = this.url + '/api/Survey/AddOrUpdateSurvey';
+    this.DeleteSurveyAPI = this.url + '/api/Survey/DeleteSurvey?surveyId=';
+    this.GetSurveyDetailsByIdAPI = this.url +'/api/Survey/GetSurveyDetailsById?surveyId=';
+    this.AddOrUpdateSurveyLandAPI = this.url+ '/api/Survey/AddOrUpdateSurveyLand';
+    this.DeleteSurveyLandAPI = this.url + '/api/Survey/DeleteSurveyLand?surveyLandId=';
+    this.AddOrUpdateSurveyOwnerAPI = this.url + '/api/Survey/AddOrUpdateSurveyOwner';
+    this.DeleteSurveyOwnerAPI = this.url +  '/api/Survey/DeleteSurveyOwner?surveyOwnerId=';
+    this.AddOrUpdateSurveyTreeAPI = this.url + '/api/Survey/AddOrUpdateSurveyTree';
+    this.DeleteSurveyTreeAPI = this.url +'/api/Survey/DeleteSurveyTree?surveyTreeId=';
+    this.AddOrUpdateSurveyCropAPI = this.url +'/api/Survey/AddOrUpdateSurveyCrop';
+    this.DeleteSurveyCropAPI = this.url +'/api/Survey/DeleteSurveyCrop?surveyCropId=';
+    this.AddOrUpdateSurveyRestorationAPI = this.url +'/api/Survey/AddOrUpdateSurveyRestoration';
+    this.DeleteSurveyRestorationAPI = this.url +'/api/Survey/DeleteSurveyRestoration?surveyRestorationId=';
+    this.AddSurveyDocumentAPI = this.url+'/api/Survey/AddSurveyDocument';
+    this.DownloadRevDocAPI = this.url +'/api/Survey/Download?documentId=';
+    this.DeleteSurveyDocumentAPI = this.url+'/api/Survey/DeleteSurveyDocument?documentId=';
+    this.GetSurveyDetailsByNameAPI = this.url +'/api/Survey/GetSurveyDetailsByName?surveyNumber=';
+    this.AddOrUpdateSurveyFarmerNOCAPI = this.url + '/api/Survey/AddOrUpdateSurveyFarmerNOC';
+    this.DeleteSurveyFarmerNOCAPI = this.url + '/api/Survey/DeleteSurveyFarmerNOC?surveyFarmerNocId=';
+    //survey documents APIs
+    this.GetSurveyDocumentDropDowns = this.url+'/api/SurveyDocuments/GetSurveyDocumentDropDowns';
+    this.GetProjectReports= this.url+'/api/SurveyDocuments/GetProjectReports';
+    this.AddProjectReportAPI = this.url+'/api/SurveyDocuments/AddProjectReport';
+    this.DownloadProjectReportAPI =  this.url+'/api/SurveyDocuments/DownloadProjectReport?documentId=';
+    this.DeleteProjectReportAPI = this.url +'/api/SurveyDocuments/DeleteProjectReport?documentId=';
+    //===2
+    this.GetAlignmentSheetsAPI = this.url +'/api/SurveyDocuments/GetAlignmentSheets';
+    this.AddAlignmentSheetAPI = this.url +'/api/SurveyDocuments/AddAlignmentSheet';
+    this.DownloadAlignmentSheetAPI = this.url +'/api/SurveyDocuments/DownloadAlignmentSheet?documentId=';
+    this.DeleteAlignmentSheetAPI = this.url +'/api/SurveyDocuments/DeleteAlignmentSheet?documentId=';
+    //===3
+    this.GetAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/GetAwardAndMutations?requestId=';
+    this.AddAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/AddAwardAndMutations';
+    this.DownloadAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DownloadAwardAndMutations?documentId=';
+    this.DeleteAwardAndMutationsAPI = this.url +'/api/SurveyDocuments/DeleteAwardAndMutations?documentId=';
+    this.GetAwardAndMutationsPostAPI = this.url +'/api/SurveyDocuments/GetAwardAndMutations';
+    //=== 4 leagal documents
+    this.GetLegalDocumentsAPI = this.url + '/api/SurveyDocuments/GetLegalDocuments';
+    this.AddLegalDocumentAPI = this.url + '/api/SurveyDocuments/AddLegalDocument';
+    this.DownloadLegalDocumentAPI = this.url + '/api/SurveyDocuments/DownloadLegalDocument?documentId=';
+    this.DeleteLegalDocumentAPI = this.url + '/api/SurveyDocuments/DeleteLegalDocument?documentId=';
+    this.GetAllLookupsForLegalDocsAPI = this.url+ '/api/Project/GetAllLookupsForGroup?lookupGroupId=1029';
+    //crop rates APIs
+    this.GetCropDropDownsAPI = this.url + '/api/LandCrop/GetCropDropDowns';
+    this.AddOrUpdateCropsRateAPI = this.url +'/api/LandCrop/AddOrUpdateCrops';
+    this.DeleteCropsAPI = this.url +'/api/LandCrop/DeleteCrops?cropId=';
+    this.GetAllCropsAPI = this.url +'/api/LandCrop/GetAllCrops?tehsilId=';
+    this.AddTehsilCropDocumentAPI = this.url +'/api/LandCrop/AddTehsilCropDocument';
+    this.DownloadTehsilCropDocumentAPI = this.url +'/api/LandCrop/DownloadTehsilCropDocument?documentId=';
+    this.DeleteTehsilCropDocumentAPI = this.url +'/api/LandCrop/DeleteTehsilCropDocument?documentId='
+    //land rates APIs
+    this.GetLandDropDownsAPI = this.url +'/api/LandCrop/GetLandDropDowns';
+    this.AddOrUpdateLandDetails = this.url + '/api/LandCrop/AddOrUpdateLandDetails';
+    this.DeleteLandDetailsAPI = this.url + '/api/LandCrop/DeleteLandDetails?landId=';
+    this.GetAllLandDetails= this.url + '/api/LandCrop/GetAllLandDetails?villageId=';
+    this.AddVillageLandDocumentAPI = this.url +'/api/LandCrop/AddVillageLandDocument';
+    this.DownloadVillageLandDocumentAPI = this.url + '/api/LandCrop/DownloadVillageLandDocument?documentId=';
+    this.DeleteVillageLandDocumentAPI = this.url +'/api/LandCrop/DeleteVillageLandDocument?documentId=3';
+    //SVIPS
+    this.GetSVIPSDropDownsAPI = this.url + '/api/LandCrop/GetSVIPSDropDowns';
+    this.AddOrUpdateSVIPSDetailsAPI = this.url + '/api/LandCrop/AddOrUpdateSVIPSDetails';
+    this.DeleteSVIPSDetailsAPI = this.url +'/api/LandCrop/DeleteSVIPSDetails?SVIPSDetailsId=';
+    this.GetSVIPSDetailsByIdAPI = this.url + '/api/LandCrop/GetSVIPSDetailsById?SVIPSDetailsId=';
+    this.GetAllSVIPSDetailsAPI = this.url + '/api/LandCrop/GetAllSVIPSDetails';
+    this.AddSVIPSDetailsDocumentAPI = this.url + '/api/LandCrop/AddSVIPSDetailsDocument';
+    this.SVIPSDownloadAPI = this.url +'/api/LandCrop/Download?documentId=';
+    this.DeleteSVIPSDetailsDocumentAPI = this.url +'/api/LandCrop/DeleteSVIPSDetailsDocument?documentId=';
+    //Adhoc payment details
+    this.GetAdHocPaymentDropDownsAPI = this.url + '/api/AdHocPayment/GetAdHocPaymentDropDowns';
+    this.AddOrUpdateAdHocPaymentAPI = this.url +'/api/AdHocPayment/AddOrUpdateAdHocPayment';
+    this.DeleteAdHocPaymentAPI = this.url +'/api/AdHocPayment/DeleteAdHocPayments?adHocPaymentId=';
+    this.GetAllAdHocPaymentsAPI = this.url +'/api/AdHocPayment/GetAdHocPaymentDetails?surveyOwnerId=';
+    this.AddAdHocPaymentDocumentAPI = this.url +'/api/AdHocPayment/AddAdHocPaymentDocument';
+    this.DownloadPaymentAPI = this.url +'/api/AdHocPayment/Download?documentId=';
+    this.DeleteAdHocPaymentDocumentAPI = this.url +'/api/AdHocPayment/DeleteAdHocPaymentDocument?documentId=';
+    //LAQ
+    this.GetSurveyDetailsForLAQAPI = this.url +'/api/Survey/GetSurveyDetailsForLAQ?villageId=';
+    //viewcrossing
+    this.GetCrossingSummaryAPI =this.url+ '/api/Crossing/GetCrossingSummary';  
+    this.GetVillageSummaryAPI = this.url+ '/api/Survey/GetVillageSummary';
+    this.GetCrossingByNameAPI = this.url+ "/api/Crossing/GetCrossingByName?crossingNo=";
+    this.GetVillageSummaryChainageWiseAPI = this.url + '/api/Survey/GetVillageSummaryChainageWise';
+    this.Authenticate = this.url+"/api/Users/Authenticate";
+    this.NavigateAddEditAdhocDetails ="../Add_Adhoc_Details";
+    //Configuration
+    this.GetLookupGroupsAPI = this.url + '/api/Project/GetLookupGroups';
+    this.AddOrUpdateLookupsAPI = this.url +'/api/Project/AddOrUpdateLookups';
+    this.DeleteLookupAPI = this.url + '/api/Project/DeleteLookup?lookupId=';
+    this.GetAllLookupsForGroupAPI = this.url+'/api/Project/GetAllLookupsForGroup?lookupGroupId=';
+    //CA Details API
+    this.GetCADetailsDropDownsAPI = this.url +'/api/Project/GetCADetailsDropDowns';
+    this.AddOrUpdateCADetailsAPI = this.url + '/api/Project/AddOrUpdateCADetails';
+    this.DeleteCADetailsAPI = this.url + '/api/Project/DeleteCADetails?caDetailsId=';
+    this.GetCADetailsAPI = this.url + '/api/Project/GetCADetails?caDetailsId=';
+    this.AddCADetailsDocumentAPI = this.url + '/api/Project/AddCADetailsDocument';
+    this.DownloadCAdocAPI = this.url +'/api/Project/Download?documentId=';
+    this.DeleteCADetailsDocumentAPI = this.url + '/api/Project/DeleteCADetailsDocument?documentId=';
+    //user magament
+    this.GetAllUsersAPI = this.url +'/api/Users/GetAllUsers';
+    this.GetUsersDropDownsAPI = this.url +'/api/Users/GetUsersDropDown';
+    this.AddOrUpdateUsersAPI = this.url +'/api/Users/AddOrUpdateUsers';
+    this.GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
+    this.AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
+    this.UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
+ 
+  }
   
   //url ="https://bppl.dgdatam.com"; //"https://localhost:44340"; 
   //url ="http://192.168.0.135:99/";
@@ -155,7 +309,7 @@ export class UrlService {
   GetCrossingByNameAPI = this.url+ "/api/Crossing/GetCrossingByName?crossingNo=";
   GetVillageSummaryChainageWiseAPI = this.url + '/api/Survey/GetVillageSummaryChainageWise';
 
-  Authenticate = this.url+ "/api/Users/Authenticate";
+  Authenticate = this.url+"/api/Users/Authenticate";
 
   NavigateAddEditAdhocDetails ="../Add_Adhoc_Details"; 
 
@@ -181,7 +335,5 @@ export class UrlService {
   GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
   AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
   UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
-
-
 }
 

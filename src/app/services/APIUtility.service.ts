@@ -9,27 +9,29 @@ import { HttpService } from '../services/http.service';
 import {UtilityService} from '../services/utility.service';
 import { User } from '../Model/Base.model';
 import MenuData from 'src/assets/Dashboard/menu.json';
+import { MenuOption } from 'src/app/Model/Base.model';
+import {ConfigService} from '../services/config.service';
 
 @Injectable({
     providedIn: 'root'
   })
 
 export class APIUtilityService {
-  _MenuJsonData = MenuData;
+  //_MenuJsonData = MenuData;
+  // _MenuJsonData : MenuOption[];
+  _ServerUrl : string;
   DisplayMenuItems = [];
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
   constructor(
-      private router: Router,
-      private http: HttpClient,
       public urlService: UrlService,
-      private httpservice : HttpService,
-      private utilityService : UtilityService
+      private httpservice : HttpService
       ) { 
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
+        // this._MenuJsonData = this.configService.getConfiguration();
       }
 
    /**

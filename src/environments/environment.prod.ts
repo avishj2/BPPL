@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  Menu: "assets/Dashboard/menu.json",
+  Url: "/assets/Dashboard/url.json",
 };

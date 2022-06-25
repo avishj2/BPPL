@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { APIUtilityService } from '../services/APIUtility.service';
+import { ConfigService } from '../services/config.service';
+import { UrlService } from '../services/url.service';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +20,16 @@ export class LoginComponent implements OnInit {
     constructor(
       private router: Router,
       private route: ActivatedRoute,
-      private apiUtility : APIUtilityService
+      private apiUtility : APIUtilityService,
+      private configService : ConfigService,
+      private urlService : UrlService
     ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.configService.LoadJsons();
+    this.urlService.setUrl(this.configService.getApiUrl());
     this._returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'dashboard';
-
   }
-
 
   Submit(){
     if(!this._userName || !this._password)

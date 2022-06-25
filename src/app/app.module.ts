@@ -72,6 +72,10 @@ import { SVIPSDetailsComponent } from './Pages/Survey_Details/svipsdetails/svips
 import { ViewSVIPSDetailsComponent } from './Pages/View_Details/view-svipsdetails/view-svipsdetails.component';
 import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-details.component';
 
+// export function ConfigLoader(configService: ConfigService) {  
+//   return () => configService.load(environment.Menu); 
+// }
+
 @NgModule({
   declarations: [
     AppComponent,

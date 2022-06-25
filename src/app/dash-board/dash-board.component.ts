@@ -5,6 +5,8 @@ import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { RoleDataModel } from 'src/app/Model/User.model';
 import { HttpService } from 'src/app/services/http.service';
 import { UrlService } from 'src/app/services/url.service';
+import { MenuOption } from '../Model/Base.model';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-dash-board',
@@ -13,19 +15,21 @@ import { UrlService } from 'src/app/services/url.service';
 })
 export class DashBoardComponent implements OnInit {
 _CurrentUserName: string;
+_MenuJsonData : MenuOption[];
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     public Utility: UtilityService,
     public APIUtilityService: APIUtilityService,
     private httpService: HttpService,
     public urlService: UrlService,
+    private configService: ConfigService
   ) { }
 
   async ngOnInit() 
     {
       //await this.Utility.MapLayerGeoJson();  
+      this._MenuJsonData = this.configService.getConfiguration();
       document.getElementById("sidebar-toggle-icon").click();
       this.APIUtilityService.DisplayMenuItems = [];
       //this.Utility.LogText2("===",this.APIUtilityService._MenuJsonData);
@@ -49,18 +53,18 @@ _CurrentUserName: string;
           Userroles.find(element => {
             if (element == 1245 ) //Admin
             {
-               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,25,this.APIUtilityService._MenuJsonData);
-               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this.APIUtilityService._MenuJsonData);
-               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,45,this.APIUtilityService._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,25,this._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,45,this._MenuJsonData);
             };
             if (element == 1246) //Viewer
               { 
-               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this.APIUtilityService._MenuJsonData);               
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this._MenuJsonData);               
               };
             if (element == 1247) //Editor
               {
-               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,25,this.APIUtilityService._MenuJsonData);
-               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this.APIUtilityService._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,25,this._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this._MenuJsonData);
               };
           });
 

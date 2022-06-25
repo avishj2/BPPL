@@ -87,3 +87,20 @@ export class LookupGroupModel
                 return l_LookupGroupModel;
             }
     }
+
+    export class MenuOption {
+        Id: any;
+        MenuName: string;
+        Icon: string;
+        Submenu : Submenu[];
+    
+        constructor()
+        {
+            this.Submenu = [];
+        }
+    }
+
+    export class Submenu{
+        title: string;
+        url:string;
+    }
