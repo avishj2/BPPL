@@ -1,15 +1,5 @@
 [
     {
-        "Id": 15,
-        "MenuName": "Project Details",
-        "Icon": "menu-icon fa fa-id-badge",
-        "Submenu": [
-            {"title" : "Project", "url" : "Project"},
-            {"title" : "CA Info", "url" : "CAInfo"},
-            {"title" : "Survey Agency", "url" : "AL"}       
-        ]
-    },
-    {
         "Id" : 25,
         "MenuName": "Survey Details",
         "Icon": "menu-icon fa fa-pencil-square-o",
@@ -24,7 +14,8 @@
             {"title" : "Ad Hoc Payment", "url" : "View_Adhoc_Payment"},
             {"title" : "Configuration", "url" : "Configuration"},
             {"title" : "SO Mapping", "url" : "SOMapping"},
-            {"title" : "SV-IPS", "url" : "SV_IPSDetails"}
+            {"title" : "SV-IPS", "url" : "SV_IPSDetails"},
+            {"title" : "CA Info", "url" : "CAInfo"}
         ]
     },
     {

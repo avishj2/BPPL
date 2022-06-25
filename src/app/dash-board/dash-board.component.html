@@ -48,7 +48,7 @@
 					</a>
 				</li>
 				<ng-container *ngFor="let Items of APIUtilityService.DisplayMenuItems;let i = index">	
-					<li class="open" role="navigation" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+					<li role="navigation" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
 						<a class="dropdown-toggle">
 						<i class={{Items.Icon}}></i>
 						<span class="menu-text"> {{Items.MenuName}} </span>

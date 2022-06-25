@@ -43,58 +43,24 @@ _CurrentUserName: string;
           UsersRoleFromAPI.forEach(element => {
             Userroles.push(element.RoleId) 
           });
+          
+          let applicableMenuIds : any[] = [];
 
           Userroles.find(element => {
             if (element == 1245 ) //Admin
             {
-              this.APIUtilityService._MenuJsonData.find(ele => {
-                if(ele.Id == 15)
-                  {
-                    this.APIUtilityService.DisplayMenuItems.push(ele)
-                  }
-                if(ele.Id == 25)
-                  {
-                    this.APIUtilityService.DisplayMenuItems.push(ele)
-                  }
-                if(ele.Id == 35)
-                  {
-                    this.APIUtilityService.DisplayMenuItems.push(ele)
-                  }
-                if(ele.Id == 45)
-                  {
-                    this.APIUtilityService.DisplayMenuItems.push(ele)
-                  }
-              });
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,25,this.APIUtilityService._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this.APIUtilityService._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,45,this.APIUtilityService._MenuJsonData);
             };
             if (element == 1246) //Viewer
-              {
-                this.APIUtilityService._MenuJsonData.find(ele => {
-                if(ele.Id == 15)
-                  {
-                    this.APIUtilityService.DisplayMenuItems.push(ele)
-                  }
-                if(ele.Id == 35)
-                  {
-                    this.APIUtilityService.DisplayMenuItems.push(ele)
-                  }                  
-                });
+              { 
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this.APIUtilityService._MenuJsonData);               
               };
             if (element == 1247) //Editor
               {
-                this.APIUtilityService._MenuJsonData.find(ele => {
-                  if(ele.Id == 15)
-                    {
-                      this.APIUtilityService.DisplayMenuItems.push(ele)
-                    }
-                  if(ele.Id == 25)
-                    {
-                      this.APIUtilityService.DisplayMenuItems.push(ele)
-                    }
-                  if(ele.Id == 35)
-                    {
-                      this.APIUtilityService.DisplayMenuItems.push(ele)
-                    }                  
-                });
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,25,this.APIUtilityService._MenuJsonData);
+               this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this.APIUtilityService._MenuJsonData);
               };
           });
 
@@ -113,4 +79,15 @@ _CurrentUserName: string;
     this.router.navigate(['/login']); 
     //localStorage.removeItem('loginDetails'); //remove username and password from localstroage after click logout
   }
+ 
+  addMenuItemIfNotPresent(applicableMenuIds : any[], menuId : number, menus : any[])
+  {
+     let isAvailable = applicableMenuIds.find(elm=>elm.Id == menuId);
+     if(!isAvailable)
+     {
+       let menuObject = menus.find(elm=>elm.Id == menuId);
+       applicableMenuIds.push(menuObject);
+     }
+  }
+
 }
