@@ -30,7 +30,7 @@ export class FiltersComponent implements OnInit {
   _DropDownsDataModel : GazzateDropDownsDataModel;
   _SurveyDocDropDownsDataModel : SurveyDocDropDownsDataModel;
 
- _TahsilLabel : string = "Tahsil";
+ _TahsilLabel : string = "Tehsil";
   //api models
   _StateDataModel : StateDetails[];
   _DistrictDetails : DistrictDetails[];

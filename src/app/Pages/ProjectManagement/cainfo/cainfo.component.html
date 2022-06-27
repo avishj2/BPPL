@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-lg-3">
                     <label class="Label">Gazette No</label>
-                    <input *ngIf="_DisabledInputField != true"type="date"class="form-control"[(ngModel)]="_CADataModel.GazzateNo" [ngModelOptions]="{standalone: true}">  
+                    <input *ngIf="_DisabledInputField != true"type="text"class="form-control"[(ngModel)]="_CADataModel.GazzateNo" [ngModelOptions]="{standalone: true}">  
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._CADataModel.GazzateNo }}
                     </div>
@@ -128,13 +128,26 @@
                         {{this._CADataModel.CaApplicationDate | date:'mediumDate'}}
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <!-- <div class="col-lg-2">
                     <label class="Label">InActive Status</label>
                     <input *ngIf="_DisabledInputField != true" type="checkbox" class="form-controlCheckBox" [(ngModel)]="_CADataModel.InActiveStatus" [ngModelOptions]="{standalone: true}">
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                         {{this._CADataModel.InActiveStatus }}
                     </div>
-                </div> 
+                </div>  -->
+                <div class="col-lg-3">
+                    <label class="Label">InActive Status</label>
+                    <select *ngIf="_DisabledInputField != true"class="form-control"  [(ngModel)]="_CADataModel.InActiveStatus">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
+                        -- Select CA Active Status --
+                        </option>
+                        <option [ngValue]="true" >Yes</option>
+                        <option [ngValue]="false" >No</option>
+                    </select>
+                    <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
+                        {{this._CADataModel.InActiveStatus }}
+                    </div>
+                </div>
                 <div class="col-lg-3">
                     <div class="SaveDataClass">
                         <button class="btn-primary"*ngIf="_DisabledInputField == false && _AddNewCA == false" (click)="AddOrUpdateCADetails()">
