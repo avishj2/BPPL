@@ -115,7 +115,7 @@ export class TreeDetailsComponent implements OnInit {
   SaveTreeDetails()
     {
       this.CommonService.ShowSpinner();
-      this._TreeDataModel.SurveyId = this.SurveyNumber;
+      this._TreeDataModel.SurveyId = Number(this.SurveyNumber);
       let url = this.urlService.AddOrUpdateSurveyTreeAPI;     
       this.httpService.HttpPostRequest(url,this._TreeDataModel,this.AddOrUpdateTreeCallBack.bind(this),null);
     }

@@ -108,7 +108,7 @@ export class CropDetailsComponent implements AfterViewInit, OnInit {
   SaveDetails()
     {
       this.CommonService.ShowSpinnerLoading();
-      this._CropDataModel.SurveyId = this.SurveyNumber;
+      this._CropDataModel.SurveyId = Number(this.SurveyNumber);
       let url = this.urlService.AddOrUpdateSurveyCropAPI;     
       this.httpService.HttpPostRequest(url,this._CropDataModel,this.AddOrUpdateCropCallBack.bind(this),null);
     }

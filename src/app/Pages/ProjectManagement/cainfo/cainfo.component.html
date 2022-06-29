@@ -145,7 +145,7 @@
                         <option [ngValue]="false" >No</option>
                     </select>
                     <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
-                        {{this._CADataModel.InActiveStatus }}
+                        {{this._CADataModel.InActiveStatus === true ? 'Yes' : 'No'}}
                     </div>
                 </div>
                 <div class="col-lg-3">

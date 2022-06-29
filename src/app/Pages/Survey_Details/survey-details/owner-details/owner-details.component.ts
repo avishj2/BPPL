@@ -63,7 +63,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
       }
       //console.log("FromParentData=>", this.SurveyDropDownsData);
       //console.log("FromParentData AllSurveyDetails=>",this.AllSurveyDetails)
-      this._SurveyOwnerModel.SurveyId = this.SurveyNumber;
+      this._SurveyOwnerModel.SurveyId = Number(this.SurveyNumber);
       this._AllSurveyDetails.Result.SurveyOwners = this.AllSurveyDetails.Result.SurveyOwners;
       this.ReloadDatatable();
     }
@@ -94,7 +94,7 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
   SaveOwnerDetails()
     {
       this.CommonService.ShowSpinner();
-      this._SurveyOwnerModel.SurveyId = this.SurveyNumber;
+      this._SurveyOwnerModel.SurveyId =  Number(this.SurveyNumber);
       let url = this.urlService.AddOrUpdateSurveyOwnerAPI;     
       this.httpService.HttpPostRequest(url,this._SurveyOwnerModel,this.AddOrUpdateOwnerCallBack.bind(this),null);
     }

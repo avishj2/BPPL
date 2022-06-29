@@ -116,7 +116,7 @@ export class LandDetailsComponent implements AfterViewInit, OnInit {
   SaveLandDetails()
     {
       this.CommonService.ShowSpinner();
-      this._LandDataModel.SurveyId = this.SurveyNumber;
+      this._LandDataModel.SurveyId = Number(this.SurveyNumber);
       let url = this.urlService.AddOrUpdateSurveyLandAPI;     
       this.httpService.HttpPostRequest(url,this._LandDataModel,this.AddOrUpdateLandCallBack.bind(this),null);
     }

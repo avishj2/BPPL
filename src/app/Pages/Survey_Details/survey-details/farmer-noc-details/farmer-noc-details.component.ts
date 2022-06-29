@@ -75,7 +75,7 @@ export class FarmerNocDetailsComponent implements OnInit {
 
     SaveDetails()
       {
-        this._SurveyFarmerNOCModel.SurveyId = this.SurveyNumber;
+        this._SurveyFarmerNOCModel.SurveyId = Number(this.SurveyNumber);
         let url = this.urlService.AddOrUpdateSurveyFarmerNOCAPI;     
         this.httpService.HttpPostRequest(url,this._SurveyFarmerNOCModel,this.AddOrUpdateNOCCallBack.bind(this),null);
       }
