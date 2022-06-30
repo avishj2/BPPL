@@ -72,7 +72,7 @@ export class ViewMapComponent implements OnInit {
               font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
               fill: new Fill({color: '#000'}),
               stroke: new Stroke({color: '#000', width: 1}),
-              text: feature.get('TEXTSTRING'),
+              text: feature.get('TEXTSTRING') + ","+feature.get('Crossing_N'),
               textAlign : 'left',  
               padding : [0,2,4,5]
             }),
@@ -135,7 +135,7 @@ export class ViewMapComponent implements OnInit {
               font: '17px "Open Sans", "Arial Unicode MS", "sans-serif"',
               fill: new Fill({color: '#f04141'}),
               stroke: new Stroke({color: '#f04141', width: 1}),
-              text: feature.get('Village_N'),
+              text: feature.get('Village'),
               textAlign : 'left',  
               padding : [0,2,4,5]
             }),
@@ -303,10 +303,10 @@ export class ViewMapComponent implements OnInit {
           };
           let argdata = {
             ShowModel: true,
-            VillageName: arg.Village_N,
-            //VillageName : arg.Village_N,//need to be change in db Variya Bhagji
+            // VillageName: arg.Village_N,
+            VillageName : arg.Village,
             TehsilName :arg.Tehsil_N,           
-            SurveyName :arg.Survey_No,
+            SurveyName :arg.DBSurvey_N,//Survey_No
           }
         /**used popup model common service function */
         this.modelServiceService.ShowPopUP(ViewSurveyTabsComponent,ngbModalOptions,argdata,
