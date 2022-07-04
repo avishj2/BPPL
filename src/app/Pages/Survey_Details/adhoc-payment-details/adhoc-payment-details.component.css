@@ -17,3 +17,12 @@
 .UploadattchClass{
   margin-top: 10%;
 }
+.hide
+{
+    display: none;
+}
+
+.show
+{
+    display: block;
+}

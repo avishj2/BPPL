@@ -1,17 +1,18 @@
-import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ChangeDetectorRef } from '@angular/core';
+import { Component,AfterViewInit, OnInit, Input,OnChanges, Output,EventEmitter,ViewChild,ChangeDetectorRef, QueryList } from '@angular/core';
 import { SearchCriteria, FilterControls} from 'src/app/Model/Filters.model';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { UtilityService } from 'src/app/services/utility.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { UrlService } from 'src/app/services/url.service';
 import { HttpService } from '../../../services/http.service';
-import { CommonDropdownModel} from 'src/app/Model/Base.model';
-import {AdHocPaymentDropDownsModel ,AdHocPaymentModel} from 'src/app/Model/Adhoc.model';
+import { CommonDropdownModel,CommonDocDataModel} from 'src/app/Model/Base.model';
+import {AdHocPaymentDropDownsModel ,AdHocPaymentModel, AdHocPaymentRespDataModel} from 'src/app/Model/Adhoc.model';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { APIUtilityService } from 'src/app/services/APIUtility.service';
 import { CommonService} from 'src/app/services/common.service';
 import {CommonDtoService} from 'src/app/services/common.dto.service';
+
 
 @Component({
   selector: 'app-adhoc-payment-details',
@@ -21,10 +22,16 @@ import {CommonDtoService} from 'src/app/services/common.dto.service';
 
 export class AdhocPaymentDetailsComponent implements OnInit {
    /**data table properties  */
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective)
+  dtElements: QueryList<DataTableDirective>;
+  dtOptions: DataTables.Settings[] = [];
   dtTrigger: Subject<any> = new Subject();
+
+  // child Dt
+  dtTrigger_c: Subject<any> = new Subject();
+  /**REFERSH DATATABLE  */
+  IsDtInitialized_c: boolean = false;
+
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
   /**popup message variables */
@@ -35,7 +42,14 @@ export class AdhocPaymentDetailsComponent implements OnInit {
   _ShowPaymentDetailsDiv: boolean = false;
   _FilterControls : FilterControls;
   _SearchCriteria : SearchCriteria;
-  
+  _ShowParent : boolean = true;
+  // Child component
+  DisableInputField : boolean = false;
+  _AddNewPaymentDetails : boolean = false;
+  _AdHocPaymentModel : AdHocPaymentModel;
+  _Paymentdoc : CommonDocDataModel ;
+  Paymentfile: File = null; // Variable to store file
+
   constructor(
     public urlService: UrlService,
     private router: Router,
@@ -52,6 +66,8 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       this.SetFilterControls();
       this._AdHocPaymentDropDownsModel = new AdHocPaymentDropDownsModel();
       this._AdHocPaymentDetails = [];
+      this._AdHocPaymentModel = new AdHocPaymentModel();
+      this._Paymentdoc = new CommonDocDataModel();
 
     }
 
@@ -69,18 +85,26 @@ export class AdhocPaymentDetailsComponent implements OnInit {
 
   ngOnInit(): void 
     {
-      this.dtOptions = 
+      this.dtOptions[1] = 
         {
           pagingType: 'full_numbers',
           pageLength: 10,
           language: {emptyTable : "No Details!!"}
         };
       this.GetAdHocPaymentDropDowns();
+
+      this.dtOptions[2] = 
+      {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        language: {emptyTable : "No Documents!!"}
+      };
     }
 
   ngAfterViewInit(): void 
     {
       this.dtTrigger.next();
+      this.dtTrigger_c.next();
     }    
 
   /**refresh/reload data table 
@@ -88,20 +112,24 @@ export class AdhocPaymentDetailsComponent implements OnInit {
   **/
   ReloadDatatable()
     {
-      /**initialized datatable */
-      if (this.IsDtInitialized) 
-        {
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
-          {
-            dtInstance.destroy();//Destroy the table first
-            this.dtTrigger.next();//Call the dtTrigger to rerender again
+      try
+      {
+        /**initialized datatable */
+        this.dtElements.forEach((dtElement: DataTableDirective,index: number) => {
+          if(dtElement.dtInstance)
+            // dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+              dtElement.dtInstance.then((dtInstance: any) => {
+              dtInstance.destroy(); 
+              this.Utility.LogText(`The DataTable ${index} instance ID is: ${dtInstance.table().node().id}`);         
           });
-        }
-      else
-        {
-          this.IsDtInitialized = true;
-          this.dtTrigger.next();
-        }
+        });
+        this.dtTrigger.next(); 
+        this.dtTrigger_c.next();  
+      }
+      catch(e:any)
+      {
+         //console.log(e);
+      }
     }
 
   /**1. Get Values From Filters component and assign into SearchCriteria
@@ -163,7 +191,9 @@ export class AdhocPaymentDetailsComponent implements OnInit {
         {
           this.CommonDtoService._SearchCriteriaDTO = this._SearchCriteria;
           this.CommonDtoService._AdHocPaymentDataDTO = new AdHocPaymentModel();
-          this._ShowPaymentDetailsDiv = false;  
+          //this._ShowPaymentDetailsDiv = false;  
+          this._ShowParent = false;
+          this.GetDataFromParent();
         }
     }
     /**
@@ -173,6 +203,8 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       {
         this.CommonDtoService._SearchCriteriaDTO = this._SearchCriteria;
         this.CommonDtoService._AdHocPaymentDataDTO = argdata;
+        this._ShowParent = false;
+        this.GetDataFromParent();
       }
 
   DeletePaymentDetails(argdata)
@@ -209,5 +241,152 @@ export class AdhocPaymentDetailsComponent implements OnInit {
     ResetFilterValues(event)
     {
       
+    }
+
+    // Child methods
+
+    GetDataFromParent()
+      {
+        /**add new payment details */
+        if (!(this.CommonDtoService._AdHocPaymentDataDTO&&this.CommonDtoService._AdHocPaymentDataDTO.AdHocPaymentId))
+          {
+            this._AdHocPaymentModel = new AdHocPaymentModel();
+            this._AddNewPaymentDetails = true;
+            this.DisableInputField = false;
+          } 
+        /**edit/delete doc */
+        if ((this.CommonDtoService._AdHocPaymentDataDTO.AdHocPaymentId !=null))  
+          {
+            this._AdHocPaymentModel = this.CommonDtoService._AdHocPaymentDataDTO;
+            this.DisableInputField = true;
+            this._AddNewPaymentDetails = false;
+          }
+      }
+
+      EditPaymentDetails()
+      {
+        this._AddNewPaymentDetails = false;
+        this.DisableInputField = false;
+      }
+
+   
+
+    SavePaymentDetails()
+    {
+      this.CommonService.ShowSpinnerLoading();
+      this._AdHocPaymentModel.SurveyId = this._SearchCriteria.SurveyID;
+      this._AdHocPaymentModel.SurveyOwnerId = this._SearchCriteria.OwnerID;
+      let url = this.urlService.AddOrUpdateAdHocPaymentAPI;     
+      this.httpService.HttpPostRequest(url,this._AdHocPaymentModel,this.AddOrUpdatePaymentCallBack.bind(this),null);
+    }
+
+    AddOrUpdatePaymentCallBack(dtas)
+    {
+      if (dtas != null)
+        {
+          let RespDataModel : AdHocPaymentRespDataModel = dtas;
+          if (RespDataModel.StatusCode != 200) 
+            {
+              alert(RespDataModel.Message);
+            }
+          if (this._AddNewPaymentDetails == false)
+            {
+              alert("Payment updated sucessfully!!");
+              this.DisableInputField = true;
+            }
+          else
+            {
+              alert("Payment added sucessfully!!");
+              this.DisableInputField = true;
+              this._AdHocPaymentModel.AdHocPaymentId  = RespDataModel.Result.AdHocPaymentId;
+              this._AddNewPaymentDetails = false;
+            }   
+        }
+        this._AddNewPaymentDetails = false;
+        this.ReloadDatatable();  
+    }
+
+    DeletePaymentDetails_c()
+      {
+        let url = this.urlService.DeleteAdHocPaymentAPI + this._AdHocPaymentModel.AdHocPaymentId + '&surveyOwnerId='+ this._AdHocPaymentModel.SurveyOwnerId;
+        this.httpService.get(url,null).subscribe(response => {
+          let PaymentDetails : any = response;
+          if (PaymentDetails.StatusCode != 200) 
+            {
+              alert(PaymentDetails.Message);
+            }
+            else {
+              alert("Payment deleted successfully!");
+              this.GoBackToPaymentList();
+
+            }
+          },error => {
+            this.Utility.LogText(error);
+          });
+      }
+
+      onChangeDocument(event)
+      {
+        this.Paymentfile = event.target.files[0];
+      }
+
+      FileUpload(fileInput)
+    {
+      let Doc : CommonDocDataModel;
+      if(!this.Paymentfile)
+      {
+        alert("Please select file!!");
+        return;
+      }
+      if(!this._Paymentdoc.Lookupid)
+        {
+          alert("Please select crossing doc type !");
+          return;
+        }
+
+      this._Paymentdoc.RequestId = Number(this._AdHocPaymentModel.AdHocPaymentId);
+      this._Paymentdoc.Document = this.Paymentfile;
+      this._Paymentdoc.DocumentId = 0;
+      this._Paymentdoc.ToChainage = '';
+      this._Paymentdoc.FromChainage = '';
+      this._Paymentdoc.Description = '';
+      Doc = this._Paymentdoc;
+
+      /**api call */
+      let url = this.urlService.AddAdHocPaymentDocumentAPI; 
+      this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
+        let DocumentModelResp: CommonDocDataModel[] = response.Result;        
+        this._AdHocPaymentModel.Documents = DocumentModelResp;
+        this.ReloadDatatable();
+        this.Utility.LogText(DocumentModelResp);
+        alert("Document updated sucessfully!!");
+      });
+      this.FileUploadreset(fileInput)// file object clear
+    }
+
+    FileUploadreset(element) 
+    {
+      element.value = "";
+      this.Paymentfile = null;
+    }
+
+    DownlaodDocument(doc)
+    {
+      let url = this.urlService.DownloadPaymentAPI + doc.DocumentId;
+      this.APIUtilityService.DownloadDocument(url);
+    }
+
+  DeleteDocument(doc)
+    {
+      let APIurl = this.urlService.DeleteAdHocPaymentDocumentAPI + doc.DocumentId;
+      this.APIUtilityService.DeleteDocument(APIurl,this._AdHocPaymentModel.Documents,doc)
+      .subscribe(response => {
+        this.ReloadDatatable();
+      });
+    } 
+
+    GoBackToPaymentList()
+    {
+      this._ShowParent = true;
     }
 }

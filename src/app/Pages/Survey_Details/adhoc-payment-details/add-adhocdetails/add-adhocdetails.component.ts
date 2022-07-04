@@ -26,11 +26,11 @@ export class AddAdhocdetailsComponent implements OnInit {
   /**data table properties  */
   @ViewChild(DataTableDirective, {static: false})
   //@ViewChildren(DataTableDirective, {static: false})
-  dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
+  dtElement_c: DataTableDirective;
+  dtOptions_c: DataTables.Settings = {};
+  dtTrigger_c: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
-  IsDtInitialized: boolean = false;
+  IsDtInitialized_c: boolean = false;
   /**popup message variables */
   popoverTitle ="Delete Details";
   popoverMessage = "Are you sure you want to delete it?";
@@ -56,7 +56,7 @@ export class AddAdhocdetailsComponent implements OnInit {
 
   ngOnInit(): void 
     {
-      this.dtOptions = 
+      this.dtOptions_c = 
         {
           pagingType: 'full_numbers',
           pageLength: 5,
@@ -95,21 +95,21 @@ export class AddAdhocdetailsComponent implements OnInit {
   /**refresh/reload data table 
   *when data update/delete/add in the datatable  
   **/
-  ReloadDatatable()
+  ReloadDatatable_c()
     {
       /**initialized datatable */
-      if (this.IsDtInitialized) 
+      if (this.IsDtInitialized_c) 
         {
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+          this.dtElement_c.dtInstance.then((dtInstance: DataTables.Api) => 
           {
             dtInstance.destroy();//Destroy the table first
-            this.dtTrigger.next();//Call the dtTrigger to rerender again
+            this.dtTrigger_c.next();//Call the dtTrigger to rerender again
           });
         }
       else
         {
-          this.IsDtInitialized = true;
-          this.dtTrigger.next();
+          this.IsDtInitialized_c = true;
+          this.dtTrigger_c.next();
         }
     }
 
@@ -171,7 +171,7 @@ export class AddAdhocdetailsComponent implements OnInit {
             }   
         }
         this._AddNewPaymentDetails = false;
-        this.ReloadDatatable();  
+        this.ReloadDatatable_c();  
     }
 
     DeletePaymentDetails()
@@ -225,7 +225,7 @@ export class AddAdhocdetailsComponent implements OnInit {
       this.httpService.Post(url, Doc.GetFormData()).subscribe(response => {
         let DocumentModelResp: CommonDocDataModel[] = response.Result;        
         this._AdHocPaymentModel.Documents = DocumentModelResp;
-        this.ReloadDatatable();
+        this.ReloadDatatable_c();
         this.Utility.LogText(DocumentModelResp);
         alert("Document updated sucessfully!!");
       });
@@ -250,7 +250,7 @@ export class AddAdhocdetailsComponent implements OnInit {
       let APIurl = this.urlService.DeleteAdHocPaymentDocumentAPI + doc.DocumentId;
       this.APIUtilityService.DeleteDocument(APIurl,this._AdHocPaymentModel.Documents,doc)
       .subscribe(response => {
-        this.ReloadDatatable();
+        this.ReloadDatatable_c();
       });
     } 
 
