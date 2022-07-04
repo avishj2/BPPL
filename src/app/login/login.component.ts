@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   public _password : string;
   _returnUrl: string;
   _error = '';
+  _Login_Logo : string;
 
     constructor(
       private router: Router,
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     await this.configService.LoadJsons();
     this.urlService.setUrl(this.configService.getApiUrl());
     this._returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'dashboard';
+    this._Login_Logo = this.configService.getLoginLogo();
   }
 
   Submit(){
