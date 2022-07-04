@@ -51,6 +51,10 @@ export class ConfigService {
     return this.apiUrl.url;
   }
 
+  getLoginLogo(): string {
+    return this.apiUrl.login_logo; 
+  }
+
   async LoadJsons(): Promise<any> { 
 
     //this.config = await this.httpservice.get(environment.Menu,null).toPromise();// .map(res => res.json())
