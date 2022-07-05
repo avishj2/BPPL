@@ -263,7 +263,7 @@ export class ViewMapComponent implements OnInit {
             {
               if(!khasraFeatures.find(elm=>elm.CrossingName==feature.get('TEXTSTRING')))
               {
-                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),SelectedFeature: feature , SurveyNo:""};
+                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),SelectedFeature: feature , SurveyNo:"", Permission :feature.get('Permission')};
                 crossingFeatures.push(mf);   
                 features.push(mf);
               }   
@@ -272,7 +272,7 @@ export class ViewMapComponent implements OnInit {
             {              
               if(!khasraFeatures.find(elm=>elm.SurveyNo==feature.get('Survey_No')))
               {
-                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),SelectedFeature : feature , CrossingName:""};
+                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),SelectedFeature : feature , CrossingName:"",Permission :""};
                 khasraFeatures.push(mf);      
                 features.push(mf);
               }
@@ -287,7 +287,13 @@ export class ViewMapComponent implements OnInit {
           if(crossingFeatures.length > 0)
           {
             let data = crossingFeatures[0].CrossingName;
-            self.ShowCrossingPopup(data);
+            if(crossingFeatures[0].Permission== "NO")
+              {
+                alert("We don't need permission for this Crossing !!")
+              }
+            else{
+              self.ShowCrossingPopup(data);
+            }
             return;
           }
           if(khasraFeatures.length > 0)

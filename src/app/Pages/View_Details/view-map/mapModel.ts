@@ -1,5 +1,6 @@
 export class MapFeature{
     CrossingName : string; 
     SurveyNo : string;
-    SelectedFeature : any
+    SelectedFeature : any;
+    Permission : string;
   }
