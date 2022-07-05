@@ -71,7 +71,7 @@ export class APIUtilityService {
       link.setAttribute('type', 'hidden');
       link.setAttribute("target","_blank");
       link.href = argURL;
-      link.download = "C:/Users/admin/Downloads/";
+      // link.download = "C:/Users/admin/Downloads/";
       document.body.appendChild(link);
       link.click();
       link.remove(); 
