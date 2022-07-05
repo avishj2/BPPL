@@ -6,6 +6,7 @@ import CSPoint from 'src/assets/GeoJson/CS_POINT.json';
 import KhasrBoundry from 'src/assets/GeoJson/Khasra_boundary.json';
 import ROW from 'src/assets/GeoJson/ROW.json';
 import VIllageBoundry from 'src/assets/GeoJson/Village_boundary.json';
+import TPPoint from 'src/assets/GeoJson/TP.json';
 
 import { MenuOption } from 'src/app/Model/Base.model';
 import { map } from 'rxjs/operators';
@@ -44,6 +45,10 @@ export class ConfigService {
   }
   getVIllageBoundry(): any {
     return VIllageBoundry; //this.config;
+  }
+
+  getTPPoint(): any{
+    return TPPoint;
   }
 
 

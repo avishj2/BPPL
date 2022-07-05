@@ -64,6 +64,14 @@ export class ViewMapComponent implements OnInit {
         stroke: new Stroke({color: 'red', width: 1}),
       });
 
+      const TPimage = new Circle({
+        radius: 5,
+        fill: new Fill({
+          color: '#ffbf00',
+        }),
+        stroke: new Stroke({color: '#6b747c', width: 1}),
+      });
+
       const pointstyleFunction = function (feature) 
         {  
           return new Style({
@@ -89,6 +97,31 @@ export class ViewMapComponent implements OnInit {
           style: pointstyleFunction,
         });
         CS_PointLayer.set('title','Crossing');
+
+
+        const TPpointstyleFunction = function (feature) 
+        {  
+          return new Style({
+            image: TPimage,
+            text : new Text({
+              font: '13px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#022cfb'}),
+              stroke: new Stroke({color: '#022cfb', width: 1}),
+              text: feature.get('Name'),
+              textAlign : 'bottom',  
+              padding : [0,2,4,5]
+            }),
+          })
+        }; 
+        /***TP_PointLayer */     
+        const TP_PointLayer = new VectorLayer({
+          source: new VectorSource({        
+            features: new GeoJSON().readFeatures(this.configService.getTPPoint()),
+            format: new GeoJSON()
+          })  ,
+          style: TPpointstyleFunction,
+        });
+        TP_PointLayer.set('title','TP');
 
       /**line feature styling */
       const LinestyleFunction = function (feature) 
@@ -206,7 +239,8 @@ export class ViewMapComponent implements OnInit {
           Khasra_Layer,
           ROU_Layer,
           Center_LineLayer,
-          CS_PointLayer
+          CS_PointLayer,
+          TP_PointLayer
         ],
         target: 'map',
         view: new View({
