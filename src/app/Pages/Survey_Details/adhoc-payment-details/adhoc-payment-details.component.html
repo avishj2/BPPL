@@ -94,7 +94,8 @@
                         {{this._AdHocPaymentModel.AmountInWords}}
                     </div>
                 </div>
-                <div class="col-lg-3">
+
+                <!-- <div class="col-lg-3">
                     <div class="form-group row" style="margin-top: 0%;">
                         <div class="col-lg-2">
                             <label class="Label" style="margin-left: 1px;">
@@ -104,12 +105,26 @@
                     </div>
                     <div class="col-lg-6"style="margin-top: -6%; margin-left: -6%;">
                     <input *ngIf="DisableInputField != true"type="checkbox"class="form-controlCheckBox"   [(ngModel)]="_AdHocPaymentModel.Paid" [ngModelOptions]="{standalone: true}">
-
                         <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
-                            {{this._AdHocPaymentModel.Paid}}
+                            {{this._AdHocPaymentModel.Paid === true ? 'Yes' : 'No'}}
                         </div>
                     </div>
+                </div> -->
+
+                <div class="col-lg-3">
+                    <label class="Label">Paid</label>
+                    <select *ngIf="DisableInputField != true"class="form-control" [(ngModel)]="_AdHocPaymentModel.Paid" [ngModelOptions]="{standalone: true}">
+                        <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
+                        -- Select Paid Status --
+                        </option>
+                        <option [ngValue]="true" >Yes</option>
+                        <option [ngValue]="false" >No</option>
+                    </select>
+                    <div class="DisabledFieldLabel" *ngIf="DisableInputField == true">
+                        {{this._AdHocPaymentModel.Paid === true ? 'Yes' : 'No'}}
+                    </div>
                 </div>
+
                 <div class="col-lg-3">
                     <label class="Label">Payment Mode </label>
                     <select *ngIf="DisableInputField != true"class="form-control"[(ngModel)]="_AdHocPaymentModel.PaymentMode" [ngModelOptions]="{standalone: true}">

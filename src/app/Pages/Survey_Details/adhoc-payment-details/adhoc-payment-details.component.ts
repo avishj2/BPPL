@@ -126,7 +126,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
         this.dtTrigger.next(); 
         this.dtTrigger_c.next();  
       }
-      catch(e:any)
+      catch(e)
       {
          //console.log(e);
       }
