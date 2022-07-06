@@ -22,7 +22,7 @@
                         <th>Action</th>
                         <th>Payment</th>
                         <th>Payment Category</th>
-                        <th>ChequeDate</th>
+                        <th>Paymentdate</th>
                         <th>ChequeNo</th>
                         <th>Paid</th>
                         <th>PaymentMode</th>
@@ -41,7 +41,7 @@
                         </td>
                         <td>{{data.PaymentAmountRs}}</td>
                         <td>{{GetLookupValue(_AdHocPaymentDropDownsModel.PaymentCategories, data.PaymentCategory)}}</td>
-                        <td>{{data.ChequeDate| date:'mediumDate'}}</td>
+                        <td>{{data.Paymentdate| date:'mediumDate'}}</td>
                         <td>{{data.ChequeNo}}</td>
                         <td>{{data.paid}}</td>
                         <td>{{GetLookupValue(_AdHocPaymentDropDownsModel.PaymentModes, data.PaymentMode)}}</td>
