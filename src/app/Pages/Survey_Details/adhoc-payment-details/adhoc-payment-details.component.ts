@@ -97,7 +97,7 @@ export class AdhocPaymentDetailsComponent implements OnInit {
       {
         pagingType: 'full_numbers',
         pageLength: 5,
-        language: {emptyTable : "No Documents!!"}
+        //language: {emptyTable : "No Documents!!"}
       };
     }
 
