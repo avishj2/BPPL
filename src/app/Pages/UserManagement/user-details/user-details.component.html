@@ -15,6 +15,7 @@
                     <tr>
                         <th style="width:34px">S.No.</th>
                         <th>UserName</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Status</th>
                         <th>Phone Number</th>
@@ -25,6 +26,7 @@
                     <tr *ngFor="let data of _UserDetails;let i = index">
                         <td style="width:34px" >{{i+1}}</td>
                         <td>{{data.UserName}}</td>
+                        <td>{{data.FName}} {{data.LName}}</td>
                         <td>{{data.Email}}</td>                        
                         <td>{{GetLookupValue(_UserDropdownsModel.UserStatus, data.Status)}}</td>
                         <td>{{data.PhNo}}</td>
