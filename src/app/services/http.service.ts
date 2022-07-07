@@ -41,6 +41,7 @@ export class HttpService {
            successCallBackFunction(data);
         }
       }, error => {
+            console.log(error);
             this.utilityService.LogText(error);   
             if(errorCallBackFunction)
             {
@@ -49,6 +50,7 @@ export class HttpService {
             else if(error.error.Message)
             {
                alert(error.error.Message)
+               console.log(error.error.Message)
             }      
             else
             {
@@ -80,7 +82,7 @@ export class HttpService {
         return dtas;
       },  error => {
     
-      //console.log(error);
+      console.log(error);
       this.utilityService.LogText(error);
       if(errorCallBackFunction)
          {
@@ -105,7 +107,8 @@ export class HttpService {
            successCallBackFunction(data);
         }
       }, error => {
-        this.utilityService.LogText(error);   
+        this.utilityService.LogText(error);
+        console.log(error);   
         if(errorCallBackFunction)
         {
             errorCallBackFunction(error.error);
@@ -159,6 +162,7 @@ export class HttpService {
     .pipe(tap(res=>this.commonService.hideSpinnerLoading()), catchError(err => {
             this.commonService.hideSpinnerLoading();
             this.utilityService.LogText(err);
+            console.log(err)
             if(showAlertOnFail)
             {
               alert(err.error.Message ? err.error.Message : "Something went wrong ! Please try again or check your selection." );
@@ -177,6 +181,7 @@ export class HttpService {
     .pipe(tap(res=>this.commonService.hideSpinnerLoading()), catchError(err => {
             this.commonService.hideSpinnerLoading();
             this.utilityService.LogText(err);
+            console.log(err);
             if(showAlertOnFail)
             {
               alert(err.error.Message ? err.error.Message : "Something went wrong ! Please try again or check your selection." );

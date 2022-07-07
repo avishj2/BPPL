@@ -43,7 +43,7 @@
                         <td>{{GetLookupValue(_AdHocPaymentDropDownsModel.PaymentCategories, data.PaymentCategory)}}</td>
                         <td>{{data.Paymentdate| date:'mediumDate'}}</td>
                         <td>{{data.ChequeNo}}</td>
-                        <td>{{data.paid}}</td>
+                        <td>{{data.paid === true ? 'Yes' : 'No'}}</td>
                         <td>{{GetLookupValue(_AdHocPaymentDropDownsModel.PaymentModes, data.PaymentMode)}}</td>
                         <td>{{GetLookupValue(_AdHocPaymentDropDownsModel.Banks, data.BankId)}}</td>
                     </tr>                

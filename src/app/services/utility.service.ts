@@ -15,12 +15,12 @@ export class UtilityService {
 
     LogText(argText)
       {
-        console.log(argText);
+        //console.log(argText);
       }
 
     LogText2(argLabel, argText)
       {
-        console.log(argLabel,argText);
+        //console.log(argLabel,argText);
       }
 
     CloneFilterData(argData)
