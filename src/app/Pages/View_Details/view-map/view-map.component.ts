@@ -72,6 +72,14 @@ export class ViewMapComponent implements OnInit {
         stroke: new Stroke({color: '#6b747c', width: 1}),
       });
 
+      const chainageImage = new Circle({
+        radius: 6,
+        fill: new Fill({
+          color: '#3e8d42',
+        }),
+        stroke: new Stroke({color: '#325a34', width: 1}),
+      });
+
       const pointstyleFunction = function (feature) 
         {  
           return new Style({
@@ -88,7 +96,6 @@ export class ViewMapComponent implements OnInit {
         }; 
         /***CS_PointLayer */     
         const CS_PointLayer = new VectorLayer({
-          // name : 'CS_POINT',
           source: new VectorSource({        
             //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1457",//387,
             features: new GeoJSON().readFeatures(this.configService.getCSPoint()),
@@ -122,6 +129,36 @@ export class ViewMapComponent implements OnInit {
           style: TPpointstyleFunction,
         });
         TP_PointLayer.set('title','TP');
+
+
+        const ChainageStyleFunction = function (feature) 
+        {  
+          
+          let zoom = map.getView().getZoom();
+          var text = zoom >= 14 ? feature.get('ChainageName') : '';
+
+          return new Style({
+            image: chainageImage,            
+            text : new Text({
+              font: '10px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#022F1F'}),
+              stroke: new Stroke({color: '#022F1F', width: 1}),
+              text: text,
+              textAlign : 'bottom',  
+              padding : [0,2,4,5]
+            }),
+          })
+        }; 
+
+        /***Chainage_Layer */     
+        const Chainage_Layer = new VectorLayer({
+          source: new VectorSource({        
+            features: new GeoJSON().readFeatures(this.configService.getChainage()),
+            format: new GeoJSON()
+          })  ,
+          style: ChainageStyleFunction,
+        });
+        Chainage_Layer.set('title','Chainage');
 
       /**line feature styling */
       const LinestyleFunction = function (feature) 
@@ -240,7 +277,8 @@ export class ViewMapComponent implements OnInit {
           ROU_Layer,
           Center_LineLayer,
           CS_PointLayer,
-          TP_PointLayer
+          TP_PointLayer,
+          Chainage_Layer
         ],
         target: 'map',
         view: new View({
@@ -253,6 +291,8 @@ export class ViewMapComponent implements OnInit {
 
       //Creating a Map Click Event Listener
       map.on('singleclick', function (e) {
+        //console.log(e.coordinate)
+        //alert("Lat, Long : " + e.coordinate[1] + ", " + e.coordinate[0])
         let crossingFeatures : MapFeature[] = [];
         let khasraFeatures : MapFeature[] = [];
         let features : MapFeature[] = [];
@@ -261,7 +301,7 @@ export class ViewMapComponent implements OnInit {
             let layerName = layer.get('title');
             if(layerName == "Crossing")
             {
-              if(!khasraFeatures.find(elm=>elm.CrossingName==feature.get('TEXTSTRING')))
+              if(!khasraFeatures.find(elm=>elm.CrossingName== feature.get('TEXTSTRING')))
               {
                 let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),SelectedFeature: feature , SurveyNo:"", Permission :feature.get('Permission')};
                 crossingFeatures.push(mf);   

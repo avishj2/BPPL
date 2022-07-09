@@ -7,6 +7,7 @@ import KhasrBoundry from 'src/assets/GeoJson/Khasra_boundary.json';
 import ROW from 'src/assets/GeoJson/ROW.json';
 import VIllageBoundry from 'src/assets/GeoJson/Village_boundary.json';
 import TPPoint from 'src/assets/GeoJson/TP.json';
+import Chainage from 'src/assets/GeoJson/Chainage.json';
 
 import { MenuOption } from 'src/app/Model/Base.model';
 import { map } from 'rxjs/operators';
@@ -51,6 +52,9 @@ export class ConfigService {
     return TPPoint;
   }
 
+  getChainage(): any{
+    return Chainage;
+  }
 
   getApiUrl(): string {
     return this.apiUrl.url;

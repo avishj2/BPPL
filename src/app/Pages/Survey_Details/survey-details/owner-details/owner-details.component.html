@@ -13,7 +13,7 @@
                 <th>Panchnama Owner(English)</th>
                 <th>Panchnama Owner(Hindi)</th>  
                 <th>Panchnama Owner(Local)</th>  
-                <th>Panchnama Owner Type</th>  
+                <th>Panchnama Ownership</th>  
                 <th>Address (English)</th>  
                 <th>Address (Hindi)</th>       
                 <th>Address (Local)</th>   
@@ -80,11 +80,11 @@
                          [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerNameLocal">
                     </div>
                     <div class="col-lg-6">
-                        <label class="Label">Panchnama Owner Type <b><h7 style="color: red;">*</h7></b></label>
+                        <label class="Label">Panchnama Ownership <b><h7 style="color: red;">*</h7></b></label>
                         <select class="form-control"
                         [ngModelOptions]="{standalone: true}"[(ngModel)]="_SurveyOwnerModel.OwnerType">
                             <option class="DDPlaceholder"[ngValue]="undefined" [disabled]="true">
-                            -- Select Owner Type --</option>
+                            -- Select Owner --</option>
                             <option *ngFor="let data of SurveyDropDownsData.OwnerTypes"[value]="data.Value">
                                 {{data.Text }}
                             </option>
