@@ -57,8 +57,8 @@ export class OwnerDetailsComponent implements AfterViewInit, OnInit {
       this.dtOptions = {
         pagingType: 'full_numbers',
         pageLength: 5,
-        scrollX: true, //enable horizontal scrolling in the table
-        scrollCollapse: true,
+        //scrollX: true, //enable horizontal scrolling in the table
+        //scrollCollapse: true,
         language: {emptyTable : "No Owners!!"}
       }
       //console.log("FromParentData=>", this.SurveyDropDownsData);
