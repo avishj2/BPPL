@@ -8,6 +8,14 @@ import ROW from 'src/assets/GeoJson/ROW.json';
 import VIllageBoundry from 'src/assets/GeoJson/Village_boundary.json';
 import TPPoint from 'src/assets/GeoJson/TP.json';
 import Chainage from 'src/assets/GeoJson/Chainage.json';
+import Borewell from 'src/assets/GeoJson/Borewell.json';
+import Building from 'src/assets/GeoJson/Building.json';
+import Compound_Wall from 'src/assets/GeoJson/Compound_wall.json';
+import Plantation from 'src/assets/GeoJson/Plantation.json';
+import Pond from 'src/assets/GeoJson/Pond.json';
+import Text_highlight from 'src/assets/GeoJson/Text_highlight.json';
+import Water_Tank from 'src/assets/GeoJson/Water_Tank.json';
+import Well from 'src/assets/GeoJson/Well.json';
 
 import { MenuOption } from 'src/app/Model/Base.model';
 import { map } from 'rxjs/operators';
@@ -54,6 +62,38 @@ export class ConfigService {
 
   getChainage(): any{
     return Chainage;
+  }
+
+  getBorewell(): any{
+    return Borewell;
+  }
+
+  getBuilding(): any{
+    return Building;
+  }
+
+  getCompound_Wall(): any{
+    return Compound_Wall;
+  }
+
+  getPlantation(): any{
+    return Plantation;
+  }
+
+  getPond(): any{
+    return Pond;
+  }
+
+  getTexthightlight(): any{
+    return Text_highlight;
+  }
+
+  getWaterTank(): any{
+    return Water_Tank;
+  }
+
+  getWell(): any{
+    return Well;
   }
 
   getApiUrl(): string {

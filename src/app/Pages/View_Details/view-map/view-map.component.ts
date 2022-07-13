@@ -254,6 +254,183 @@ export class ViewMapComponent implements OnInit {
         });
         Khasra_Layer.set('title','Khasra');
 
+        var image_Well = new Icon({
+          opacity: 0.75,
+          src: "src/assets/NKBPLImages/WELL.png",
+          // the real size of your icon
+          size: [10, 10],        
+          scale: 0.5
+        })
+
+        const Wellstyle = function (feature) 
+        {  
+          return new Style({
+            image: image_Well,            
+            text : new Text({
+              font: '10px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#022F1F'}),
+              stroke: new Stroke({color: '#022F1F', width: 1}),
+              // text: text,
+              textAlign : 'bottom',  
+              padding : [0,2,4,5]
+            }),
+          })
+        }; 
+
+        const Well_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getWell()),
+            format: new GeoJSON()
+          }),
+          style: Wellstyle,
+        });
+        Well_Layer.set('title','Well');
+
+        const Watertank_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getWaterTank()),
+            format: new GeoJSON()
+          }),
+          style: Wellstyle,
+        });
+        Watertank_Layer.set('title','WaterTank');
+
+
+      /**polygon feature styling */
+      const BoreWellstyle = function (feature) 
+      {  
+        return new Style({
+          stroke: new Stroke({
+            color: '#5990cb',
+            width: 1,
+          }),
+          fill: new Fill({
+            color: '#000',
+          }),
+        
+        })
+      }; 
+
+        const BoreWell_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getBorewell()),
+            format: new GeoJSON()
+          }),
+          style: BoreWellstyle,
+        });
+        Well_Layer.set('title','BoreWell');
+
+        const Pondstyle = function (feature) 
+        {  
+          return new Style({
+            stroke: new Stroke({
+              color: '#00FFFF',
+              width: 1,
+            }),
+            fill: new Fill({
+              color: '#00FFFF',
+            }),          
+          })
+        };
+
+        const Pond_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getPond()),
+            format: new GeoJSON()
+          }),
+          style: Pondstyle,
+        });
+        Well_Layer.set('title','Pond');
+
+        const Compoundstyle = function (feature) 
+        {  
+          return new Style({
+            stroke: new Stroke({
+              color: '#000',
+              width: 1,
+            }),
+            fill: new Fill({
+              color: '#000',
+            }),          
+          })
+        }; 
+
+        const Compound_Wall_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getCompound_Wall()),
+            format: new GeoJSON()
+          }),
+          style: Compoundstyle,
+        });
+        Well_Layer.set('title','Compound_Wall');
+
+        
+        const Plantation_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getPlantation()),
+            format: new GeoJSON()
+          }),
+          style: Pondstyle,
+        });
+        Well_Layer.set('title','Plantation');
+
+        const Texthighlightstyle = function (feature) 
+        { 
+          let zoom = map.getView().getZoom();
+          var text = zoom >= 14 ? feature.get('TextName') : ''; 
+          return new Style({
+            stroke: new Stroke({
+              color: '#0d0d0e',
+              width: 1,
+            }),
+            fill: new Fill({
+              color: '#0d0d0e',
+            }),
+            text : new Text({
+              font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
+              fill: new Fill({color: '#0052eb'}),
+              stroke: new Stroke({color: '#0052eb', width: 1}),
+              text: feature.get('TextName'),
+              textAlign : 'left',  
+              padding : [0,0,0,0]
+            }),
+          })
+        }; 
+        const Texthighlight_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getTexthightlight()),
+            format: new GeoJSON()
+          }),
+          style: Texthighlightstyle,
+        });
+        Well_Layer.set('title','Texthighlight');
+
+
+      /**polygon feature styling */
+      const Buildingstyle = function (feature) 
+        {  
+          return new Style({
+            stroke: new Stroke({
+              color: '#f9035e',
+              width: 1,
+            }),
+            fill: new Fill({
+              color: '#fff',
+            }),
+          
+          })
+        }; 
+        const Building_Layer = new VectorLayer({
+          source: new VectorSource({                  
+            features: new GeoJSON().readFeatures(this.configService.getBuilding()),
+            format: new GeoJSON()
+          }),
+          style: Buildingstyle,
+        });
+        Well_Layer.set('title','Building');
+        
+
+
         const ROU_Layer = new VectorLayer({
           source:  new VectorSource({        
             //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1459",
@@ -278,7 +455,15 @@ export class ViewMapComponent implements OnInit {
           Center_LineLayer,
           CS_PointLayer,
           TP_PointLayer,
-          Chainage_Layer
+          Chainage_Layer,
+          Well_Layer,
+          Compound_Wall_Layer,
+          Building_Layer,
+          Texthighlight_Layer,
+          Plantation_Layer,
+          Watertank_Layer,
+          Pond_Layer,
+          BoreWell_Layer
         ],
         target: 'map',
         view: new View({
