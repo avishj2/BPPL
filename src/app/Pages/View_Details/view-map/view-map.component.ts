@@ -254,12 +254,12 @@ export class ViewMapComponent implements OnInit {
         });
         Khasra_Layer.set('title','Khasra');
 
+        // Changes to add new GeoJson - Start
+
         var image_Well = new Icon({
-          opacity: 0.75,
-          src: "src/assets/NKBPLImages/WELL.png",
-          // the real size of your icon
-          size: [10, 10],        
-          scale: 0.5
+          src: this.configService.getWellIcon(),
+          // the real size of your icon  
+          scale: .2          
         })
 
         const Wellstyle = function (feature) 
@@ -272,7 +272,7 @@ export class ViewMapComponent implements OnInit {
               stroke: new Stroke({color: '#022F1F', width: 1}),
               // text: text,
               textAlign : 'bottom',  
-              padding : [0,2,4,5]
+              padding : [0,0,0,0]
             }),
           })
         }; 
@@ -291,7 +291,13 @@ export class ViewMapComponent implements OnInit {
             features: new GeoJSON().readFeatures(this.configService.getWaterTank()),
             format: new GeoJSON()
           }),
-          style: Wellstyle,
+          style: new Style({
+            image: new Icon({
+              src: this.configService.getWaterTankIcon(),
+              // the real size of your icon  
+              scale: 1       
+            })
+          }),
         });
         Watertank_Layer.set('title','WaterTank');
 
@@ -300,14 +306,19 @@ export class ViewMapComponent implements OnInit {
       const BoreWellstyle = function (feature) 
       {  
         return new Style({
-          stroke: new Stroke({
-            color: '#5990cb',
-            width: 1,
+          image: new Icon({
+            src: "assets/NKBPLImages/BOREWELL.png", //this.configService.getBWIcon(),
+            // the real size of your icon  
+            scale: .2          
+          }),            
+          text : new Text({
+            font: '10px "Open Sans", "Arial Unicode MS", "sans-serif"',
+            fill: new Fill({color: '#022F1F'}),
+            stroke: new Stroke({color: '#022F1F', width: 1}),
+            // text: text,
+            textAlign : 'bottom',  
+            padding : [0,0,0,0]
           }),
-          fill: new Fill({
-            color: '#000',
-          }),
-        
         })
       }; 
 
@@ -318,7 +329,7 @@ export class ViewMapComponent implements OnInit {
           }),
           style: BoreWellstyle,
         });
-        Well_Layer.set('title','BoreWell');
+        BoreWell_Layer.set('title','BoreWell');
 
         const Pondstyle = function (feature) 
         {  
@@ -340,7 +351,7 @@ export class ViewMapComponent implements OnInit {
           }),
           style: Pondstyle,
         });
-        Well_Layer.set('title','Pond');
+        Pond_Layer.set('title','Pond');
 
         const Compoundstyle = function (feature) 
         {  
@@ -362,7 +373,7 @@ export class ViewMapComponent implements OnInit {
           }),
           style: Compoundstyle,
         });
-        Well_Layer.set('title','Compound_Wall');
+        Compound_Wall_Layer.set('title','Compound_Wall');
 
         
         const Plantation_Layer = new VectorLayer({
@@ -370,29 +381,36 @@ export class ViewMapComponent implements OnInit {
             features: new GeoJSON().readFeatures(this.configService.getPlantation()),
             format: new GeoJSON()
           }),
-          style: Pondstyle,
+          style: new Style({
+            stroke: new Stroke({
+              color: '#00b300',
+              width: 1,
+            }),
+            fill: new Fill({
+              color: '#00b300',
+            }),          
+          }),
         });
-        Well_Layer.set('title','Plantation');
+        Plantation_Layer.set('title','Plantation');
 
         const Texthighlightstyle = function (feature) 
         { 
           let zoom = map.getView().getZoom();
           var text = zoom >= 14 ? feature.get('TextName') : ''; 
           return new Style({
-            stroke: new Stroke({
-              color: '#0d0d0e',
-              width: 1,
-            }),
-            fill: new Fill({
-              color: '#0d0d0e',
+             image: new Circle({
+              radius: 6,
+              fill: new Fill({
+                color: '#621e73',
+              }),
+              stroke: new Stroke({color: '#621e73', width: 1}),
             }),
             text : new Text({
               font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#0052eb'}),
-              stroke: new Stroke({color: '#0052eb', width: 1}),
-              text: feature.get('TextName'),
-              textAlign : 'left',  
-              padding : [0,0,0,0]
+              fill: new Fill({color: '#330000'}),
+              stroke: new Stroke({color: '#330000', width: 1}),
+              text: text,
+              textAlign : 'left'              
             }),
           })
         }; 
@@ -403,7 +421,7 @@ export class ViewMapComponent implements OnInit {
           }),
           style: Texthighlightstyle,
         });
-        Well_Layer.set('title','Texthighlight');
+        Texthighlight_Layer.set('title','Texthighlight');
 
 
       /**polygon feature styling */
@@ -449,21 +467,21 @@ export class ViewMapComponent implements OnInit {
           new TileLayer({
             source: new OSM(),
           }),
-          Village_Layer,
-          Khasra_Layer,
-          ROU_Layer,
-          Center_LineLayer,
-          CS_PointLayer,
-          TP_PointLayer,
-          Chainage_Layer,
-          Well_Layer,
-          Compound_Wall_Layer,
-          Building_Layer,
-          Texthighlight_Layer,
-          Plantation_Layer,
+           Village_Layer,
+           Khasra_Layer,
+           ROU_Layer,
+           Center_LineLayer,
+           CS_PointLayer,
+           TP_PointLayer,
+           Chainage_Layer,          
+           Compound_Wall_Layer,
+           Building_Layer,          
+           Plantation_Layer,         
+           Pond_Layer,
           Watertank_Layer,
-          Pond_Layer,
-          BoreWell_Layer
+          BoreWell_Layer,
+          Well_Layer,
+          Texthighlight_Layer,
         ],
         target: 'map',
         view: new View({

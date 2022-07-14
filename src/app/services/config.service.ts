@@ -17,6 +17,10 @@ import Text_highlight from 'src/assets/GeoJson/Text_highlight.json';
 import Water_Tank from 'src/assets/GeoJson/Water_Tank.json';
 import Well from 'src/assets/GeoJson/Well.json';
 
+// import WellIcon from 'src/assets/NKBPLImages/WELL.png';
+// import BoreWellIcon from 'src/assets/NKBPLImages/BOREWELL.png';
+// import WaterTankIcon from 'src/assets/NKBPLImages/WT.png';
+
 import { MenuOption } from 'src/app/Model/Base.model';
 import { map } from 'rxjs/operators';
 import { HttpService } from './http.service';
@@ -104,9 +108,27 @@ export class ConfigService {
     return this.apiUrl.login_logo; 
   }
 
+  getWellIcon(): string {
+    //return WellIcon; 
+    //return require("../../assets/NKBPLImages/WELL.png");
+    return "assets/NKBPLImages/WELL.png";
+  }
+
+  
+
+  getWaterTankIcon(): string {
+    //return WaterTankIcon; 
+    //return require("../../assets/NKBPLImages/WT.png");
+    return "assets/NKBPLImages/WT.png";
+  }
+
   async LoadJsons(): Promise<any> { 
 
     //this.config = await this.httpservice.get(environment.Menu,null).toPromise();// .map(res => res.json())
     this.apiUrl = await this.httpservice.get(environment.Url,null).toPromise();// .map(res => res.json())    
   } 
+
+  public getBWIcon(): string {
+      return "assets/NKBPLImages/BOREWELL.png";
+  }
 }
