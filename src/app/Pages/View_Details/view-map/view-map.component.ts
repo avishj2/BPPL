@@ -113,6 +113,10 @@ export class ViewMapComponent implements OnInit {
             let textOnMap = "";
 
             for (let index = 0; index < cols.length; index++) {
+              if(!feature.get(cols[index]))
+              {
+                 continue;
+              }
               textOnMap= textOnMap+ feature.get(cols[index]);
               if(index < cols.length -1 ) 
               {
@@ -123,9 +127,15 @@ export class ViewMapComponent implements OnInit {
             if(styleModel.zoomLevel)
             {
               let zoom = map.getView().getZoom();
-              textOnMap = zoom >= styleModel.zoomLevel ? textOnMap : '';
+              if(textOnMap == "")
+              {
+                textOnMap = zoom >= styleModel.zoomLevel ? styleModel.textProperty : '';
+              }
+              else
+              {
+                 textOnMap = zoom >= styleModel.zoomLevel ? textOnMap : '';
+              }
             }
-
 
             let text : Text = new Text({
             font: styleModel.textFont,
@@ -254,7 +264,7 @@ export class ViewMapComponent implements OnInit {
         format: new GeoJSON()
         }),
         style: function(feature){
-          let style = self.SetStyleModelForIcon(self.configService.getWaterTankIcon(),.2,false);
+          let style = self.SetStyleModelForIcon(self.configService.getWaterTankIcon(),.4,false);
           return GetPointStyleFunction(feature, style,GeometryType.Icon)
         },
       });   
@@ -266,7 +276,7 @@ export class ViewMapComponent implements OnInit {
         format: new GeoJSON()
         }),
         style: function(feature){
-          let style = self.SetStyleModelForIcon(self.configService.getBWIcon(),.2,false);
+          let style = self.SetStyleModelForIcon(self.configService.getBWIcon(),.4,false);
           return GetPointStyleFunction(feature, style,GeometryType.Icon)
         },
       });   
@@ -327,7 +337,7 @@ export class ViewMapComponent implements OnInit {
         format: new GeoJSON()
         }),
         style: function(feature){
-          let style = self.SetStyleModel("#fff","#f9035e",false);
+          let style = self.SetStyleModel("#fff","#f9035e",true,"#330000","B",self.urlService.TextFont15,"left",14,[0,2,4,5]);
           return GetPointStyleFunction(feature, style,GeometryType.Polygon)
         },
       });  
@@ -375,7 +385,7 @@ export class ViewMapComponent implements OnInit {
         format: new GeoJSON()
         }),
         style: function(feature){
-          let style = self.SetStyleModel("#33ffff","#33ffff",true,"black","TEXTSTRING",self.urlService.TextFont10,"bottom",14,[0,2,4,5]);
+          let style = self.SetStyleModel("#33ffff","#33ffff",true,"black","TEXTSTRING",self.urlService.TextFont15,"bottom",14,[0,2,4,5]);
           return GetPointStyleFunction(feature, style,GeometryType.Circle)
         },
       });   
