@@ -25,8 +25,10 @@ import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ChildViewCrossingComponent } from 'src/app/Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component'
 import { ViewSurveyTabsComponent } from 'src/app/Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
-import {MapFeature} from './mapModel';
+import {GeometryType, MapFeature, MapLayer, PointStyleModel as StyleModel} from './mapModel';
 import { ConfigService } from 'src/app/services/config.service';
+import ImageStyle from 'ol/style/Image';
+import { StyleFunction } from 'ol/style/Style';
 @Component({
   selector: 'app-view-map',
   templateUrl: './view-map.component.html',
@@ -34,6 +36,8 @@ import { ConfigService } from 'src/app/services/config.service';
 })
 export class ViewMapComponent implements OnInit {
   map: any;
+
+  MapLayers: MapLayer[] = [];
   
   constructor(public urlService: UrlService,
     public modelServiceService : ModelServiceService,
@@ -54,411 +58,282 @@ export class ViewMapComponent implements OnInit {
 
   showJsonLayer()
     {
+      const GetPointStyleFunction = function(feature,styleModel: StyleModel,geoType : GeometryType)
+      {
+        let style: Style = new Style();
+
+        
+        if(geoType == GeometryType.Circle)
+        {
+          let image = new Circle({
+            radius: 5,
+            fill: new Fill({
+              color:styleModel.imageColor,
+                }),
+            stroke: new Stroke({color: styleModel.imageStrokeColor, width: 1}),
+            });
+            style.setImage(image);
+        }
+        else if(geoType == GeometryType.Line)
+        {
+           let image = new Stroke({
+            color: styleModel.imageStrokeColor,
+            width: 1,
+          });
+          style.setStroke(image);
+        }
+        else if(geoType == GeometryType.Polygon)
+        {
+          let image = new Stroke({
+            color: styleModel.imageStrokeColor,
+            width: 1,
+          });
+          style.setStroke(image);
+
+          if(styleModel.imageColor)
+          {
+            let fill = new Fill({
+              color: styleModel.imageColor,
+            });
+            style.setFill(fill);
+          }
+        }
+        else if(geoType == GeometryType.Icon)
+        {
+           let image = new Icon({
+            src: styleModel.imageSource,
+            scale: styleModel.scale          
+          })
+          style.setImage(image);
+        }
+
+        if(styleModel.showText)
+        {
+            let cols = styleModel.textProperty.split(",");
+            let textOnMap = "";
+
+            for (let index = 0; index < cols.length; index++) {
+              textOnMap= textOnMap+ feature.get(cols[index]);
+              if(index < cols.length -1 ) 
+              {
+                textOnMap = textOnMap + ",";
+              }            
+            }
+
+            if(styleModel.zoomLevel)
+            {
+              let zoom = map.getView().getZoom();
+              textOnMap = zoom >= styleModel.zoomLevel ? textOnMap : '';
+            }
+
+
+            let text : Text = new Text({
+            font: styleModel.textFont,
+            fill: new Fill({color: styleModel.textColor}),
+            stroke: new Stroke({color: styleModel.textColor, width: 1}),
+            text: textOnMap,
+            textAlign : styleModel.textAlign,  
+            padding : styleModel.padding
+          });
+
+          style.setText(text);
+        }
+
+        return style;
+      }
+
       var self = this;
-      /**point layer */
-      const image = new Circle({
-        radius: 5,
-        fill: new Fill({
-          color: '#f34141ed',
+
+      //const CS_PointLayer = this.CreateLayer(this.configService.getCSPoint(),GetPointStyleFunction,"Crossing",4);
+      const CS_PointLayer : VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getCSPoint()),
+        format: new GeoJSON()
         }),
-        stroke: new Stroke({color: 'red', width: 1}),
+        style: function(feature){
+          let style = self.SetStyleModel("#f34141ed","#f34141ed",true,"#000","TEXTSTRING,Crossing_N",self.urlService.TextFont15,"left",null,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Circle)
+        },
       });
+      CS_PointLayer.set('title',self.urlService.CSLayer);      
 
-      const TPimage = new Circle({
-        radius: 5,
-        fill: new Fill({
-          color: '#ffbf00',
+      //const TP_PointLayer = this.CreateLayer(this.configService.getTPPoint(),GetPointStyleFunction,"TP",4);
+      const TP_PointLayer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getTPPoint()),
+        format: new GeoJSON()
         }),
-        stroke: new Stroke({color: '#6b747c', width: 1}),
+        style: function(feature){
+          let style = self.SetStyleModel("#ffbf00","#ffbf00",true,"#022cfb","Name",self.urlService.TextFont15,"bottom",null,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Circle)
+        },
+      });   
+      TP_PointLayer.set('title',self.urlService.TPLayer);  
+
+
+      //const Chainage_Layer = this.CreateLayer(this.configService.getChainage(),GetPointStyleFunction,"Chainage",4);
+      const Chainage_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getChainage()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#3e8d42","#325a34",true,"#022F1F","ChainageName",self.urlService.TextFont10,"bottom",14,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Circle)
+        },
+      });   
+      Chainage_Layer.set('title',self.urlService.Chainage); 
+
+      const Center_LineLayer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getCenterLine()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("","green",false);
+          return GetPointStyleFunction(feature, style,GeometryType.Line)
+        },
+      });   
+      Center_LineLayer.set('title',self.urlService.Center);
+
+      const Village_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getVIllageBoundry()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#dfdf326e","#5990cb",true,"#f04141","Village",self.urlService.TextFont17,"left",null,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
+      });   
+      Village_Layer.set('title',self.urlService.Village);
+
+      const Khasra_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getKhasrBoundry()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#0052eb4a","#d30d39e8",true,"#0052eb","Survey_No",self.urlService.TextFont17,"left",null,[0,0,0,0]);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
+      }); 
+      Khasra_Layer.set('title',self.urlService.Khasra);
+
+      const ROU_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getROW()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#0052eb4a","#d30d39e8",false);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
       });
+      ROU_Layer.set('title',self.urlService.ROU);
 
-      const chainageImage = new Circle({
-        radius: 6,
-        fill: new Fill({
-          color: '#3e8d42',
+      // Changes to add new GeoJson - Start
+
+      const Well_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getWell()),
+        format: new GeoJSON()
         }),
-        stroke: new Stroke({color: '#325a34', width: 1}),
+        style: function(feature){
+          let style = self.SetStyleModelForIcon(self.configService.getWellIcon(),.2,false);
+          return GetPointStyleFunction(feature, style,GeometryType.Icon)
+        },
+      });   
+     
+      Well_Layer.set('title',self.urlService.Well);
+
+     
+      const Watertank_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getWaterTank()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModelForIcon(self.configService.getWaterTankIcon(),.2,false);
+          return GetPointStyleFunction(feature, style,GeometryType.Icon)
+        },
+      });   
+      Watertank_Layer.set('title',self.urlService.WaterTank);
+
+      const BoreWell_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getBorewell()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModelForIcon(self.configService.getBWIcon(),.2,false);
+          return GetPointStyleFunction(feature, style,GeometryType.Icon)
+        },
+      });   
+      BoreWell_Layer.set('title',self.urlService.BoreWell);
+    
+      const Pond_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getPond()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#00FFFF","#00FFFF",false);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
       });
-
-      const pointstyleFunction = function (feature) 
-        {  
-          return new Style({
-            image: image,
-            text : new Text({
-              font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#000'}),
-              stroke: new Stroke({color: '#000', width: 1}),
-              text: feature.get('TEXTSTRING') + ","+feature.get('Crossing_N'),
-              textAlign : 'left',  
-              padding : [0,2,4,5]
-            }),
-          })
-        }; 
-        /***CS_PointLayer */     
-        const CS_PointLayer = new VectorLayer({
-          source: new VectorSource({        
-            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1457",//387,
-            features: new GeoJSON().readFeatures(this.configService.getCSPoint()),
-            format: new GeoJSON()
-          })  ,
-          style: pointstyleFunction,
-        });
-        CS_PointLayer.set('title','Crossing');
-
-
-        const TPpointstyleFunction = function (feature) 
-        {  
-          return new Style({
-            image: TPimage,
-            text : new Text({
-              font: '13px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#022cfb'}),
-              stroke: new Stroke({color: '#022cfb', width: 1}),
-              text: feature.get('Name'),
-              textAlign : 'bottom',  
-              padding : [0,2,4,5]
-            }),
-          })
-        }; 
-        /***TP_PointLayer */     
-        const TP_PointLayer = new VectorLayer({
-          source: new VectorSource({        
-            features: new GeoJSON().readFeatures(this.configService.getTPPoint()),
-            format: new GeoJSON()
-          })  ,
-          style: TPpointstyleFunction,
-        });
-        TP_PointLayer.set('title','TP');
-
-
-        const ChainageStyleFunction = function (feature) 
-        {  
-          
-          let zoom = map.getView().getZoom();
-          var text = zoom >= 14 ? feature.get('ChainageName') : '';
-
-          return new Style({
-            image: chainageImage,            
-            text : new Text({
-              font: '10px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#022F1F'}),
-              stroke: new Stroke({color: '#022F1F', width: 1}),
-              text: text,
-              textAlign : 'bottom',  
-              padding : [0,2,4,5]
-            }),
-          })
-        }; 
-
-        /***Chainage_Layer */     
-        const Chainage_Layer = new VectorLayer({
-          source: new VectorSource({        
-            features: new GeoJSON().readFeatures(this.configService.getChainage()),
-            format: new GeoJSON()
-          })  ,
-          style: ChainageStyleFunction,
-        });
-        Chainage_Layer.set('title','Chainage');
-
-      /**line feature styling */
-      const LinestyleFunction = function (feature) 
-        {  
-          return new Style({
-            stroke: new Stroke({
-              color: 'green',
-              width: 1,
-            }),
-            text : new Text({
-              font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#000'}),
-              stroke: new Stroke({color: '#000', width: 1}),
-              //text: feature.get('Shape'),
-              textAlign : 'left',  
-              padding : [0,2,4,5]
-            }),
-          })
-        }; 
-
-        const Center_LineLayer = new VectorLayer({
-          // name : 'Center_Line',
-          source: new VectorSource({        
-            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1456",
-            features: new GeoJSON().readFeatures(this.configService.getCenterLine()),
-            format: new GeoJSON()
-          }),
-          style: LinestyleFunction,
-        });
-        Center_LineLayer.set('title','Center');
-
-      /**polygon feature styling */
-      const VillagePolygonstyle = function (feature) 
-        {  
-          return new Style({
-            stroke: new Stroke({
-              color: '#5990cb',
-              width: 1,
-            }),
-            fill: new Fill({
-              color: '#dfdf326e',
-            }),
-            text : new Text({
-              font: '17px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#f04141'}),
-              stroke: new Stroke({color: '#f04141', width: 1}),
-              text: feature.get('Village'),
-              textAlign : 'left',  
-              padding : [0,2,4,5]
-            }),
-          })
-        }; 
-
-        const Village_Layer = new VectorLayer({
-          source:  new VectorSource({        
-          //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1460",
-          features: new GeoJSON().readFeatures(this.configService.getVIllageBoundry()),
-          format: new GeoJSON(),
-          
+      Pond_Layer.set('title',self.urlService.Pond);
+      
+      const Compound_Wall_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getCompound_Wall()),
+        format: new GeoJSON()
         }),
-          style: VillagePolygonstyle,
-        });
-        Village_Layer.set('title','Village');
+        style: function(feature){
+          let style = self.SetStyleModel("#000","#000",false);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
+      });   
+      Compound_Wall_Layer.set('title',self.urlService.Compound_Wall);
 
-        const KhasraPolygonstyle = function (feature) 
-        {  
-          return new Style({
-            stroke: new Stroke({
-              color: '#d30d39e8',
-              width: 1,
-            }),
-            fill: new Fill({
-              color: '#0052eb4a',
-            }),
-            text : new Text({
-              font: '17px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#0052eb'}),
-              stroke: new Stroke({color: '#0052eb', width: 1}),
-              text: feature.get('Survey_No'),
-              textAlign : 'left',  
-              padding : [0,0,0,0]
-            }),
-          })
-        }; 
-        
-        const Khasra_Layer = new VectorLayer({
-          source: new VectorSource({        
-            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1458",
-            features: new GeoJSON().readFeatures(this.configService.getKhasrBoundry()),
-            format: new GeoJSON()
-          }),
-          style: KhasraPolygonstyle,
-        });
-        Khasra_Layer.set('title','Khasra');
+      const Plantation_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getPlantation()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#00b300","#00b300",false);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
+      });  
+      Plantation_Layer.set('title',self.urlService.Plantation);
 
-        // Changes to add new GeoJson - Start
+      const Texthighlight_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getTexthightlight()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#621e73","#621e73",true,"#330000","TextName",self.urlService.TextFont15,"left",14,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Circle)
+        },
+      });   
+      Texthighlight_Layer.set('title',self.urlService.TPLayer);  
+      
 
-        var image_Well = new Icon({
-          src: this.configService.getWellIcon(),
-          // the real size of your icon  
-          scale: .2          
-        })
+      const Building_Layer: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getBuilding()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#fff","#f9035e",false);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
+      });  
+      Building_Layer.set('title',self.urlService.Plantation);
 
-        const Wellstyle = function (feature) 
-        {  
-          return new Style({
-            image: image_Well,            
-            text : new Text({
-              font: '10px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#022F1F'}),
-              stroke: new Stroke({color: '#022F1F', width: 1}),
-              // text: text,
-              textAlign : 'bottom',  
-              padding : [0,0,0,0]
-            }),
-          })
-        }; 
-
-        const Well_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getWell()),
-            format: new GeoJSON()
-          }),
-          style: Wellstyle,
-        });
-        Well_Layer.set('title','Well');
-
-        const Watertank_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getWaterTank()),
-            format: new GeoJSON()
-          }),
-          style: new Style({
-            image: new Icon({
-              src: this.configService.getWaterTankIcon(),
-              // the real size of your icon  
-              scale: 1       
-            })
-          }),
-        });
-        Watertank_Layer.set('title','WaterTank');
-
-
-      /**polygon feature styling */
-      const BoreWellstyle = function (feature) 
-      {  
-        return new Style({
-          image: new Icon({
-            src: "assets/NKBPLImages/BOREWELL.png", //this.configService.getBWIcon(),
-            // the real size of your icon  
-            scale: .2          
-          }),            
-          text : new Text({
-            font: '10px "Open Sans", "Arial Unicode MS", "sans-serif"',
-            fill: new Fill({color: '#022F1F'}),
-            stroke: new Stroke({color: '#022F1F', width: 1}),
-            // text: text,
-            textAlign : 'bottom',  
-            padding : [0,0,0,0]
-          }),
-        })
-      }; 
-
-        const BoreWell_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getBorewell()),
-            format: new GeoJSON()
-          }),
-          style: BoreWellstyle,
-        });
-        BoreWell_Layer.set('title','BoreWell');
-
-        const Pondstyle = function (feature) 
-        {  
-          return new Style({
-            stroke: new Stroke({
-              color: '#00FFFF',
-              width: 1,
-            }),
-            fill: new Fill({
-              color: '#00FFFF',
-            }),          
-          })
-        };
-
-        const Pond_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getPond()),
-            format: new GeoJSON()
-          }),
-          style: Pondstyle,
-        });
-        Pond_Layer.set('title','Pond');
-
-        const Compoundstyle = function (feature) 
-        {  
-          return new Style({
-            stroke: new Stroke({
-              color: '#000',
-              width: 1,
-            }),
-            fill: new Fill({
-              color: '#000',
-            }),          
-          })
-        }; 
-
-        const Compound_Wall_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getCompound_Wall()),
-            format: new GeoJSON()
-          }),
-          style: Compoundstyle,
-        });
-        Compound_Wall_Layer.set('title','Compound_Wall');
-
-        
-        const Plantation_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getPlantation()),
-            format: new GeoJSON()
-          }),
-          style: new Style({
-            stroke: new Stroke({
-              color: '#00b300',
-              width: 1,
-            }),
-            fill: new Fill({
-              color: '#00b300',
-            }),          
-          }),
-        });
-        Plantation_Layer.set('title','Plantation');
-
-        const Texthighlightstyle = function (feature) 
-        { 
-          let zoom = map.getView().getZoom();
-          var text = zoom >= 14 ? feature.get('TextName') : ''; 
-          return new Style({
-             image: new Circle({
-              radius: 6,
-              fill: new Fill({
-                color: '#621e73',
-              }),
-              stroke: new Stroke({color: '#621e73', width: 1}),
-            }),
-            text : new Text({
-              font: '15px "Open Sans", "Arial Unicode MS", "sans-serif"',
-              fill: new Fill({color: '#330000'}),
-              stroke: new Stroke({color: '#330000', width: 1}),
-              text: text,
-              textAlign : 'left'              
-            }),
-          })
-        }; 
-        const Texthighlight_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getTexthightlight()),
-            format: new GeoJSON()
-          }),
-          style: Texthighlightstyle,
-        });
-        Texthighlight_Layer.set('title','Texthighlight');
-
-
-      /**polygon feature styling */
-      const Buildingstyle = function (feature) 
-        {  
-          return new Style({
-            stroke: new Stroke({
-              color: '#f9035e',
-              width: 1,
-            }),
-            fill: new Fill({
-              color: '#fff',
-            }),
-          
-          })
-        }; 
-        const Building_Layer = new VectorLayer({
-          source: new VectorSource({                  
-            features: new GeoJSON().readFeatures(this.configService.getBuilding()),
-            format: new GeoJSON()
-          }),
-          style: Buildingstyle,
-        });
-        Well_Layer.set('title','Building');
-        
-
-
-        const ROU_Layer = new VectorLayer({
-          source:  new VectorSource({        
-            //url : "https://bppl.dgdatam.com/api/SurveyDocuments/DownloadProjectReport?documentId=1459",
-            features: new GeoJSON().readFeatures(this.configService.getROW()),
-            format: new GeoJSON()
-          }),
-          style: KhasraPolygonstyle,
-        });
-
-        ROU_Layer.set('title','ROU');
+      
       /**base map style and add layers */
       var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
       var washingtonWebMercator = olProj.transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
@@ -546,7 +421,8 @@ export class ViewMapComponent implements OnInit {
             return;
           }
         }     
-      })      
+      });        
+      
     }
 
 
@@ -595,6 +471,76 @@ export class ViewMapComponent implements OnInit {
         this.modelServiceService.ShowPopUP(ViewSurveyTabsComponent,ngbModalOptions,argdata,
           null,null);
       }
+
+    /**
+     * 
+     * @param imageColor : Color used to fill
+     * @param imageStrokeColor : color for the stroke (boundry)
+     * @param showText 
+     * @param textColor 
+     * @param textProperty 
+     * @param textFont 
+     * @param textAlign 
+     * @param zoomLevel 
+     * @param padding 
+     * @returns 
+     */
+    SetStyleModel(imageColor : string,imageStrokeColor:string,
+      showText: boolean,textColor: string = "",textProperty: string= "",textFont: string= "",
+      textAlign:string= "",zoomLevel : Number= null, padding:number[]=[]) :StyleModel
+    {
+       let styleModelObj = new StyleModel();
+       styleModelObj.imageColor = imageColor;
+       styleModelObj.imageStrokeColor = imageStrokeColor;
+       styleModelObj.padding = padding;
+       styleModelObj.showText = showText;
+       styleModelObj.textAlign = textAlign;
+       styleModelObj.textColor = textColor;
+       styleModelObj.textFont = textFont;
+       styleModelObj.textProperty = textProperty;
+       styleModelObj.zoomLevel = zoomLevel;
+       return styleModelObj;
+    }
+
+    SetStyleModelForIcon(imageSource:string, scale:number,
+      showText: boolean,textColor: string = "",textProperty: string= "",textFont: string= "",
+      textAlign:string= "",zoomLevel : Number= null, padding:number[]=[]) :StyleModel
+    {
+       let styleModelObj = new StyleModel();
+       styleModelObj.padding = padding;
+       styleModelObj.showText = showText;
+       styleModelObj.textAlign = textAlign;
+       styleModelObj.textColor = textColor;
+       styleModelObj.textFont = textFont;
+       styleModelObj.textProperty = textProperty;
+       styleModelObj.zoomLevel = zoomLevel;
+       styleModelObj.imageSource = imageSource;
+       styleModelObj.scale = scale;
+       return styleModelObj;
+    }
+
+    CreateLayer(features : any, styleF : StyleFunction,layerTitle : string, layerOrder: Number) :VectorLayer 
+    {
+        let layer : VectorLayer = new VectorLayer({
+          source: new VectorSource({  
+          features: new GeoJSON().readFeatures(features),
+          format: new GeoJSON()
+          }),
+          style: styleF,
+        });
+
+        layer.set('title',layerTitle);
+
+        let mLayer : MapLayer = new MapLayer();
+        mLayer.Checked = true;
+        mLayer.LayerName = layerTitle;
+        mLayer.LayerObject = layer;
+        mLayer.Order = layerOrder;
+
+        this.MapLayers.push(mLayer);
+
+        return layer;
+    }
 
 }
 

@@ -335,5 +335,25 @@ export class UrlService {
   GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
   AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
   UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
+
+  /** Map layers */
+  CSLayer = "Crossing";
+  TPLayer = "TP";
+  TextFont15 = '15px "Open Sans", "Arial Unicode MS", "sans-serif"';
+  TextFont10 = '10px "Open Sans", "Arial Unicode MS", "sans-serif"';
+  Chainage = "Chainage";
+  Center = "Center";
+  TextFont17 = '17px "Open Sans", "Arial Unicode MS", "sans-serif"';
+  Village = "Village";
+  Khasra = "Khasra";
+  ROU = "ROU";
+  Well = "Well";
+  WaterTank = "WaterTank";
+  BoreWell = "BoreWell";
+  Pond = "Pond";
+  Compound_Wall = "Compound_Wall";
+  Plantation = "Plantation";
+  Texthighlight = "Texthighlight";
+  Building= "Building";
 }
 

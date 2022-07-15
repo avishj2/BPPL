@@ -128,6 +128,4 @@ export class UtilityService {
             return Geodata;  
           });
         }
-
-
 }
