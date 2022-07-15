@@ -355,5 +355,10 @@ export class UrlService {
   Plantation = "Plantation";
   Texthighlight = "Texthighlight";
   Building= "Building";
+  FOREST_BOUNDARY="FOREST_BOUNDARY";
+  Neotectonic = "Neotectonic";
+  Khasara_Boundary_bigger = "Khasara_Boundary_bigger";
+  GCP_Points = "GCP_Points";
+  SurveyNoTextBigger = "SurveyNoTextBigger";
 }
 

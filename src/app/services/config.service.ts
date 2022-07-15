@@ -17,6 +17,12 @@ import Text_highlight from 'src/assets/GeoJson/Text_highlight.json';
 import Water_Tank from 'src/assets/GeoJson/Water_Tank.json';
 import Well from 'src/assets/GeoJson/Well.json';
 
+import SurveyNoTextBigger from 'src/assets/GeoJson/Survey_No.json';
+import KhasaraBoundaryBigger from 'src/assets/GeoJson/Khasara_Boundary_bigger.json';
+import GCP_Points from 'src/assets/GeoJson/GCP_Points.json';
+import FOREST_BOUNDARY from 'src/assets/GeoJson/FOREST_BOUNDARY.json';
+import Neotectonic_Fault from 'src/assets/GeoJson/Neotectonic_Fault.json';
+
 // import WellIcon from 'src/assets/NKBPLImages/WELL.png';
 // import BoreWellIcon from 'src/assets/NKBPLImages/BOREWELL.png';
 // import WaterTankIcon from 'src/assets/NKBPLImages/WT.png';
@@ -96,6 +102,26 @@ export class ConfigService {
     return Water_Tank;
   }
 
+  getSurveyNoTextBigger(): any{
+    return SurveyNoTextBigger;
+  }
+
+  getKhasaraBoundaryBigger(): any{
+    return KhasaraBoundaryBigger;
+  }
+
+  getGCP_Points(): any{
+    return GCP_Points;
+  }
+
+  getFOREST_BOUNDARY(): any{
+    return FOREST_BOUNDARY;
+  }
+
+  getNeotectonic_Fault(): any{
+    return Neotectonic_Fault;
+  }
+
   getWell(): any{
     return Well;
   }
@@ -114,7 +140,6 @@ export class ConfigService {
     return "assets/NKBPLImages/WELL.png";
   }
 
-  
 
   getWaterTankIcon(): string {
     //return WaterTankIcon; 

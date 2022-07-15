@@ -164,7 +164,7 @@ export class ViewMapComponent implements OnInit {
         format: new GeoJSON()
         }),
         style: function(feature){
-          let style = self.SetStyleModel("#ffbf00","#ffbf00",true,"#022cfb","Name",self.urlService.TextFont15,"bottom",null,[0,2,4,5]);
+          let style = self.SetStyleModel("#ffbf00","#ffbf00",true,"#022cfb","TEXTSTRING",self.urlService.TextFont15,"bottom",null,[0,2,4,5]);
           return GetPointStyleFunction(feature, style,GeometryType.Circle)
         },
       });   
@@ -333,6 +333,67 @@ export class ViewMapComponent implements OnInit {
       });  
       Building_Layer.set('title',self.urlService.Plantation);
 
+      const FOREST_BOUNDARY: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getFOREST_BOUNDARY()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#00e600","#330000",true,"#330000","STRING",self.urlService.TextFont17,"left",null,[0,0,0,0]);
+          return GetPointStyleFunction(feature, style,GeometryType.Polygon)
+        },
+      });  
+      FOREST_BOUNDARY.set('title',self.urlService.FOREST_BOUNDARY);
+
+      const Neotectonic: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getNeotectonic_Fault()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("","#5a0c5a",false);          
+          return GetPointStyleFunction(feature, style,GeometryType.Line)
+        },
+      });  
+      Neotectonic.set('title',self.urlService.FOREST_BOUNDARY);
+
+      const Khasara_Boundary_bigger: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getKhasaraBoundaryBigger()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("","#cc0000",false);          
+          return GetPointStyleFunction(feature, style,GeometryType.Line)
+        },
+      });  
+      Khasara_Boundary_bigger.set('title',self.urlService.Khasara_Boundary_bigger);
+
+      const GCP_Points: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getGCP_Points()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#33ffff","#33ffff",true,"black","TEXTSTRING",self.urlService.TextFont10,"bottom",14,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Circle)
+        },
+      });   
+      GCP_Points.set('title',self.urlService.GCP_Points); 
+
+      const SurveyNoTextBigger: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getSurveyNoTextBigger()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#a22a2a","#a22a2a",true,"black","TEXTSTRING",self.urlService.TextFont10,"bottom",14,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Circle)
+        },
+      });   
+      SurveyNoTextBigger.set('title',self.urlService.SurveyNoTextBigger); 
+
+      /** New Set of shape files - 15 July */
       
       /**base map style and add layers */
       var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
@@ -342,7 +403,9 @@ export class ViewMapComponent implements OnInit {
           new TileLayer({
             source: new OSM(),
           }),
-           Village_Layer,
+           Village_Layer,           
+           Khasara_Boundary_bigger,           
+           SurveyNoTextBigger,
            Khasra_Layer,
            ROU_Layer,
            Center_LineLayer,
@@ -353,10 +416,13 @@ export class ViewMapComponent implements OnInit {
            Building_Layer,          
            Plantation_Layer,         
            Pond_Layer,
-          Watertank_Layer,
-          BoreWell_Layer,
-          Well_Layer,
-          Texthighlight_Layer,
+           Watertank_Layer,
+           BoreWell_Layer,
+           Well_Layer,
+           Texthighlight_Layer,
+           FOREST_BOUNDARY,
+           Neotectonic,
+           GCP_Points,
         ],
         target: 'map',
         view: new View({
