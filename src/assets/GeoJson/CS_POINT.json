@@ -4,6 +4,7 @@
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
 { "type": "Feature", "properties": { "TEXTSTRING": "CS-1", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0, "Permission": "YES", "Crossing_N": "BT ROAD" }, "geometry": { "type": "Point", "coordinates": [ 72.209230394135375, 25.970515710089924, 0.0 ] } },
+{ "type": "Feature", "properties": { "TEXTSTRING": "CS-FaultLine", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0, "Permission": "NO", "Crossing_N": "" }, "geometry": { "type": "Point", "coordinates": [72.21315395913558, 24.55836895981303] } },
 { "type": "Feature", "properties": { "TEXTSTRING": "CS-2", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0, "Permission": "YES", "Crossing_N": "BT ROAD" }, "geometry": { "type": "Point", "coordinates": [ 72.210585547281411, 25.971574860311616, 0.0 ] } },
 { "type": "Feature", "properties": { "TEXTSTRING": "CS-5", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0, "Permission": "NO", "Crossing_N": "CART TRACK" }, "geometry": { "type": "Point", "coordinates": [ 72.223848804318138, 25.964722767610802, 0.0 ] } },
 { "type": "Feature", "properties": { "TEXTSTRING": "CS-6", "TEXT_SIZE": 5.0, "TEXT_ANGLE": 45.0, "Permission": "NO", "Crossing_N": "CART TRACK" }, "geometry": { "type": "Point", "coordinates": [ 72.224917660067021, 25.960266701804699, 0.0 ] } },

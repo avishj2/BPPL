@@ -4,7 +4,7 @@ import OSM from 'ol/source/OSM';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Icon from 'ol/style/Icon';
-import * as olProj from 'ol/proj';
+import {toLonLat,transform} from 'ol/proj';
 import * as  olProj4 from 'ol/proj/proj4';
 import * as  Proj4 from 'proj4/dist/proj4';
 import {Fill, Stroke, Style,Circle, Text} from 'ol/style';
@@ -29,6 +29,9 @@ import {GeometryType, MapFeature, MapLayer, PointStyleModel as StyleModel} from 
 import { ConfigService } from 'src/app/services/config.service';
 import ImageStyle from 'ol/style/Image';
 import { StyleFunction } from 'ol/style/Style';
+import {toStringHDMS} from 'ol/coordinate';
+import Overlay from 'ol/Overlay';
+
 @Component({
   selector: 'app-view-map',
   templateUrl: './view-map.component.html',
@@ -349,7 +352,7 @@ export class ViewMapComponent implements OnInit {
         format: new GeoJSON()
         }),
         style: function(feature){
-          let style = self.SetStyleModel("#00e600","#330000",true,"#330000","STRING",self.urlService.TextFont17,"left",null,[0,0,0,0]);
+          let style = self.SetStyleModel("#00e600","#330000",true,"#330000","STRING",self.urlService.TextFont15,"left",null,[0,0,0,0]);
           return GetPointStyleFunction(feature, style,GeometryType.Polygon)
         },
       });  
@@ -403,17 +406,44 @@ export class ViewMapComponent implements OnInit {
       });   
       SurveyNoTextBigger.set('title',self.urlService.SurveyNoTextBigger); 
 
-      /** New Set of shape files - 15 July */
+      /** Overlay */
+      // OverLay:
+      const container = document.getElementById('popup');
+      const content = document.getElementById('popup-content');
+      const closer = document.getElementById('popup-closer');
+
+      /**
+       * Create an overlay to anchor the popup to the map.
+       */
+      const overlay = new Overlay({
+        element: container,
+        autoPan: {
+          animation: {
+            duration: 250,
+          },
+        },
+      });
+
+      /**
+       * Add a click handler to hide the popup.
+       * @return {boolean} Don't follow the href.
+       */
+      closer.onclick = function () {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
       
       /**base map style and add layers */
       var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
-      var washingtonWebMercator = olProj.transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
+      var washingtonWebMercator = transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
       const map = new Map({
         layers: [
           new TileLayer({
             source: new OSM(),
           }),
-           Village_Layer,           
+           Village_Layer,     
+           FOREST_BOUNDARY,      
            Khasara_Boundary_bigger,           
            SurveyNoTextBigger,
            Khasra_Layer,
@@ -429,12 +459,12 @@ export class ViewMapComponent implements OnInit {
            Watertank_Layer,
            BoreWell_Layer,
            Well_Layer,
-           Texthighlight_Layer,
-           FOREST_BOUNDARY,
+           Texthighlight_Layer,           
            Neotectonic,
            GCP_Points,
         ],
         target: 'map',
+        overlays: [overlay],
         view: new View({
           projection: 'EPSG:4326',
           center: washingtonLonLat,//washingtonWebMercator,//[0, 0],
@@ -443,21 +473,31 @@ export class ViewMapComponent implements OnInit {
         controls: defaultControls({ attribution: false }).extend([new FullScreen()]),
       });
 
+      Khasara_Boundary_bigger.setVisible(false);
+      BoreWell_Layer.setVisible(false);
+      Watertank_Layer.setVisible(false);
+      Well_Layer.setVisible(false);
+      SurveyNoTextBigger.setVisible(false);
+      Chainage_Layer.setVisible(false);  
+      TP_PointLayer.setVisible(false);    
+      CS_PointLayer.setVisible(false);    
+
       //Creating a Map Click Event Listener
       map.on('singleclick', function (e) {
         //console.log(e.coordinate)
         //alert("Lat, Long : " + e.coordinate[1] + ", " + e.coordinate[0])
         let crossingFeatures : MapFeature[] = [];
         let khasraFeatures : MapFeature[] = [];
+        let TP_GCP_Features : MapFeature[] = [];
         let features : MapFeature[] = [];
         var feature = map.forEachFeatureAtPixel(e.pixel,        
           function(feature, layer) { 
             let layerName = layer.get('title');
             if(layerName == "Crossing")
             {
-              if(!khasraFeatures.find(elm=>elm.CrossingName== feature.get('TEXTSTRING')))
+              if(!crossingFeatures.find(elm=>elm.CrossingName== feature.get('TEXTSTRING')))
               {
-                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),SelectedFeature: feature , SurveyNo:"", Permission :feature.get('Permission')};
+                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),SelectedFeature: feature , SurveyNo:"",TP_GCP:"", Permission :feature.get('Permission')};
                 crossingFeatures.push(mf);   
                 features.push(mf);
               }   
@@ -466,8 +506,17 @@ export class ViewMapComponent implements OnInit {
             {              
               if(!khasraFeatures.find(elm=>elm.SurveyNo==feature.get('Survey_No')))
               {
-                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),SelectedFeature : feature , CrossingName:"",Permission :""};
+                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),SelectedFeature : feature , CrossingName:"",Permission :"",TP_GCP:""};
                 khasraFeatures.push(mf);      
+                features.push(mf);
+              }
+            }
+            if(layerName == "TP" || layerName == "GCP_Points" )
+            {              
+              if(!TP_GCP_Features.find(elm=>elm.SurveyNo==feature.get('TEXTSTRING')))
+              {
+                let mf :MapFeature = { TP_GCP: feature.get('TEXTSTRING'),SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
+                TP_GCP_Features.push(mf);      
                 features.push(mf);
               }
             }              
@@ -490,17 +539,46 @@ export class ViewMapComponent implements OnInit {
             }
             return;
           }
+          if(TP_GCP_Features.length > 0)
+          {
+            let TP_GCP = TP_GCP_Features[0].TP_GCP;
+            let Easting = TP_GCP_Features[0].SelectedFeature.get('Easting');
+            let Northing = TP_GCP_Features[0].SelectedFeature.get('Northing');
+                        
+            const coordinate = e.coordinate;
+            const hdms =toStringHDMS(toLonLat(coordinate));
+  
+            content.innerHTML = '<p>You clicked at: '+TP_GCP+' :</p><code>Easting :' + Easting + ', Northing:'+Northing+'</code>';
+            overlay.setPosition(coordinate);
+
+            return;
+          }
           if(khasraFeatures.length > 0)
           {
             let data =khasraFeatures[0].SelectedFeature.getProperties();
             self.ShowSurveyPopup(data);  
             return;
-          }
+          }         
         }     
-      });        
+      });   
+      
+      map.getView().on('change:resolution', function (e) {
+        let visible : boolean = true;
+
+        if (map.getView().getZoom() < 12) {  
+           visible = false;       
+        }
+        Khasara_Boundary_bigger.setVisible(visible);
+        BoreWell_Layer.setVisible(visible);
+        Watertank_Layer.setVisible(visible);
+        Well_Layer.setVisible(visible);
+        SurveyNoTextBigger.setVisible(visible);
+        Chainage_Layer.setVisible(visible);    
+        TP_PointLayer.setVisible(visible);    
+        CS_PointLayer.setVisible(visible);      
+     });
       
     }
-
 
     RegisterProj4s()
     {
@@ -508,6 +586,7 @@ export class ViewMapComponent implements OnInit {
       //proj4.defs("EPSG:32644", "+proj=utm +zone=44 +datum=WGS84 +units=m +no_defs"); // projection definitions needs to be added on proj4 library
       Proj4.defs("EPSG:32643", "+proj=utm +zone=43 +datum=WGS84 +units=m +no_defs");
       Proj4.defs("EPSG:32644","+proj=utm +zone=44 +datum=WGS84 +units=m +no_defs");
+      //Proj4.defs("EPSG:4326","+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees");
       p4.register(Proj4);
     }    
 
