@@ -37,3 +37,12 @@ export enum GeometryType
   Polygon = 3,
   Icon = 4
 }
+
+export class DisasterManagementDetails
+{
+   Name : string;
+   Address : string;
+   Phone : string;
+   Type : string;
+   Distance : number;
+}

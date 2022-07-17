@@ -25,13 +25,14 @@ import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ChildViewCrossingComponent } from 'src/app/Pages/View_Details/view-crossing-details/child-view-crossing/child-view-crossing.component'
 import { ViewSurveyTabsComponent } from 'src/app/Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
-import {GeometryType, MapFeature, MapLayer, PointStyleModel as StyleModel} from './mapModel';
+import {DisasterManagementDetails, GeometryType, MapFeature, MapLayer, PointStyleModel as StyleModel} from './mapModel';
 import { ConfigService } from 'src/app/services/config.service';
 import ImageStyle from 'ol/style/Image';
 import { StyleFunction } from 'ol/style/Style';
 import {toStringHDMS} from 'ol/coordinate';
 import Overlay from 'ol/Overlay';
-import { of } from 'rxjs';
+import  Projection from 'ol/proj/Projection';
+import {getDistance,getLength,getArea} from 'ol/sphere';
 
 @Component({
   selector: 'app-view-map',
@@ -41,6 +42,8 @@ import { of } from 'rxjs';
 export class ViewMapComponent implements OnInit {
   map: any;
   _ShowDisasterPoints : boolean= false;
+  _DisasterManagementLyr : VectorLayer;
+  _DisasterManagementDetails:DisasterManagementDetails[] = [];
   MapLayers: MapLayer[] = [];
   @ViewChild('closebutton') closebutton;
 
@@ -416,7 +419,8 @@ export class ViewMapComponent implements OnInit {
           return GetPointStyleFunction(feature, style,GeometryType.Circle)
         },
       });   
-      DisasterManagementData.set('title',self.urlService.DisasterManagementData); 
+      DisasterManagementData.set('title',self.urlService.DisasterManagementData);
+      self._DisasterManagementLyr = DisasterManagementData; 
 
       /** Overlay */
       // OverLay:
@@ -503,14 +507,50 @@ export class ViewMapComponent implements OnInit {
         let khasraFeatures : MapFeature[] = [];
         let TP_GCP_Features : MapFeature[] = [];
         let l_DisasterManagementData : MapFeature[] = [];
-        let features : MapFeature[] = [];
+        let features : MapFeature[] = [];        
         //checkbox
         if(self._ShowDisasterPoints == true)
         {
-          let coordinate = e.coordinate[1] + "," + e.coordinate[0];
-          //const closestFeature = self.getClosestPoint(coordinate);
-          //var aa = DisasterManagementData.getClosestFeatureToCoordinate(coordinate);
-          //console.log(aa);
+          self._DisasterManagementDetails = [];
+          let dmFeatures = self._DisasterManagementLyr.getSource().getFeatures();
+          let features : any[];
+
+          for (let index = 0; index < dmFeatures.length; index++) {
+            try
+            {
+              let elm = dmFeatures[index];
+              let dmPoint =(<Point>elm.getGeometry()).getCoordinates();
+              e.coordinate.push(0);
+              let dist = self.ComputeDistance(dmPoint,e.coordinate);
+              if(dist)
+              {
+                dist = dist/1000;
+                if(dist <= 10)
+                {
+                  let dmDetails : DisasterManagementDetails = new DisasterManagementDetails();
+                  
+                  dmDetails.Name = elm.get('TEXTSTRING');
+                  dmDetails.Address = elm.get('Address');
+                  if(!dmDetails.Address)
+                  { 
+                    dmDetails.Address = "";
+                  }
+                  dmDetails.Type = elm.get('Type');
+                  dmDetails.Phone = elm.get('Phone_N');
+                  if(!dmDetails.Phone)
+                  {
+                    dmDetails.Phone = "";
+                  }
+                  dmDetails.Distance = dist;
+                  self._DisasterManagementDetails.push(dmDetails);
+                }
+              }
+            }
+            catch(e)
+            {
+               console.log("DM error in point: " +index);
+            }
+          }
         }
         else
         {
@@ -589,9 +629,7 @@ export class ViewMapComponent implements OnInit {
                 Phone = "";
               }
                           
-              const coordinate = e.coordinate;
-              const hdms =toStringHDMS(toLonLat(coordinate));
-    
+              const coordinate = e.coordinate;    
               content.innerHTML = '<p>You clicked at: '+DM_Id+' ('+Type+') :</p><code>Name :' + Name + ', Address:'+Address+', Phone:'+Phone+'</code>';
               overlay.setPosition(coordinate);
 
@@ -617,7 +655,7 @@ export class ViewMapComponent implements OnInit {
               self.ShowSurveyPopup(data);  
               return;
             }         
-        }    
+          }    
         // start without check box click - end 
 
         }
@@ -639,6 +677,12 @@ export class ViewMapComponent implements OnInit {
         CS_PointLayer.setVisible(visible);      
      });
       
+    }
+
+    ComputeDistance(argDMPoint : any,argClickPoint: any[]):any
+    {     
+      var distance = getDistance(argDMPoint, argClickPoint);      
+      return distance;
     }
 
     RegisterProj4s()
