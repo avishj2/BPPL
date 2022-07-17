@@ -23,6 +23,8 @@ import GCP_Points from 'src/assets/GeoJson/GCP_Points.json';
 import FOREST_BOUNDARY from 'src/assets/GeoJson/FOREST_BOUNDARY.json';
 import Neotectonic_Fault from 'src/assets/GeoJson/Neotectonic_Fault.json';
 
+import DisasterManagementData from 'src/assets/GeoJson/Name.json';
+
 // import WellIcon from 'src/assets/NKBPLImages/WELL.png';
 // import BoreWellIcon from 'src/assets/NKBPLImages/BOREWELL.png';
 // import WaterTankIcon from 'src/assets/NKBPLImages/WT.png';
@@ -124,6 +126,10 @@ export class ConfigService {
 
   getWell(): any{
     return Well;
+  }
+
+  getDisasterManagementData(): any{
+    return DisasterManagementData;
   }
 
   getApiUrl(): string {

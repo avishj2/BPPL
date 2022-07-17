@@ -3,7 +3,8 @@ export class MapFeature{
     SurveyNo : string;
     SelectedFeature : any;
     Permission : string;
-    TP_GCP :string;    
+    TP_GCP :string;   
+    DM_Id : any 
   }
 
 export class MapLayer

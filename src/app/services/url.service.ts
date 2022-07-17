@@ -360,5 +360,6 @@ export class UrlService {
   Khasara_Boundary_bigger = "Khasara_Boundary_bigger";
   GCP_Points = "GCP_Points";
   SurveyNoTextBigger = "SurveyNoTextBigger";
+  DisasterManagementData= "DisasterManagementData";
 }
 

@@ -31,6 +31,7 @@ import ImageStyle from 'ol/style/Image';
 import { StyleFunction } from 'ol/style/Style';
 import {toStringHDMS} from 'ol/coordinate';
 import Overlay from 'ol/Overlay';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-view-map',
@@ -331,7 +332,7 @@ export class ViewMapComponent implements OnInit {
           return GetPointStyleFunction(feature, style,GeometryType.Circle)
         },
       });   
-      Texthighlight_Layer.set('title',self.urlService.TPLayer);  
+      Texthighlight_Layer.set('title',self.urlService.Texthighlight);  
       
 
       const Building_Layer: VectorLayer = new VectorLayer({
@@ -344,7 +345,7 @@ export class ViewMapComponent implements OnInit {
           return GetPointStyleFunction(feature, style,GeometryType.Polygon)
         },
       });  
-      Building_Layer.set('title',self.urlService.Plantation);
+      Building_Layer.set('title',self.urlService.Building);
 
       const FOREST_BOUNDARY: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -368,7 +369,7 @@ export class ViewMapComponent implements OnInit {
           return GetPointStyleFunction(feature, style,GeometryType.Line)
         },
       });  
-      Neotectonic.set('title',self.urlService.FOREST_BOUNDARY);
+      Neotectonic.set('title',self.urlService.Neotectonic);
 
       const Khasara_Boundary_bigger: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -405,6 +406,18 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       SurveyNoTextBigger.set('title',self.urlService.SurveyNoTextBigger); 
+
+      const DisasterManagementData: VectorLayer = new VectorLayer({
+        source: new VectorSource({  
+        features: new GeoJSON().readFeatures(this.configService.getDisasterManagementData()),
+        format: new GeoJSON()
+        }),
+        style: function(feature){
+          let style = self.SetStyleModel("#03fce3","#03fce3",true,"black","Type",self.urlService.TextFont15,"left",10,[0,2,4,5]);
+          return GetPointStyleFunction(feature, style,GeometryType.Circle)
+        },
+      });   
+      DisasterManagementData.set('title',self.urlService.DisasterManagementData); 
 
       /** Overlay */
       // OverLay:
@@ -462,6 +475,7 @@ export class ViewMapComponent implements OnInit {
            Texthighlight_Layer,           
            Neotectonic,
            GCP_Points,
+           DisasterManagementData
         ],
         target: 'map',
         overlays: [overlay],
@@ -489,7 +503,10 @@ export class ViewMapComponent implements OnInit {
         let crossingFeatures : MapFeature[] = [];
         let khasraFeatures : MapFeature[] = [];
         let TP_GCP_Features : MapFeature[] = [];
+        let l_DisasterManagementData : MapFeature[] = [];
         let features : MapFeature[] = [];
+
+        // start without check box click - start
         var feature = map.forEachFeatureAtPixel(e.pixel,        
           function(feature, layer) { 
             let layerName = layer.get('title');
@@ -497,7 +514,7 @@ export class ViewMapComponent implements OnInit {
             {
               if(!crossingFeatures.find(elm=>elm.CrossingName== feature.get('TEXTSTRING')))
               {
-                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),SelectedFeature: feature , SurveyNo:"",TP_GCP:"", Permission :feature.get('Permission')};
+                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),DM_Id:"",SelectedFeature: feature , SurveyNo:"",TP_GCP:"", Permission :feature.get('Permission')};
                 crossingFeatures.push(mf);   
                 features.push(mf);
               }   
@@ -506,7 +523,7 @@ export class ViewMapComponent implements OnInit {
             {              
               if(!khasraFeatures.find(elm=>elm.SurveyNo==feature.get('Survey_No')))
               {
-                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),SelectedFeature : feature , CrossingName:"",Permission :"",TP_GCP:""};
+                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),DM_Id:"",SelectedFeature : feature , CrossingName:"",Permission :"",TP_GCP:""};
                 khasraFeatures.push(mf);      
                 features.push(mf);
               }
@@ -515,8 +532,17 @@ export class ViewMapComponent implements OnInit {
             {              
               if(!TP_GCP_Features.find(elm=>elm.SurveyNo==feature.get('TEXTSTRING')))
               {
-                let mf :MapFeature = { TP_GCP: feature.get('TEXTSTRING'),SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
+                let mf :MapFeature = { TP_GCP: feature.get('TEXTSTRING'),DM_Id:"",SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
                 TP_GCP_Features.push(mf);      
+                features.push(mf);
+              }
+            } 
+            if(layerName == "DisasterManagementData")
+            {              
+              if(!l_DisasterManagementData.find(elm=>elm.DM_Id==feature.get('TEXTSTRING')))
+              {
+                let mf :MapFeature = { DM_Id: feature.get('TEXTSTRING'),TP_GCP:"",SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
+                l_DisasterManagementData.push(mf);      
                 features.push(mf);
               }
             }              
@@ -539,6 +565,30 @@ export class ViewMapComponent implements OnInit {
             }
             return;
           }
+          if(l_DisasterManagementData.length > 0)
+          {
+            let DM_Id = l_DisasterManagementData[0].DM_Id;
+            let Name = l_DisasterManagementData[0].SelectedFeature.get('TEXTSTRING');
+            let Address = l_DisasterManagementData[0].SelectedFeature.get('Address');
+            if(!Address)
+            { 
+              Address = "";
+            }
+            let Type = l_DisasterManagementData[0].SelectedFeature.get('Type');
+            let Phone = l_DisasterManagementData[0].SelectedFeature.get('Phone_N');
+            if(!Phone)
+            {
+              Phone = "";
+            }
+                        
+            const coordinate = e.coordinate;
+            const hdms =toStringHDMS(toLonLat(coordinate));
+  
+            content.innerHTML = '<p>You clicked at: '+DM_Id+' ('+Type+') :</p><code>Name :' + Name + ', Address:'+Address+', Phone:'+Phone+'</code>';
+            overlay.setPosition(coordinate);
+
+            return;
+          }
           if(TP_GCP_Features.length > 0)
           {
             let TP_GCP = TP_GCP_Features[0].TP_GCP;
@@ -559,7 +609,8 @@ export class ViewMapComponent implements OnInit {
             self.ShowSurveyPopup(data);  
             return;
           }         
-        }     
+        }    
+        // start without check box click - end 
       });   
       
       map.getView().on('change:resolution', function (e) {
