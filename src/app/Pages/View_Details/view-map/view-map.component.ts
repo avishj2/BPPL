@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import Map from 'ol/Map';
 import OSM from 'ol/source/OSM';
 import VectorLayer from 'ol/layer/Vector';
@@ -40,9 +40,10 @@ import { of } from 'rxjs';
 })
 export class ViewMapComponent implements OnInit {
   map: any;
-
+  _ShowDisasterPoints : boolean= false;
   MapLayers: MapLayer[] = [];
-  
+  @ViewChild('closebutton') closebutton;
+
   constructor(public urlService: UrlService,
     public modelServiceService : ModelServiceService,
     public Utility: UtilityService,
@@ -245,9 +246,7 @@ export class ViewMapComponent implements OnInit {
         },
       });
       ROU_Layer.set('title',self.urlService.ROU);
-
       // Changes to add new GeoJson - Start
-
       const Well_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
         features: new GeoJSON().readFeatures(this.configService.getWell()),
@@ -505,112 +504,123 @@ export class ViewMapComponent implements OnInit {
         let TP_GCP_Features : MapFeature[] = [];
         let l_DisasterManagementData : MapFeature[] = [];
         let features : MapFeature[] = [];
-
-        // start without check box click - start
-        var feature = map.forEachFeatureAtPixel(e.pixel,        
-          function(feature, layer) { 
-            let layerName = layer.get('title');
-            if(layerName == "Crossing")
-            {
-              if(!crossingFeatures.find(elm=>elm.CrossingName== feature.get('TEXTSTRING')))
-              {
-                let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),DM_Id:"",SelectedFeature: feature , SurveyNo:"",TP_GCP:"", Permission :feature.get('Permission')};
-                crossingFeatures.push(mf);   
-                features.push(mf);
-              }   
-            }  
-            if(layerName == "Khasra")
-            {              
-              if(!khasraFeatures.find(elm=>elm.SurveyNo==feature.get('Survey_No')))
-              {
-                let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),DM_Id:"",SelectedFeature : feature , CrossingName:"",Permission :"",TP_GCP:""};
-                khasraFeatures.push(mf);      
-                features.push(mf);
-              }
-            }
-            if(layerName == "TP" || layerName == "GCP_Points" )
-            {              
-              if(!TP_GCP_Features.find(elm=>elm.SurveyNo==feature.get('TEXTSTRING')))
-              {
-                let mf :MapFeature = { TP_GCP: feature.get('TEXTSTRING'),DM_Id:"",SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
-                TP_GCP_Features.push(mf);      
-                features.push(mf);
-              }
-            } 
-            if(layerName == "DisasterManagementData")
-            {              
-              if(!l_DisasterManagementData.find(elm=>elm.DM_Id==feature.get('TEXTSTRING')))
-              {
-                let mf :MapFeature = { DM_Id: feature.get('TEXTSTRING'),TP_GCP:"",SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
-                l_DisasterManagementData.push(mf);      
-                features.push(mf);
-              }
-            }              
-          });  
-        if(features.length > 2)
+        //checkbox
+        if(self._ShowDisasterPoints == true)
         {
-           alert("Multiple features are selected please zoom in and select precise !")
+          let coordinate = e.coordinate[1] + "," + e.coordinate[0];
+          //const closestFeature = self.getClosestPoint(coordinate);
+          //var aa = DisasterManagementData.getClosestFeatureToCoordinate(coordinate);
+          //console.log(aa);
         }
         else
         {
-          if(crossingFeatures.length > 0)
-          {
-            let data = crossingFeatures[0].CrossingName;
-            if(crossingFeatures[0].Permission== "NO")
+          // start without check box click - start
+          var feature = map.forEachFeatureAtPixel(e.pixel,        
+            function(feature, layer) { 
+              let layerName = layer.get('title');
+              if(layerName == "Crossing")
               {
-                alert("We don't need permission for this Crossing !!")
+                if(!crossingFeatures.find(elm=>elm.CrossingName== feature.get('TEXTSTRING')))
+                {
+                  let mf :MapFeature = {CrossingName: feature.get('TEXTSTRING'),DM_Id:"",SelectedFeature: feature , SurveyNo:"",TP_GCP:"", Permission :feature.get('Permission')};
+                  crossingFeatures.push(mf);   
+                  features.push(mf);
+                }   
+              }  
+              if(layerName == "Khasra")
+              {              
+                if(!khasraFeatures.find(elm=>elm.SurveyNo==feature.get('Survey_No')))
+                {
+                  let mf :MapFeature = { SurveyNo: feature.get('Survey_No'),DM_Id:"",SelectedFeature : feature , CrossingName:"",Permission :"",TP_GCP:""};
+                  khasraFeatures.push(mf);      
+                  features.push(mf);
+                }
               }
-            else{
-              self.ShowCrossingPopup(data);
-            }
-            return;
-          }
-          if(l_DisasterManagementData.length > 0)
+              if(layerName == "TP" || layerName == "GCP_Points" )
+              {              
+                if(!TP_GCP_Features.find(elm=>elm.SurveyNo==feature.get('TEXTSTRING')))
+                {
+                  let mf :MapFeature = { TP_GCP: feature.get('TEXTSTRING'),DM_Id:"",SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
+                  TP_GCP_Features.push(mf);      
+                  features.push(mf);
+                }
+              } 
+              if(layerName == "DisasterManagementData")
+              {              
+                if(!l_DisasterManagementData.find(elm=>elm.DM_Id==feature.get('TEXTSTRING')))
+                {
+                  let mf :MapFeature = { DM_Id: feature.get('TEXTSTRING'),TP_GCP:"",SurveyNo:"",SelectedFeature : feature , CrossingName:"",Permission :""};
+                  l_DisasterManagementData.push(mf);      
+                  features.push(mf);
+                }
+              }              
+            });  
+          if(features.length > 2)
           {
-            let DM_Id = l_DisasterManagementData[0].DM_Id;
-            let Name = l_DisasterManagementData[0].SelectedFeature.get('TEXTSTRING');
-            let Address = l_DisasterManagementData[0].SelectedFeature.get('Address');
-            if(!Address)
-            { 
-              Address = "";
-            }
-            let Type = l_DisasterManagementData[0].SelectedFeature.get('Type');
-            let Phone = l_DisasterManagementData[0].SelectedFeature.get('Phone_N');
-            if(!Phone)
+            alert("Multiple features are selected please zoom in and select precise !")
+          }
+          else
+          {
+            if(crossingFeatures.length > 0)
             {
-              Phone = "";
+              let data = crossingFeatures[0].CrossingName;
+              if(crossingFeatures[0].Permission== "NO")
+                {
+                  alert("We don't need permission for this Crossing !!")
+                }
+              else{
+                self.ShowCrossingPopup(data);
+              }
+              return;
             }
-                        
-            const coordinate = e.coordinate;
-            const hdms =toStringHDMS(toLonLat(coordinate));
-  
-            content.innerHTML = '<p>You clicked at: '+DM_Id+' ('+Type+') :</p><code>Name :' + Name + ', Address:'+Address+', Phone:'+Phone+'</code>';
-            overlay.setPosition(coordinate);
+            if(l_DisasterManagementData.length > 0)
+            {
+              let DM_Id = l_DisasterManagementData[0].DM_Id;
+              let Name = l_DisasterManagementData[0].SelectedFeature.get('TEXTSTRING');
+              let Address = l_DisasterManagementData[0].SelectedFeature.get('Address');
+              if(!Address)
+              { 
+                Address = "";
+              }
+              let Type = l_DisasterManagementData[0].SelectedFeature.get('Type');
+              let Phone = l_DisasterManagementData[0].SelectedFeature.get('Phone_N');
+              if(!Phone)
+              {
+                Phone = "";
+              }
+                          
+              const coordinate = e.coordinate;
+              const hdms =toStringHDMS(toLonLat(coordinate));
+    
+              content.innerHTML = '<p>You clicked at: '+DM_Id+' ('+Type+') :</p><code>Name :' + Name + ', Address:'+Address+', Phone:'+Phone+'</code>';
+              overlay.setPosition(coordinate);
 
-            return;
-          }
-          if(TP_GCP_Features.length > 0)
-          {
-            let TP_GCP = TP_GCP_Features[0].TP_GCP;
-            let Easting = TP_GCP_Features[0].SelectedFeature.get('Easting');
-            let Northing = TP_GCP_Features[0].SelectedFeature.get('Northing');
-                        
-            const coordinate = e.coordinate;
-            const hdms =toStringHDMS(toLonLat(coordinate));
-  
-            content.innerHTML = '<p>You clicked at: '+TP_GCP+' :</p><code>Easting :' + Easting + ', Northing:'+Northing+'</code>';
-            overlay.setPosition(coordinate);
+              return;
+            }
+            if(TP_GCP_Features.length > 0)
+            {
+              let TP_GCP = TP_GCP_Features[0].TP_GCP;
+              let Easting = TP_GCP_Features[0].SelectedFeature.get('Easting');
+              let Northing = TP_GCP_Features[0].SelectedFeature.get('Northing');
+                          
+              const coordinate = e.coordinate;
+              const hdms =toStringHDMS(toLonLat(coordinate));
+    
+              content.innerHTML = '<p>You clicked at: '+TP_GCP+' :</p><code>Easting :' + Easting + ', Northing:'+Northing+'</code>';
+              overlay.setPosition(coordinate);
 
-            return;
-          }
-          if(khasraFeatures.length > 0)
-          {
-            let data =khasraFeatures[0].SelectedFeature.getProperties();
-            self.ShowSurveyPopup(data);  
-            return;
-          }         
+              return;
+            }
+            if(khasraFeatures.length > 0)
+            {
+              let data =khasraFeatures[0].SelectedFeature.getProperties();
+              self.ShowSurveyPopup(data);  
+              return;
+            }         
         }    
         // start without check box click - end 
+
+        }
       });   
       
       map.getView().on('change:resolution', function (e) {

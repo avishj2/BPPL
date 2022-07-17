@@ -68,3 +68,9 @@ html, body {
   .ol-popup-closer:after {
     content: "✖";
   }
+  .ol-custom{
+    z-index: 1000;
+  top: 4.5em;
+  left: .5em;
+  
+}
