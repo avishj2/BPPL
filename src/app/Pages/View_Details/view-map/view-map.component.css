@@ -70,7 +70,31 @@ html, body {
   }
   .ol-custom{
     z-index: 1000;
-  top: 4.5em;
-  left: .5em;
+    top: 4.5em;
+    left: .5em;
   
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 150%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  /* height: 100vh; */
+  /* background-color: #000; */
+  background-color: #c2cfdb2d !important;
 }

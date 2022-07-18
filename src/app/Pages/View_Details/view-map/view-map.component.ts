@@ -33,6 +33,8 @@ import {toStringHDMS} from 'ol/coordinate';
 import Overlay from 'ol/Overlay';
 import  Projection from 'ol/proj/Projection';
 import {getDistance,getLength,getArea} from 'ol/sphere';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-view-map',
@@ -41,8 +43,16 @@ import {getDistance,getLength,getArea} from 'ol/sphere';
 })
 export class ViewMapComponent implements OnInit {
   map: any;
-  _ShowDisasterPoints : boolean= false;
+  _ShowDisasterPoints : boolean = false;
   _DisasterManagementLyr : VectorLayer;
+  /**data table properties  */
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  /**REFERSH DATATABLE  */
+  IsDtInitialized: boolean = false;
+
   _DisasterManagementDetails:DisasterManagementDetails[] = [];
   MapLayers: MapLayer[] = [];
   @ViewChild('closebutton') closebutton;
@@ -58,12 +68,41 @@ export class ViewMapComponent implements OnInit {
 
  async ngOnInit() 
     {
+      this.dtOptions = 
+        {
+          pagingType: 'full_numbers',
+          pageLength: 10,
+          destroy : true,
+          language: {emptyTable : "Nearest Disaster Points Not Available!!"}
+        };
       this.RegisterProj4s();
       this.showJsonLayer();
       let data = await this.Utility._ROULayer;
       console.log(data);
     }
 
+  ngAfterViewInit(): void 
+    {
+      this.dtTrigger.next();      
+    }
+
+  ReloadDatatable()
+    {
+      /**initialized datatable */
+      if (this.IsDtInitialized) 
+        {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => 
+          {
+            dtInstance.destroy();//Destroy the table first
+            this.dtTrigger.next();//Call the dtTrigger to rerender again
+          });
+        }
+      else
+        {
+          this.IsDtInitialized = true;
+          this.dtTrigger.next();
+        }
+    }  
   showJsonLayer()
     {
       const GetPointStyleFunction = function(feature,styleModel: StyleModel,geoType : GeometryType)
@@ -543,6 +582,7 @@ export class ViewMapComponent implements OnInit {
                   }
                   dmDetails.Distance = dist;
                   self._DisasterManagementDetails.push(dmDetails);
+                  //self.ReloadDatatable();
                 }
               }
             }
