@@ -35,6 +35,7 @@ import  Projection from 'ol/proj/Projection';
 import {getDistance,getLength,getArea} from 'ol/sphere';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import RasterSource from 'ol/source/Raster';
 
 @Component({
   selector: 'app-view-map',
