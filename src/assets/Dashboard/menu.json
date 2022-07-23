@@ -33,7 +33,8 @@
             {"title" : "LAQ Permanent", "url" : "LAQPermanent"},
             {"title" : "Gazette & Notification", "url" : "ViewGazette"},
             {"title" : "View SV-IPS ", "url" : "ViewSVIPSDetails"},
-            {"title" : "View Map", "url" : "ViewMap"}
+            {"title" : "View Map", "url" : "ViewMap"},
+            {"title" : "ArcGIS Map", "url" : "ArcGISMap"}
         ]
     },
     {

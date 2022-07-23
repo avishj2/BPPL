@@ -71,6 +71,7 @@ import { SOMappingComponent } from './Pages/Survey_Details/somapping/somapping.c
 import { SVIPSDetailsComponent } from './Pages/Survey_Details/svipsdetails/svipsdetails.component';
 import { ViewSVIPSDetailsComponent } from './Pages/View_Details/view-svipsdetails/view-svipsdetails.component';
 import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-details.component';
+import { ArcGISMapComponent } from './Pages/View_Details/arc-gismap/arc-gismap.component';
 
 // export function ConfigLoader(configService: ConfigService) {  
 //   return () => configService.load(environment.Menu); 
@@ -131,6 +132,7 @@ import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-d
     SVIPSDetailsComponent,
     ViewSVIPSDetailsComponent,
     UserDetailsComponent,
+    ArcGISMapComponent,
     
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
