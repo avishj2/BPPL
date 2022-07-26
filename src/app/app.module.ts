@@ -4,7 +4,6 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngb-modal';
 import { NgbModule ,NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadCrumbComponent } from 'src/app/dash-board/breadcrumb.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -144,7 +143,6 @@ import { ArcGISMapComponent } from './Pages/View_Details/arc-gismap/arc-gismap.c
     ModalModule,
     NgbModule,
     DataTablesModule,
-    BreadcrumbModule,
     NgSelectModule,
     HttpClientModule,
     AlertsModule.forRoot(),

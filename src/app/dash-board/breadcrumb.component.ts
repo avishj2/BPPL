@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { MenuItem } from 'primeng/api';
 
 export interface BreadCrumb {
     label: string;
