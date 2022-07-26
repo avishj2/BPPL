@@ -26,34 +26,35 @@
             "styles": [
               "src/custom-theme.scss",
               {
-                "input": "src/assets/Dashboard/bootstrap(node).min.css"
+                "input": "src/assets/Dashboard/bootstrap(node).min.css",
+                "inject": true
               },
               {
-                "input": "src/styles.css"
+                "input": "src/styles.css",
+                "inject": true
               },
               {
-                "input": "node_modules/datatables.net-dt/css/jquery.dataTables.css"
-              },
-              
-              {
-                "input": "src/assets/Dashboard/font-awesome.min.css"
+                "input": "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+                "inject": true
               },
               {
-                "input": "src/assets/Dashboard/Style-rtl.min.css"
+                "input": "src/assets/Dashboard/font-awesome.min.css",
+                "inject": true
               },
               {
-                "input": "src/assets/Dashboard/Style.min.css"
+                "input": "src/assets/Dashboard/Style-rtl.min.css",
+                "inject": true
+              },
+              {
+                "input": "src/assets/Dashboard/Style.min.css",
+                "inject": true
               }
-              
-              
             ],
             "scripts": [
               "src/assets/Dashboard/Newjquery-2.1.4.min.js",
               "src/assets/Dashboard/bootstrap.min.js",
               "src/assets/Dashboard/min.js",
-             
               "node_modules/datatables.net/js/jquery.dataTables.js"
-              
             ]
           },
           "configurations": {
@@ -71,7 +72,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,

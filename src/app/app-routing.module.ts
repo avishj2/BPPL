@@ -97,7 +97,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {
     onSameUrlNavigation: "ignore"
     //useHash: true,
-  })],
+    ,
+    relativeLinkResolution: 'legacy'
+})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
