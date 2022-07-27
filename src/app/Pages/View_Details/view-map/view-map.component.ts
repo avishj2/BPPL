@@ -10,7 +10,7 @@ import * as  Proj4 from 'proj4/dist/proj4';
 import {Fill, Stroke, Style,Circle, Text} from 'ol/style';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import 'ol/ol.css';
+//import 'ol/ol.css';
 import {FullScreen, defaults as defaultControls} from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';

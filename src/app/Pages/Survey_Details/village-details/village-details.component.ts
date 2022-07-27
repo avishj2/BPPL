@@ -9,7 +9,7 @@ import { VillageResponseModel, VillageChainageModel, VillageChainageResModel, Vi
 import { HttpService } from '../../../services/http.service';
 import { Subject, from } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/services/common.service';
 
 @Component({
@@ -45,7 +45,7 @@ IsDtInitialized: boolean = false;
   popoverMessage = "Are you sure you want to delete it ?";
   /**form fields validation */
   _IsFirstLoad = false;
-  myFormGroup: FormGroup;
+  myFormGroup: UntypedFormGroup;
 
   constructor(
     public urlService: UrlService,
@@ -53,7 +53,7 @@ IsDtInitialized: boolean = false;
     private router: Router,
     private httpService: HttpService,
     public Utility: UtilityService,
-    public formBuilder: FormBuilder,
+    public formBuilder: UntypedFormBuilder,
     public CommonService: CommonService,
   ) {
     this._SearchCriteria = new SearchCriteria();
