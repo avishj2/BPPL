@@ -103,7 +103,6 @@
           "configurations": {
             "production": {
               "browserTarget": "BPPLWebsite:build:production",
-              "optimization": true,
               "outputHashing": "all"
             }
           }
@@ -127,19 +126,6 @@
             ],
             "styles": [],
             "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         },
         "e2e": {
