@@ -31,7 +31,7 @@ export class ArcGISMapComponent implements OnInit {
     
     const webmap = new WebMap({
       portalItem: {
-        id: '81c5c531a26a48299a600fe4be4b1299'// ee945975a60c47fe80b6fd37ab331705 (S) .. aa1d3f80270146208328cf66d022e09c (G)
+        id: '0c96587e9db643e8baf8ae4f96b94d16' //'81c5c531a26a48299a600fe4be4b1299'// ee945975a60c47fe80b6fd37ab331705 (S) .. aa1d3f80270146208328cf66d022e09c (G)
        //id: '0c96587e9db643e8baf8ae4f96b94d16',
       }
     });
