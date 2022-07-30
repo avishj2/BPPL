@@ -1,9 +1,4 @@
-/* html, body {
-    height: 100%;
-    width: 100%;
-    } */
-    
-    .esri-view {
+ .esri-view {
       padding: 0;
       margin: 0;
       height: 800px;
@@ -18,11 +13,6 @@
     }
 
     
-    /* html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      } */
+  .esri-view-height-medium .esri-expand .esri-widget--panel, .esri-view-height-medium .esri-expand .esri-widget--panel-height-only, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel-height-only {
+      max-height: 280px;
+  }

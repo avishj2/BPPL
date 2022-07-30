@@ -13,7 +13,9 @@ import WebMap from '@arcgis/core/WebMap';
 import Bookmarks from '@arcgis/core/widgets/Bookmarks';
 import Expand from '@arcgis/core/widgets/Expand';
 import Editor from "@arcgis/core/widgets/Editor";
-
+import LayerList from "@arcgis/core/widgets/LayerList";
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
+import * as content from "@arcgis/core/popup/content";
 
 @Component({
   selector: 'app-arc-gismap',
@@ -45,7 +47,24 @@ export class ArcGISMapComponent implements OnInit {
       view: view
     });
     
-    view.ui.add(editor, "top-right");
+    // view.ui.add(editor, "top-right");
+
+    // typical usage
+    let layerlist = new LayerList({
+      view: view
+    });
+
+    view.ui.add(layerlist, {
+      position: "top-right"//"top-left"
+    });
+
+    let basemapGallery = new BasemapGallery({
+      view: view
+    });
+    // Add widget to the top right corner of the view
+    // view.ui.add(basemapGallery, {
+    //   position: "top-right"
+    // });
 
     const bookmarks = new Bookmarks({
       view,
@@ -56,11 +75,11 @@ export class ArcGISMapComponent implements OnInit {
     const bkExpand = new Expand({
       view,
       content: bookmarks,
-      expanded: true,
+      expanded: false,
     });
 
     // Add the widget to the top-right corner of the view
-    view.ui.add(bkExpand, 'top-right');
+    //view.ui.add(bkExpand, 'top-right');
 
     // bonus - how many bookmarks in the webmap?
     webmap.when(() => {
