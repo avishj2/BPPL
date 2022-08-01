@@ -16,6 +16,12 @@ import Editor from "@arcgis/core/widgets/Editor";
 import LayerList from "@arcgis/core/widgets/LayerList";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import * as content from "@arcgis/core/popup/content";
+import { ViewSurveyTabsComponent } from 'src/app/Pages/View_Details/view-survey-tabs/view-survey-tabs.component';
+import {ModelServiceService} from 'src/app/services/model-service.service';
+import { NgbDateStruct, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService} from 'src/app/services/common.service';
+import { UrlService } from 'src/app/services/url.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-arc-gismap',
@@ -27,6 +33,15 @@ export class ArcGISMapComponent implements OnInit {
 
   // The <div> where we will place the map
   @ViewChild('mapViewNode', { static: true }) private mapViewEl!: ElementRef;
+
+  constructor(public urlService: UrlService,
+    public modelServiceService : ModelServiceService,
+    public Utility: UtilityService,
+    public CommonService : CommonService,
+    )
+    {
+    }
+
 
   initializeMap(): Promise<any> {
     const container = this.mapViewEl.nativeElement;
@@ -51,9 +66,16 @@ export class ArcGISMapComponent implements OnInit {
 
     // typical usage
     let layerlist = new LayerList({
-      view: view
+      view: view,
+      listItemCreatedFunction: function(event){
+        const item = event.item;
+        item.panel = {
+          content: "legend"
+        };
+      }
     });
-
+    layerlist.selectionEnabled = true;
+    layerlist.multipleSelectionEnabled = true;
     view.ui.add(layerlist, {
       position: "top-right"//"top-left"
     });
@@ -91,6 +113,32 @@ export class ArcGISMapComponent implements OnInit {
     });
 
     this.view = view;
+    //click on map 
+    // view.on("click", (event) => {
+    //   console.log("event",event)
+    //       // Search for symbols on click's position
+    //     view.hitTest(event.screenPoint)
+    //     .then(function(response){
+    //       // Retrieve the first symbol
+    //       var graphic = response.results[0].graphic;
+    //       if (graphic) {
+    //         // We now have access to its attributes
+    //         console.log(graphic.attributes);
+    //       }
+    //     });
+
+    //   });
+
+    // view.on("layerview-create", function(event) {
+    //   // The event contains the layer and its layer view that has just been
+    //   // created. Here we check for the creation of a layer view for a layer with
+    //   // a specific id, and log the layer view
+    //   if (event.layer.id === "Khsara boundary") {
+    //     // The LayerView for the desired layer
+    //     console.log(event.layerView);
+    //   }
+    // });
+
     return this.view.when();
   }
 
@@ -108,4 +156,23 @@ export class ArcGISMapComponent implements OnInit {
       this.view.destroy();
     }
   }
+
+  ShowSurveyPopup(arg)
+      {
+        /**NgbModalOptions  add some option in ngbmodel  */
+        let ngbModalOptions: NgbModalOptions = {
+          keyboard : false,
+          size: 'xl'
+          };
+          let argdata = {
+            ShowModel: true,
+            // VillageName: arg.Village_N,
+            VillageName : arg.Village,
+            TehsilName :arg.Tehsil_N,           
+            SurveyName :arg.DBSurvey_N,//Survey_No
+          }
+        /**used popup model common service function */
+        this.modelServiceService.ShowPopUP(ViewSurveyTabsComponent,ngbModalOptions,argdata,
+          null,null);
+      }
 }
