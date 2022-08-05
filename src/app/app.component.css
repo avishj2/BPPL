@@ -1,1 +1,12 @@
 /* @import "@arcgis/core/assets/esri/themes/light/main.css"; */
+
+.esri-search {
+    width: 200px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    left: 50px;
+    top: 13px;
+  }
