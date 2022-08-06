@@ -26,6 +26,7 @@ import { CommonService} from 'src/app/services/common.service';
 import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import Search from "@arcgis/core/widgets/Search";
+// import Query from "@arcgis/core/widgets/";
 
 @Component({
   selector: 'app-arc-gismap',
@@ -118,12 +119,6 @@ export class ArcGISMapComponent implements OnInit {
     view.ui.add(searchWidget, {
       position: "manual",
     });
-
-    // const editor = new Editor({
-    //   view: view,
-    // });
-    // view.ui.add(editor, 'top-right');
-
     webmap.when(() => {
       if (webmap.bookmarks && webmap.bookmarks.length) {
         console.log('Bookmarks: ', webmap.bookmarks.length);
@@ -146,19 +141,19 @@ export class ArcGISMapComponent implements OnInit {
           // }
           //second method
           if (response.results.length) 
-          {
-            var graphic = response.results.filter(function (result) 
             {
-              // check if the graphic belongs to the layer of interest
-              let layer = result.graphic.layer.title
-              console.log("Layer name => ",layer);
-              result.graphic.layer.fields[5].name
-              //'Survey_No'
-              return result.graphic.layer.title === "CHAINAGE"//"Khasra boundary"
-            })[0].graphic;
-            //do something with the result graphic
-            console.log(graphic.attributes);
-          }
+              // var graphic = response.results.filter(function (result) 
+              // {
+              //   // check if the graphic belongs to the layer of interest
+              //   let layer = result.graphic.layer.title
+              //   console.log("Layer name => ",layer);
+              //   //result.graphic.layer.fields[5].name
+              //   //'Survey_No'
+              //   return result.graphic.layer.title === "Khasra boundary"//"CHAINAGE"
+              // })[0].graphic;
+              // //do something with the result graphic
+              // console.log(graphic.attributes);
+            }
         });
           //======end
       });
@@ -246,69 +241,80 @@ export class ArcGISMapComponent implements OnInit {
         }        
     }
 
-    OpenBaseMaps()
-      {
-        let basemapGallery = new BasemapGallery({
-          view: this.view,
-          id : "2"
+  OpenBaseMaps()
+    {
+      let basemapGallery = new BasemapGallery({
+        view: this.view,
+        id : "2"
+      });
+      if(this._OpenBasemap== false)
+        {
+          this._OpenBasemap = true;
+          this.view.ui.empty("top-right");
+          // Add widget to the top right corner of the view
+          this.view.ui.add(basemapGallery, {position: "top-right"});
+        }
+      else{
+        this.HideWidget();
+      }
+    }
+
+  OpenEditor()
+    {
+      const editor = new Editor({
+        view: this.view,
+        id: "3",
+        //layerInfos: [pointInfos, lineInfos, polyInfos]
+      });
+      if(this._OpenEditor == false)
+        {
+          this._OpenEditor = true;
+          this.view.ui.empty("top-right");
+          this.view.ui.add(editor, "top-right");
+        }
+      else{
+        this.HideWidget();          
+      }
+        
+    }
+    
+  openPrint()
+    {
+      this.view.when(() => {
+        const print = new Print({
+          view: this.view, 
+          id: "4",           
+          printServiceUrl:// specify your own print service
+            "https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
         });
-        if(this._OpenBasemap== false)
+        if(this._OpenPrint == false)
           {
-            this._OpenBasemap = true;
+            this._OpenPrint = true;
             this.view.ui.empty("top-right");
             // Add widget to the top right corner of the view
-            this.view.ui.add(basemapGallery, {position: "top-right"});
+            this.view.ui.add(print, "top-right");
           }
-        else{
-          this.HideWidget();
-        }
-      }
-
-    OpenEditor()
-      {
-        const editor = new Editor({
-          view: this.view,
-          id: "3",
-          //layerInfos: [pointInfos, lineInfos, polyInfos]
-        });
-        if(this._OpenEditor == false)
+        else
           {
-            this._OpenEditor = true;
-            this.view.ui.empty("top-right");
-            this.view.ui.add(editor, "top-right");
-          }
-        else{
-          this.HideWidget();          
-        }
-         
-      }
-    
-    openPrint()
-      {
-        this.view.when(() => {
-          const print = new Print({
-            view: this.view,            
-            printServiceUrl:// specify your own print service
-              "https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
-          });
-          if(this._OpenPrint == false)
-            {
-              this._OpenPrint = true;
-              this.view.ui.empty("top-right");
-              // Add widget to the top right corner of the view
-              this.view.ui.add(print, "top-right");
-            }
-          else
-            {
-              this.HideWidget();
-            }        
-        });
-      }
+            this.HideWidget();
+          }        
+      });
+    }
 
-    OpenbkExpand(){
+  OpenbkExpand()
+    {
+      const bookmarks = new Bookmarks({
+        view: this.view,   
+        id: "5",          
+        editingEnabled: true,  // allows bookmarks to be added, edited, or deleted
+        visibleElements: {
+          time: false // don't show the time (h:m:s) next to the date
+        }
+      });
       const bkExpand = new Expand({
         view: this.view,
-        expanded: true
+        expanded: true,
+        content: bookmarks,
       });
       if(this._OpenBookmark == false)
         {
@@ -321,17 +327,18 @@ export class ArcGISMapComponent implements OnInit {
           this.HideWidget();
         }          
     }
-    OpenQuery()
-      {
-        
-      }
-    HideWidget()
-      {
-        this.view.ui.empty("top-right");
-        this._OpenLayerList = false;
-        this._OpenBasemap = false;
-        this._OpenEditor = false;
-        this._OpenPrint = false;
-        this._OpenBookmark = false;
-      }
+  OpenQuery()
+    {
+      
+    }
+
+  HideWidget()
+    {
+      this.view.ui.empty("top-right");
+      this._OpenLayerList = false;
+      this._OpenBasemap = false;
+      this._OpenEditor = false;
+      this._OpenPrint = false;
+      this._OpenBookmark = false;
+    }
 }
