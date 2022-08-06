@@ -32,6 +32,7 @@ import { SOMappingComponent } from './Pages/Survey_Details/somapping/somapping.c
 import { SVIPSDetailsComponent } from './Pages/Survey_Details/svipsdetails/svipsdetails.component';
 import { ViewSVIPSDetailsComponent } from './Pages/View_Details/view-svipsdetails/view-svipsdetails.component';
 import { UserDetailsComponent } from './Pages/UserManagement/user-details/user-details.component';
+import { ArcGISMapComponent } from './Pages/View_Details/arc-gismap/arc-gismap.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -83,6 +84,7 @@ const routes: Routes = [
       {path: 'LegalDocuments', component: LegalDocumentsComponent, canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis /Legal Documents'}},
 
       {path: 'ViewMap', component: ViewMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / ViewMap'}},
+      {path: 'ArcGISMap', component: ArcGISMapComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / ArcGIS Map'}},
       {path: 'ViewSVIPSDetails', component: ViewSVIPSDetailsComponent,canActivate:[AuthGuard], data: { breadcrumb: 'Survey Analysis / ViewSVIPSDetails'}},
 
       //user management
@@ -95,7 +97,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {
     onSameUrlNavigation: "ignore"
     //useHash: true,
-  })],
+    ,
+    relativeLinkResolution: 'legacy'
+})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

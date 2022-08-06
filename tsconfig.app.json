@@ -11,8 +11,21 @@
       "exceljs": [
         "node_modules/exceljs/dist/exceljs.js"
       ]
-    }
-    
+    },
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "jsxFactory": "tsx",
+    "lib": ["ES2020", "DOM"],
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "strict": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "strictPropertyInitialization": false,
+    "target": "ES2020",
   },
   "files": [
     "src/main.ts",

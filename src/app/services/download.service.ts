@@ -31,9 +31,9 @@ export class DownloadService {
           (x: any) => {
             console.log("x", x);
             var newBlob = new Blob([x], { type: "application/pdf" });
-            if (window.navigator && window.navigator.msSaveOrOpenBlob) 
+            if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) 
               {
-                window.navigator.msSaveOrOpenBlob(newBlob);
+                (window.navigator as any).msSaveOrOpenBlob(newBlob);
                 return;
               }
             const data = window.URL.createObjectURL(newBlob);

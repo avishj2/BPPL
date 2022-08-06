@@ -1,0 +1,39 @@
+ .esri-view {
+      padding: 0;
+      margin: 0;
+      height: 800px;
+      max-width: 100%;
+    }
+    
+    #mapViewNode {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    
+  .esri-view-height-medium .esri-expand .esri-widget--panel, .esri-view-height-medium .esri-expand .esri-widget--panel-height-only, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel, .esri-view-height-medium .esri-ui-corner .esri-component.esri-widget--panel-height-only {
+      max-height: 280px;
+  }
+
+  .fa-list:before {
+    content: "\f03a";
+    border: 1.5px solid black;
+    font-size: 20px;
+    border-radius: 1px;
+    cursor: pointer;
+    z-index: 1px;
+}
+
+.fa-map:before, .fa-pencil-square-o:before,.fa-print:before, .fa-bookmark:before, .fa-search:before {
+  border: 1.5px solid black;
+  font-size: 20px;
+  border-radius: 1px;
+  cursor: pointer;
+}
+.Widgetclass{
+  background-color: #007bff26;
+  align-items: flex-end;
+}
+
