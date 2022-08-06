@@ -11036,6 +11036,8 @@ to {
     justify-content: center;
     align-items: center;
     overflow: visible;
+    left: 50px;
+    top: 13px;
 }
 .esri-search .esri-widget--button {
     box-shadow: none;

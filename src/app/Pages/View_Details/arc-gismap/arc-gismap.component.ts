@@ -26,7 +26,7 @@ import { CommonService} from 'src/app/services/common.service';
 import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import Search from "@arcgis/core/widgets/Search";
-// import Query from "@arcgis/core/widgets/";
+import Query from "@arcgis/core/rest/support/Query";
 
 @Component({
   selector: 'app-arc-gismap',
@@ -42,52 +42,14 @@ export class ArcGISMapComponent implements OnInit {
   _OpenBookmark : boolean = false;
   // The <div> where we will place the map
   @ViewChild('mapViewNode', { static: true }) private mapViewEl!: ElementRef;
-  @ViewChild('basemap') basemap: ElementRef;
   constructor(public urlService: UrlService,
     public modelServiceService : ModelServiceService,
     public Utility: UtilityService,
     public CommonService : CommonService,
-    )
-    {
-    }
+    ){}
 
-
-  initializeMap(): Promise<any> {
+  initializeWebMap(): Promise<any> {
     const container = this.mapViewEl.nativeElement;
- 
-    const template = {
-      // autocasts as new PopupTemplate()
-      title: "Khasra boundary",
-      Value  : "{Survey_No}",
-      content: [
-        {
-          type: "fields",
-          fieldInfos: [
-            {
-              fieldName: "State_N",
-              label: "State_N",
-            },
-            {
-              fieldName: "District_N",
-              label: "District_N",
-            },
-            {
-              fieldName: "Tehsil_N",
-              label: "Tehsil",
-            },
-            {
-              fieldName: "Village_N",
-              label: "Village",
-            },
-            {
-              fieldName: "Survey_No",
-              label: "Survey_No"
-            },
-          ]
-        }
-      ]
-    };
-
     const webmap = new WebMap({
       portalItem: {
         id: '0c96587e9db643e8baf8ae4f96b94d16' //'81c5c531a26a48299a600fe4be4b1299'// ee945975a60c47fe80b6fd37ab331705 (S) .. aa1d3f80270146208328cf66d022e09c (G)
@@ -101,31 +63,13 @@ export class ArcGISMapComponent implements OnInit {
     const view = new MapView({
       container,
       map: webmap,
-      //map : map,
     });
-
-    const featureLayer = new FeatureLayer({
-      url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/Khasra_boundary_Layer/FeatureServer",
-      //url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/BPPL_Layers/FeatureServer",
-      outFields: ["*"],
-      popupTemplate: template
-      });
-    //map.add(featureLayer); 
 
     const searchWidget = new Search({
       view: view
     });
     // Adds the search widget below other elements in
-    view.ui.add(searchWidget, {
-      position: "manual",
-    });
-    webmap.when(() => {
-      if (webmap.bookmarks && webmap.bookmarks.length) {
-        console.log('Bookmarks: ', webmap.bookmarks.length);
-      } else {
-        console.log('No bookmarks in this webmap.');
-      }
-    });
+    view.ui.add(searchWidget, {position: "manual"});
     this.view = view;
      ///=======start 
     //click on map 
@@ -162,18 +106,82 @@ export class ArcGISMapComponent implements OnInit {
     return this.view.when();
   }
 
+
+  initializeFeatureLayer(): Promise<any> 
+    {
+      const container = this.mapViewEl.nativeElement;  
+      const template = {
+        title: "Khasra boundary",
+        Value  : "{Survey_No}",
+        content: [
+          {
+            type: "fields",
+            fieldInfos: [
+              {
+                fieldName: "State_N",
+                label: "State_N",
+              },
+              {
+                fieldName: "District_N",
+                label: "District_N",
+              },
+              {
+                fieldName: "Tehsil_N",
+                label: "Tehsil",
+              },
+              {
+                fieldName: "Village_N",
+                label: "Village",
+              },
+              {
+                fieldName: "Survey_No",
+                label: "Survey_No"
+              },
+            ]
+          }
+        ]
+      };
+      var map = new Map({
+        basemap: "imagery"//"gray-vector",
+      });
+      const view = new MapView({
+        container,
+        map : map,
+      });
+      const featureLayer = new FeatureLayer({
+        //url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/Khasra_boundary_Layer/FeatureServer",
+        url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/BPPL_Layers/FeatureServer",
+        outFields: ["*"],
+        popupTemplate: template
+        });
+        map.add(featureLayer); 
+
+      const searchWidget = new Search({
+        view: view
+      });
+      // Adds the search widget below other elements in
+      view.ui.add(searchWidget, {
+        position: "manual",
+      });
+      this.view = view;
+      return this.view.when();
+    }
+
   ngOnInit(): any {
     // Initialize MapView and return an instance of MapView
-    this.initializeMap().then(() => {
+    this.initializeWebMap().then(() => {
       // The map has been initialized
         console.log('The map is ready.');
     });
+
+    // this.initializeFeatureLayer().then(() => {
+    //     console.log('The map is ready.');
+    // });
   }
 
   ngOnDestroy(): void {
-    if (this.view) {
-      // destroy the map view
-      this.view.destroy();
+    if (this.view) {   
+      this.view.destroy();   // destroy the map view
     }
   }
 
@@ -212,20 +220,6 @@ export class ArcGISMapComponent implements OnInit {
           itemView.panel = {
             content: "legend",
           }; 
-          // itemView.actionsSections = [
-          //   [
-          //     {
-          //       title: "Go to full extent",
-          //       className: "esri-icon-zoom-out-fixed",
-          //       id: "full-extent"
-          //     },
-          //     {
-          //       title: "Layer information",
-          //       className: "esri-icon-description",
-          //       id: "information"
-          //     }
-          //   ],
-          // ];
         }
       });
       layerlist.selectionEnabled = true;

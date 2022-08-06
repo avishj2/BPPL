@@ -47,6 +47,10 @@
               {
                 "input": "src/assets/Dashboard/Style.min.css",
                 "inject": true
+              },
+              {
+                "input":"node_modules/@arcgis/core/assets/esri/themes/light/main.css",
+                "inject": true
               }
             ],
             "scripts": [
