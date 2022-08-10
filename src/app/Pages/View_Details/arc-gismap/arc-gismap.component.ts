@@ -27,7 +27,10 @@ import { UrlService } from 'src/app/services/url.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import Search from "@arcgis/core/widgets/Search";
 import Query from "@arcgis/core/rest/support/Query";
-
+import esriConfig from "@arcgis/core/config";
+import esriId from "@arcgis/core/identity/IdentityManager";
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS, HttpHeaders,HttpResponse } from '@angular/common/http';
+import { HttpService } from 'src/app/services/http.service';
 @Component({
   selector: 'app-arc-gismap',
   templateUrl: './arc-gismap.component.html',
@@ -40,26 +43,25 @@ export class ArcGISMapComponent implements OnInit {
   _OpenEditor : boolean = false;
   _OpenPrint : boolean = false;
   _OpenBookmark : boolean = false;
+  _SurveyNo : string;
   // The <div> where we will place the map
   @ViewChild('mapViewNode', { static: true }) private mapViewEl!: ElementRef;
   constructor(public urlService: UrlService,
     public modelServiceService : ModelServiceService,
     public Utility: UtilityService,
     public CommonService : CommonService,
+    private http: HttpClient,
+    public httpService : HttpService,
     ){}
 
-  initializeWebMap(): Promise<any> {
+  initializeWebMap(): Promise<any> {    
+    // esriConfig.portalUrl = "https://shalinee1.maps.arcgis.com/arcgis"
     const container = this.mapViewEl.nativeElement;
     const webmap = new WebMap({
       portalItem: {
         id: '0c96587e9db643e8baf8ae4f96b94d16' //'81c5c531a26a48299a600fe4be4b1299'// ee945975a60c47fe80b6fd37ab331705 (S) .. aa1d3f80270146208328cf66d022e09c (G)
       }
     });
-
-    var map = new Map({
-      basemap: "imagery"//"gray-vector",
-    })
-
     const view = new MapView({
       container,
       map: webmap,
@@ -109,6 +111,7 @@ export class ArcGISMapComponent implements OnInit {
 
   initializeFeatureLayer(): Promise<any> 
     {
+      //esriConfig.apiKey = "fUgDMIBCSPttb0MF";
       const container = this.mapViewEl.nativeElement;  
       const template = {
         title: "Khasra boundary",
@@ -141,20 +144,43 @@ export class ArcGISMapComponent implements OnInit {
           }
         ]
       };
+
+      // const featureLayer = new FeatureLayer({
+      //   url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/Khasra_boundary_Layer/FeatureServer",
+      //   // url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/BPPL_Layers/FeatureServer",
+      //   outFields: ["*"],
+      //   popupTemplate: template
+      //   });
+
+        const featureLayer = new FeatureLayer({
+          portalItem: {
+            id: "54722552aeee471a9082c78416bdd1ca"
+          },
+          outFields: ["*"]
+        });
+
       var map = new Map({
-        basemap: "imagery"//"gray-vector",
+        basemap: "hybrid",//"gray-vector",
+        layers: [featureLayer]
       });
       const view = new MapView({
         container,
         map : map,
+        //center: [72.018320,24.850438],
+        scale: 5000000
       });
-      const featureLayer = new FeatureLayer({
-        //url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/Khasra_boundary_Layer/FeatureServer",
-        url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/BPPL_Layers/FeatureServer",
-        outFields: ["*"],
-        popupTemplate: template
-        });
-        map.add(featureLayer); 
+      map.add(featureLayer); 
+      
+        let query = featureLayer.createQuery();
+        query.where = "'Survey_No' = '55'";
+        query.outFields = ["Survey_No"];
+
+        featureLayer.queryFeatures(query)
+          .then(function(response){
+            // returns a feature set with features containing the following attributes
+            // STATE_NAME, COUNTY_NAME, POPULATION, POP_DENSITY
+            return;
+          });
 
       const searchWidget = new Search({
         view: view
@@ -168,16 +194,86 @@ export class ArcGISMapComponent implements OnInit {
     }
 
   ngOnInit(): any {
-    // Initialize MapView and return an instance of MapView
+    //Initialize MapView and return an instance of MapView
     this.initializeWebMap().then(() => {
       // The map has been initialized
         console.log('The map is ready.');
     });
-
+    this.devServerLogin();
     // this.initializeFeatureLayer().then(() => {
     //     console.log('The map is ready.');
     // });
   }
+
+
+  // devServerLogin()
+  // {
+  //   let portalTokenUrl = "https://www.arcgis.com/sharing/rest/generateToken"; //Federated evn.,  use Portal  to generate user token.
+  //   this.httpService.HttpPostRequest(portalTokenUrl,this.getCredentials(),this.EsriCallBack.bind(this),null);
+  // }
+
+  EsriCallBack(dtas)
+    {
+      if(dtas!=null)
+      {
+        console.log(dtas)
+      }
+    }
+
+  devServerLogin()
+  {
+    let portalTokenUrl = "https://www.arcgis.com/sharing/rest/generateToken";
+    // this.http.post(portalTokenUrl, this.getCredentials(), this.getHttpOptions()).subscribe(esriResponse =>{
+    //   sessionStorage.setItem('dev_access_token', esriResponse['token']);
+    //   console.log("['token']==> ",esriResponse['token'])
+    //   sessionStorage.setItem('dev_access_token_expires', esriResponse['expires']);
+    // });    
+
+
+    // test only === working
+    let tokenData ={
+      "token": "IcHjbX_0pSUfgIEVviBJ3zSUVWynIAaxguKyhQfP0symoZ-4YJ02TGxf9fn1-gMxb0-b9fXyPIJpLmeWbERalfxs1SIqqG4TaVCmpK2C4jaV9-RFdQFHnmYq4lRNFPVlCmJdok7Hk_x3V66O8E7KKbh8rlyEUIXQhREudHs4FkMElmE_RgXNMwtdZPfH8nfI",
+      "expires": 1660157906101,
+      "ssl": true,
+      'server': portalTokenUrl,
+      'userId': "shalinee1",
+      }
+      esriId.registerToken(tokenData);
+  }
+
+  getCredentials()
+  {
+    let username = "shalinee1";
+    let password = "shalinee123";
+    let request=  "getToken"
+    let expiration = 720;
+    let f = "json"
+    let referer= 'http://'+ window.location.host+'/';
+
+    var params = {
+      username: username,
+      password: password,
+      // client: client,
+      request : request,
+      referer: referer,
+      expiration: expiration,
+      f: f
+      };
+
+      //let expiration = 720; //1440 -> 60 minute * 24 = 1 day token , 720 ->  12hrs token   
+      let tokenCredentials =  'username='+params.username+'&password='+params.password+'&f=json&expiration='+params.expiration+'&request='+request+'&referer='+ params.referer;
+      return tokenCredentials;
+    }
+
+    private getHttpOptions()
+      {
+        let httpOptions = {
+          headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded'}),//({'Access-Control-Allow-Headers': '*'}),//
+          withCredentials: true,
+        };
+        return httpOptions;
+      }
+
 
   ngOnDestroy(): void {
     if (this.view) {   
