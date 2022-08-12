@@ -205,75 +205,19 @@ export class ArcGISMapComponent implements OnInit {
     // });
   }
 
-
-  // devServerLogin()
-  // {
-  //   let portalTokenUrl = "https://www.arcgis.com/sharing/rest/generateToken"; //Federated evn.,  use Portal  to generate user token.
-  //   this.httpService.HttpPostRequest(portalTokenUrl,this.getCredentials(),this.EsriCallBack.bind(this),null);
-  // }
-
-  EsriCallBack(dtas)
-    {
-      if(dtas!=null)
-      {
-        console.log(dtas)
-      }
-    }
-
   devServerLogin()
-  {
-    let portalTokenUrl = "https://www.arcgis.com/sharing/rest/generateToken";
-    // this.http.post(portalTokenUrl, this.getCredentials(), this.getHttpOptions()).subscribe(esriResponse =>{
-    //   sessionStorage.setItem('dev_access_token', esriResponse['token']);
-    //   console.log("['token']==> ",esriResponse['token'])
-    //   sessionStorage.setItem('dev_access_token_expires', esriResponse['expires']);
-    // });    
-
-
-    // test only === working
-    let tokenData ={
-      "token": "IcHjbX_0pSUfgIEVviBJ3zSUVWynIAaxguKyhQfP0symoZ-4YJ02TGxf9fn1-gMxb0-b9fXyPIJpLmeWbERalfxs1SIqqG4TaVCmpK2C4jaV9-RFdQFHnmYq4lRNFPVlCmJdok7Hk_x3V66O8E7KKbh8rlyEUIXQhREudHs4FkMElmE_RgXNMwtdZPfH8nfI",
-      "expires": 1660157906101,
-      "ssl": true,
-      'server': portalTokenUrl,
-      'userId': "shalinee1",
-      }
-      esriId.registerToken(tokenData);
-  }
-
-  getCredentials()
-  {
-    let username = "shalinee1";
-    let password = "shalinee123";
-    let request=  "getToken"
-    let expiration = 720;
-    let f = "json"
-    let referer= 'http://'+ window.location.host+'/';
-
-    var params = {
-      username: username,
-      password: password,
-      // client: client,
-      request : request,
-      referer: referer,
-      expiration: expiration,
-      f: f
-      };
-
-      //let expiration = 720; //1440 -> 60 minute * 24 = 1 day token , 720 ->  12hrs token   
-      let tokenCredentials =  'username='+params.username+'&password='+params.password+'&f=json&expiration='+params.expiration+'&request='+request+'&referer='+ params.referer;
-      return tokenCredentials;
+    {
+      let portalTokenUrl = "https://www.arcgis.com/sharing/rest/generateToken";
+      // test only === working
+      let tokenData ={
+        "token": "WSskg5-ubVORQ8eq_cjI7Zu3u__5ImxWxfeX6Zy35Wbi501HJprA9eMky4Eq-DNbiTeHB0eM6VpZQiNsrJ5rDApk5fcXaQ4e34uqgoexpK4Fwd506WZvq5OzqfhMR86nXGrtubV_7Ug6pPfGyPWL6oX3CghwwjhFJ_JgWVDA7Y9d-yRGs5-MpyzDUu2vaiZZ",
+        "expires": 1660157906101,
+        "ssl": true,
+        'server': portalTokenUrl,
+        'userId': "shalinee1",
+        }
+        esriId.registerToken(tokenData);
     }
-
-    private getHttpOptions()
-      {
-        let httpOptions = {
-          headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded'}),//({'Access-Control-Allow-Headers': '*'}),//
-          withCredentials: true,
-        };
-        return httpOptions;
-      }
-
 
   ngOnDestroy(): void {
     if (this.view) {   
