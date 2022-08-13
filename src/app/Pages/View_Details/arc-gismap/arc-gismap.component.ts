@@ -31,6 +31,7 @@ import esriConfig from "@arcgis/core/config";
 import esriId from "@arcgis/core/identity/IdentityManager";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS, HttpHeaders,HttpResponse } from '@angular/common/http';
 import { HttpService } from 'src/app/services/http.service';
+import Attachments from "@arcgis/core/widgets/Attachments";
 @Component({
   selector: 'app-arc-gismap',
   templateUrl: './arc-gismap.component.html',
@@ -145,19 +146,19 @@ export class ArcGISMapComponent implements OnInit {
         ]
       };
 
-      // const featureLayer = new FeatureLayer({
-      //   url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/Khasra_boundary_Layer/FeatureServer",
-      //   // url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/BPPL_Layers/FeatureServer",
-      //   outFields: ["*"],
-      //   popupTemplate: template
-      //   });
-
-        const featureLayer = new FeatureLayer({
-          portalItem: {
-            id: "54722552aeee471a9082c78416bdd1ca"
-          },
-          outFields: ["*"]
+      const featureLayer = new FeatureLayer({
+        url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/Khasra_boundary_Layer/FeatureServer",
+        // url: "https://services5.arcgis.com/7ZC5WD9ov5lKqoSp/arcgis/rest/services/BPPL_Layers/FeatureServer",
+        outFields: ["*"],
+        popupTemplate: template
         });
+
+        // const featureLayer = new FeatureLayer({
+        //   portalItem: {
+        //     id: "54722552aeee471a9082c78416bdd1ca"
+        //   },
+        //   outFields: ["*"]
+        // });
 
       var map = new Map({
         basemap: "hybrid",//"gray-vector",
@@ -166,19 +167,21 @@ export class ArcGISMapComponent implements OnInit {
       const view = new MapView({
         container,
         map : map,
-        //center: [72.018320,24.850438],
-        scale: 5000000
+        center: [72.018320,24.850438],//
+        //scale: 5000000,
+        zoom: 10
       });
       map.add(featureLayer); 
       
         let query = featureLayer.createQuery();
-        query.where = "'Survey_No' = '55'";
+        query.where = "Survey_No = '283'";//"'Survey_No' = '55'";
         query.outFields = ["Survey_No"];
 
         featureLayer.queryFeatures(query)
           .then(function(response){
             // returns a feature set with features containing the following attributes
             // STATE_NAME, COUNTY_NAME, POPULATION, POP_DENSITY
+            console.log(response)
             return;
           });
 
@@ -190,19 +193,24 @@ export class ArcGISMapComponent implements OnInit {
         position: "manual",
       });
       this.view = view;
+      view.on("click", function(event){
+        console.log(event)
+      })
+
       return this.view.when();
+
     }
 
   ngOnInit(): any {
     //Initialize MapView and return an instance of MapView
-    this.initializeWebMap().then(() => {
-      // The map has been initialized
+    // this.initializeWebMap().then(() => {
+    //   // The map has been initialized
+    //     console.log('The map is ready.');
+    // });    
+    this.initializeFeatureLayer().then(() => {
         console.log('The map is ready.');
     });
     this.devServerLogin();
-    // this.initializeFeatureLayer().then(() => {
-    //     console.log('The map is ready.');
-    // });
   }
 
   devServerLogin()
@@ -210,7 +218,7 @@ export class ArcGISMapComponent implements OnInit {
       let portalTokenUrl = "https://www.arcgis.com/sharing/rest/generateToken";
       // test only === working
       let tokenData ={
-        "token": "WSskg5-ubVORQ8eq_cjI7Zu3u__5ImxWxfeX6Zy35Wbi501HJprA9eMky4Eq-DNbiTeHB0eM6VpZQiNsrJ5rDApk5fcXaQ4e34uqgoexpK4Fwd506WZvq5OzqfhMR86nXGrtubV_7Ug6pPfGyPWL6oX3CghwwjhFJ_JgWVDA7Y9d-yRGs5-MpyzDUu2vaiZZ",
+        "token": "P08241EqWK1jfCEPtt8I7Nb_2xEzuL60KE9x0Q27w0PcycWgKQ2kTO7vkZUNg65_gRcfDw3Es7ekAwf4JBZm_9snLg8t5VtiaB17AU8oQCPagtycSbfE9wEWydf7OksmVPIzdFzImlHfyxqMsjoNY-aEbhnzM-NkV9kkvHlc70QoiP4w1rpjmZgY_udYP52J",
         "expires": 1660157906101,
         "ssl": true,
         'server': portalTokenUrl,
