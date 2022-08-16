@@ -36,6 +36,10 @@ import {getDistance,getLength,getArea} from 'ol/sphere';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import RasterSource from 'ol/source/Raster';
+import { Openlayers } from 'src/app/Model/Base.model';
+import { ThisReceiver } from '@angular/compiler';
+import { transformGeometryWithOptions } from 'ol/format/Feature';
+
 
 @Component({
   selector: 'app-view-map',
@@ -45,6 +49,7 @@ import RasterSource from 'ol/source/Raster';
 export class ViewMapComponent implements OnInit {
   map: any;
   _ShowDisasterPoints : boolean = false;
+  _OpenHideShowLayersPopup : boolean = false;
   _DisasterManagementLyr : VectorLayer;
   /**data table properties  */
   @ViewChild(DataTableDirective, {static: false})
@@ -53,7 +58,7 @@ export class ViewMapComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
-
+  _ShowFeaturelayers : Openlayers;
   _DisasterManagementDetails:DisasterManagementDetails[] = [];
   MapLayers: MapLayer[] = [];
   @ViewChild('closebutton') closebutton;
@@ -65,6 +70,7 @@ export class ViewMapComponent implements OnInit {
     public configService : ConfigService
     )
     {
+      this._ShowFeaturelayers = new Openlayers();
     }
 
  async ngOnInit() 
@@ -104,6 +110,7 @@ export class ViewMapComponent implements OnInit {
           this.dtTrigger.next();
         }
     }  
+
   showJsonLayer()
     {
       const GetPointStyleFunction = function(feature,styleModel: StyleModel,geoType : GeometryType)
@@ -489,37 +496,52 @@ export class ViewMapComponent implements OnInit {
         closer.blur();
         return false;
       };
-      
+
+      let tileLayer = new TileLayer({
+        source: new OSM(),
+      })
       /**base map style and add layers */
       var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
       var washingtonWebMercator = transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
+      let LayersCol = [];
+      LayersCol.push(tileLayer)
+      if (self._ShowFeaturelayers.BoreWellLayer === true)
+      {
+        LayersCol.push(BoreWell_Layer)
+      }
+      if (self._ShowFeaturelayers.BuildingLayer === true)
+      {
+        LayersCol.push(Building_Layer)
+      }
+       
+    
+
       const map = new Map({
-        layers: [
-          new TileLayer({
-            source: new OSM(),
-          }),
-           Village_Layer,     
-           FOREST_BOUNDARY,      
-           Khasara_Boundary_bigger,           
-           SurveyNoTextBigger,
-           Khasra_Layer,
-           ROU_Layer,
-           Center_LineLayer,
-           CS_PointLayer,
-           TP_PointLayer,
-           Chainage_Layer,          
-           Compound_Wall_Layer,
-           Building_Layer,          
-           Plantation_Layer,         
-           Pond_Layer,
-           Watertank_Layer,
-           BoreWell_Layer,
-           Well_Layer,
-           Texthighlight_Layer,           
-           Neotectonic,
-           GCP_Points,
-           DisasterManagementData
-        ],
+        layers: LayersCol,
+        // [
+        //    tileLayer,
+        //    Village_Layer,     
+        //    FOREST_BOUNDARY,      
+        //    Khasara_Boundary_bigger,           
+        //    SurveyNoTextBigger,
+        //    Khasra_Layer,
+        //    ROU_Layer,
+        //    Center_LineLayer,
+        //    CS_PointLayer,
+        //    TP_PointLayer,
+        //    Chainage_Layer,          
+        //    Compound_Wall_Layer,
+        //    Building_Layer,          
+        //    Plantation_Layer,         
+        //    Pond_Layer,
+        //    Watertank_Layer,
+        //    BoreWell_Layer,
+        //    Well_Layer,
+        //    Texthighlight_Layer,           
+        //    Neotectonic,
+        //    GCP_Points,
+        //    DisasterManagementData
+        // ],
         target: 'map',
         overlays: [overlay],
         view: new View({
@@ -716,8 +738,28 @@ export class ViewMapComponent implements OnInit {
         Chainage_Layer.setVisible(visible);    
         TP_PointLayer.setVisible(visible);    
         CS_PointLayer.setVisible(visible);      
-     });
+     });     
       
+    }
+
+    ShowLayers()
+      {
+        this._OpenHideShowLayersPopup = false;
+        this.closebutton.nativeElement.click();
+        console.log(this._ShowFeaturelayers)
+        this.showJsonLayer();
+      }
+
+    hideFeatures() 
+    {
+      // var features = layer.features;
+      // for (var i = 0; i < features.length; i++) {
+      //     var feature = features[i];
+      //     if (!isVisible(feature)) {
+      //         feature.style.display = 'none';
+      //     }
+      // }
+      // layer.redraw();      
     }
 
     ComputeDistance(argDMPoint : any,argClickPoint: any[]):any

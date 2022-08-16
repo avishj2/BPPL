@@ -104,3 +104,52 @@ export class LookupGroupModel
         title: string;
         url:string;
     }
+
+    export class Openlayers{
+        VillageLayer : boolean;
+        ForestBoundary: boolean;
+        KhasaraBoundarybigger: boolean;
+        SurveyNoTextBigger: boolean;
+        KhasraLayer: boolean;
+        ROULayer: boolean;
+        CenterLineLayer: boolean;
+        CSPointLayer: boolean;
+        TPPointLayer: boolean;
+        ChainageLayer: boolean;
+        CompoundWallLayer: boolean;
+        BuildingLayer: boolean;
+        PlantationLayer: boolean;
+        PondLayer: boolean;
+        WatertankLayer: boolean;
+        BoreWellLayer: boolean;
+        WellLayer: boolean;
+        TexthighlightLayer: boolean;
+        NeotectonicLayer: boolean;
+        GCPPointsLayer: boolean;
+        DisasterPointLayer: boolean;
+
+        constructor()
+        {
+            this.BoreWellLayer = false;
+            this.BuildingLayer = false;
+            this.CSPointLayer = false;
+            this.CenterLineLayer = false;
+            this.ChainageLayer = false;
+            this.CompoundWallLayer = false;
+            this.DisasterPointLayer = false;
+            this.ForestBoundary = false;
+            this.GCPPointsLayer = false;
+            this.KhasaraBoundarybigger = false;
+            this.KhasraLayer = false;
+            this.NeotectonicLayer = false;
+            this.WellLayer = false;
+            this.WatertankLayer = false;
+            this.VillageLayer = false;
+            this.TexthighlightLayer = false;
+            this.TPPointLayer = false;
+            this.SurveyNoTextBigger = false;
+            this.ROULayer = false;
+            this.PondLayer = false;
+            this.PlantationLayer = false;
+        }
+    }

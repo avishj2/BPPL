@@ -1,8 +1,10 @@
 <input type="checkbox"[(ngModel)]="_ShowDisasterPoints" [ngModelOptions]="{standalone: true}"> 
-<b>&nbsp; Get Disaster Points</b>
+<b>&nbsp; Get Disaster Points</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button class="btn-primary" data-toggle="modal"(click)="_OpenHideShowLayersPopup =true" data-target="#LayerModal">Layer List</button>
 
-<div id="map" data-toggle="modal" data-target="#DetailsModal">
-    <!-- <div class="ol-custom ol-unselectable ol-control">
+<div id="map" data-toggle="modal" data-target="#LayerModal">
+    <!-- 
+        <div class="ol-custom ol-unselectable ol-control">
         <input type="checkbox"[(ngModel)]="_ShowDisasterPoints" [ngModelOptions]="{standalone: true}">&nbsp;Disaster Points
     </div> -->
 </div> 
@@ -52,5 +54,169 @@
             </div> 
         </div>
       </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="_OpenHideShowLayersPopup == true">
+    <div class="modal" id="LayerModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content2">
+            <div class="modal-header">
+                <h5 class="modal-title"><b>
+                    <i class='fa fa-eye fa-fw'style='font-size:24px'></i> 
+                    Layer Hide/Show
+                </b></h5>  
+                <button type="button" #closebutton (click)="_OpenHideShowLayersPopup = false" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <legend>Select Layer Name</legend>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.VillageLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Village Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.KhasraLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Khasra Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.ROULayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">ROU Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.CenterLineLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Center Line Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.ForestBoundary" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Forest Boundary Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.CSPointLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">CS Point Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.TPPointLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">TP Point Layer</label>
+                            </div>
+                        </div>            
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.ChainageLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Chainage Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.BuildingLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Building Layer</label>
+                            </div>
+                        </div>            
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.PlantationLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Plantation Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.WellLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Well Layer</label>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.CompoundWallLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Compound Wall Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.PondLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Pond Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.WatertankLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Watertank Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.BoreWellLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">BoreWell Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.TexthighlightLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Texthighlight Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.NeotectonicLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Neotectonic Layer</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.GCPPointsLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">GCP Point Layer</label>
+                            </div>
+                        </div>            
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.DisasterPointLayer" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Disaster Points</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.SurveyNoTextBigger" [ngModelOptions]="{standalone: true}">
+                                <label for="scales">Survey No Text Bigger</label>
+                            </div>
+                        </div>            
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-sm-12 col-xs-8">
+                                <input type="checkbox"  [(ngModel)]="_ShowFeaturelayers.KhasaraBoundarybigger" [ngModelOptions]="{standalone: true}">
+                                <label for="horns">Khasara Bigger Boundary</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+                        <div class="div-to-align">
+                            <br>
+                        <button type="button" class="btn-primary" (click)="ShowLayers()">
+                            Show Layers
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div> 
+        </div>
+    </div>
     </div>
 </div>

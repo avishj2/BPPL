@@ -88,13 +88,42 @@ html, body {
   outline: 0;
 }
 
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1040;
-  width: 100vw;
-  /* height: 100vh; */
-  /* background-color: #000; */
-  background-color: #c2cfdb2d !important;
+.modal-content2 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 130%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
+
+p,label {
+    font: 1rem 'Fira Sans', sans-serif;
+    margin-bottom: 1.1rem;
+    color: #000;
+    font-weight: 550;
+}
+
+input {
+    margin: .4rem;
+}
+
+legend {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  line-height: inherit;
+  color: #000;
+  white-space: normal;
+}
+.column {
+  float: left;
+  width: 50%;
 }

@@ -162,6 +162,7 @@ export class UrlService {
     this.GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
     this.AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
     this.UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
+    this.GetAOTokendAPI = this.url +'/api/Users/GetAOToken';
  
   }
   
@@ -335,6 +336,7 @@ export class UrlService {
   GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
   AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
   UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
+  GetAOTokendAPI = this.url +'/api/Users/GetAOToken';
 
   /** Map layers */
   CSLayer = "Crossing";
