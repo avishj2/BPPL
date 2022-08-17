@@ -353,15 +353,15 @@ export class UrlService {
   WaterTank = "WaterTank";
   BoreWell = "BoreWell";
   Pond = "Pond";
-  Compound_Wall = "Compound_Wall";
+  Compound_Wall = "Compound Wall";
   Plantation = "Plantation";
   Texthighlight = "Texthighlight";
   Building= "Building";
-  FOREST_BOUNDARY="FOREST_BOUNDARY";
+  FOREST_BOUNDARY="Forest Boundary";
   Neotectonic = "Neotectonic";
-  Khasara_Boundary_bigger = "Khasara_Boundary_bigger";
-  GCP_Points = "GCP_Points";
+  Khasara_Boundary_bigger = "Khasara Boundary bigger";
+  GCP_Points = "GCP Points";
   SurveyNoTextBigger = "SurveyNoTextBigger";
-  DisasterManagementData= "DisasterManagementData";
+  DisasterManagementData= "Disaster Management Points";
 }
 

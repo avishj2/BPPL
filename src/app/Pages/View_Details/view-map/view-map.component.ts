@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,Output,EventEmitter } from '@angular/core';
 import Map from 'ol/Map';
 import OSM from 'ol/source/OSM';
 import VectorLayer from 'ol/layer/Vector';
@@ -36,7 +36,7 @@ import {getDistance,getLength,getArea} from 'ol/sphere';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import RasterSource from 'ol/source/Raster';
-import { Openlayers } from 'src/app/Model/Base.model';
+import { OpenLayerDatamodel } from 'src/app/Model/Base.model';
 import { ThisReceiver } from '@angular/compiler';
 import { transformGeometryWithOptions } from 'ol/format/Feature';
 
@@ -49,7 +49,7 @@ import { transformGeometryWithOptions } from 'ol/format/Feature';
 export class ViewMapComponent implements OnInit {
   map: any;
   _ShowDisasterPoints : boolean = false;
-  _OpenHideShowLayersPopup : boolean = false;
+  _OpenShowLayersPopup : boolean = false;
   _DisasterManagementLyr : VectorLayer;
   /**data table properties  */
   @ViewChild(DataTableDirective, {static: false})
@@ -58,10 +58,15 @@ export class ViewMapComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   /**REFERSH DATATABLE  */
   IsDtInitialized: boolean = false;
-  _ShowFeaturelayers : Openlayers;
   _DisasterManagementDetails:DisasterManagementDetails[] = [];
   MapLayers: MapLayer[] = [];
   @ViewChild('closebutton') closebutton;
+  _OpenLayerData : OpenLayerDatamodel;
+  _LayerCol = [];
+  _LayerArray1 = [];
+  _LayerArray2 =[];
+  _CheckAllLayer : boolean = true;
+  _CheckAllLayerValue :boolean = true;
 
   constructor(public urlService: UrlService,
     public modelServiceService : ModelServiceService,
@@ -70,7 +75,8 @@ export class ViewMapComponent implements OnInit {
     public configService : ConfigService
     )
     {
-      this._ShowFeaturelayers = new Openlayers();
+     
+      this._OpenLayerData = new OpenLayerDatamodel();
     }
 
  async ngOnInit() 
@@ -90,7 +96,7 @@ export class ViewMapComponent implements OnInit {
 
   ngAfterViewInit(): void 
     {
-      this.dtTrigger.next();      
+      this.dtTrigger.next();           
     }
 
   ReloadDatatable()
@@ -208,6 +214,7 @@ export class ViewMapComponent implements OnInit {
       }
 
       var self = this;
+      let l_OLdata
 
       //const CS_PointLayer = this.CreateLayer(this.configService.getCSPoint(),GetPointStyleFunction,"Crossing",4);
       const CS_PointLayer : VectorLayer = new VectorLayer({
@@ -221,6 +228,8 @@ export class ViewMapComponent implements OnInit {
         },
       });
       CS_PointLayer.set('title',self.urlService.CSLayer);      
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.CSLayer,CS_PointLayer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       //const TP_PointLayer = this.CreateLayer(this.configService.getTPPoint(),GetPointStyleFunction,"TP",4);
       const TP_PointLayer: VectorLayer = new VectorLayer({
@@ -234,7 +243,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       TP_PointLayer.set('title',self.urlService.TPLayer);  
-
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.TPLayer,TP_PointLayer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       //const Chainage_Layer = this.CreateLayer(this.configService.getChainage(),GetPointStyleFunction,"Chainage",4);
       const Chainage_Layer: VectorLayer = new VectorLayer({
@@ -248,6 +258,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       Chainage_Layer.set('title',self.urlService.Chainage); 
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Chainage,Chainage_Layer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const Center_LineLayer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -260,6 +272,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       Center_LineLayer.set('title',self.urlService.Center);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Center,Center_LineLayer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const Village_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -272,6 +286,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       Village_Layer.set('title',self.urlService.Village);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Village,Village_Layer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const Khasra_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -284,6 +300,8 @@ export class ViewMapComponent implements OnInit {
         },
       }); 
       Khasra_Layer.set('title',self.urlService.Khasra);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Khasra,Khasra_Layer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const ROU_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -296,6 +314,9 @@ export class ViewMapComponent implements OnInit {
         },
       });
       ROU_Layer.set('title',self.urlService.ROU);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.ROU,ROU_Layer,true, true)
+      this._LayerCol.push(l_OLdata);
+
       // Changes to add new GeoJson - Start
       const Well_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -309,6 +330,8 @@ export class ViewMapComponent implements OnInit {
       });   
      
       Well_Layer.set('title',self.urlService.Well);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Well,Well_Layer,true, true)
+      this._LayerCol.push(l_OLdata);
 
      
       const Watertank_Layer: VectorLayer = new VectorLayer({
@@ -322,6 +345,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       Watertank_Layer.set('title',self.urlService.WaterTank);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.WaterTank,Watertank_Layer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const BoreWell_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -334,6 +359,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       BoreWell_Layer.set('title',self.urlService.BoreWell);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.BoreWell,BoreWell_Layer,true,true)
+      this._LayerCol.push(l_OLdata);
     
       const Pond_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -346,6 +373,8 @@ export class ViewMapComponent implements OnInit {
         },
       });
       Pond_Layer.set('title',self.urlService.Pond);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Pond,Pond_Layer,true,true)
+      this._LayerCol.push(l_OLdata);
       
       const Compound_Wall_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -358,6 +387,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       Compound_Wall_Layer.set('title',self.urlService.Compound_Wall);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Compound_Wall,Compound_Wall_Layer,true, true)
+      this._LayerCol.push(l_OLdata); 
 
       const Plantation_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -370,6 +401,8 @@ export class ViewMapComponent implements OnInit {
         },
       });  
       Plantation_Layer.set('title',self.urlService.Plantation);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Plantation,Plantation_Layer,true, true)
+      this._LayerCol.push(l_OLdata); 
 
       const Texthighlight_Layer: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -381,7 +414,9 @@ export class ViewMapComponent implements OnInit {
           return GetPointStyleFunction(feature, style,GeometryType.Circle)
         },
       });   
-      Texthighlight_Layer.set('title',self.urlService.Texthighlight);  
+      Texthighlight_Layer.set('title',self.urlService.Texthighlight); 
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Texthighlight,Texthighlight_Layer,true, true)
+      this._LayerCol.push(l_OLdata); 
       
 
       const Building_Layer: VectorLayer = new VectorLayer({
@@ -395,6 +430,8 @@ export class ViewMapComponent implements OnInit {
         },
       });  
       Building_Layer.set('title',self.urlService.Building);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Building,Building_Layer,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const FOREST_BOUNDARY: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -407,6 +444,8 @@ export class ViewMapComponent implements OnInit {
         },
       });  
       FOREST_BOUNDARY.set('title',self.urlService.FOREST_BOUNDARY);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.FOREST_BOUNDARY,FOREST_BOUNDARY,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const Neotectonic: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -419,6 +458,8 @@ export class ViewMapComponent implements OnInit {
         },
       });  
       Neotectonic.set('title',self.urlService.Neotectonic);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Neotectonic,Neotectonic,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const Khasara_Boundary_bigger: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -431,6 +472,8 @@ export class ViewMapComponent implements OnInit {
         },
       });  
       Khasara_Boundary_bigger.set('title',self.urlService.Khasara_Boundary_bigger);
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.Khasara_Boundary_bigger,Khasara_Boundary_bigger,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const GCP_Points: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -443,6 +486,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       GCP_Points.set('title',self.urlService.GCP_Points); 
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.GCP_Points,GCP_Points,true, true)
+      this._LayerCol.push(l_OLdata);
 
       const SurveyNoTextBigger: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -455,6 +500,8 @@ export class ViewMapComponent implements OnInit {
         },
       });   
       SurveyNoTextBigger.set('title',self.urlService.SurveyNoTextBigger); 
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.SurveyNoTextBigger,SurveyNoTextBigger,true, true)
+      this._LayerCol.push(l_OLdata);    
 
       const DisasterManagementData: VectorLayer = new VectorLayer({
         source: new VectorSource({  
@@ -468,6 +515,8 @@ export class ViewMapComponent implements OnInit {
       });   
       DisasterManagementData.set('title',self.urlService.DisasterManagementData);
       self._DisasterManagementLyr = DisasterManagementData; 
+      l_OLdata = this._OpenLayerData.LayerInfo(self.urlService.DisasterManagementData,DisasterManagementData,true, true)
+      this._LayerCol.push(l_OLdata);
 
       /** Overlay */
       // OverLay:
@@ -503,45 +552,33 @@ export class ViewMapComponent implements OnInit {
       /**base map style and add layers */
       var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
       var washingtonWebMercator = transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
-      let LayersCol = [];
-      LayersCol.push(tileLayer)
-      if (self._ShowFeaturelayers.BoreWellLayer === true)
-      {
-        LayersCol.push(BoreWell_Layer)
-      }
-      if (self._ShowFeaturelayers.BuildingLayer === true)
-      {
-        LayersCol.push(Building_Layer)
-      }
-       
-    
-
       const map = new Map({
-        layers: LayersCol,
-        // [
-        //    tileLayer,
-        //    Village_Layer,     
-        //    FOREST_BOUNDARY,      
-        //    Khasara_Boundary_bigger,           
-        //    SurveyNoTextBigger,
-        //    Khasra_Layer,
-        //    ROU_Layer,
-        //    Center_LineLayer,
-        //    CS_PointLayer,
-        //    TP_PointLayer,
-        //    Chainage_Layer,          
-        //    Compound_Wall_Layer,
-        //    Building_Layer,          
-        //    Plantation_Layer,         
-        //    Pond_Layer,
-        //    Watertank_Layer,
-        //    BoreWell_Layer,
-        //    Well_Layer,
-        //    Texthighlight_Layer,           
-        //    Neotectonic,
-        //    GCP_Points,
-        //    DisasterManagementData
-        // ],
+        //layers: LayersCol,
+        layers:
+        [
+           tileLayer,
+           Village_Layer,     
+           FOREST_BOUNDARY,      
+           Khasara_Boundary_bigger,           
+           SurveyNoTextBigger,
+           Khasra_Layer,
+           ROU_Layer,
+           Center_LineLayer,
+           CS_PointLayer,
+           TP_PointLayer,
+           Chainage_Layer,          
+           Compound_Wall_Layer,
+           Building_Layer,          
+           Plantation_Layer,         
+           Pond_Layer,
+           Watertank_Layer,
+           BoreWell_Layer,
+           Well_Layer,
+           Texthighlight_Layer,           
+           Neotectonic,
+           GCP_Points,
+           DisasterManagementData
+        ],
         target: 'map',
         overlays: [overlay],
         view: new View({
@@ -738,29 +775,48 @@ export class ViewMapComponent implements OnInit {
         Chainage_Layer.setVisible(visible);    
         TP_PointLayer.setVisible(visible);    
         CS_PointLayer.setVisible(visible);      
-     });     
+     });
       
     }
 
-    ShowLayers()
+    OpenPopupModel()
       {
-        this._OpenHideShowLayersPopup = false;
-        this.closebutton.nativeElement.click();
-        console.log(this._ShowFeaturelayers)
-        this.showJsonLayer();
+        this. _OpenShowLayersPopup = true;        
       }
 
-    hideFeatures() 
-    {
-      // var features = layer.features;
-      // for (var i = 0; i < features.length; i++) {
-      //     var feature = features[i];
-      //     if (!isVisible(feature)) {
-      //         feature.style.display = 'none';
-      //     }
-      // }
-      // layer.redraw();      
-    }
+    SubmitShowLayers()
+      {
+        this._OpenShowLayersPopup = false;        
+        this._LayerCol.forEach(element => {
+          element.PreviousVisiblity = element.Visible;
+          element.LayerObj.setVisible(element.Visible);          
+        });        
+        this._CheckAllLayerValue = this._CheckAllLayer  
+        this.closebutton.nativeElement.click();          
+      }
+
+    ClosePopupModel()
+      {        
+        this. _OpenShowLayersPopup = false;
+        this._LayerCol.forEach(element => {
+          element.Visible = element.PreviousVisiblity;
+        });       
+        this._CheckAllLayer = this._CheckAllLayerValue               
+      }
+
+    SelectallCheckBox()
+      {
+        this._LayerCol.forEach(element => {
+          if(this._CheckAllLayer)
+            {
+              element.Visible = false;          
+            }
+          else
+            {
+              element.Visible = true;
+            }
+        });        
+      }
 
     ComputeDistance(argDMPoint : any,argClickPoint: any[]):any
     {     
