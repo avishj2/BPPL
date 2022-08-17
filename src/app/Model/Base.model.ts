@@ -104,3 +104,21 @@ export class LookupGroupModel
         title: string;
         url:string;
     }
+
+ 
+export class OpenLayerDatamodel{
+    Name : string;
+    LayerObj: any;
+    Visible: boolean;
+    PreviousVisiblity : boolean;
+
+    public LayerInfo(argName, argObj, argVisible,argPreviousVisiblity)
+        {
+            let l_OpenLayerData = new OpenLayerDatamodel();
+            l_OpenLayerData.Name = argName;
+            l_OpenLayerData.LayerObj = argObj;
+            l_OpenLayerData.Visible = argVisible;
+            l_OpenLayerData.PreviousVisiblity = argPreviousVisiblity;
+            return l_OpenLayerData;
+        }
+}

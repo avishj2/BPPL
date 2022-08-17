@@ -162,6 +162,7 @@ export class UrlService {
     this.GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
     this.AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
     this.UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
+    this.GetAOTokendAPI = this.url +'/api/Users/GetAOToken';
  
   }
   
@@ -335,6 +336,7 @@ export class UrlService {
   GetRolesByUserIdAPI = this.url +'/api/Users/GetRolesByUserId?userId=';
   AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
   UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
+  GetAOTokendAPI = this.url +'/api/Users/GetAOToken';
 
   /** Map layers */
   CSLayer = "Crossing";
@@ -351,15 +353,15 @@ export class UrlService {
   WaterTank = "WaterTank";
   BoreWell = "BoreWell";
   Pond = "Pond";
-  Compound_Wall = "Compound_Wall";
+  Compound_Wall = "Compound Wall";
   Plantation = "Plantation";
   Texthighlight = "Texthighlight";
   Building= "Building";
-  FOREST_BOUNDARY="FOREST_BOUNDARY";
+  FOREST_BOUNDARY="Forest Boundary";
   Neotectonic = "Neotectonic";
-  Khasara_Boundary_bigger = "Khasara_Boundary_bigger";
-  GCP_Points = "GCP_Points";
+  Khasara_Boundary_bigger = "Khasara Boundary bigger";
+  GCP_Points = "GCP Points";
   SurveyNoTextBigger = "SurveyNoTextBigger";
-  DisasterManagementData= "DisasterManagementData";
+  DisasterManagementData= "Disaster Management Points";
 }
 

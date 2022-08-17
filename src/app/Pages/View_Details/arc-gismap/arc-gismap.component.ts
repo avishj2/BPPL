@@ -32,6 +32,8 @@ import esriId from "@arcgis/core/identity/IdentityManager";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS, HttpHeaders,HttpResponse } from '@angular/common/http';
 import { HttpService } from 'src/app/services/http.service';
 import Attachments from "@arcgis/core/widgets/Attachments";
+import AttachmentsContent from "@arcgis/core/popup/content/AttachmentsContent";
+import PopupTemplate from "@arcgis/core/PopupTemplate";
 @Component({
   selector: 'app-arc-gismap',
   templateUrl: './arc-gismap.component.html',
@@ -58,10 +60,21 @@ export class ArcGISMapComponent implements OnInit {
   initializeWebMap(): Promise<any> {    
     // esriConfig.portalUrl = "https://shalinee1.maps.arcgis.com/arcgis"
     const container = this.mapViewEl.nativeElement;
+    let attachmentsElement = new AttachmentsContent({
+      displayType: "list" // this will show all attachments as a list of linked files
+    });
+    
+    // Create the PopupTemplate
+    let template = new PopupTemplate({
+      outFields: ["*"],
+      content: [attachmentsElement]
+    });
+
     const webmap = new WebMap({
       portalItem: {
         id: '0c96587e9db643e8baf8ae4f96b94d16' //'81c5c531a26a48299a600fe4be4b1299'// ee945975a60c47fe80b6fd37ab331705 (S) .. aa1d3f80270146208328cf66d022e09c (G)
-      }
+      },
+      //popupTemplate: template
     });
     const view = new MapView({
       container,
@@ -114,10 +127,13 @@ export class ArcGISMapComponent implements OnInit {
     {
       //esriConfig.apiKey = "fUgDMIBCSPttb0MF";
       const container = this.mapViewEl.nativeElement;  
+      let attachmentsElement = new AttachmentsContent({
+        displayType: "list" // this will show all attachments as a list of linked files
+      });
       const template = {
         title: "Khasra boundary",
         Value  : "{Survey_No}",
-        content: [
+        content: [          
           {
             type: "fields",
             fieldInfos: [
@@ -140,9 +156,10 @@ export class ArcGISMapComponent implements OnInit {
               {
                 fieldName: "Survey_No",
                 label: "Survey_No"
-              },
+              },              
             ]
-          }
+          },
+          attachmentsElement,
         ]
       };
 
@@ -203,28 +220,39 @@ export class ArcGISMapComponent implements OnInit {
 
   ngOnInit(): any {
     //Initialize MapView and return an instance of MapView
-    // this.initializeWebMap().then(() => {
-    //   // The map has been initialized
-    //     console.log('The map is ready.');
-    // });    
-    this.initializeFeatureLayer().then(() => {
+    this.initializeWebMap().then(() => {
+      // The map has been initialized
         console.log('The map is ready.');
-    });
-    this.devServerLogin();
+    });    
+    // this.initializeFeatureLayer().then(() => {
+    //     console.log('The map is ready.');
+    // });
+    this.GetArcGISToken();
   }
 
-  devServerLogin()
+
+  GetArcGISToken()
+  {
+    let url = this.urlService.GetAOTokendAPI;
+    this.httpService.HttpGetRequest(url,this.GetAOTokendCallBack.bind(this),null); 
+  }
+
+  /** @abstract
+   * 
+   */
+    GetAOTokendCallBack(dtas)
     {
-      let portalTokenUrl = "https://www.arcgis.com/sharing/rest/generateToken";
-      // test only === working
-      let tokenData ={
-        "token": "P08241EqWK1jfCEPtt8I7Nb_2xEzuL60KE9x0Q27w0PcycWgKQ2kTO7vkZUNg65_gRcfDw3Es7ekAwf4JBZm_9snLg8t5VtiaB17AU8oQCPagtycSbfE9wEWydf7OksmVPIzdFzImlHfyxqMsjoNY-aEbhnzM-NkV9kkvHlc70QoiP4w1rpjmZgY_udYP52J",
-        "expires": 1660157906101,
-        "ssl": true,
-        'server': portalTokenUrl,
-        'userId': "shalinee1",
-        }
-        esriId.registerToken(tokenData);
+      if (dtas != null)
+        {
+          let tokenData ={
+            "token": dtas.token,
+            "expires": dtas.expires,
+            "ssl": true,
+            'server': "https://www.arcgis.com/sharing/rest/generateToken",
+            'userId': "shalinee1",
+          }
+          esriId.registerToken(tokenData);
+        }        
     }
 
   ngOnDestroy(): void {
