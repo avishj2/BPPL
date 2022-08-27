@@ -53,6 +53,7 @@ _MenuJsonData : MenuOption[];
           Userroles.find(element => {
             if (element == 1245 ) //Admin
             {
+              this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,15,this._MenuJsonData);
                this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,25,this._MenuJsonData);
                this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this._MenuJsonData);
                this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,45,this._MenuJsonData);

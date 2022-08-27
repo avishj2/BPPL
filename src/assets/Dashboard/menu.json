@@ -44,5 +44,14 @@
         "Submenu":[
             {"title" : "Users", "url" : "UserDetails"}
         ]
+    },
+    {
+        "Id":15,
+        "MenuName":"Project Management",
+        "Icon": "menu-icon fa fa-envelope",
+        "Submenu":[
+            {"title" : "CAInfo", "url" : "CAInfo"},
+            {"title" : "Project", "url" : "Project"}
+        ]
     }
 ]
