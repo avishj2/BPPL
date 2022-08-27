@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <label class ="dropdownsLabel">SV-IPS</label>
-                <ng-select placeholder="-- Select SV-IPS --" [allowClear]="true"[items]="_SVIPSDetails" bindLabel="Text" bindValue ="Value"(change)="GetSVIPSDetailsById()" [(ngModel)]="_SVIPSDetailsId"> 
+                <ng-select placeholder="-- Select SV-IPS --" [items]="_SVIPSDetails" bindLabel="Text" bindValue ="Value"(change)="GetSVIPSDetailsById()" [(ngModel)]="_SVIPSDetailsId"> 
                 </ng-select>
             </div>
             <div class="ParentBtn"> 
@@ -37,12 +37,12 @@
                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                     {{GetLookupValue(_SVIPSDropDownsModel.SVIPSCategories,_SVIPSModel.SVDetailsType)}}
                 </div>
-                <!-- <ng-select placeholder="-- SV-IPS --" [allowClear]="true"[items]="_SVIPSDropDownsModel.SVIPSCategories" bindLabel="Text" bindValue ="Value"(change)="GetSVIPSDetailsById()" [(ngModel)]="_SVIPSModel.SVDetailsType"> 
+                <!-- <ng-select placeholder="-- SV-IPS --" [items]="_SVIPSDropDownsModel.SVIPSCategories" bindLabel="Text" bindValue ="Value"(change)="GetSVIPSDetailsById()" [(ngModel)]="_SVIPSModel.SVDetailsType"> 
                 </ng-select> -->
             </div>
             <div class="col-lg-3">
                 <label class ="Label"> Tahsil - Village </label>
-                <ng-select placeholder="-- Select Tahsil-Village --"*ngIf="_DisabledInputField != true" [allowClear]="true"[items]="_VillageTaluka" bindLabel="Text" bindValue ="Value" [(ngModel)]="_SVIPSModel.VillageId"[ngModelOptions]="{standalone: true}"> 
+                <ng-select placeholder="-- Select Tahsil-Village --"*ngIf="_DisabledInputField != true" [items]="_VillageTaluka" bindLabel="Text" bindValue ="Value" [(ngModel)]="_SVIPSModel.VillageId"[ngModelOptions]="{standalone: true}"> 
                 </ng-select>
                 <div class="DisabledFieldLabel" *ngIf="_DisabledInputField == true">
                     {{ GetLookupValue(_VillageTaluka, _SVIPSModel.VillageId)}}
@@ -102,7 +102,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <label class ="Label">Document Types</label>
-                    <ng-select [allowClear]="true" [items]="_SVIPSDropDownsModel.SVIPSDocuments" bindLabel="Text" bindValue ="Value" [(ngModel)]="_SVIPSdoc.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
+                    <ng-select  [items]="_SVIPSDropDownsModel.SVIPSDocuments" bindLabel="Text" bindValue ="Value" [(ngModel)]="_SVIPSdoc.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
                     </ng-select>
                 </div>
                 <div class="col-lg-3">

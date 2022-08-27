@@ -6,12 +6,12 @@
         <div class="row" *ngIf="OpenAsChild == true">
             <div class="col-lg-3">
                 <label class ="dropdownsLabel">Tahsil - Village </label>
-                <ng-select placeholder="-- Select Tahsil - Village --" [allowClear]="true"[items]="_VillageTaluka" bindLabel="Text" bindValue ="Value" [(ngModel)]="_VillageTalukaID"> 
+                <ng-select placeholder="-- Select Tahsil - Village --" [items]="_VillageTaluka" bindLabel="Text" bindValue ="Value" [(ngModel)]="_VillageTalukaID"> 
                 </ng-select>
             </div>
             <div class="col-lg-3">
                 <label class ="dropdownsLabel">Documents </label>
-                <ng-select placeholder="-- Select Document Type --" [allowClear]="true"[items]="_LegalDocsType" bindLabel="lookupName" bindValue ="LookupId" [(ngModel)]="_LegalDocuments.Lookupid"> 
+                <ng-select placeholder="-- Select Document Type --" [items]="_LegalDocsType" bindLabel="lookupName" bindValue ="LookupId" [(ngModel)]="_LegalDocuments.Lookupid"> 
                 </ng-select>                
             </div>
             <div class="col-lg-3">

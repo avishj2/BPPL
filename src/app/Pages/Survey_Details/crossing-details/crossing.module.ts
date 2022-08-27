@@ -6,15 +6,14 @@ import { CrossingRoutingModule} from './crossing-routing.module';
 import {CrossingDetailsComponent } from './crossing-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FiltersComponent } from '../../filters/filters.component';
-
+import { SharedModule } from '../../../SharedModule';
 
 @NgModule({
   imports: [
     CommonModule,
     CrossingRoutingModule,
-    FormsModule, NgbModule,
+    FormsModule, NgbModule,SharedModule
   ],
-  declarations: [CrossingDetailsComponent,FiltersComponent],
-
+  declarations: [CrossingDetailsComponent],
 })
 export class CrossingModule { }

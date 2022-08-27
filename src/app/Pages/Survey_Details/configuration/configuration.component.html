@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <label class ="dropdownsLabel">Select Value </label>
-                <ng-select placeholder="-- Select lookup Type --"[allowClear]="true"[items]="_LookupValues" bindLabel="Text" bindValue ="Value"[(ngModel)]="_lookupGroupId"(change)="GetAllLookupsForGroup()"> 
+                <ng-select placeholder="-- Select lookup Type --"[items]="_LookupValues" bindLabel="Text" bindValue ="Value"[(ngModel)]="_lookupGroupId"(change)="GetAllLookupsForGroup()"> 
                 </ng-select>
             </div>
         </div>

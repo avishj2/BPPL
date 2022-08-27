@@ -61,12 +61,12 @@
             <div class="row">
                 <div class="col-lg-4">
                     <label class ="Label">Document Types</label>
-                    <ng-select [allowClear]="true" [items]="_LandDropDownsModel.LandDocuments" bindLabel="Text" bindValue ="Value" [(ngModel)]="_LandRatesdocument.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
+                    <ng-select [items]="_LandDropDownsModel.LandDocuments" bindLabel="Text" bindValue ="Value" [(ngModel)]="_LandRatesdocument.Lookupid" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Document Type --"> 
                     </ng-select>
                 </div>
                 <div class="col-lg-3">
                     <div class="FileInputClass">
-                        <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"[ngModelOptions]="{standalone: true}"/>
+                        <input #fileInput (change)="onChangeDocument($event)"type="file" id="Upload"/>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -121,7 +121,7 @@
                 <div class="form-group row">
                     <div class="col-lg-8">
                         <label class="Label">Land Types</label>
-                        <ng-select [allowClear]="true" [items]="_LandTypeDetails" bindLabel="Text" bindValue ="Value" [(ngModel)]="_LandRatesModel.TypeOfLand" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Land Types --"> 
+                        <ng-select  [items]="_LandTypeDetails" bindLabel="Text" bindValue ="Value" [(ngModel)]="_LandRatesModel.TypeOfLand" [multiple]="false"[ngModelOptions]="{standalone: true}"placeholder="-- Select Land Types --"> 
                         </ng-select>
                     </div>
                     <div class="col-lg-6">
