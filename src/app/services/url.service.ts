@@ -163,6 +163,8 @@ export class UrlService {
     this.AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
     this.UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
     this.GetAOTokendAPI = this.url +'/api/Users/GetAOToken';
+
+    this.GetAllLayersAPI = this.url +'/api/OpenLayer/GetAllLayers';
  
   }
   
@@ -337,6 +339,7 @@ export class UrlService {
   AddOrUpdateUsersRolesAPI = this.url +'/api/Users/AddOrUpdateUsersRoles';
   UpdatePasswordAPI = this.url +'/api/Users/UpdatePassword';
   GetAOTokendAPI = this.url +'/api/Users/GetAOToken';
+  GetAllLayersAPI = this.url +'/api/OpenLayer/GetAllLayers';
 
   /** Map layers */
   CSLayer = "Crossing";

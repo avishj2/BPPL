@@ -34,7 +34,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     MasterDetailsComponent,
     TerminalsDetailsComponent,
     AddAdhocdetailsComponent,
-    RegionDetailsComponent,    
+    RegionDetailsComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [

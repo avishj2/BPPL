@@ -34,7 +34,8 @@
             {"title" : "Gazette & Notification", "url" : "ViewGazette"},
             {"title" : "View SV-IPS ", "url" : "ViewSVIPSDetails"},
             {"title" : "View Map", "url" : "ViewMap"},
-            {"title" : "ArcGIS Map", "url" : "ArcGISMap"}
+            {"title" : "ArcGIS Map", "url" : "ArcGISMap"},
+            {"title" : "GeoServer Layer", "url" : "OLGS"}
         ]
     },
     {

@@ -107,6 +107,10 @@ const routes: Routes = [
       path: 'ArcGISMap',
       loadChildren: () => import('../Pages/View_Details/arc-gismap/arc-gismap.module').then(x => x.ArcGISMapModule) 
     },
+    { 
+      path: 'OLGS',
+      loadChildren: () => import('../Pages/View_Details/olgspage/olgspage.module').then(x => x.OLGSPageModule) 
+    },
     //user management tab
     { 
       path: 'UserDetails',
