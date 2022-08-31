@@ -69,12 +69,9 @@ export class OLGSPageComponent implements OnInit {
 
  async ngOnInit() 
     {
-      this.GetAllLayersAPI();      
-      this.RegisterProj4s();           
-    }
-
-
-  
+      this.RegisterProj4s(); 
+      this.GetAllLayersAPI();
+    }  
 
 
   GetAllLayersAPI()
@@ -95,10 +92,6 @@ export class OLGSPageComponent implements OnInit {
   showJsonLayer()
     {
       var self = this;
-      let l_OLdata
-     // this._LayerCol.push(l_OLdata);//old
-
-
       /** Overlay */
       // OverLay:
       const container = document.getElementById('popup');
@@ -131,16 +124,6 @@ export class OLGSPageComponent implements OnInit {
         source: new OSM(),
       })
 
-      // let wmsLayer = new TileLayer({
-      //   source: new TileWMS({
-      //     url: 'http://localhost:8080/geoserver/NKBPL/wms',//'https://ahocevar.com/geoserver/wms',
-      //     params: {'LAYERS': 'CHAINAGE', 'TILED': true},
-      //       serverType: 'geoserver',
-      //       // Countries have transparency, so do not fade tiles:
-      //       transition: 0,
-      //     }),
-      // })
-
       const l_projection = getProjection('EPSG:4326');
       const l_projectionExtent = l_projection.getExtent();
       let WMTSlayer =  new TileLayer({
@@ -170,7 +153,7 @@ export class OLGSPageComponent implements OnInit {
         [
            tileLayer,
            //wmsLayer,
-          //  WMTSlayer          
+          // WMTSlayer          
         ],
         target: 'map',
         overlays: [overlay],
@@ -183,6 +166,8 @@ export class OLGSPageComponent implements OnInit {
       });
       //map.addLayer(wmsLayer);
 
+      let queryLayers = ''
+
       for (let index = 0; index < self._LayersInfo.length; index++) {
         const element = self._LayersInfo[index];
         let l_wmsLayer = new TileLayer({
@@ -190,28 +175,85 @@ export class OLGSPageComponent implements OnInit {
             url:  element.IPaddress + element.Baseurl,
             params: {'LAYERS': element.LayerName, 'TILED': true},//element.LayerName
               serverType: 'geoserver',
-              transition: 0,
+              transition: 0
             }),
         })
         map.addLayer(l_wmsLayer);
         let l_Layer = new OpenLayerDatamodel();
         l_Layer = l_Layer.LayerInfo(element.LayerDisplayName,l_wmsLayer,true,true); 
-        self._LayerCol.push(l_Layer)        
+        self._LayerCol.push(l_Layer) 
+        queryLayers += `${element.LayerName}${(index<self._LayersInfo.length-1)?',' :''}`       
       }
 
+      let all_Source : any = new TileWMS({
+        url:  self._LayersInfo[0].IPaddress + self._LayersInfo[0].Baseurl,
+        params: {'LAYERS': queryLayers, 'TILED': true},//element.LayerName
+          serverType: 'geoserver',
+          transition: 0
+        });
       //map.addLayer(localpbj);
      
-      map.on('singleclick', function (e) {
-          //console.log(e.coordinate)
-          //alert("Lat, Long : " + e.coordinate[1] + ", " + e.coordinate[0])
-           // start without check box click - start
-           var features = map.forEachFeatureAtPixel(e.pixel,        
-            function(feature, layer) { 
-              if (feature) {
-                console.log(layer.getFeatures);
-                console.log(feature.get('TEXTSTRING'))                            
-              }             
-            }); 
+      map.on('singleclick', function (evt) {
+        
+        var viewResolution = (map.getView().getResolution());
+        let viewProj =map.getView().getProjection();
+
+        var url = all_Source.getGetFeatureInfoUrl(
+          evt.coordinate, viewResolution, viewProj,
+          { 'INFO_FORMAT': 'application/json'}); //text/html
+
+        if (url) {
+            var parser = new GeoJSON();
+            var lookup = {};
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                method: 'GET',
+                success: function (response) {
+                    var result = parser.readFeatures(response);
+                    //if ((result.length > 0) && (wmsLayer.getVisible() == true)) {
+                    if (result.length > 0)
+                    {
+                        var coord = evt.coordinate;
+                        var content = '<p>';
+
+                        // for (var i = 0, ii = result.length; i < ii; ++i)
+                        // {
+                        //     var text = result[i];
+                        //     var props = text.getProperties();
+                        //     var txt = text.getId();
+                        //     content = content + '<strong>ID:' + txt + '</strong><br>';
+                        //     content = content + '<strong>District:' + props.district + '</strong><br>';
+
+                        // }
+
+                        content = content + '</p>';
+                        //content_element.innerHTML = content;
+                        overlay.setPosition(coord);
+                    }
+                },
+                error: function (jqXHR, exception) {
+                  var msg = '';
+                  if (jqXHR.status === 0) {
+                      msg = 'Not connect.\n Verify Network.';
+                  } else if (jqXHR.status == 404) {
+                      msg = 'Requested page not found. [404]';
+                  } else if (jqXHR.status == 500) {
+                      msg = 'Internal Server Error [500].';
+                  } else if (exception === 'parsererror') {
+                      msg = 'Requested JSON parse failed.';
+                  } else if (exception === 'timeout') {
+                      msg = 'Time out error.';
+                  } else if (exception === 'abort') {
+                      msg = 'Ajax request aborted.';
+                  } else {
+                      msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                  }
+                  $('#post').html(msg);
+              }
+            });
+        }  
+
       }) 
     }
 
