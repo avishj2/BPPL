@@ -170,7 +170,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class ="Label">Gazzete Document Types  <b><h7 style="color: red;">*</h7></b></label>
-                                <ng-select [allowClear]="true" [items]="_GazzateDropDownsDataModel.GazzateDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_gazzettedoc.Lookupid"placeholder="-- Select Documet Type --" [multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <ng-select  [items]="_GazzateDropDownsDataModel.GazzateDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_gazzettedoc.Lookupid"placeholder="-- Select Documet Type --" [multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">
@@ -334,7 +334,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class ="Label">Notification document types  <b><h7 style="color: red;">*</h7></b></label>
-                                <ng-select placeholder="-- Select Document Type --" [allowClear]="true" [items]="_GazzateDropDownsDataModel.NotificationDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_notificationDoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
+                                <ng-select placeholder="-- Select Document Type --"  [items]="_GazzateDropDownsDataModel.NotificationDocumentTypes" bindLabel="Text" bindValue ="Value" [(ngModel)]="_notificationDoc.Lookupid"[multiple]="false"[ngModelOptions]="{standalone: true}"> 
                                 </ng-select>
                             </div>
                             <div class="col-lg-3">

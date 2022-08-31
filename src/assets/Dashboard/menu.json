@@ -34,7 +34,8 @@
             {"title" : "Gazette & Notification", "url" : "ViewGazette"},
             {"title" : "View SV-IPS ", "url" : "ViewSVIPSDetails"},
             {"title" : "View Map", "url" : "ViewMap"},
-            {"title" : "ArcGIS Map", "url" : "ArcGISMap"}
+            {"title" : "ArcGIS Map", "url" : "ArcGISMap"},
+            {"title" : "GeoServer Layer", "url" : "OLGS"}
         ]
     },
     {
@@ -43,6 +44,15 @@
         "Icon": "menu-icon fa fa-users",
         "Submenu":[
             {"title" : "Users", "url" : "UserDetails"}
+        ]
+    },
+    {
+        "Id":15,
+        "MenuName":"Project Management",
+        "Icon": "menu-icon fa fa-envelope",
+        "Submenu":[
+            {"title" : "CAInfo", "url" : "CAInfo"},
+            {"title" : "Project", "url" : "Project"}
         ]
     }
 ]
