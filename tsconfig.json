@@ -16,7 +16,7 @@
     {
       "compilerOptions": {
         "experimentalDecorators": true,
-        "fullTemplateTypeCheck": true,
+        "fullTemplateTypeCheck": false,
         "strictInjectionParameters": true,
         "enableIvy": false,
         "declarationMap": true,

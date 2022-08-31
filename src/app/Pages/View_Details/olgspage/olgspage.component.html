@@ -2,14 +2,11 @@
 <button class="btn-primary" data-toggle="modal"(click)="OpenPopupModel()" data-target="#LayerModal"data-backdrop="static" data-keyboard="false">Layer List</button>
 
 <div id="map" data-toggle="modal" data-target="#DetailsModal">
-    <!-- 
-        <div class="ol-custom ol-unselectable ol-control">
-        <input type="checkbox"[(ngModel)]="_ShowDisasterPoints" [ngModelOptions]="{standalone: true}">&nbsp;Disaster Points
-    </div> -->
 </div> 
 <div id="popup" class="ol-popup">
     <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-    <div id="popup-content"></div>
+    <div id="popup-content">
+    </div>
 </div>
 
 <div class="container" *ngIf="_OpenShowLayersPopup == true">
