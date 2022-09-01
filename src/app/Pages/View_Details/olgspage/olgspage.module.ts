@@ -8,6 +8,7 @@ import { OLGSPageComponent } from './olgspage.component';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PopupPageComponent } from './popup-page/popup-page.component';
 
 @NgModule({
   imports: [
@@ -18,8 +19,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgbModule,
     DataTablesModule,
     NgSelectModule,
+    
   ],
-  declarations: [OLGSPageComponent],
+  declarations: [OLGSPageComponent, PopupPageComponent],
 
 })
 export class OLGSPageModule { }

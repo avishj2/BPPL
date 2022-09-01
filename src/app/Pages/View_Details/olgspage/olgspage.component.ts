@@ -37,6 +37,7 @@ import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities';
 import { HttpService } from 'src/app/services/http.service';
 import {LayerInfo} from './olgspage.model';
+import { PopupPageComponent } from './popup-page/popup-page.component';
 
 @Component({
   selector: 'app-olgspage',
@@ -53,7 +54,7 @@ export class OLGSPageComponent implements OnInit {
   _CheckAllLayer : boolean = true;
   _CheckAllLayerValue :boolean = true;
   _LayersInfo : LayerInfo[];
-
+  tabs;
   constructor(public urlService: UrlService,
     public modelServiceService : ModelServiceService,
     public Utility: UtilityService,
@@ -199,7 +200,7 @@ export class OLGSPageComponent implements OnInit {
 
         var url = all_Source.getGetFeatureInfoUrl(
           evt.coordinate, viewResolution, viewProj,
-          { 'INFO_FORMAT': 'application/json'}); //text/html
+          { 'INFO_FORMAT': 'application/json','FEATURE_COUNT': '1000'}); //text/html
 
         if (url) {
             var parser = new GeoJSON();
@@ -212,18 +213,19 @@ export class OLGSPageComponent implements OnInit {
                     var result = parser.readFeatures(response);
                     if (result.length > 0)
                     {
+                      self.ShowAttributesPopup(result);
                       // for (var i = 0;i<=result.length; i++)
                       //   {
-                          let l_featureValues = response.features[0].properties
-                          var coord = evt.coordinate;
-                          document.getElementById("popup-content").innerHTML = "";
-                          let keyValues = Object.keys(l_featureValues);
-                          for (var j = 0;j< keyValues.length; j++)
-                          {                          
-                            document.getElementById("popup-content").innerHTML +=
-                            '<strong>'+ keyValues[j]+ ':</strong>' + l_featureValues[Object.keys(l_featureValues)[j]] + '<br> '+"";
-                          }   
-                          overlay.setPosition(coord);
+                          // let l_featureValues = response.features[0].properties
+                          // var coord = evt.coordinate;
+                          // document.getElementById("popup-content").innerHTML = "";
+                          // let keyValues = Object.keys(l_featureValues);
+                          // for (var j = 0;j< keyValues.length; j++)
+                          // {                          
+                          //   document.getElementById("popup-content").innerHTML +=
+                          //   '<strong>'+ keyValues[j]+ ':</strong>' + l_featureValues[Object.keys(l_featureValues)[j]] + '<br> '+"";
+                          // }   
+                          // overlay.setPosition(coord);
                         //}
                     }
                 },
@@ -299,41 +301,18 @@ export class OLGSPageComponent implements OnInit {
     }    
 
     /**open crossing deatils popup model */
-    ShowCrossingPopup(arg)
+    ShowAttributesPopup(argdata)
       { 
         /**NgbModalOptions  add some option in ngbmodel  */
         let ngbModalOptions: NgbModalOptions = {
           //backdrop : 'static',//outside click to not close model
           keyboard : false,
-          size: 'xl'
+          size: 'lg'
           };
-          let argdata = {
-            CrossingName : arg,
-            ShowModel : true
-          }
         /**used popup model common service function */
-        this.modelServiceService.ShowPopUP(ChildViewCrossingComponent,ngbModalOptions,argdata,
+        this.modelServiceService.ShowPopUP(PopupPageComponent,ngbModalOptions,argdata,
           null,null);
       }
-
-  ShowSurveyPopup(arg)
-    {
-      /**NgbModalOptions  add some option in ngbmodel  */
-      let ngbModalOptions: NgbModalOptions = {
-        keyboard : false,
-        size: 'xl'
-        };
-        let argdata = {
-          ShowModel: true,
-          // VillageName: arg.Village_N,
-          VillageName : arg.Village,
-          TehsilName :arg.Tehsil_N,           
-          SurveyName :arg.DBSurvey_N,//Survey_No
-        }
-      /**used popup model common service function */
-      this.modelServiceService.ShowPopUP(ViewSurveyTabsComponent,ngbModalOptions,argdata,
-        null,null);
-    }
 }
 
 
