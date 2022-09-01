@@ -145,10 +145,9 @@ export class OLGSPageComponent implements OnInit {
         })
 
       /**base map style and add layers */
-      var washingtonLonLat = [72.018320,24.850438];//lat long panchpadra
+      var washingtonLonLat = [75.7873,26.9124];//lat long jaipur
       var washingtonWebMercator = transform(washingtonLonLat,'EPSG:32643', 'EPSG:4326');
       const map = new Map({
-        //layers: LayersCol,
         layers:
         [
            tileLayer,
@@ -211,43 +210,21 @@ export class OLGSPageComponent implements OnInit {
                 method: 'GET',
                 success: function (response) {
                     var result = parser.readFeatures(response);
-                    //if ((result.length > 0) && (wmsLayer.getVisible() == true)) {
                     if (result.length > 0)
                     {
-                        let l_featureValues = response.features[0].properties
-                        var coord = evt.coordinate;
-                        var content = '<p>';
-
-                        let divcontent = document.getElementById("popup-content").innerHTML;
-                        document.getElementById("popup-content").innerHTML = divcontent
-                              +'<strong> BHUCODE: ' + l_featureValues.BHUCODE + '</strong><br> '
-                              + '<strong> CCODE11: ' + l_featureValues.CCODE11 + '</strong><br> '
-                              + '<strong> DISTRICT: ' + l_featureValues.DISTRICT + '</strong><br> '
-                              + '<strong> FEAT_TYPE: ' + l_featureValues.FEAT_TYPE + '</strong><br> '
-                              + '<strong> ILR: ' + l_featureValues.ILR + '</strong><br> '
-                              +'<strong> KID: ' + l_featureValues.KID + '</strong><br> '
-                              + '<strong> OBJECTID: ' + l_featureValues.OBJECTID + '</strong><br> '
-                              + '<strong> SHAPE_Area: ' + l_featureValues.SHAPE_Area + '</strong><br> '
-                              + '<strong> SHAPE_Leng: ' + l_featureValues.SHAPE_Leng + '</strong><br> '
-                              + '<strong> SHEET_No: ' + l_featureValues.SHEET_No + '</strong><br> '
-                              + '<strong> TEHSIL: ' + l_featureValues.TEHSIL + '</strong><br> '
-                              + '<strong> TehsilId: ' + l_featureValues.TehsilId + '</strong><br> '
-                              + '<strong> VILL_AREA: ' + l_featureValues.VILL_AREA + '</strong><br> '
-                              + '<strong> VILL_CODE: ' + l_featureValues.VILL_CODE + '</strong><br> ';
-
-                        // for (var i = 0, ii = result.length; i < ii; ++i)
-                        // {
-                        //     var text = result[i];
-                        //     var props = text.getProperties();
-                        //     var txt = text.getId();
-                        //     content = content + '<strong>ID:' + txt + '</strong><br>';
-                        //     content = content + '<strong>District:' + props.district + '</strong><br>';
-
-                        // }
-
-                        content = content + '</p>';
-                        //content_element.innerHTML = content;
-                        overlay.setPosition(coord);
+                      // for (var i = 0;i<=result.length; i++)
+                      //   {
+                          let l_featureValues = response.features[0].properties
+                          var coord = evt.coordinate;
+                          document.getElementById("popup-content").innerHTML = "";
+                          let keyValues = Object.keys(l_featureValues);
+                          for (var j = 0;j< keyValues.length; j++)
+                          {                          
+                            document.getElementById("popup-content").innerHTML +=
+                            '<strong>'+ keyValues[j]+ ':</strong>' + l_featureValues[Object.keys(l_featureValues)[j]] + '<br> '+"";
+                          }   
+                          overlay.setPosition(coord);
+                        //}
                     }
                 },
                 error: function (jqXHR, exception) {
