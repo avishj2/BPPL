@@ -19,7 +19,6 @@ import { PopupPageComponent } from './popup-page/popup-page.component';
     NgbModule,
     DataTablesModule,
     NgSelectModule,
-    
   ],
   declarations: [OLGSPageComponent, PopupPageComponent],
 

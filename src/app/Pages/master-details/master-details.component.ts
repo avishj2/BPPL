@@ -139,11 +139,9 @@ export class MasterDetailsComponent implements AfterViewInit,OnDestroy, OnInit {
       ExecutionOfAggrement: "0",
       ReceiptOfFinal: "4",
       RefundableAmount :"564375.05",
-      NonRefundableAmount: "4442.05"
-      
+      NonRefundableAmount: "4442.05"      
     },
     {
-    
       CrossingType: "Railways",
       NoOfCrossing: "4",
       DemandNodeNot: "0",

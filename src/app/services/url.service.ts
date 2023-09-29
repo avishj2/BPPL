@@ -84,7 +84,7 @@ export class UrlService {
     this.DownloadProjectReportAPI =  this.url+'/api/SurveyDocuments/DownloadProjectReport?documentId=';
     this.DeleteProjectReportAPI = this.url +'/api/SurveyDocuments/DeleteProjectReport?documentId=';
     //===2
-    this.GetAlignmentSheetsAPI = this.url +'/api/SurveyDocuments/GetAlignmentSheets';
+    this.GetAlignmentSheetsAPI = 'https://bppl.dgdatam.com/api/SurveyDocuments/GetAlignmentSheets';
     this.AddAlignmentSheetAPI = this.url +'/api/SurveyDocuments/AddAlignmentSheet';
     this.DownloadAlignmentSheetAPI = this.url +'/api/SurveyDocuments/DownloadAlignmentSheet?documentId=';
     this.DeleteAlignmentSheetAPI = this.url +'/api/SurveyDocuments/DeleteAlignmentSheet?documentId=';

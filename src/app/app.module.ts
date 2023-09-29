@@ -24,6 +24,8 @@ import { TerminalsDetailsComponent } from './Pages/Survey_Details/terminals-deta
 import { AddAdhocdetailsComponent } from './Pages/Survey_Details/adhoc-payment-details/add-adhocdetails/add-adhocdetails.component';
 import { RegionDetailsComponent } from './Pages/ProjectManagement/region-details/region-details.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -35,10 +37,12 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     TerminalsDetailsComponent,
     AddAdhocdetailsComponent,
     RegionDetailsComponent,
+    // AlignmentsheettestComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA], /// Added for the form validations.
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),

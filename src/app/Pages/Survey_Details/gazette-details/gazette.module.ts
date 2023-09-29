@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { GazetteRoutingModule} from './gazette-routing.module';
-import {GazetteDetailsComponent } from './gazette-details.component';
+import { GazetteDetailsComponent } from './gazette-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 

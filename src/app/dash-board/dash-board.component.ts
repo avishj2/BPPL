@@ -68,9 +68,7 @@ _MenuJsonData : MenuOption[];
                this.addMenuItemIfNotPresent(this.APIUtilityService.DisplayMenuItems,35,this._MenuJsonData);
               };
           });
-
-          this.Utility.LogText2("DisplayMenuItems=>",this.APIUtilityService.DisplayMenuItems)
-
+            this.Utility.LogText2("DisplayMenuItems=>",this.APIUtilityService.DisplayMenuItems)
           },
           error => {
             this.Utility.LogText(error);
@@ -79,20 +77,20 @@ _MenuJsonData : MenuOption[];
 
   /**top right side clicks on logout button and logout website  */
   logoutBtn()
-  {
-    this.APIUtilityService.logout();
-    this.router.navigate(['/login']); 
-    //localStorage.removeItem('loginDetails'); //remove username and password from localstroage after click logout
-  }
+    {
+      this.APIUtilityService.logout();
+      this.router.navigate(['/login']); 
+      //localStorage.removeItem('loginDetails'); //remove username and password from localstroage after click logout
+    }
  
   addMenuItemIfNotPresent(applicableMenuIds : any[], menuId : number, menus : any[])
-  {
-     let isAvailable = applicableMenuIds.find(elm=>elm.Id == menuId);
-     if(!isAvailable)
-     {
-       let menuObject = menus.find(elm=>elm.Id == menuId);
-       applicableMenuIds.push(menuObject);
-     }
-  }
+    {
+      let isAvailable = applicableMenuIds.find(elm=>elm.Id == menuId);
+      if(!isAvailable)
+      {
+        let menuObject = menus.find(elm=>elm.Id == menuId);
+        applicableMenuIds.push(menuObject);
+      }
+    }
 
 }

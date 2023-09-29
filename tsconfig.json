@@ -15,7 +15,7 @@
     },
     {
       "compilerOptions": {
-        "experimentalDecorators": true,
+        //"experimentalDecorators": true,
         "fullTemplateTypeCheck": false,
         "strictInjectionParameters": true,
         "enableIvy": false,
@@ -24,6 +24,8 @@
         "module": "commonjs",
         //"outDir": "out",
         "sourceMap": false,
+        "emitDecoratorMetadata": true,
+        
 
       },
       "angularCompilerOptions": {

@@ -43,7 +43,8 @@
         "MenuName":"User Details",
         "Icon": "menu-icon fa fa-users",
         "Submenu":[
-            {"title" : "Users", "url" : "UserDetails"}
+            {"title" : "Users", "url" : "UserDetails"},
+            {"title" : "Alignment Reports Test", "url": "TestSheet"}
         ]
     },
     {

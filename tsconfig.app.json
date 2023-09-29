@@ -23,7 +23,7 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "strict": false,
-    "suppressImplicitAnyIndexErrors": true,
+    // "suppressImplicitAnyIndexErrors": true,
     "strictPropertyInitialization": false,
     "target": "ES2020",
   },

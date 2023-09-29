@@ -116,6 +116,10 @@ const routes: Routes = [
       path: 'UserDetails',
       loadChildren: () => import('../Pages/UserManagement/user-details/user-details.module').then(x => x.UserDetailsModule) 
     },
+    { 
+      path: 'TestSheet',
+      loadChildren: () => import('../alignmentsheettest/alignmentsheettest.module').then(x => x.AlignmentTestModule) 
+    }
   ]}
   
 ];

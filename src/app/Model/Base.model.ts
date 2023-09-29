@@ -1,5 +1,4 @@
-export class BaseResponse
-{
+export class BaseResponse{
     StatusCode: any;
     Message: string;
     ValidationFailed: true;
